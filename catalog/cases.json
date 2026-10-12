@@ -1,7 +1,7 @@
 [
   {
     "id": "vibeqwen",
-    "title": "VibeQwen: from MetaInfer workflow to a serving stack",
+    "title": "MetaInfer → VibeQwen: from construction workflow to serving stack",
     "project_ids": [
       "metainfer"
     ],
@@ -120,6 +120,33 @@
       "https://github.com/Niko1221/Strata/blob/7695859aa13afb248bdb4d36f9b2e95707db079d/README.md",
       "https://github.com/Niko1221/Strata/blob/7695859aa13afb248bdb4d36f9b2e95707db079d/docs/DETAILS.md",
       "https://github.com/Niko1221/Strata/blob/7695859aa13afb248bdb4d36f9b2e95707db079d/src/core/expert_cache.cpp"
+    ],
+    "checked_on": "2026-10-12"
+  },
+  {
+    "id": "ninfer",
+    "title": "NInfer: a native Qwen stack for one GPU",
+    "project_ids": [
+      "ninfer"
+    ],
+    "summary": "Owns model execution, state and serving within a deliberately narrow checkpoint and GPU contract.",
+    "summary_cn": "围绕选定 Qwen 模型和 RTX 5090，自行组织模型计算、状态管理与请求服务。",
+    "motivation": "The stated objective is maximum single-GPU performance for selected checkpoints; general model and device coverage is outside that target.",
+    "boundary": "Native operators, model programs, state/KV management, scheduling and CLI/HTTP serving form one execution stack.",
+    "reuse": "Retains pretrained weights, CUDA runtime, FFmpeg and HTTP/JSON/logging dependencies; owning execution does not imply a dependency-free system.",
+    "tradeoff": "The upstream target is Linux with sm_120a, one resident model and startup-fixed execution lanes; it is not a general multi-device deployment contract.",
+    "construction": "Public C++/CUDA modules and development contracts expose how components fit together. The actual development chronology and human–AI division of work are not disclosed.",
+    "ai_role": "Not established. AI-assistance contribution policies and agent instruction files are not implementation-authorship evidence.",
+    "cost": "Development effort and lifecycle costs are not disclosed; inference throughput does not establish construction economics.",
+    "validation": "Published tests include independent operator oracles and opt-in real-engine integration checks. This survey did not execute them or reproduce performance.",
+    "maintenance": "Explicit architecture and contribution boundaries constrain changes; artifact-version migration is documented, but sustained adaptation cost is unknown.",
+    "evidence_urls": [
+      "https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/README.md",
+      "https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/docs/maintainer/engine-architecture.md",
+      "https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/src/models/qwen3_5/execution/text.cpp",
+      "https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/docs/maintainer/build-system.md",
+      "https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/tests/README.md",
+      "https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/CONTRIBUTING.md"
     ],
     "checked_on": "2026-10-12"
   },

@@ -18,7 +18,7 @@ Artifact roles retained as independent labels: `system` — Specialized inferenc
 
 <a id="core"></a>
 
-## Core cases / 核心案例 (13)
+## Core cases / 核心案例 (14)
 
 Purposeful reconstruction of execution paths, or a construction workflow linked to a concrete specialized artifact. These cases motivate investigation; they do not establish a new paradigm.
 
@@ -35,6 +35,7 @@ Purposeful reconstruction of execution paths, or a construction workflow linked 
 | [Magnitude](catalog.md#magnitude) | A dedicated inference stack exposes its kernel-composition and model-execution boundary for construction analysis. | system / runtime |
 | [MetaInfer](catalog.md#metainfer) | Connects a disclosed construction workflow to the VibeQwen engine case; the toolbox and generated engine are different artifacts. | construction / generator |
 | [Mirage Persistent Kernel](catalog.md#mirage) | A model-to-persistent-program construction path connects generated execution schedules to a concrete runtime artifact. | construction / compiler |
+| [NInfer](catalog.md#ninfer) | Rebuilds model execution and serving for selected Qwen checkpoints on one GPU; exposes the scope and ownership of a purpose-built stack. | system / runtime |
 | [Nunchaku](catalog.md#nunchaku) | A substantial low-bit diffusion backend connects representation-specific execution to reusable pipeline integration. | system / runtime |
 | [Sol-Engine](catalog.md#sol-engine) | Connects agent-guided optimization with inspectable model runtimes and their acceptance checks. | construction / optimizer |
 | [Strata](catalog.md#strata) | A narrow MoE runtime makes expert placement and execution choices inspectable; AI authorship is not established. | system / runtime |

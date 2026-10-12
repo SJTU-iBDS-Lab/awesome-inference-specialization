@@ -22,13 +22,15 @@
 
 <!-- CATALOG-START -->
 
+**[完整目录：99 个项目](docs/systems.md) · [精选分析：14 个案例](docs/cases.md)**
+
 先看构建过程与产出系统，再比较复用边界和证据缺口。以下分组只是阅读顺序；AI 参与不代表效果更好，未披露也不代表纯人工实现。
 
 ### 构建流程实际产出了什么
 
 | 案例 | 为什么研究它 |
 | --- | --- |
-| [VibeQwen](docs/cases.md#vibeqwen) | 一个改造智能体工作流、复用现有内核来构建专用执行栈的实验案例。 |
+| [MetaInfer → VibeQwen](docs/cases.md#vibeqwen) | 一个改造智能体工作流、复用现有内核来构建专用执行栈的实验案例。 |
 | [Sol-Engine](docs/cases.md#sol-engine) | 以智能体工作流组合模型专用优化，并以延迟和图像质量约束筛选配置。 |
 
 ### 围绕部署条件重建执行栈
@@ -38,6 +40,7 @@
 | [Flash-MoE](docs/cases.md#flash-moe) | 围绕固定模型和苹果统一内存机器，直接组织 SSD 专家读取与 C/Metal 执行。 |
 | [DwarfStar](docs/cases.md#dwarfstar) | 以少数模型和消费级硬件为边界，联合构建原生执行、状态管理与本地服务。 |
 | [Strata](docs/cases.md#strata) | 针对普通游戏电脑，将 GPU 热专家、CPU 冷专家和状态存储组合成模型专用运行时。 |
+| [NInfer](docs/cases.md#ninfer) | 围绕选定 Qwen 模型和 RTX 5090，自行组织模型计算、状态管理与请求服务。 |
 | [Iris](docs/cases.md#iris) | 用 C 接管选定图像模型的完整推理流程，同时复用系统数学库和 GPU 能力。 |
 | [TensorFold](docs/cases.md#tensorfold) | 以模型、权重格式和平台的资格表限定支持范围，再提供原生 Zig 服务与专用执行。 |
 | [Halogen Flash](docs/cases.md#halogen-flash) | 以一个模型家族和一类芯片为边界发布专用二进制，公开部署与量化说明。 |

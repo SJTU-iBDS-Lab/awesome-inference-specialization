@@ -4,7 +4,7 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Systems & construction](systems.md) · [Comparison](comparison.md) · [Taxonomy](taxonomy.md) · [Evidence policy](evidence-policy.md)
 
-98 entries. Source review: 2026-10-12. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
+99 entries. Source review: 2026-10-12. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
 
 Use the family links below, or search this page for a model, device, mechanism or project. Source visibility is not a license or correctness certification. Semantic labels identify evaluation obligations, not proven equivalence.
 
@@ -1643,7 +1643,7 @@ Combines Ulysses and Ring sequence parallelism with CFG/data parallelism and Pip
 
 <a id="execution"></a>
 
-## Compiled & native execution / 编译与原生执行 (32)
+## Compiled & native execution / 编译与原生执行 (33)
 
 **How does a graph become an executable?** Fuse, lower, specialize and dispatch graphs or native kernels.
 
@@ -2309,6 +2309,35 @@ Uses a TVM LLM-specific compilation pipeline to fuse dequantization and normaliz
 **Constraints:** `hardware`, `model`, `precision`, `workload`.
 
 **Evidence:** [Source 1](https://github.com/mlc-ai/mlc-llm/blob/HEAD/README.md) · [Source 2](https://github.com/mlc-ai/mlc-llm/blob/HEAD/python/mlc_llm/compiler_pass/pipeline.py) · [Source 3](https://github.com/mlc-ai/mlc-llm/blob/HEAD/cpp/serve/engine.cc).
+
+**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
+
+</details>
+
+<a id="ninfer"></a>
+
+### [NInfer](https://github.com/Neroued/ninfer)
+
+[core](systems.md#core) · `system` · `runtime` · `text / multimodal` · **public code**
+
+**Survey relevance:** Rebuilds model execution and serving for selected Qwen checkpoints on one GPU; exposes the scope and ownership of a purpose-built stack.
+
+Native model code composes operators; Program owns state, KV, workspace and CUDA Graph execution, while runtime manages request scheduling, cache retention and pause/resume.
+
+**Scope:** Selected Qwen Dense/MoE checkpoints on Linux and one RTX 5090 (sm_120a), with one resident model and one to eight startup-fixed execution lanes.
+
+**Boundary:** Weight/KV precision and speculative paths require configuration-specific checks; published results are author-reported. Agent instruction files and AI-client compatibility do not establish AI authorship.
+
+**Semantic considerations:** configuration-dependent, reduced precision, target-verified proposals.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `native-execution`, `cuda-graphs`, `low-bit-kernels`, `paged-kv`, `speculative-decoding`.
+
+**Constraints:** `model`, `hardware`, `memory`, `precision`, `workload`.
+
+**Evidence:** [Source 1](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/README.md) · [Source 2](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/docs/maintainer/engine-architecture.md) · [Source 3](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/src/models/qwen3_5/execution/text.cpp) · [Source 4](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/docs/maintainer/build-system.md) · [Source 5](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/tests/README.md) · [Source 6](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/CONTRIBUTING.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 

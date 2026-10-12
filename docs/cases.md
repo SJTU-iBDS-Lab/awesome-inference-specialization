@@ -10,11 +10,11 @@ Read motivation → execution ownership → retained components and lost general
 
 No case performance was independently reproduced here. “Not disclosed” and “not established” describe the reviewed sources, not an assertion that an activity never occurred.
 
-[VibeQwen: from MetaInfer workflow to a serving stack](#vibeqwen) · [Sol-Engine: compose and qualify model-specific optimizations](#sol-engine) · [Flash-MoE: SSD-streamed experts in a native prototype](#flash-moe) · [DwarfStar: a deliberately narrow native execution stack](#dwarfstar) · [Strata: tier experts around a gaming PC](#strata) · [Iris: own the image pipeline in C](#iris) · [TensorFold: qualify native paths by checkpoint and platform](#tensorfold) · [Halogen Flash: specialize a closed binary to one chip](#halogen-flash) · [Magnitude: specialize kernels inside MLX execution](#magnitude) · [KTransformers: integrate CPU expert execution with GPU serving](#ktransformers) · [Nunchaku: build execution around an SVDQuant artifact](#nunchaku) · [ExLlamaV3: couple low-bit artifacts to a dedicated library](#exllamav3) · [Mirage MPK: compile an explicit graph into persistent execution](#mirage)
+[MetaInfer → VibeQwen: from construction workflow to serving stack](#vibeqwen) · [Sol-Engine: compose and qualify model-specific optimizations](#sol-engine) · [Flash-MoE: SSD-streamed experts in a native prototype](#flash-moe) · [DwarfStar: a deliberately narrow native execution stack](#dwarfstar) · [Strata: tier experts around a gaming PC](#strata) · [NInfer: a native Qwen stack for one GPU](#ninfer) · [Iris: own the image pipeline in C](#iris) · [TensorFold: qualify native paths by checkpoint and platform](#tensorfold) · [Halogen Flash: specialize a closed binary to one chip](#halogen-flash) · [Magnitude: specialize kernels inside MLX execution](#magnitude) · [KTransformers: integrate CPU expert execution with GPU serving](#ktransformers) · [Nunchaku: build execution around an SVDQuant artifact](#nunchaku) · [ExLlamaV3: couple low-bit artifacts to a dedicated library](#exllamav3) · [Mirage MPK: compile an explicit graph into persistent execution](#mirage)
 
 <a id="vibeqwen"></a>
 
-## VibeQwen: from MetaInfer workflow to a serving stack
+## MetaInfer → VibeQwen: from construction workflow to serving stack
 
 **Related project records:** [MetaInfer](catalog.md#metainfer).
 
@@ -109,6 +109,26 @@ No case performance was independently reproduced here. “Not disclosed” and �
 - **Evolution evidence / 适配与维护:** Device, quantization and skip-policy combinations require version-specific checks; maintenance effort is not disclosed.
 
 **Sources:** [Source 1](https://github.com/Niko1221/Strata/blob/7695859aa13afb248bdb4d36f9b2e95707db079d/README.md) · [Source 2](https://github.com/Niko1221/Strata/blob/7695859aa13afb248bdb4d36f9b2e95707db079d/docs/DETAILS.md) · [Source 3](https://github.com/Niko1221/Strata/blob/7695859aa13afb248bdb4d36f9b2e95707db079d/src/core/expert_cache.cpp).
+
+**Reviewed:** 2026-10-12. See the linked project record for mechanism-specific caveats.
+
+<a id="ninfer"></a>
+
+## NInfer: a native Qwen stack for one GPU
+
+**Related project records:** [NInfer](catalog.md#ninfer).
+
+- **Why build it? / 为什么另建:** The stated objective is maximum single-GPU performance for selected checkpoints; general model and device coverage is outside that target.
+- **Execution ownership / 重构边界:** Native operators, model programs, state/KV management, scheduling and CLI/HTTP serving form one execution stack.
+- **Retained components / 复用什么:** Retains pretrained weights, CUDA runtime, FFmpeg and HTTP/JSON/logging dependencies; owning execution does not imply a dependency-free system.
+- **Scope given up / 取舍与兼容性:** The upstream target is Linux with sm_120a, one resident model and startup-fixed execution lanes; it is not a general multi-device deployment contract.
+- **Construction process / 怎样构建:** Public C++/CUDA modules and development contracts expose how components fit together. The actual development chronology and human–AI division of work are not disclosed.
+- **AI participation / AI 参与的直接证据:** Not established. AI-assistance contribution policies and agent instruction files are not implementation-authorship evidence.
+- **Disclosed effort / 构建投入:** Development effort and lifecycle costs are not disclosed; inference throughput does not establish construction economics.
+- **Validation boundary / 验证覆盖:** Published tests include independent operator oracles and opt-in real-engine integration checks. This survey did not execute them or reproduce performance.
+- **Evolution evidence / 适配与维护:** Explicit architecture and contribution boundaries constrain changes; artifact-version migration is documented, but sustained adaptation cost is unknown.
+
+**Sources:** [Source 1](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/README.md) · [Source 2](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/docs/maintainer/engine-architecture.md) · [Source 3](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/src/models/qwen3_5/execution/text.cpp) · [Source 4](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/docs/maintainer/build-system.md) · [Source 5](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/tests/README.md) · [Source 6](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/CONTRIBUTING.md).
 
 **Reviewed:** 2026-10-12. See the linked project record for mechanism-specific caveats.
 

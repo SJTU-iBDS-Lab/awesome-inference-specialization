@@ -10,11 +10,12 @@ Start with what is rebuilt and what effort is disclosed. Read each case for reta
 
 | Case | Execution ownership | Construction effort evidence |
 | --- | --- | --- |
-| [VibeQwen](cases.md#vibeqwen) | Model execution and serving integration, evaluated as deployed services; public VibeQwen engine source was not established. | Resource usage reported; fee estimates do not establish total development cost. |
+| [MetaInfer → VibeQwen](cases.md#vibeqwen) | Model execution and serving integration, evaluated as deployed services; public VibeQwen engine source was not established. | Resource usage reported; fee estimates do not establish total development cost. |
 | [Sol-Engine](cases.md#sol-engine) | The reviewed artifact is an optimized video codebase and configuration workflow, not a replacement for every serving layer. | Total development tokens, GPU-hours and human maintenance costs are not disclosed in reviewed sources. |
 | [Flash-MoE](cases.md#flash-moe) | Owns model inference, routing, I/O and Metal execution; this is a narrow research prototype rather than a generic loader. | The README reports a 24-hour human–AI prototype build; total lifecycle expenditure is not disclosed. |
 | [DwarfStar](cases.md#dwarfstar) | Owns a narrow inference path plus CLI/server integration; it deliberately does not accept arbitrary GGUF models. | Total construction time, token usage and engineering expenditure are not disclosed in reviewed sources. |
 | [Strata](cases.md#strata) | Integrates inference, memory policy and local APIs around one model family and qualified quantized layouts. | Development time, token expenditure and controlled construction-cost comparisons are not disclosed. |
+| [NInfer](cases.md#ninfer) | Native operators, model programs, state/KV management, scheduling and CLI/HTTP serving form one execution stack. | Development effort and lifecycle costs are not disclosed; inference throughput does not establish construction economics. |
 | [Iris](cases.md#iris) | Implements text encoding, diffusion-transformer execution and image decoding for selected FLUX and Z-Image variants. | Construction time, AI-token spending and maintenance economics are not disclosed in reviewed sources. |
 | [TensorFold](cases.md#tensorfold) | Owns loading, tokenization, serving and execution for admitted combinations; experimental Living Weights is a separate model-changing feature. | Development time, token/GPU expenditure and long-term engineering costs are not disclosed. |
 | [Halogen Flash](cases.md#halogen-flash) | Public material exposes deployment and behavior; the core engine and complete tensor-level quantization choices are not publicly inspectable. | Development time, token usage and engineering costs are not disclosed in reviewed sources. |
@@ -143,6 +144,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [MFLUX](catalog.md#mflux) · adjacent | system / runtime / image | configuration-dependent, reduced precision |
 | [Mirage Persistent Kernel](catalog.md#mirage) · core | construction / compiler / text | layout / scheduling |
 | [MLC LLM](catalog.md#mlc-llm) · adjacent | construction / runtime / text | layout / scheduling |
+| [NInfer](catalog.md#ninfer) · core | system / runtime / text, multimodal | configuration-dependent, reduced precision, target-verified proposals |
 | [NVIDIA TensorRT](catalog.md#tensorrt) · foundation · **closed core** | support / compiler / text, image, general | layout / scheduling |
 | [OneDiff](catalog.md#onediff) · adjacent | construction / compiler / image, video | layout / scheduling |
 | [ONNX Runtime GenAI](catalog.md#onnxruntime-genai) · foundation | support / runtime / text, audio, multimodal | layout / scheduling |

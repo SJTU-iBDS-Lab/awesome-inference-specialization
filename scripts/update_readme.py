@@ -53,7 +53,9 @@ def render_overview(rows: list[dict[str, str]], chinese: bool = False) -> str:
     cases = {c['id']: c for c in load_cases()}
     key = 'title_cn' if chinese else 'title'
     summary_key = 'summary_cn' if chinese else 'summary'
-    lines = ['先看构建过程与产出系统，再比较复用边界和证据缺口。以下分组只是阅读顺序；AI 参与不代表效果更好，未披露也不代表纯人工实现。' if chinese else
+    inventory = (f"**[完整目录：{len(rows)} 个项目](docs/systems.md) · [精选分析：{len(cases)} 个案例](docs/cases.md)**" if chinese else
+                 f"**[Full directory: {len(rows)} projects](docs/systems.md) · [Selected analyses: {len(cases)} cases](docs/cases.md)**")
+    lines = [inventory, '', '先看构建过程与产出系统，再比较复用边界和证据缺口。以下分组只是阅读顺序；AI 参与不代表效果更好，未披露也不代表纯人工实现。' if chinese else
              'Follow the construction process to its resulting system, then examine reuse boundaries and missing evidence. These groups guide reading; AI involvement does not imply better results, and missing disclosure does not imply human-only implementation.', '']
     for group in SCHEMA['case_groups']:
         lines += [f"### {group[key]}", '', '| 案例 | 为什么研究它 |' if chinese else '| Case | Why study it? |', '| --- | --- |']
