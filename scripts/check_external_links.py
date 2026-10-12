@@ -31,6 +31,11 @@ def extract_urls(text: str) -> list[str]:
     urls = []
     for raw in re.findall(r'https?://[^\s<>"\'`]+', text, flags=re.I):
         raw = unescape(raw).rstrip('.,;')
+        # Emphasis can surround the entire Markdown link: **[name](url)**.
+        for marker in ('**', '__', '~~', '*', '_'):
+            if raw.endswith(')' + marker):
+                raw = raw[:-len(marker)]
+                break
         # Remove Markdown delimiters, preserving balanced parentheses in URLs.
         while raw and raw[-1] in ')]}':
             opening = {')': '(', ']': '[', '}': '{'}[raw[-1]]

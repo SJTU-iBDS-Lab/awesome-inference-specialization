@@ -13,6 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CSV_PATH = ROOT / 'catalog' / 'projects.csv'
 CASES_PATH = ROOT / 'catalog' / 'cases.json'
 SHOWCASE_PATH = ROOT / 'catalog' / 'showcase.json'
+HOMEPAGE_CN_PATH = ROOT / 'catalog' / 'homepage_cn.json'
 SCHEMA = json.loads((ROOT / 'catalog' / 'schema.json').read_text(encoding='utf-8'))
 FAMILIES = SCHEMA['families']
 START = '<!-- CATALOG-START -->'
@@ -53,6 +54,10 @@ def load_showcase(path: Path = SHOWCASE_PATH) -> list[dict[str, str]]:
     return json.loads(path.read_text(encoding='utf-8'))
 
 
+def load_homepage_cn(path: Path = HOMEPAGE_CN_PATH) -> dict[str, str]:
+    return json.loads(path.read_text(encoding='utf-8'))
+
+
 def items(row: dict[str, str], field: str) -> list[str]:
     return row[field].split(';')
 
@@ -65,32 +70,117 @@ def project_links(ids: list[str], by_id: dict[str, dict[str, str]], prefix: str 
     return ', '.join(f"[{md_cell(by_id[id]['project'])}]({prefix}catalog.md#{id})" for id in ids)
 
 
+HOMEPAGE_VALIDATION = [
+    ('numerical', 'Operator and subgraph numerics', '算子与子图数值',
+     'Compare explicit shapes, layouts, dtypes and tolerances with a reference; inspect mutation and evaluator integrity. Passing local tests does not validate a whole model.',
+     '对照参考实现，明确形状、布局、数据类型与容差，并检查输入改写和评测完整性。局部通过不等于整模型通过。', [
+         ('kernelbench', 'KernelBench', 'Reference evaluation plus adversarial checks for cached answers, input mutation and alternate CUDA streams; defenses are evolving.', '参考评测及针对缓存答案、输入改写和替代 CUDA 流的对抗检查；防护仍在演进。'),
+         ('fastkernels', 'FastKernels', 'Checks replacement at kernel, fused-operation, layer/block and full-pipeline levels; report which integration level actually ran.', '从内核、融合算子、层／块到完整流水线检查替换结果；必须说明实际检查了哪一层。'),
+         ('atrex-bench', 'Atrex-Bench', 'Checks output structure, numerical differences, declared mutation and side effects; coverage depends on generated inputs, shapes and tolerances.', '检查输出结构、数值差异、声明的输入改写与副作用；覆盖受输入生成器、形状及容差限制。')]),
+    ('model-state', 'Composed model and persistent state', '组合模型与持久状态',
+     'Recheck the assembled forward path, then separately cover prefill/decode, cache ownership, resets, batching and repeated state transitions.',
+     '重新检查组合后的前向程序，再分别覆盖 prefill/decode、缓存归属、重置、批处理和重复状态转换。', [
+         ('kernelagent', 'KernelAgent composition', 'Requests a reference self-test and can execute the candidate with --verify; verification is optional, and finite forward tests do not establish stateful service correctness.', '请求参考自测，并可通过 --verify 执行候选；验证是可选项，有限前向测试不证明有状态服务正确。')]),
+    ('quality', 'Generated-output quality', '生成输出质量',
+     'Evaluate the admitted approximation under a stated reference and threshold. Perceptual similarity, text accuracy and task success are different contracts.',
+     '针对允许的近似，规定参考配置和验收阈值。感知相似、文本准确率与任务成功是不同契约。', [
+         ('sol-engine', 'Sol-Engine LPIPS and visual review', 'Compares sampled baseline/candidate frames and records aggregate/per-frame distances. Unequal video lengths may compare only the common prefix; unavailable scoring is not a pass, and temporal consistency is not fully covered.', '比较采样的基线／候选帧并记录总体与逐帧距离。帧数不同时可能只比较共同前缀；评分不可用不算通过，也不能完整覆盖时间一致性。')]),
+    ('service', 'Service and integration behavior', '服务与集成行为',
+     'Check loading, readiness, requests, responses, failures and whether the intended candidate executed. A working API does not establish reference parity or concurrency safety.',
+     '检查加载、就绪、请求、响应、失败路径及预期候选是否真正执行。API 可用不证明参考一致性或并发安全。', [
+         ('metainfer', 'MetaInfer inference-framework oracle', 'Starts serve.sh, waits for readiness and judges configured prompts through an LLM or heuristic fallback; hard checks determine acceptance. This is functional feedback, not internal-tensor equivalence.', '启动 serve.sh、等待就绪，以 LLM 或启发式回退判断配置中的提示词，硬检查决定验收。这是功能反馈，不是内部张量等价检查。')]),
+]
+
+
+def render_homepage_catalog(rows: list[dict[str, str]], chinese: bool = False) -> str:
+    notes_cn = load_homepage_cn()
+    key = 'title_cn' if chinese else 'title'
+    domains = {id: cn if chinese else en for id, en, cn in DOMAINS}
+    by_id = {r['id']: r for r in rows}
+    lines = [f'本页完整列出 **{len(rows)} 个项目**，按主要用途分类，每个项目只计一次。模型领域直接标在条目中；验证方案按方法展开，内嵌检查不另计仓库。' if chinese else
+             f'All **{len(rows)} projects** are listed below, once each under their primary role. Model domains appear on every entry. Validation methods are expanded separately; embedded checks do not add repository counts.', '',
+             '## 目录' if chinese else '## Contents', '']
+    for role in SCHEMA['roles']:
+        count = sum(r['catalog_role'] == role['id'] for r in rows)
+        suffix = f' ({count})' if role['id'] != 'validation' else ('（4 类契约，6 个方法入口）' if chinese else ' (4 contracts, 6 method entries)')
+        lines.append(f"- [{role[key]}](#homepage-{role['id']}){suffix}")
+        if role['id'] in ('system', 'construction'):
+            for family in FAMILIES:
+                if any(r['catalog_role'] == role['id'] and r['family'] == family['id'] for r in rows):
+                    lines.append(f"  - [{family[key]}](#homepage-{role['id']}-{family['id']})")
+        elif role['id'] == 'support':
+            for group in SCHEMA['support_groups']:
+                lines.append(f"  - [{group[key]}](#homepage-support-{group['id']})")
+        elif role['id'] == 'validation':
+            for id, en, cn, *_ in HOMEPAGE_VALIDATION:
+                lines.append(f"  - [{cn if chinese else en}](#homepage-validation-{id})")
+    lines += ['- [精选阅读与对照](#featured-reading)' if chinese else '- [Selected reading and comparison](#featured-reading)', '']
+
+    def project_entry(row):
+        description = notes_cn[row['id']] if chinese else row['mechanism']
+        domain_text = ' / '.join(domains[d] for d in items(row, 'domains'))
+        detail = '范围、来源与限制' if chinese else 'Scope, sources and limits'
+        return f"- <a id=\"project-{row['id']}\"></a>**[{md_cell(row['project'])}]({row['url']})** — {md_cell(description)} **[{domain_text}]** [{detail}](docs/catalog.md#{row['id']})"
+
+    for role in SCHEMA['roles']:
+        members = [r for r in rows if r['catalog_role'] == role['id']]
+        lines += [f'<a id="homepage-{role["id"]}"></a>', '', f"## {role[key]}", '',
+                  role['description_cn' if chinese else 'description'], '']
+        if role['id'] in ('system', 'construction'):
+            lines += [f"[{'完整角色与证据索引' if chinese else 'Role and evidence index'}](docs/systems.md#{role['id']})", '']
+            for family in FAMILIES:
+                group_members = sorted((r for r in members if r['family'] == family['id']), key=lambda r: r['project'].lower())
+                if not group_members:
+                    continue
+                lines += [f'<a id="homepage-{role["id"]}-{family["id"]}"></a>', '',
+                          f"### {family[key]} ({len(group_members)})", '', family['description_cn' if chinese else 'description'], '']
+                lines += [project_entry(r) for r in group_members] + ['']
+        elif role['id'] == 'validation':
+            lines += ['以下方法已做来源检查，未在本仓库执行。检查必须对应实际改变；数值、组合状态、生成质量与服务行为不能互相替代。' if chinese else
+                      'These methods were source-inspected, not executed here. Match checks to the change: numerical behavior, composed state, output quality and service behavior do not substitute for one another.', '']
+            for id, en, cn, description, description_cn, methods in HOMEPAGE_VALIDATION:
+                lines += [f'<a id="homepage-validation-{id}"></a>', '', f"### {cn if chinese else en}", '',
+                          description_cn if chinese else description, '']
+                for project_id, label, note, note_cn in methods:
+                    lines.append(f"- **[{label}](#project-{project_id})** — {note_cn if chinese else note}")
+                lines += ['', f"[{'实现证据与覆盖说明' if chinese else 'Implementation evidence and coverage'}](docs/validation.md#{id})", '']
+            lines += ['验证开销需包括编译、参考运行、设备时间、判定器调用、人工复核和失败尝试。自动化本身不证明低成本；少样本或松容差会改变验收契约。' if chinese else
+                      'Checking cost includes compilation, reference runs, device time, judge calls, human review and failures. Automation alone does not establish efficiency; fewer samples or looser tolerances change the acceptance contract.', '']
+            lines += [project_entry(r) for r in sorted(members, key=lambda r: r['project'].lower())] + ['']
+        elif role['id'] == 'benchmark':
+            questions = {item['id']: item for item in SCHEMA['benchmark_entries']}
+            for r in sorted(members, key=lambda r: r['project'].lower()):
+                lines += [project_entry(r), f"  - **{'比较问题' if chinese else 'Comparison question'}:** {questions[r['id']]['question_cn' if chinese else 'question']}"]
+            lines += ['', '评测必须匹配模型／检查点、设备、精度、输入分布、状态、并发与质量标准。通过算子任务不等于完成整个引擎验收。' if chinese else
+                      'Match model/checkpoint, device, precision, input distribution, state, concurrency and quality criteria. Passing operator tasks does not validate a complete engine.', '',
+                      '[基准范围与比较协议](docs/benchmarks.md)' if chinese else '[Benchmark scope and comparison protocols](docs/benchmarks.md)', '']
+        else:
+            for group in SCHEMA['support_groups']:
+                lines += [f'<a id="homepage-support-{group["id"]}"></a>', '', f"### {group[key]}", '',
+                          group['description_cn' if chinese else 'description'], '']
+                lines += [project_entry(by_id[id]) for id in group['examples']] + ['']
+                lines += [f"[{'来源与用途' if chinese else 'Sources and use'}](docs/resources.md#{group['id']})", '']
+            lines += ['**内嵌构建知识：**Atrex GPU Wiki 将优化轨迹和 Agent 会话整理为候选知识，经来源与范围检查后供后续尝试检索；它属于 Atrex 工作流，不另计项目。公开流程不证明总开发成本下降。[具体过程](docs/resources.md#embedded-knowledge)。' if chinese else
+                      '**Embedded construction knowledge:** Atrex GPU Wiki turns optimization traces and agent sessions into candidate knowledge, checks provenance/scope and retrieves it in later attempts. It remains part of Atrex, not a second project; the workflow alone does not establish reduced total development cost. [Process details](docs/resources.md#embedded-knowledge).', '']
+    return '\n'.join(lines)
+
+
 def render_overview(rows: list[dict[str, str]], chinese: bool = False) -> str:
     cases = {c['id']: c for c in load_cases()}
     showcase = load_showcase()
-    count = len(showcase)
     key = 'why_cn' if chinese else 'why'
-    lines = [f'### {count} 个起点：读完能学到什么' if chinese else f'### {count} starting points: what you can learn', '',
-             '按执行控制、复用方式、构建路径和验证边界选例，覆盖引擎、编译与 Agent 工作流。这是阅读路线，不按星标、速度或成熟度排名。' if chinese else
-             'Chosen to contrast execution control, reuse, construction routes and validation across engines, compilation and agent workflows. This is a reading route, not a star, speed or maturity ranking.', '',
+    lines = [render_homepage_catalog(rows, chinese), '<a id="featured-reading"></a>', '',
+             '## 精选阅读与对照' if chinese else '## Selected reading and comparison', '',
+             '以下入口补充上方完整清单，按执行控制、复用、构建与验证的阅读价值选例，不按星标、速度或成熟度排名。' if chinese else
+             'These reading choices supplement the complete list above. They contrast execution control, reuse, construction and validation; they are not a star, speed or maturity ranking.', '',
              '| 案例 | 阅读收益 |' if chinese else '| Case | Read it to understand |', '| --- | --- |']
     for item in showcase:
         c = cases[item['case_id']]
         lines.append(f"| [{md_cell(c['title'].split(':', 1)[0])}](docs/cases.md#{c['id']}) | {md_cell(item[key])} |")
-    lines += ['', f'[{count} 案例速查：模型／设备、产物、复用与验证](docs/representative-comparison.md#chinese) · [完整对照](docs/comparison.md) · [全部案例](docs/cases.md)' if chinese else
-              f'[{count}-case matrix: model/device, artifact, reuse and checks](docs/representative-comparison.md) · [Full comparison](docs/comparison.md) · [All cases](docs/cases.md)', '',
-              '### 按任务继续找' if chinese else '### Continue by task', '',
-              '- **找引擎：**[全部引擎](docs/systems.md#system)，再按下方模型领域筛选。' if chinese else
-              '- **Find an engine:** open [all engines](docs/systems.md#system), then use the model-domain links below.',
-              '- **构建或优化：**[工作流索引](docs/systems.md#construction)区分内核、模型前向程序和完整服务；[内嵌构建知识](docs/resources.md#embedded-knowledge)连接优化经验与后续尝试。' if chinese else
-              '- **Build or optimize:** the [workflow index](docs/systems.md#construction) distinguishes kernels, model forward programs and full services; [embedded knowledge](docs/resources.md#embedded-knowledge) connects optimization experience to later attempts.',
-              '- **验证结果：**[数值](docs/validation.md#numerical)、[模型／状态](docs/validation.md#model-state)、[生成质量](docs/validation.md#quality)、[服务行为](docs/validation.md#service)是不同契约；[基准](docs/benchmarks.md)提供任务和比较协议。' if chinese else
-              '- **Validate results:** [numerics](docs/validation.md#numerical), [model/state](docs/validation.md#model-state), [output quality](docs/validation.md#quality) and [service behavior](docs/validation.md#service) are different contracts; [benchmarks](docs/benchmarks.md) supply tasks and comparison protocols.',
-              '- **找配套工具：**[性能诊断](docs/resources.md#diagnostics)、[构建知识](docs/resources.md#knowledge)和[复用组件](docs/resources.md#components)。' if chinese else
-              '- **Find supporting tools:** [diagnostics](docs/resources.md#diagnostics), [construction knowledge](docs/resources.md#knowledge) and [reusable components](docs/resources.md#components).', '',
-              domain_links(chinese), '',
-              f'完整资料：{len(rows)} 个项目、{len(cases)} 个构建案例。按[执行机制](docs/catalog.md)查找，或读[跨案例结论](docs/synthesis.md)。' if chinese else
-              f'Full collection: {len(rows)} projects, {len(cases)} construction cases. Browse [execution mechanisms](docs/catalog.md) or read the [cross-case synthesis](docs/synthesis.md).']
+    lines += ['', f'[{len(showcase)} 案例速查：模型／设备、产物、复用与验证](docs/representative-comparison.md#chinese) · [完整对照](docs/comparison.md) · [全部案例](docs/cases.md) · [跨案例综合](docs/synthesis.md)' if chinese else
+              f'[{len(showcase)}-case matrix: model/device, artifact, reuse and checks](docs/representative-comparison.md) · [Full comparison](docs/comparison.md) · [All cases](docs/cases.md) · [Cross-case synthesis](docs/synthesis.md)', '',
+              '模型领域已在上方各条目标注；需要跨类别聚合时，可使用补充索引：' if chinese else
+              'Model domains are visible on every project above. Supplementary cross-category domain indices:', '', domain_links(chinese)]
     return '\n'.join(lines)
 
 

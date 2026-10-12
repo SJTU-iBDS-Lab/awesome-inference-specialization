@@ -7,7 +7,7 @@ import re
 import sys
 from urllib.parse import urlparse
 
-from update_readme import CSV_PATH, FAMILIES, SCHEMA, CASE_QUESTIONS, load_rows, load_cases, load_showcase
+from update_readme import CSV_PATH, FAMILIES, SCHEMA, CASE_QUESTIONS, load_rows, load_cases, load_showcase, load_homepage_cn
 
 FIELDS = set('id project survey_role relevance_note catalog_role family domains artifact_type constraints mechanisms target mechanism semantic_effect source_visibility ai_involvement url evidence_urls caveat checked_on discovery'.split())
 TAG = re.compile(r'[a-z0-9][a-z0-9-]*\Z')
@@ -182,9 +182,20 @@ def validate_showcase(selections: list[dict], cases: list[dict], rows: list[dict
     return errors
 
 
+def validate_homepage_cn(notes: dict[str, str], rows: list[dict[str, str]]) -> list[str]:
+    if not isinstance(notes, dict):
+        return ['Chinese homepage descriptions must be an object keyed by project ID']
+    errors = []
+    if set(notes) != {r['id'] for r in rows}:
+        errors.append('Chinese homepage descriptions must cover every project exactly once')
+    if any(not isinstance(note, str) or not note.strip() for note in notes.values()):
+        errors.append('Chinese homepage descriptions must be nonempty strings')
+    return errors
+
+
 def main() -> int:
     rows, cases = load_rows(), load_cases()
-    errors = validate(rows) + validate_cases(cases, rows) + validate_showcase(load_showcase(), cases, rows)
+    errors = validate(rows) + validate_cases(cases, rows) + validate_showcase(load_showcase(), cases, rows) + validate_homepage_cn(load_homepage_cn(), rows)
     if errors:
         print('\n'.join('ERROR ' + e for e in errors), file=sys.stderr)
         return 1

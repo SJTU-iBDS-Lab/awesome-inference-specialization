@@ -38,6 +38,13 @@ class ExternalLinkTests(unittest.TestCase):
             'https://example.test/ref', 'https://example.test/auto',
             'https://example.test/?a=1&b=2'])
 
+    def test_emphasized_markdown_links_drop_formatting_not_url_characters(self):
+        self.assertEqual(links.extract_urls(
+            '**[bold](https://example.test/a)** __[bold](https://example.test/b)__ '
+            '*[italic](https://example.test/c)* [plain](https://example.test/trailing_)'),
+            ['https://example.test/a', 'https://example.test/b',
+             'https://example.test/c', 'https://example.test/trailing_'])
+
     def test_deduplicate_across_files_before_cap(self):
         with tempfile.TemporaryDirectory() as directory:
             a, b = Path(directory) / 'a.md', Path(directory) / 'b.md'

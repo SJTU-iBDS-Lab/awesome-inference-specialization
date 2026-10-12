@@ -66,6 +66,14 @@ The homepage foregrounds engines, construction and validation, with benchmarks s
 
 Use `catalog/schema.json` for controlled facets and navigation configuration, `catalog/projects.csv` for project records, and `catalog/cases.json` for selected-case narratives. Keep both homepages and original diagrams consistent with classification changes. Construction routes can overlap; distinguish generated kernels, composed model programs and complete servers. The homepage should foreground cases and research questions rather than entry totals.
 
+## Keep the full Awesome listing on the homepages
+
+Both homepages must list **every project exactly once**, always expanded, with its canonical upstream link and an evidence-detail link. Do not replace the complete list with featured selections or links to separate directory pages. Group by primary role and mechanism; supporting resources use their existing purpose groups. Display model-domain labels on each entry.
+
+English descriptions come from `projects.csv` (`mechanism`); `catalog/homepage_cn.json` supplies a source-grounded Chinese description for every project ID. Update both when a record changes. Translations may explain the inspected mechanism or scope, but must not strengthen evidence, imply AI authorship, or invent support or performance claims.
+
+The homepage also expands validation contracts and named methods from `docs/validation.md`, construction output boundaries, benchmark comparison questions, and the purpose of each support category. Keep the method summaries in `HOMEPAGE_VALIDATION` in `scripts/update_readme.py` aligned with the source-backed validation guide. Embedded methods link to their containing project without adding duplicate repository entries. Featured reading and deeper documents are supplements to this full homepage content.
+
 ## Maintain the reading selections and updates
 
 `catalog/showcase.json` selects 10–15 existing cases (currently 12) for both homepages and the compact comparison. Each entry must identify a linked project and concise bilingual reading benefit, reviewed model/device scope, artifact/control boundary, retained components and validation limit. These summaries must stay within the existing case/project evidence; when a source record does not list supported models, say so instead of inferring support. Correct the underlying project/case record first if new evidence changes a claim, then update its showcase summary. Selection is for contrasting useful lessons, not stars, speed or maturity.

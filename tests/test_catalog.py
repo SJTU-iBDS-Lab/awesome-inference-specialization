@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import update_readme as render
-from validate_catalog import validate, validate_cases, validate_showcase
+from validate_catalog import validate, validate_cases, validate_showcase, validate_homepage_cn
 
 
 def anchors(text):
@@ -183,6 +183,47 @@ class CatalogTests(unittest.TestCase):
         for case in cases.values():
             self.assertIn(f"(cases.md#{case['id']})", full)
             self.assertIn(render.md_cell(case['cost']), full)
+
+    def test_homepages_list_every_project_once_with_direct_upstream_links(self):
+        for chinese in (False, True):
+            text = render.render_overview(self.rows, chinese)
+            ids = re.findall(r'<a id="project-([a-z0-9-]+)"></a>', text)
+            self.assertCountEqual(ids, [r['id'] for r in self.rows])
+            self.assertEqual(len(ids), len(set(ids)))
+            external = re.findall(r'\]\((https://[^)]+)\)', text)
+            for row in self.rows:
+                self.assertEqual(external.count(row['url']), 1, row['id'])
+                if not chinese:
+                    self.assertIn(render.md_cell(row['mechanism']), text)
+                self.assertIn(f"(docs/catalog.md#{row['id']})", text)
+            # Complete entries are ordinary expanded Markdown, never hidden panels.
+            self.assertNotIn('<details>', text)
+            self.assertLess(text.index('project-'), text.index('id="featured-reading"'))
+
+    def test_homepage_expands_every_functional_section_and_validation_contract(self):
+        for chinese in (False, True):
+            text = render.render_overview(self.rows, chinese)
+            for role in render.SCHEMA['roles']:
+                self.assertIn(f'(#homepage-{role["id"]})', text)
+                self.assertIn(f'<a id="homepage-{role["id"]}"></a>', text)
+            for id, en, cn, explanation, explanation_cn, methods in render.HOMEPAGE_VALIDATION:
+                self.assertIn(f'id="homepage-validation-{id}"', text)
+                self.assertIn(explanation_cn if chinese else explanation, text)
+                for project_id, label, note, note_cn in methods:
+                    self.assertIn(f'[{label}](#project-{project_id})', text)
+                    self.assertIn(note_cn if chinese else note, text)
+            self.assertNotIn('### Continue by task', text)
+
+    def test_chinese_homepage_descriptions_cover_all_records(self):
+        notes = render.load_homepage_cn()
+        self.assertEqual(validate_homepage_cn(notes, self.rows), [])
+        self.assertTrue(validate_homepage_cn({}, self.rows))
+        broken = dict(notes)
+        broken[self.rows[0]['id']] = ''
+        self.assertTrue(validate_homepage_cn(broken, self.rows))
+        text = render.render_overview(self.rows, True)
+        for note in notes.values():
+            self.assertIn(render.md_cell(note), text)
 
     def test_local_links_and_anchors(self):
         paths = [*ROOT.glob('*.md'), *ROOT.glob('docs/*.md')]

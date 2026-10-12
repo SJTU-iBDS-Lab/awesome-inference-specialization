@@ -2,9 +2,21 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Quick comparison](representative-comparison.md) · [Contributing](../CONTRIBUTING.md)
 
-## 2026-10-12 — Reader-first navigation / 优先解决阅读入口
+## 2026-10-12 — Complete listings on both homepages / 中英文首页完整展开
 
-- Shorter English and Chinese homepages now explain what to read for engines, construction workflows and validation.
+- Both homepages now contain all **121 projects**, always expanded with direct upstream links, concise explanations and model-domain labels. The full list is grouped into engines, construction, benchmarks and support, with mechanism-oriented subcategories.
+- Validation is expanded in place: four contracts and six named method entries explain what is checked and what a pass cannot establish. Methods embedded in a project do not add duplicate repository counts.
+- Construction outputs, benchmark comparison questions, and the uses of diagnostics, knowledge and reusable components are explained on the homepage. The table of contents jumps to these local sections.
+- The 12-case matrix and synthesis remain useful supplements below the complete list. The homepage is no longer a short directory of links to other pages.
+- Regression tests enforce complete, unique project coverage and direct upstream links on both language versions.
+
+中英文首页现按类别完整展开 **121 个项目**，每项附上游链接、说明和模型领域。引擎、构建、验证、评测、配套资源均在首页讲清楚；四类验证契约和六个具名方法也直接展开，内嵌方法不重复计数。精选案例与对照只作补充，目录链接直接跳转本页相应部分。测试保证两种语言完整且不重复地展示所有项目。
+
+This corrects the earlier overly compressed homepage layout; source-review dates and the underlying project/case evidence are unchanged. / 本次修正此前过度压缩的首页布局，来源检查日期及底层项目、案例证据不变。
+
+## Earlier on 2026-10-12 — Comparison and synthesis / 当日较早更新：对照与综合
+
+- Added curated reading choices; the shortened-homepage layout was subsequently replaced by the complete listings described above.
 - The generated [12-case matrix](representative-comparison.md) exposes reviewed model/device scope, execution ownership, retained components, validation limits and direct upstream sources. [Selection reasons](representative-comparison.md#why-these-cases--为什么选这些案例) explain the reading benefit rather than rank projects.
 - The [cross-case synthesis](synthesis.md) connects execution control, reuse, construction evidence, validation and requalification.
 - All **121 project records and 63 construction cases** remain available. The [full comparison](comparison.md), [case evidence](cases.md), [taxonomy](taxonomy.md) and [research agenda](research-agenda.md) remain the deeper reference.
