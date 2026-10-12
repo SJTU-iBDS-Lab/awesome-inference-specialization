@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="772" viewBox="0 0 1000 772" role="img" aria-labelledby="title desc">
+<title id="title">Inference specialization landscape</title><desc id="desc">Seven complementary execution choices: memory, precision, selection, reuse, decoding, serving and execution. Construction and verification form a supporting tool layer. Domains and artifact types are independent labels.</desc>
+<style>text{font-family:Inter,Segoe UI,Arial,sans-serif;fill:#173449}.muted{fill:#5d6d77}.teal{fill:#147b76}.orange{fill:#b9673f}.eyebrow{font-size:11px;font-weight:700;letter-spacing:1.5px}.small{font-size:13px}.body{font-size:14px}.title{font-size:21px;font-weight:650}.line{fill:none;stroke:#147b76;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}</style>
+<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L7,3.5 L0,7" fill="none" stroke="#147b76" stroke-width="1.5"/></marker><marker id="arrowOrange" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L7,3.5 L0,7" fill="none" stroke="#b9673f" stroke-width="1.5"/></marker></defs>
+<rect width="1000" height="772" rx="20" fill="#f7f5ef"/>
+<text x="38" y="40" font-size="14" class="eyebrow teal">WHERE SPECIALIZATION CHANGES EXECUTION</text>
+<text x="38" y="83" font-size="33" font-weight="650">Inference specialization</text>
+<text x="38" y="112" font-size="16" class="muted">Seven execution choices, supported by tools that build and validate them.</text>
+<g id="memory">
+<rect x="38" y="145" width="220" height="165" rx="13" fill="#fffefa" stroke="#d8dfda"/>
+<g transform="translate(56 165)" class="line">
+<rect x="0" y="0" width="25" height="5" rx="2"/>
+<rect x="0" y="7" width="25" height="5" rx="2"/>
+<rect x="0" y="14" width="25" height="5" rx="2"/>
+<path d="M31,2 V18 M28,15 L31,18 L34,15"/>
+</g>
+<text x="56" y="217" font-size="21" font-weight="650">Memory</text>
+<text x="56" y="245" font-size="13.5" font-weight="550">Where does state live?</text>
+<text x="56" y="271" font-size="12.7" class="muted">Residency · offload</text>
+<text x="56" y="290" font-size="12.7" class="muted">Prefetch · memory tiers</text>
+</g>
+<g id="precision">
+<rect x="272" y="145" width="220" height="165" rx="13" fill="#fffefa" stroke="#d8dfda"/>
+<g transform="translate(290 165)" class="line">
+<rect x="0" y="0" width="4" height="20" rx="1"/>
+<rect x="8" y="5" width="4" height="15" rx="1"/>
+<rect x="16" y="10" width="4" height="10" rx="1"/>
+<rect x="24" y="15" width="4" height="5" rx="1"/>
+</g>
+<text x="290" y="217" font-size="21" font-weight="650">Precision</text>
+<text x="290" y="245" font-size="13.5" font-weight="550">How is state represented?</text>
+<text x="290" y="271" font-size="12.7" class="muted">Quantization · mixed precision</text>
+<text x="290" y="290" font-size="12.7" class="muted">Format-aware kernels</text>
+</g>
+<g id="selection">
+<rect x="506" y="145" width="220" height="165" rx="13" fill="#fffefa" stroke="#d8dfda"/>
+<g transform="translate(524 165)" class="line">
+<rect x="0" y="0" width="5" height="5" rx="1" stroke="#147b76" fill="#147b76"/>
+<rect x="9" y="0" width="5" height="5" rx="1" stroke="#c9d4ce" fill="#c9d4ce"/>
+<rect x="18" y="0" width="5" height="5" rx="1" stroke="#c9d4ce" fill="#c9d4ce"/>
+<rect x="27" y="0" width="5" height="5" rx="1" stroke="#147b76" fill="#147b76"/>
+<rect x="0" y="9" width="5" height="5" rx="1" stroke="#c9d4ce" fill="#c9d4ce"/>
+<rect x="9" y="9" width="5" height="5" rx="1" stroke="#147b76" fill="#147b76"/>
+<rect x="18" y="9" width="5" height="5" rx="1" stroke="#c9d4ce" fill="#c9d4ce"/>
+<rect x="27" y="9" width="5" height="5" rx="1" stroke="#c9d4ce" fill="#c9d4ce"/>
+<rect x="0" y="18" width="5" height="5" rx="1" stroke="#c9d4ce" fill="#c9d4ce"/>
+<rect x="9" y="18" width="5" height="5" rx="1" stroke="#c9d4ce" fill="#c9d4ce"/>
+<rect x="18" y="18" width="5" height="5" rx="1" stroke="#147b76" fill="#147b76"/>
+<rect x="27" y="18" width="5" height="5" rx="1" stroke="#c9d4ce" fill="#c9d4ce"/>
+</g>
+<text x="524" y="217" font-size="21" font-weight="650">Selection</text>
+<text x="524" y="245" font-size="13.5" font-weight="550">What work is retained?</text>
+<text x="524" y="271" font-size="12.7" class="muted">Sparse attention · tokens</text>
+<text x="524" y="290" font-size="12.7" class="muted">Expert selection · pruning</text>
+</g>
+<g id="reuse">
+<rect x="740" y="145" width="220" height="165" rx="13" fill="#fffefa" stroke="#d8dfda"/>
+<g transform="translate(758 165)" class="line">
+<path d="M27,7 A11,11 0 1,0 1,17 M27,7 L20,6 M27,7 L26,0 M2,17 L3,24 M2,17 L9,18"/>
+</g>
+<text x="758" y="217" font-size="21" font-weight="650">Reuse</text>
+<text x="758" y="245" font-size="13.5" font-weight="550">What can be reused?</text>
+<text x="758" y="271" font-size="12.7" class="muted">Prefixes · activations · features</text>
+<text x="758" y="290" font-size="12.7" class="muted">Gating · feature prediction</text>
+</g>
+<g id="decoding">
+<rect x="38" y="328" width="298" height="165" rx="13" fill="#fffefa" stroke="#d8dfda"/>
+<g transform="translate(56 348)" class="line">
+<path d="M1,13 H9 M9,13 L20,3 M9,13 L20,23 M22,3 H29 M22,23 H29 M23,13 L27,17 L34,9"/>
+</g>
+<text x="56" y="400" font-size="21" font-weight="650">Decoding</text>
+<text x="56" y="428" font-size="13.5" font-weight="550">How is output advanced?</text>
+<text x="56" y="454" font-size="12.7" class="muted">Draft-and-verify</text>
+<text x="56" y="473" font-size="12.7" class="muted">Blockwise generation</text>
+</g>
+<g id="serving">
+<rect x="350" y="328" width="298" height="165" rx="13" fill="#fffefa" stroke="#d8dfda"/>
+<g transform="translate(368 348)" class="line">
+<path d="M0,2 H12 M0,10 H12 M0,18 H12 M17,2 V18 M17,10 H31 M27,6 L31,10 L27,14"/>
+</g>
+<text x="368" y="400" font-size="21" font-weight="650">Serving</text>
+<text x="368" y="428" font-size="13.5" font-weight="550">Who runs work, and when?</text>
+<text x="368" y="454" font-size="12.7" class="muted">Parallelism · stage disaggregation</text>
+<text x="368" y="473" font-size="12.7" class="muted">Queue and state coordination</text>
+</g>
+<g id="execution">
+<rect x="662" y="328" width="298" height="165" rx="13" fill="#fffefa" stroke="#d8dfda"/>
+<g transform="translate(680 348)" class="line">
+<rect x="5" y="0" width="22" height="22" rx="4"/><path d="M0,5 H5 M0,16 H5 M27,5 H32 M27,16 H32 M11,7 L16,11 L11,15 M19,7 V15"/>
+</g>
+<text x="680" y="400" font-size="21" font-weight="650">Execution</text>
+<text x="680" y="428" font-size="13.5" font-weight="550">How does work run?</text>
+<text x="680" y="454" font-size="12.7" class="muted">Fusion · persistent kernels</text>
+<text x="680" y="473" font-size="12.7" class="muted">Native kernels · custom dataflow</text>
+</g>
+<rect x="38" y="515" width="922" height="102" rx="15" fill="#e9f2ed" stroke="#c7dad1"/>
+<g transform="translate(58 541)" class="line">
+<path d="M1,5 L7,11 L1,17 M11,18 H18 M24,6 L29,11 L37,2"/>
+</g>
+<text x="116" y="543" font-size="14" class="eyebrow teal">CONSTRUCTION</text>
+<text x="116" y="571" font-size="23" font-weight="600">Generate · compile · tune · verify</text>
+<text x="116" y="596" font-size="14" class="muted">Supporting tools build and test the execution choices above.</text>
+<path d="M925,554 V533 M919,539 L925,533 L931,539" fill="none" stroke="#147b76" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="38" y1="646" x2="960" y2="646" stroke="#d8dfda"/>
+<text x="38" y="672" font-size="14" class="eyebrow muted">CROSS-CUTTING LABELS</text>
+<text x="960" y="672" font-size="12" class="muted" text-anchor="end">One project can span multiple choices.</text>
+<text x="38" y="705" font-size="11" font-weight="700" class="muted">DOMAINS</text>
+<text x="165" y="705" font-size="13">Language</text>
+<text x="280" y="705" font-size="13">Image</text>
+<text x="365" y="705" font-size="13">Video</text>
+<text x="450" y="705" font-size="13">Multimodal</text>
+<text x="38" y="738" font-size="11" font-weight="700" class="muted">ARTIFACTS</text>
+<text x="165" y="738" font-size="13">Runtime</text>
+<text x="280" y="738" font-size="13">Backend / kernel</text>
+<text x="450" y="738" font-size="13">Compiler / optimizer</text>
+<text x="658" y="738" font-size="13">Generator / verification</text>
+</svg>

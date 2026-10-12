@@ -1,118 +1,56 @@
 # Awesome Inference Specialization
 
-**From general-purpose frameworks to model-, hardware-, and workload-specialized inference systems.**
+**A map of how inference systems specialize computation, memory and execution.**
 
-A curated, evidence-aware collection of **purpose-built inference runtimes**, **domain-specific execution systems**, and **tools that generate or optimize them**. Scope: LLMs, image generation, video generation, and adjacent compiler/runtime infrastructure.
+[中文](README_CN.md) · [All projects](docs/catalog.md) · [Compare](docs/comparison.md) · [Classification](docs/taxonomy.md) · [Survey notes](docs/survey-2026-10-12.md) · [Contribute](CONTRIBUTING.md)
 
-[Catalog](#project-catalog) · [Selection criteria](#what-belongs-here) · [Taxonomy](docs/taxonomy.md) · [Research agenda](docs/research-agenda.md) · [Contributing](CONTRIBUTING.md) · [中文](README_CN.md)
+![Eight mechanism families, from data placement to program construction](assets/landscape.svg)
 
-> **Research hypothesis, not an established conclusion:** As code generation and adaptation become cheaper, more deployment-specific inference systems may be economically viable. The generality once embedded in a runtime may increasingly move to the **tools that construct, validate, and evolve runtimes**. Whether this improves *total* cost or performance is an open empirical question.
+Start with the execution decision: **what is moved, represented, skipped, reused, generated, scheduled or compiled?** Text, image and video are cross-cutting tags. Each record identifies a concrete mechanism, its implementation role, direct sources and an important limitation.
 
-## Why another inference collection?
-
-This is **not** a directory of every LLM serving framework, an optimization-paper bibliography, or a ranking by peak tokens/s. We focus on **where specialization changes execution design**:
-
-- **Model-specific:** leverage a known MoE topology, attention pattern, generation algorithm, or precision format.
-- **Hardware/memory-specific:** design around a particular GPU, CPU–GPU combination, SSD, or memory budget.
-- **Workload-specific:** restructure prefill/decode, expert routing, block diffusion, streaming, concurrency, or communication.
-- **Construction-time specialization:** agent-generated code, compiler-generated execution graphs, or deployment-specific kernel/runtime builds.
-
-A project **does not need to be AI-written**, written from scratch, or limited to one model. Reusing ggml, PyTorch, Triton, FlashAttention, CUDA libraries, etc. is normal. What matters is an identifiable *execution-level design decision* tied to a constrained target.
-
-## What belongs here?
-
-**Core:** An implemented inference runtime or execution stack with substantive specialization, or a system that explicitly builds/optimizes such stacks. **Adjacent:** A specialized backend, compiler, deep runtime fork, or verification platform essential to understanding the phenomenon. **Watchlist:** Interesting but rapidly evolving projects whose exact implementation boundary needs follow-up.
-
-We generally **exclude from the core catalog**:
-
-- teaching/minimal replicas whose principal contribution is small code size;
-- API wrappers or model downloaders without meaningful control of execution;
-- single isolated kernels that do not define an execution subsystem;
-- generic serving engines listed solely because they support many models;
-- projects with only a performance headline and no inspectable design description.
-
-See [taxonomy](docs/taxonomy.md), [evidence policy](docs/evidence-policy.md), and [contribution guide](CONTRIBUTING.md). Inclusion **does not imply** production readiness, benchmark superiority, strict model equivalence, open-source licensing, or verified AI authorship.
-
-## Project catalog
-
-These entries are drawn from [`catalog/projects.csv`](catalog/projects.csv). Use `python scripts/update_readme.py` after changing the catalog; `--check` verifies synchronization. `public code` means code is visible, **not** that every artifact is fully open-source or independently audited. `AI disclosed` means a project explicitly states AI-assisted development; `agent-native` means agents are part of the documented method. A missing disclosure is marked `AI use unverified`, not `human-only`.
+## Explore by mechanism
 
 <!-- CATALOG-START -->
 
-### LLM execution runtimes
+**98 projects · 8 mechanism families · Last source review 2026-10-12**
 
-| Project | Target | Execution-level specialization | Source / AI | Limitations |
-| --- | --- | --- | --- | --- |
-| [DwarfStar](https://github.com/antirez/ds4) | Selected DeepSeek / GLM / Qwen models | Narrow native inference and serving paths; hardware-aware memory and KV handling | [public code](https://github.com/antirez/ds4#ai-full-disclosure) · AI disclosed | Authors explicitly disclose substantial AI coding assistance; not a generic GGUF runner. |
-| [ExLlamaV3](https://github.com/turboderp-org/exllamav3) | Quantized LLMs on consumer GPUs | EXL3 quantization and dedicated inference, KV, batching, and offload paths | [public code](https://github.com/turboderp-org/exllamav3) · AI use unverified | A precision/hardware-specialized engine, not a single-model runtime. |
-| [Flash-MoE](https://github.com/danveloper/flash-moe) | Large MoE on memory-limited Apple hardware | SSD-streamed experts and custom C/Metal execution pipeline | [public code](https://github.com/danveloper/flash-moe) · AI disclosed | Developer documents human–AI work; independently verify routing/model-equivalence claims. |
-| [Halogen Flash](https://github.com/peonist-ai/halogen-flash-server) | Qwen MoE on AMD Strix Halo | One model family and one GPU target, with custom execution kernels | [closed core](https://github.com/peonist-ai/halogen-flash-server/blob/main/AGENTS.md) · AI use unverified | Public repository contains deployment/docs, not engine source code. |
-| [Magnitude](https://github.com/magnitudedev/magnitude) | Local LLMs on user-owned hardware | Hardware profiling and on-device kernel compilation/tuning | [public code](https://github.com/magnitudedev/magnitude) · AI use unverified | Model coverage is not limited to a single family; optimization extent needs per-backend inspection. |
-| [Strata](https://github.com/Niko1221/Strata) | Qwen MoE on consumer hardware | Specialized expert residency, CPU–GPU overlap, and model-specific decoding | [public code](https://github.com/Niko1221/Strata) · AI use unverified | Some modes change computation or output; benchmark equivalence must be checked. |
+One primary home per project; modality, artifact type and mechanism tags remain independent. Construction tools support execution rather than being another runtime class.
 
-### Image and diffusion execution
-
-| Project | Target | Execution-level specialization | Source / AI | Limitations |
-| --- | --- | --- | --- | --- |
-| [Draw Things Community](https://github.com/drawthingsai/draw-things-community) | Image generation application/server stack | Independent public implementation of model, sampler, and execution components | [public code](https://github.com/drawthingsai/draw-things-community) · AI use unverified | Broader application execution stack rather than a narrowly model-specific runtime. |
-| [edge-dit.cpp](https://github.com/THU-MIG/edge-dit.cpp) | DiT image/video models on constrained devices | Native C/C++ DiT inference with VRAM-aware placement, precision, and offloading | [public code](https://github.com/THU-MIG/edge-dit.cpp) · AI use unverified | Reuses ggml and other third-party building blocks. |
-| [Iris](https://github.com/antirez/iris.c) | FLUX.2 Klein and Z-Image families | Dependency-light C image-generation pipeline including text, denoising, and VAE execution | [public code](https://github.com/antirez/iris.c) · AI use unverified | Supports selected image models; do not generalize to all diffusion architectures. |
-| [Nunchaku](https://github.com/nunchux-ai/nunchaku) | Low-bit diffusion models | Co-designed SVDQuant execution; fuses low-bit and low-rank paths | [public code](https://github.com/nunchux-ai/nunchaku) · AI use unverified | Quantized and BF16 models are not numerically identical; separate quality effects. |
-| [stable-diffusion.cpp](https://github.com/leejet/stable-diffusion.cpp) | Native image/video generation | ggml-backed C/C++ execution outside the standard PyTorch pipeline | [public code](https://github.com/leejet/stable-diffusion.cpp) · AI use unverified | A domain-specific native runtime with relatively broad model coverage. |
-
-### Video and diffusion-transformer execution
-
-| Project | Target | Execution-level specialization | Source / AI | Limitations |
-| --- | --- | --- | --- | --- |
-| [FastVideo](https://github.com/hao-ai-lab/FastVideo) | Accelerated video generation | Video-serving paths alongside sparsity and post-training methods | [public code](https://github.com/hao-ai-lab/FastVideo) · AI use unverified | Joint model/post-training and runtime improvements should be measured separately. |
-| [Inferix](https://github.com/alibaba-damo-academy/Inferix) | Block-diffusion/world simulation | Block-oriented generation state, KV handling, and VAE chunking/streaming | [public code](https://github.com/alibaba-damo-academy/Inferix) · AI use unverified | Distinct block-generation and VAE-chunk units; not a generic all-video serving engine. |
-| [LightX2V](https://github.com/ModelTC/LightX2V) | Video/image generation model families | Domain runtime spanning caching, quantization, offload, and multi-GPU execution | [public code](https://github.com/ModelTC/LightX2V) · AI use unverified | Broad domain-specific framework; distinguish runtime gains from model changes. |
-| [TurboDiffusion](https://github.com/thu-ml/TurboDiffusion) | Accelerated video diffusion | Combination of sparse attention, step distillation, and optimized execution | [public code](https://github.com/thu-ml/TurboDiffusion) · AI use unverified | Reported end-to-end gains combine model/algorithm and runtime effects. |
-| [xDiT](https://github.com/xdit-project/xDiT) | Parallel DiT inference | DiT-specific multi-device execution, including parallelism and pipelining | [public code](https://github.com/xdit-project/xDiT) · AI use unverified | A compute-family-specific distributed runtime rather than a single-checkpoint engine. |
-
-### Agent-driven generation and optimization
-
-| Project | Target | Execution-level specialization | Source / AI | Limitations |
-| --- | --- | --- | --- | --- |
-| [MetaInfer](https://github.com/HuangPuStar/MetaInfer) | Generate purpose-built LLM inference servers | Agent-driven creation, testing, and optimization of model-specific engines | [public code](https://github.com/HuangPuStar/MetaInfer) · agent-native | A generator/toolbox, not itself a specific serving-engine implementation. |
-| [Sol-Engine](https://nvlabs.github.io/Sana/Sol-Engine/docs/) | Agent-driven video inference optimization | Agent orchestration of kernel/cache/sparse techniques with quality gates | [documentation](https://nvlabs.github.io/Sana/Sol-Engine/docs/agent-workflow/) · agent-native | Official documentation; do not assume an independently released standalone engine repository. |
-
-### Adjacent infrastructure and watchlist
-
-| Project | Target | Execution-level specialization | Source / AI | Limitations |
-| --- | --- | --- | --- | --- |
-| [AgentCompile](https://github.com/veneno1213822/AgentCompile) **(Adjacent)** | LLM-guided inference compiler prototype | Bounded kernel selection and contract-checked LLM-generated fusion kernels | [review-only code](https://github.com/veneno1213822/AgentCompile) · agent-native | Anonymous research artifact; review-only licensing, not a production engine. |
-| [cache-dit](https://github.com/vipshop/cache-dit) **(Adjacent)** | DiT execution acceleration in PyTorch | Caching, parallelism, quantization, and offload for DiT inference | [public code](https://github.com/vipshop/cache-dit) · AI use unverified | Retains PyTorch as its underlying environment. |
-| [FastKernels](https://github.com/Snowflake-AI-Research/fastkernels) **(Adjacent)** | Agent-created/custom kernels in integrated inference | Correctness and performance benchmarking from operator to end-to-end pipeline | [public code](https://github.com/Snowflake-AI-Research/fastkernels) · AI use unverified | Benchmark infrastructure, included for verification rather than as a bespoke engine. |
-| [ik_llama.cpp](https://github.com/ikawrakow/ik_llama.cpp) **(Adjacent)** | Specialized quantization in a llama.cpp fork | Deep runtime fork emphasizing quantization and performance | [public code](https://github.com/ikawrakow/ik_llama.cpp) · AI use unverified | Evidence that modifying an existing framework may be preferable to a full rewrite. |
-| [KTransformers](https://github.com/kvcache-ai/ktransformers) **(Adjacent)** | CPU–GPU heterogeneous MoE | Optimized CPU MoE kernels and heterogeneous expert placement | [public code](https://github.com/kvcache-ai/ktransformers) · AI use unverified | Can integrate with other serving runtimes; specialized backend rather than always a separate engine. |
-| [Mirage Persistent Kernel](https://github.com/mirage-project/mirage) **(Adjacent)** | Persistent fused GPU execution for LLMs | Compiler/runtime transforms computation and communication into megakernels | [public code](https://github.com/mirage-project/mirage) · AI use unverified | Compiler-generated execution system; not necessarily AI-generated source code. |
-| [TensorFold](https://github.com/ashhart/TensorFold) **(Watchlist)** | Local model memory virtualization | Layer-aware streaming and resident-weight budgeting | [public code](https://github.com/ashhart/TensorFold) · AI use unverified | Architecture is evolving; verify current implementation before detailed comparison. |
+| Mechanism family | What changes | Start with |
+| --- | --- | --- |
+| [Data residency & movement (11)](docs/catalog.md#memory) | Place, page, prefetch or offload weights, experts and KV state. | [KTransformers / kt-kernel](docs/catalog.md#ktransformers), [vAttention](docs/catalog.md#vattention), [Mooncake](docs/catalog.md#mooncake) |
+| [Numerical representation (9)](docs/catalog.md#precision) | Co-design low-bit formats, layouts and execution kernels. | [ExLlamaV3](docs/catalog.md#exllamav3), [Nunchaku](docs/catalog.md#nunchaku), [T-MAC](docs/catalog.md#t-mac) |
+| [Selective computation (8)](docs/catalog.md#selection) | Select neurons, tokens or attention blocks; expose approximation. | [MInference](docs/catalog.md#minference), [SnapKV](docs/catalog.md#snapkv), [Sparse VideoGen](docs/catalog.md#sparse-videogen) |
+| [Computation reuse (10)](docs/catalog.md#reuse) | Reuse request prefixes, features or attention across steps. | [LMCache](docs/catalog.md#lmcache), [TeaCache](docs/catalog.md#teacache), [TaylorSeer](docs/catalog.md#taylorseer) |
+| [Generation order (5)](docs/catalog.md#decoding) | Draft and verify tokens, or reorganize block generation. | [EAGLE](docs/catalog.md#eagle), [Lookahead Decoding](docs/catalog.md#lookahead), [Inferix](docs/catalog.md#inferix) |
+| [Parallelism & scheduling (12)](docs/catalog.md#serving) | Partition stages, devices and requests around workload constraints. | [DistServe](docs/catalog.md#distserve), [Sarathi-Serve](docs/catalog.md#sarathi-serve), [xDiT](docs/catalog.md#xdit) |
+| [Compiled & native execution (32)](docs/catalog.md#execution) | Fuse, lower, specialize and dispatch graphs or native kernels. | [Mirage Persistent Kernel](docs/catalog.md#mirage), [FlashAttention](docs/catalog.md#flash-attention), [MLC LLM](docs/catalog.md#mlc-llm) |
+| [Construction & validation tools (11)](docs/catalog.md#construction) | Agents, kernel languages and evaluation infrastructure. | [MetaInfer](docs/catalog.md#metainfer), [Sol-Engine](docs/catalog.md#sol-engine), [KernelBench](docs/catalog.md#kernelbench) |
 
 <!-- CATALOG-END -->
 
-## Case studies and comparisons
+## Three mechanisms, different contracts
 
-- **[VibeQwen / Baseten](https://www.baseten.co/blog/agentic-inference-optimization-faster-than-sota/):** a reported agent-driven, Qwen-targeted inference optimization case. This is listed as a **case study**, not an audited standalone open-source engine.
-- **General-purpose baselines:** [vLLM](https://github.com/vllm-project/vllm), [SGLang](https://github.com/sgl-project/sglang), [TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM), [llama.cpp](https://github.com/ggml-org/llama.cpp), and [Diffusers](https://github.com/huggingface/diffusers). Their maturity, interfaces, and ecosystem are part of the economic comparison, not just raw latency.
-- **Minimal/educational context:** [nano-vllm](https://github.com/GeeeekExplorer/nano-vllm) and [mini-sglang](https://github.com/sgl-project/mini-sglang) are useful learning references, but **not core evidence** that production-grade systems are becoming cheap to replace.
+![Data movement, state reuse and candidate verification illustrated as distinct execution paths](assets/mechanisms.svg)
 
-## What we want to measure, not assume
+- **Place data and compute:** [KTransformers](docs/catalog.md#ktransformers) runs selected MoE work on CPU; [MoE-Infinity](docs/catalog.md#moe-infinity) transfers and caches expert weights. Both address memory limits through different execution decisions.
+- **Reuse state:** [LMCache](docs/catalog.md#lmcache) can reuse matching KV prefixes; [TeaCache](docs/catalog.md#teacache) reuses earlier denoising residuals. Their validity conditions differ.
+- **Propose and verify:** [EAGLE](docs/catalog.md#eagle) drafts candidate tokens and checks them with the target model. [Medusa](docs/catalog.md#medusa) also uses candidate trees, but training and acceptance modes need separate scrutiny.
 
-1. **Abstraction tax:** Which generic interfaces impose measurable memory traffic, synchronization, scheduling constraints, or missed fusion opportunities? Which costs disappear after ordinary plugin/kernel tuning?
-2. **True specialization benefit:** For fixed semantics, model weights, precision, hardware, workload, and service targets, how does a bespoke path compare to a fairly tuned general-purpose implementation?
-3. **Generation economics:** How much human and machine time is required to build, validate, port, debug, and maintain specialized runtimes?
-4. **Correctness and quality:** Are gains exact, tolerance-equivalent, or produced by approximate computation, quantization, expert skipping, or model distillation?
-5. **Where generality moves:** Do kernel libraries, compilers, agents, testing frameworks, and orchestration absorb the complexity that monolithic runtimes previously carried?
+See [taxonomy and semantic effects](docs/taxonomy.md) for all eight families and overlapping cases.
 
-For methodology and potential systems research directions, see [research agenda](docs/research-agenda.md) and [evidence policy](docs/evidence-policy.md).
+## What belongs here?
 
-## Contributions
+Include a project when a known constraint changes **execution, data movement, numerical representation, scheduling or program construction**. Full runtimes, backends, kernel libraries, compilers and evaluation tools have distinct roles; none is automatically a higher tier. A focused kernel subsystem can be relevant without being a complete server.
 
-Project suggestions, corrections, counterexamples, and independently reproduced benchmarks are welcome. In particular, **negative findings** are valuable: an execution path that does *not* beat a well-tuned general engine, a specialization that breaks correctness, or a case where general infrastructure wins on total cost.
+API wrappers, deployment recipes and paper-only performance headlines do not establish a mechanism. Educational engines and [Diffusers](https://github.com/huggingface/diffusers) remain useful context. General engines such as [vLLM](docs/catalog.md#vllm), [SGLang](docs/catalog.md#sglang) and [TensorRT-LLM](docs/catalog.md#tensorrt-llm) are included where a concrete design is documented.
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) before editing the catalog. The curated list is not an endorsement of a project's claims.
+**Evidence boundary:** this is a source-reviewed directory, not a benchmark leaderboard. Publicly visible code does not imply open licensing, correctness or production readiness. Approximation, reduced precision and model changes are stated alongside implementation changes. [Evidence policy →](docs/evidence-policy.md)
 
-## License
+## Research and maintenance
 
-Catalog metadata, original commentary, and scripts in this repository are provided under the [MIT License](LICENSE). Linked third-party projects, models, papers, and assets retain their own licenses.
+Can cheaper construction make deployment-specific systems economical, or will shared runtimes absorb most useful specialization? This remains a research question. Explore the [research agenda](docs/research-agenda.md), [reading list](docs/reading-list.md) and [survey method and corrections](docs/survey-2026-10-12.md).
+
+The [CSV catalog](catalog/projects.csv) is the source of truth for both homepages, the complete catalog and comparison view. Corrections, missing mechanisms and independent negative results are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+Catalog metadata, original diagrams, commentary and scripts use the [MIT License](LICENSE). Linked projects, models and third-party material retain their own licenses.

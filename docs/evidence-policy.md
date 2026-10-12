@@ -1,38 +1,85 @@
 # Evidence and comparison policy
 
-The purpose of this catalog is to aid research, not aggregate marketing claims. Every catalog row must include a public source and an evidence link. We verify **the existence of the source and what it documents**, not automatically the advertised speedup.
+Every record should explain **what mechanism is implemented, under which constraints, and where it can be inspected**. Source access, implementation inspection, validation, performance reproduction, and deployment readiness are separate claims. This catalog records source-based findings; an evidence link does not mean that the maintainers independently reproduced the advertised result.
 
-## Claim strength
+## Match the claim to the evidence
 
-| Level | Evidence | Appropriate language |
+| Evidence available | Appropriate claim | What it does not establish |
 | --- | --- | --- |
-| E0 — assertion | Marketing text, demo only, undocumented number | “Claims …”; no comparative conclusion |
-| E1 — disclosed implementation | Public code or sufficiently detailed design docs | “Implements / describes …” |
-| E2 — reproducible procedure | Hardware, models, quantization, prompts, scripts, baseline and quality criterion documented | “Reports X under Y conditions …” |
-| E3 — independent reproduction | Repeated under comparable conditions by independent party | “Independently reproduced for …” |
+| Official README or design documentation | “Describes …” or “Reports … under the stated setup” | That the relevant implementation is public, complete, or exercised by the example |
+| Inspected implementation and call path | “Implements … in this path/configuration” | Correctness for all inputs, support on all devices, or a measured speedup |
+| Author-provided evaluation procedure and results | “Reports … with these models, settings, baselines and metrics” | Independent reproduction or portability to another workload |
+| Independent reproduction under documented conditions | “Independently reproduced … for this setup” | Universal performance or quality guarantees |
 
-`E1` does not imply `E2`, and a public repository does not necessarily include the underlying engine source. Do not assign E3 to an author's self-benchmark.
+Do not turn repository existence into implementation evidence or author benchmarks into independent validation. An inspected file may establish a mechanism while leaving its integration unverified. Record that limit explicitly.
 
-## Minimum fair-comparison checklist
+## Inspect the path that is actually used
 
-- **Model identity:** weights/checkpoint, MoE routing, layer count, quantization, MTP, tokenizer, and software versions.
-- **Semantic contract:** exact execution, numerical tolerance, approximate inference, expert dropping, speculative verification, or a retrained/distilled model. State which one.
-- **Hardware:** accelerator and count, host CPU, RAM/VRAM capacity, storage bandwidth, interconnect, driver/compiler versions.
-- **Workload:** input/output length distribution, concurrency, batching, cache hit rate, warm/cold state, modality-specific dimensions.
-- **Metrics:** LLM TTFT, TPOT, throughput, tail latency and memory; image/video latency, throughput and generated quality; amortized total service cost where relevant.
-- **Strong baselines:** a *well-tuned* general engine, an optimized plugin/backend, and a focused implementation when available.
-- **End-to-end attribution:** distinguish changes to **execution system** from quantization, sparsity, timestep distillation, and other model/algorithm changes.
-- **Correctness:** differential output/shape tests; quality metrics for approximate paths; stateful and concurrent workloads; model- and hardware-specific corner cases.
+For a substantive mechanism claim, trace the relevant dispatch, implementation, configuration, and fallback. For a validation claim, check whether the candidate is actually invoked, what reference it is compared against, which inputs are tested, and whether failure propagates to the acceptance decision. A directory called `verifier` or a test named “correctness” is not sufficient evidence.
 
-Do not compute average speedup across projects that use different model weights, quantization, or hardware.
+Concrete examples from source inspection illustrate the distinction:
 
-## Source visibility
+- MetaInfer's [correctness oracle](https://github.com/MetaInfer/MetaInfer/blob/HEAD/metainfer/tasks/gen_infer_framework/orchestrator/oracles/correctness.py) starts the generated service and tests an API using prescribed prompts, with judge or heuristic paths. This is evidence of service-level checks, not a proof of numerical equivalence across all model inputs.
+- In the inspected AgentCompile revision, the generic [benchmark selector](https://github.com/veneno1213822/AgentCompile/blob/043e454f55f69355e483920fa6292ff5731ecf41/benchmark/selector.py#L104-L114) times a proxy operation, and the generic [verifier](https://github.com/veneno1213822/AgentCompile/blob/043e454f55f69355e483920fa6292ff5731ecf41/verifier/verifier.py#L89-L93) can return success when the CUDA compiler is unavailable. These paths require a concrete caveat despite the README's validation language. This observation does not establish that every dedicated fusion path has the same limitation.
+- Sol-Engine has visible [model runtime code](https://github.com/NVlabs/Sana/blob/sol-engine/models/wan22_ti2v_5b/optimized/wan_kernel_runtime.py) and a [perceptual image judge](https://github.com/NVlabs/Sana/blob/sol-engine/tools/vision/lpips_judge.py). A documentation-only label would miss the implementation; perceptual similarity checks should still not be described as bitwise equivalence.
+- The public [TensorRT repository](https://github.com/NVIDIA/TensorRT) exposes components such as plugins, parsers and samples, rather than the complete optimizer/runtime core. Public examples support claims about those interfaces, not inspection claims about the closed implementation.
 
-- `public-code`: relevant source can be inspected publicly; this says nothing about independent correctness, licensing of all dependencies, or production quality.
-- `closed-core`: the repository may expose deployment/configuration while the actual engine remains proprietary.
-- `documentation-only`: an official documentation entry is available but should not be presented as a distinct open-source engine repository.
-- `review-only`: source is visible under a review-use restriction and is **not** equivalent to a standard open-source license.
+Pin a commit for a consequential negative or rapidly changing implementation finding. A current-branch link is useful for navigation, but it can move after the recorded inspection date.
+
+## Semantic effects determine the evaluation contract
+
+The [semantic-effect tags](taxonomy.md#semantic-effects-what-must-be-evaluated) identify changes to assess; they are not correctness certificates. Multiple tags can apply to one configuration.
+
+| Effect | Minimum evaluation questions |
+| --- | --- |
+| `layout-scheduling` | Are shapes, indexing, synchronization, state ownership and numerical tolerances preserved? Are stateful and concurrent paths exercised? |
+| `reduced-precision` | Which values and accumulators change precision? What calibration and quality tests support the chosen format? |
+| `selective-approximation` | What work or state is removed? How does error change with selection budgets and difficult inputs? |
+| `stale-state` | When is cached state refreshed? How is drift measured over the full generation trajectory? |
+| `verified-proposals` | What verifies acceptance? Are rejection/correction paths implemented, and which target distribution or output contract is intended? |
+| `trained-model` | Which weights or components changed? How much of the result comes from the model change rather than its execution system? |
+| `configurable` | Which modes were enabled in the reported run, and which specific effects apply to them? |
+| `tool-dependent` | Was the generated or selected candidate executed and checked after integration? What does the tool's acceptance gate actually cover? |
+
+Identical greedy tokens on a test set, close tensor outputs, acceptable perceptual quality, and preservation of a sampling distribution are different contracts. Report the one actually tested. A successful verifier run has meaning only within its tested reference, tolerances, inputs and failure handling.
+
+## Fair comparisons
+
+- **Model and algorithm:** checkpoint, tokenizer, architecture, routing, draft/target identity, quantization, denoising steps, distillation, and other changed components.
+- **Numerical and quality contract:** reference behavior, tolerance, approximate paths, calibration, and task or perceptual quality criteria.
+- **Hardware and software:** accelerator type/count, host CPU, memory capacity, storage, interconnect, drivers, compiler and dependency versions.
+- **Workload:** input/output lengths, concurrency, batching, cache hit rate, warm/cold state, image resolution, video frame count and other modality-specific dimensions.
+- **Baselines:** relevant optimized systems with disclosed tuning, compatible models, quality settings, resources and timing boundaries.
+- **Timing scope:** model load, compilation/search, warm-up, transfers, pre/post-processing and steady-state inference; state which are included.
+- **Metrics:** TTFT, per-token latency, throughput, tail latency and memory for serving; full-generation latency, throughput and quality for image/video; construction cost and amortization when compilation or agents are involved.
+
+LLM prefill throughput and decode latency answer different questions. A faster video denoiser does not automatically imply the same end-to-end gain after text encoding, VAE decoding and transfers. A compiler or agent can improve steady-state execution while adding substantial build/search cost. Keep these boundaries visible rather than averaging incomparable results.
+
+Do not compute an average speedup across projects with different models, hardware, precision, quality budgets, or timing scopes. Cross-project tables should compare disclosed mechanisms and assumptions unless a controlled measurement supports direct performance comparison.
+
+## Kernel checks and integrated checks
+
+A kernel benchmark can establish behavior for its supplied tensor cases without exercising model state, decoding, cache lifetime, batching, or a service interface. For example, [KernelBench's evaluator](https://github.com/ScalingIntelligence/KernelBench/blob/HEAD/src/kernelbench/eval.py) tests candidate implementations within a benchmark harness. Its coverage should not be presented as complete model-serving validation.
+
+Integrated checks have their own scope. [FastKernels' model evaluator](https://github.com/Snowflake-AI-Research/fastkernels/blob/HEAD/fastkernels/eval.py) checks generated tokens for an enabled end-to-end configuration. Such a check supplements operator tests; it does not prove equivalence for every prompt, decoding policy, precision or hardware target. Record both the local and integrated validation evidence when available.
+
+## Source visibility and access
+
+- `public-code`: relevant source is publicly inspectable. This does not establish an OSI-approved license, license completeness, independent correctness, or production readiness.
+- `closed-core`: public interfaces, examples or components are available while the relevant engine core is not fully inspectable.
+- `documentation-only`: official documentation is available, but the relevant implementation was not located or inspected. Recheck this label when a linked branch or repository becomes available.
+- `review-only`: source access or use is restricted to review. This is an access/licensing attribute, not a verdict on the implementation's validation quality.
+
+Inspect the actual license and its scope. A README's licensing statement and a missing referenced license file should be reported as a gap rather than replaced with an assumed license. The catalog's license does not relicense linked projects. Validation placeholders belong in a mechanism-specific caveat, independently of a `review-only` label.
+
+## Agent involvement is independent
+
+`intrinsic` means that the documented system uses agents or LLMs as part of its construction or optimization method. `disclosed` means that maintainers explicitly report AI participation in development. `not-established` means that the catalog has not established sufficiently direct attribution; it does not mean human-only authorship.
+
+A `CLAUDE.md`, an agents directory, coding style, or repository size does not establish how an engine was built. A compiler is not necessarily agent-driven. Use explicit maintainer statements or an inspected generation workflow, and do not attribute performance gains to AI participation without a controlled comparison.
 
 ## Updating a record
 
-Each row has `checked_on`, `url`, `evidence_url`, `caveat`, `source_visibility`, and `ai_involvement`. Preserve uncertainty rather than converting a self-report into a verified fact. Review fast-changing projects regularly; the date indicates when the record was last checked, not a promise of current validity.
+Keep canonical project URLs, direct evidence pointers, an inspection date, and a concrete caveat. Prefer an implementation pointer alongside documentation for mechanism claims. Preserve a pinned revision for findings whose interpretation depends on exact code.
+
+The inspection date records when the source was checked, not the software release date or a promise of future validity. When a repository adds code, serving support, a new backend or a different validation path, update source visibility, artifact scope and caveats together. Keep mechanism observations, semantic effects and evaluation results distinct; explicitly label inference, untested paths, source inspection and independent reproduction.

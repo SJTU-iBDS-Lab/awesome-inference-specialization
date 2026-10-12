@@ -1,75 +1,89 @@
 #!/usr/bin/env python3
-"""Offline structural checks for the machine-readable research catalog."""
+"""Offline validation of the catalog, controlled facets and evidence pointers."""
 from __future__ import annotations
 
 import datetime as dt
-from pathlib import Path
 import re
 import sys
 from urllib.parse import urlparse
 
-from update_readme import CSV_PATH, CATEGORIES, load_rows
+from update_readme import CSV_PATH, FAMILIES, SCHEMA, load_rows
 
-AXES = set('model hardware memory precision workload domain algorithm execution parallelism builder verification'.split())
-CATEGORIES_SET = {x[0] for x in CATEGORIES}
-TIERS = {'Core', 'Adjacent', 'Watchlist'}
-VISIBILITY = {'public-code', 'closed-core', 'documentation-only', 'review-only'}
-AI = {'intrinsic', 'disclosed', 'not-established'}
-MANDATORY = {'id', 'project', 'category', 'tier', 'axes', 'target', 'mechanism',
-             'source_visibility', 'ai_involvement', 'url', 'evidence_url', 'caveat', 'checked_on'}
+FIELDS = set('id project family domains artifact_type constraints mechanisms target mechanism semantic_effect source_visibility ai_involvement url evidence_urls caveat checked_on discovery'.split())
+TAG = re.compile(r'[a-z0-9][a-z0-9-]*\Z')
 
 
-def valid_url(s: str) -> bool:
-    u = urlparse(s)
-    return u.scheme == 'https' and bool(u.netloc) and not re.search(r'\s', s)
+def valid_url(value: str) -> bool:
+    u = urlparse(value)
+    return u.scheme == 'https' and bool(u.netloc) and not re.search(r'[\s<>"|]', value)
+
+
+def validate(rows: list[dict[str, str]]) -> list[str]:
+    errors: list[str] = []
+    if not rows:
+        return ['Catalog is empty']
+    ids: set[str] = set()
+    urls: set[str] = set()
+    family_ids = {f['id'] for f in FAMILIES}
+    enums = {'family': family_ids, 'artifact_type': set(SCHEMA['artifact_types']),
+             'source_visibility': set(SCHEMA['source_visibility']),
+             'ai_involvement': {'intrinsic', 'disclosed', 'not-established'},
+             'discovery': {'initial', 'keyword', 'dependency'}}
+    for n, r in enumerate(rows, 2):
+        label = f'CSV row {n} ({r.get("id", "?")})'
+        if set(r) != FIELDS:
+            errors.append(f'{label}: columns do not match schema')
+            continue
+        if any(not isinstance(v, str) or not v.strip() for v in r.values()):
+            errors.append(f'{label}: missing or malformed field')
+            continue
+        if not TAG.fullmatch(r['id']):
+            errors.append(f'{label}: invalid id')
+        if r['id'] in ids:
+            errors.append(f'{label}: duplicate id')
+        ids.add(r['id'])
+        canonical_url = r['url'].rstrip('/').lower()
+        if canonical_url in urls:
+            errors.append(f'{label}: duplicate project URL')
+        urls.add(canonical_url)
+        for field, allowed in enums.items():
+            if r[field] not in allowed:
+                errors.append(f'{label}: unsupported {field}: {r[field]}')
+        for field in ('domains', 'constraints', 'mechanisms', 'semantic_effect'):
+            values = r[field].split(';')
+            if len(set(values)) != len(values) or any(not TAG.fullmatch(v) for v in values):
+                errors.append(f'{label}: malformed or duplicate {field} tags')
+            allowed = SCHEMA['domains'] if field == 'domains' else SCHEMA['semantic_effects'] if field == 'semantic_effect' else None
+            if allowed is not None and set(values) - set(allowed):
+                errors.append(f'{label}: unknown {field} tag')
+        evidence = r['evidence_urls'].split(';')
+        if len(evidence) < 2 or len(set(evidence)) != len(evidence):
+            errors.append(f'{label}: need at least two distinct evidence pointers')
+        for url in [r['url'], *evidence]:
+            if not valid_url(url):
+                errors.append(f'{label}: invalid HTTPS URL: {url!r}')
+        try:
+            day = dt.date.fromisoformat(r['checked_on'])
+            if day > dt.datetime.now(dt.timezone.utc).date() + dt.timedelta(days=1):
+                errors.append(f'{label}: future review date')
+        except ValueError:
+            errors.append(f'{label}: invalid review date')
+    for f in FAMILIES:
+        members = {r.get('id') for r in rows if r.get('family') == f['id']}
+        if not members:
+            errors.append(f'Empty family: {f["id"]}')
+        for example in f['examples']:
+            if example not in members:
+                errors.append(f'Invalid featured example for {f["id"]}: {example}')
+    return errors
 
 
 def main() -> int:
-    rows = load_rows()
-    errors: list[str] = []
-    if not rows:
-        errors.append('Catalog is empty')
-    if rows:
-        missing = MANDATORY - rows[0].keys()
-        if missing:
-            errors.append(f'Missing CSV columns: {sorted(missing)}')
-    seen: set[str] = set()
-    for index, r in enumerate(rows, start=2):
-        label = f'CSV row {index}'
-        absent = [key for key in MANDATORY if not r.get(key, '').strip()]
-        if absent:
-            errors.append(f'{label}: missing {sorted(absent)}')
-            continue
-        id_ = r['id'].strip()
-        if not re.fullmatch(r'[a-z0-9][a-z0-9-]*', id_):
-            errors.append(f'{label}: invalid id {id_!r}')
-        if id_ in seen:
-            errors.append(f'{label}: duplicate id {id_}')
-        seen.add(id_)
-        if r['category'] not in CATEGORIES_SET:
-            errors.append(f'{label}: unsupported category {r["category"]}')
-        if r['tier'] not in TIERS:
-            errors.append(f'{label}: unsupported tier {r["tier"]}')
-        if r['source_visibility'] not in VISIBILITY:
-            errors.append(f'{label}: unsupported source visibility')
-        if r['ai_involvement'] not in AI:
-            errors.append(f'{label}: unsupported AI involvement')
-        bad_axes = set(r['axes'].split(';')) - AXES
-        if bad_axes:
-            errors.append(f'{label}: unknown axes {sorted(bad_axes)}')
-        for key in ('url', 'evidence_url'):
-            if not valid_url(r[key]):
-                errors.append(f'{label}: invalid {key} {r[key]!r}')
-        try:
-            date = dt.date.fromisoformat(r['checked_on'])
-            if date > dt.date.today() + dt.timedelta(days=1):
-                errors.append(f'{label}: future checked_on date {date}')
-        except ValueError:
-            errors.append(f'{label}: invalid checked_on date')
+    errors = validate(load_rows())
     if errors:
         print('\n'.join('ERROR ' + e for e in errors), file=sys.stderr)
         return 1
-    print(f'Catalog validated: {len(rows)} unique entries in {CSV_PATH.relative_to(Path(__file__).resolve().parents[1])}')
+    print(f'Validated {len(load_rows())} unique records and {len(FAMILIES)} families in {CSV_PATH.name}')
     return 0
 
 

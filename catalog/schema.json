@@ -1,0 +1,151 @@
+{
+  "version": 2,
+  "families": [
+    {
+      "id": "memory",
+      "title": "Data residency & movement",
+      "title_cn": "数据驻留与搬移",
+      "question": "What stays close to compute?",
+      "question_cn": "数据放在哪、何时搬？",
+      "description": "Place, page, prefetch or offload weights, experts and KV state.",
+      "description_cn": "权重、专家和 KV 的驻留、分页、预取与卸载。",
+      "examples": [
+        "ktransformers",
+        "vattention",
+        "mooncake"
+      ]
+    },
+    {
+      "id": "precision",
+      "title": "Numerical representation",
+      "title_cn": "数值表示与低比特执行",
+      "question": "How is each value represented?",
+      "question_cn": "每个数怎样存、怎样算？",
+      "description": "Co-design low-bit formats, layouts and execution kernels.",
+      "description_cn": "联合设计低比特格式、布局和执行内核。",
+      "examples": [
+        "exllamav3",
+        "nunchaku",
+        "t-mac"
+      ]
+    },
+    {
+      "id": "selection",
+      "title": "Selective computation",
+      "title_cn": "选择性计算",
+      "question": "Which work can be omitted?",
+      "question_cn": "哪些计算可以不做？",
+      "description": "Select neurons, tokens or attention blocks; expose approximation.",
+      "description_cn": "选择神经元、token 或注意力块，并明确近似条件。",
+      "examples": [
+        "minference",
+        "snapkv",
+        "sparse-videogen"
+      ]
+    },
+    {
+      "id": "reuse",
+      "title": "Computation reuse",
+      "title_cn": "计算复用",
+      "question": "Which earlier results can be reused?",
+      "question_cn": "哪些结果不用重算？",
+      "description": "Reuse request prefixes, features or attention across steps.",
+      "description_cn": "复用请求前缀、特征或跨时间步注意力结果。",
+      "examples": [
+        "lmcache",
+        "teacache",
+        "taylorseer"
+      ]
+    },
+    {
+      "id": "decoding",
+      "title": "Generation order",
+      "title_cn": "生成顺序",
+      "question": "Can more output be produced per step?",
+      "question_cn": "一次能推进多少生成？",
+      "description": "Draft and verify tokens, or reorganize block generation.",
+      "description_cn": "候选生成与验证，或重新组织块生成流程。",
+      "examples": [
+        "eagle",
+        "lookahead",
+        "inferix"
+      ]
+    },
+    {
+      "id": "serving",
+      "title": "Parallelism & scheduling",
+      "title_cn": "并行与调度",
+      "question": "Who executes what, and when?",
+      "question_cn": "由谁计算、何时执行？",
+      "description": "Partition stages, devices and requests around workload constraints.",
+      "description_cn": "围绕负载约束安排阶段、设备与请求。",
+      "examples": [
+        "distserve",
+        "sarathi-serve",
+        "xdit"
+      ]
+    },
+    {
+      "id": "execution",
+      "title": "Compiled & native execution",
+      "title_cn": "编译与原生执行",
+      "question": "How does a graph become an executable?",
+      "question_cn": "计算图怎样落到硬件？",
+      "description": "Fuse, lower, specialize and dispatch graphs or native kernels.",
+      "description_cn": "融合、降低抽象层级、专用化及分派原生内核。",
+      "examples": [
+        "mirage",
+        "flash-attention",
+        "mlc-llm"
+      ]
+    },
+    {
+      "id": "construction",
+      "title": "Construction & validation tools",
+      "title_cn": "构建与验证工具",
+      "question": "How are specialized programs built and checked?",
+      "question_cn": "专用程序怎样构建与检验？",
+      "description": "Agents, kernel languages and evaluation infrastructure.",
+      "description_cn": "智能体、内核语言和评测基础设施。",
+      "examples": [
+        "metainfer",
+        "sol-engine",
+        "kernelbench"
+      ]
+    }
+  ],
+  "domains": [
+    "text",
+    "image",
+    "video",
+    "audio",
+    "multimodal",
+    "general"
+  ],
+  "artifact_types": [
+    "runtime",
+    "backend",
+    "compiler",
+    "optimizer",
+    "kernel-library",
+    "research-prototype",
+    "generator",
+    "verification"
+  ],
+  "source_visibility": [
+    "public-code",
+    "closed-core",
+    "documentation-only",
+    "review-only"
+  ],
+  "semantic_effects": [
+    "layout-scheduling",
+    "reduced-precision",
+    "selective-approximation",
+    "stale-state",
+    "verified-proposals",
+    "trained-model",
+    "configurable",
+    "tool-dependent"
+  ]
+}
