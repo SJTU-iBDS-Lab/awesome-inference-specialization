@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "families": [
     {
       "id": "memory",
@@ -171,49 +171,6 @@
       "description_cn": "通用引擎、可复用编译器与语言、内核、机制组件和评测工具。"
     }
   ],
-  "system_showcases": [
-    {
-      "title": "Known model structure",
-      "title_cn": "已知模型结构",
-      "description": "Tailor model execution and generation state to selected architectures.",
-      "description_cn": "针对选定架构组织模型执行与生成状态。",
-      "examples": [
-        "dwarfstar",
-        "iris",
-        "inferix"
-      ]
-    },
-    {
-      "title": "Device and memory limits",
-      "title_cn": "设备与内存约束",
-      "description": "Choose which experts reside or execute on each device.",
-      "description_cn": "决定专家驻留在哪个设备、由哪个设备执行。",
-      "examples": [
-        "ktransformers",
-        "strata"
-      ]
-    },
-    {
-      "title": "Chosen numerical formats",
-      "title_cn": "选定数值格式",
-      "description": "Co-design quantized representations and their execution paths.",
-      "description_cn": "联合设计量化表示及其实际执行路径。",
-      "examples": [
-        "exllamav3",
-        "nunchaku"
-      ]
-    },
-    {
-      "title": "Known workload structure",
-      "title_cn": "已知负载结构",
-      "description": "Organize prefill/decode stages or DiT work across devices.",
-      "description_cn": "围绕预填充/解码阶段或 DiT 计算组织跨设备执行。",
-      "examples": [
-        "distserve",
-        "xdit"
-      ]
-    }
-  ],
   "build_routes": [
     {
       "title": "Native implementation",
@@ -294,6 +251,62 @@
         "kernelbench",
         "fastkernels",
         "spec-bench"
+      ]
+    }
+  ],
+  "survey_roles": [
+    {
+      "id": "core",
+      "title": "Core cases",
+      "title_cn": "核心案例",
+      "description": "Purposeful reconstruction of execution paths, or a construction workflow linked to a concrete specialized artifact. These cases motivate investigation; they do not establish a new paradigm.",
+      "description_cn": "有明确目的的执行路径重建，或与具体专用产物相连的构建流程。用于提出和研究问题，不自动构成范式变化的证据。"
+    },
+    {
+      "id": "adjacent",
+      "title": "Historical and adjacent routes",
+      "title_cn": "历史与相邻路线",
+      "description": "Earlier and contemporary routes that explain what already exists, or illuminate a narrower or different construction boundary. This is not an age cutoff.",
+      "description_cn": "说明哪些思想早已有之，或构建边界较窄、不同的已有及当代路线；不按年代硬切。"
+    },
+    {
+      "id": "foundation",
+      "title": "Shared foundations and baselines",
+      "title_cn": "共享基础与对照",
+      "description": "General engines, compilers, kernels, components and evaluators used for reuse and controlled comparison.",
+      "description_cn": "提供复用关系与公平比较条件的通用引擎、编译器、内核、组件和评测工具。"
+    }
+  ],
+  "case_groups": [
+    {
+      "title": "From a construction workflow to an engine",
+      "title_cn": "构建流程实际产出了什么",
+      "examples": [
+        "vibeqwen",
+        "sol-engine"
+      ]
+    },
+    {
+      "title": "Rebuilding execution around deployment constraints",
+      "title_cn": "围绕部署条件重建执行栈",
+      "examples": [
+        "flash-moe",
+        "dwarfstar",
+        "strata",
+        "iris",
+        "tensorfold",
+        "halogen-flash",
+        "exllamav3"
+      ]
+    },
+    {
+      "title": "Specialized backends and generated programs",
+      "title_cn": "专用后端与编译生成的执行程序",
+      "examples": [
+        "magnitude",
+        "ktransformers",
+        "nunchaku",
+        "mirage"
       ]
     }
   ]

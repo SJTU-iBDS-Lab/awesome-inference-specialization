@@ -1,6 +1,6 @@
 # Evidence and comparison policy
 
-Every record should explain **what mechanism is implemented, under which constraints, and where it can be inspected**. Source access, implementation inspection, validation, performance reproduction, and deployment readiness are separate claims. This catalog records source-based findings; an evidence link does not mean that the maintainers independently reproduced the advertised result.
+Every project record should explain **what mechanism is implemented, under which constraints, and where it can be inspected**. Selected cases additionally explain why a distinct execution path was built, what it reuses or gives up, how construction was performed, and which cost and maintenance claims remain unknown. Source access, implementation inspection, validation, performance reproduction, and deployment readiness are separate claims. This catalog records source-based findings; an evidence link does not mean that the maintainers independently reproduced the advertised result.
 
 ## Match the claim to the evidence
 
@@ -12,6 +12,23 @@ Every record should explain **what mechanism is implemented, under which constra
 | Independent reproduction under documented conditions | “Independently reproduced … for this setup” | Universal performance or quality guarantees |
 
 Do not turn repository existence into implementation evidence or author benchmarks into independent validation. An inspected file may establish a mechanism while leaving its integration unverified. Record that limit explicitly.
+
+## Evidence for construction, availability and economics
+
+A visible specialized stack is evidence that a particular artifact exists. It does not establish that such stacks have become cheaper, easier for more teams to obtain, or more economical to maintain. A collection of successful recent examples also cannot establish that AI caused a change: selection, model simplicity, hardware access, prior code, team expertise and unreported failed attempts can affect the result.
+
+| Claim | Evidence to seek | Boundary to retain |
+| --- | --- | --- |
+| Why a separate path was built | Direct rationale plus the execution decisions or extension constraints visible in the implementation | A motivation statement does not prove that a tuned existing engine could not satisfy the need |
+| What was reused or abandoned | Dependency and integration paths, supported configurations and explicit omissions | Few lines of new code do not mean little inherited engineering; missing features are not automatically intended trade-offs |
+| What construction or AI actually did | Workflow/code, disclosed human interventions, prompts or task logs where available, emitted artifacts and acceptance decisions | AI-authorship claims and an agent construction method are different evidence; neither establishes saved effort |
+| Who can obtain and use the result | Access/license, released artifacts, hardware requirements, setup procedure and external execution evidence | Public code alone does not establish reproducible deployment or accessibility to teams with different resources |
+| Total construction and operating cost | Human effort, tool and compute spending, failed candidates, validation, integration, serving and change/maintenance costs with a stated horizon | Prototype elapsed time, agent tokens or steady-state speed alone are not total cost |
+| AI reduced total cost | Comparable target contracts and resources, an explicit non-AI or alternative-workflow counterfactual, complete cost accounting and uncertainty | Before/after anecdotes or selected successes support a hypothesis, not causal attribution |
+
+Record missing evidence as **unknown**, not as zero cost or evidence of failure. Distinguish measured costs, author-reported costs, inferred trade-offs and unmeasured obligations. A core case can be valuable for exposing these gaps without establishing economic success.
+
+Case records may link a construction workflow and a reported generated output. Keep those sources distinct and do not count the output as another repository without an independently identified upstream project. In particular, link VibeQwen-related claims to the MetaInfer workflow and the relevant Baseten output report; evidence for one side of that relationship does not automatically verify the other.
 
 ## Inspect the path that is actually used
 
@@ -51,6 +68,7 @@ Identical greedy tokens on a test set, close tensor outputs, acceptable perceptu
 - **Workload:** input/output lengths, concurrency, batching, cache hit rate, warm/cold state, image resolution, video frame count and other modality-specific dimensions.
 - **Baselines:** relevant optimized systems with disclosed tuning, compatible models, quality settings, resources and timing boundaries.
 - **Timing scope:** model load, compilation/search, warm-up, transfers, pre/post-processing and steady-state inference; state which are included.
+- **Construction and maintenance:** human effort, tools, profiling/validation compute, rejected attempts, integration work, model/device updates, deployment horizon and amortization assumptions.
 - **Metrics:** TTFT, per-token latency, throughput, tail latency and memory for serving; full-generation latency, throughput and quality for image/video; construction cost and amortization when compilation or agents are involved.
 
 LLM prefill throughput and decode latency answer different questions. A faster video denoiser does not automatically imply the same end-to-end gain after text encoding, VAE decoding and transfers. A compiler or agent can improve steady-state execution while adding substantial build/search cost. Keep these boundaries visible rather than averaging incomparable results.
@@ -76,10 +94,10 @@ Inspect the actual license and its scope. A README's licensing statement and a m
 
 `intrinsic` means that the documented system uses agents or LLMs as part of its construction or optimization method. `disclosed` means that maintainers explicitly report AI participation in development. `not-established` means that the catalog has not established sufficiently direct attribution; it does not mean human-only authorship.
 
-A `CLAUDE.md`, an agents directory, coding style, or repository size does not establish how an engine was built. A compiler is not necessarily agent-driven. Use explicit maintainer statements or an inspected generation workflow, and do not attribute performance gains to AI participation without a controlled comparison.
+A `CLAUDE.md`, an agents directory, coding style, or repository size does not establish how an engine was built. Report the specific AI task and the human decisions or interventions disclosed; do not collapse all forms of participation into autonomous construction. A compiler is not necessarily agent-driven. Use explicit maintainer statements or an inspected generation workflow, and do not attribute performance gains to AI participation without a controlled comparison.
 
 ## Updating a record
 
-Keep canonical project URLs, direct evidence pointers, an inspection date, and a concrete caveat. Prefer an implementation pointer alongside documentation for mechanism claims. Preserve a pinned revision for findings whose interpretation depends on exact code.
+Keep canonical project URLs, direct evidence pointers, an inspection date, and a concrete caveat. Preserve the distinction between repository records in `catalog/projects.csv` and selected case accounts in `catalog/cases.json`; `survey_role` describes research relevance, while `catalog_role` and `artifact_type` describe the delivered software. Prefer an implementation pointer alongside documentation for mechanism claims. Preserve a pinned revision for findings whose interpretation depends on exact code.
 
 The inspection date records when the source was checked, not the software release date or a promise of future validity. When a repository adds code, serving support, a new backend or a different validation path, update source visibility, artifact scope and caveats together. Keep mechanism observations, semantic effects and evaluation results distinct; explicitly label inference, untested paths, source inspection and independent reproduction.

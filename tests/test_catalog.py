@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import update_readme as render
-from validate_catalog import validate
+from validate_catalog import validate, validate_cases
 
 
 def anchors(text):
@@ -32,6 +32,31 @@ class CatalogTests(unittest.TestCase):
 
     def test_catalog_valid(self):
         self.assertEqual(validate(self.rows), [])
+        self.assertEqual(validate_cases(render.load_cases(), self.rows), [])
+
+    def test_core_case_requires_linked_project_and_explicit_evidence(self):
+        cases = copy.deepcopy(render.load_cases())
+        cases[0]['project_ids'] = ['missing-project']
+        cases[0]['cost'] = ''
+        self.assertTrue(validate_cases(cases, self.rows))
+        cases = copy.deepcopy(render.load_cases())
+        cases[0]['evidence_urls'] = [cases[0]['evidence_urls'][0]]
+        self.assertTrue(any('evidence pointers' in e for e in validate_cases(cases, self.rows)))
+
+    def test_core_selection_cannot_silently_include_adjacent_work(self):
+        rows = copy.deepcopy(self.rows)
+        next(r for r in rows if r['id'] == 'zero-inference')['survey_role'] = 'core'
+        self.assertTrue(any('lacks a construction case' in e for e in validate_cases(render.load_cases(), rows)))
+
+    def test_relevance_does_not_replace_artifact_role(self):
+        rows = copy.deepcopy(self.rows)
+        rows[0]['survey_role'] = 'system'
+        self.assertTrue(any('unsupported survey_role' in e for e in validate(rows)))
+
+    def test_case_can_link_a_foundation_without_promoting_it(self):
+        cases = copy.deepcopy(render.load_cases())
+        cases[0]['project_ids'].append('vllm')
+        self.assertEqual(validate_cases(cases, self.rows), [])
 
     def test_duplicates_rejected(self):
         errors = validate(self.rows + [self.rows[0]])

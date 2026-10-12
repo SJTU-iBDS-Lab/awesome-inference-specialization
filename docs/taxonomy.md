@@ -1,32 +1,48 @@
 # Taxonomy: inference specialization
 
-The catalog foregrounds **specialized inference systems and the ways they are built**. Start with concrete deployment constraints and follow them to changed execution decisions, an integrated or generated artifact, and its validation and maintenance obligations. General engines, reusable compilers, kernel languages, libraries, mechanism components and evaluators remain in the catalog as supporting context.
+This survey studies **whether the ways specialized execution stacks are built, who can obtain and maintain them, and their economics are changing**. It follows concrete decisions about model execution rather than treating all inference optimization as specialization. AI-assisted construction is one candidate explanation for change; lower total cost is a causal hypothesis to test, not an inclusion rule or an established result.
 
-## Reading order and catalog roles
+Start with the [selected cases](cases.md). Each case connects a reason to build a separate execution path with the decisions it controls, the infrastructure it reuses, the generality it gives up, the construction work actually performed, and the costs that remain unknown. The broader [project index](systems.md) and [mechanism catalog](catalog.md) preserve historical context, alternative routes, shared infrastructure and comparison baselines.
 
-The [systems and construction guide](systems.md) is the main entry point. Each record has one editorial `catalog_role`:
+## Survey role: relation to the research question
 
-| Role | What belongs here | What to inspect first |
+Each project has one `survey_role`, independently of what kind of software it delivers:
+
+| Survey role | Why the project is included | Reading purpose |
 | --- | --- | --- |
-| `system` | An integrated execution system or specialized backend whose decisions are shaped by identifiable model, device or workload constraints | The constraint, the changed state/layout/scheduling/execution decision, the integration boundary and the deployable artifact |
-| `construction` | A concrete workflow that builds model- or deployment-specific programs, through direct native implementation, backend integration, compilation/search, agents, or a combination | Its inputs, decisions made during construction, emitted artifact, validation gates and update process |
+| `core` | A direct case for examining the construction, availability or economics of a specialized execution stack | Explain why a separate path was built, which decisions it controls, how it was constructed, and what remains unmeasured |
+| `adjacent` | A historical precedent or nearby route that helps establish alternatives, continuity or boundaries | Compare earlier and neighboring designs without claiming that they demonstrate the present hypothesis |
+| `foundation` | Shared infrastructure, reusable components, evaluation tools or general reference systems used to build or compare stacks | Trace dependencies, alternative implementations, validation and counterfactual baselines |
+
+These roles describe relevance to the survey, **not quality, maturity, novelty or an ordering of merit**. Age does not decide the role: an older system can be a core case if it directly answers the construction question. AI involvement is neither necessary nor sufficient. A project can be central even when it builds on an existing runtime, compiler or kernel library; building everything from scratch is not required.
+
+Every `core` project must be linked from at least one selected case. The selected-case layer in [`catalog/cases.json`](../catalog/cases.json), rendered as [case notes](cases.md), is distinct from the repository inventory. A workflow and one or more reported outputs can form a case without becoming duplicate project records. For example, a VibeQwen case should link the relevant MetaInfer workflow and Baseten-reported output evidence instead of inventing another repository row. Preserve the distinction between inspected source, reported output and inaccessible implementation.
+
+## Catalog role: what the project delivers
+
+Records in the [project index](systems.md) retain an independent `catalog_role` describing their software:
+
+| Catalog role | What belongs here | What to inspect first |
+| --- | --- | --- |
+| `system` | An integrated execution system or specialized backend whose decisions are shaped by identifiable model, device or workload constraints | The changed state/layout/scheduling/execution decision, integration boundary and deployable artifact |
+| `construction` | A concrete workflow that builds model- or deployment-specific programs, through direct native implementation, backend integration, compilation/search, agents, or a combination | Its inputs, construction decisions, emitted artifact, validation gates and update process |
 | `support` | General reference engines, reusable compilers/DSLs/kernels, mechanism components and evaluation infrastructure | What it supplies to a system or construction workflow, its interface and its limits |
 
-These are **display roles, not quality levels**. A support project may be mature and indispensable; a system may be experimental or incompletely validated. A compiler may be `construction` when the record documents a specific model-to-deployment workflow, or `support` when the record concerns reusable compiler infrastructure. An agent framework does not qualify as a construction workflow merely because it can write code.
+`survey_role` answers **why study this project here**; `catalog_role` answers **what role its software plays**. A `system` may be a core case, an adjacent precedent, or a foundational reference engine. A construction workflow can be core while producing only one subsystem. Neither role replaces `artifact_type`, the eight `family` values, or evidence about the actual artifact.
 
-The roles do not replace `artifact_type` or the eight `family` values. In particular, `catalog_role=construction` describes a concrete way to build specialized programs, whereas `family=construction` groups languages, agents and checking tools for secondary discovery. A DSL or benchmark can have the latter family and the `support` role. A directly implemented runtime can have the `system` role while illustrating a native construction path.
+A compiler may have the `construction` catalog role when the record describes a concrete model-to-deployment workflow, or `support` when it concerns reusable compiler infrastructure. An agent framework does not qualify as a concrete workflow merely because it can write code. `catalog_role=construction` also differs from `family=construction`: the latter is a secondary index for languages, agents and checking tools. A DSL or benchmark can have that family and the `support` catalog role.
 
 Read in this order:
 
-1. **Systems:** which constraint justified which execution decision, and what can be deployed?
-2. **Construction paths:** how was that decision implemented, integrated, checked and updated?
-3. **Supporting infrastructure and mechanisms:** which pieces can be reused, compared or replaced?
+1. **Core cases:** why build another execution path, how was it obtained, and what evidence bears on its cost?
+2. **Historical and adjacent routes:** what was already possible, and what alternatives constrain the explanation?
+3. **Foundations and mechanisms:** what is reused, what is compared, and which execution changes implement the choice?
 
-The full catalog retains all records. Navigation priority does not remove generic engines or mechanism components, and it does not rank their research value.
+The project inventory retains its existing records. Selection for a case note and placement on the homepage are editorial choices, not a claim that every retained project establishes the central hypothesis. Tiny or “nano” teaching reimplementations whose purpose is explaining a standard engine are outside the collection's scope; line count alone is not a criterion, and a small substantive system should be assessed by the same case questions.
 
 ## What counts as specialization here?
 
-Optimization alone is too broad a criterion: almost every inference project optimizes something. A useful specialization account connects four elements:
+Optimization alone is too broad a criterion: almost every inference project optimizes something. A useful specialization account connects four elements; a core case must additionally explain the decision to construct a distinct path and the resulting trade-offs:
 
 | Element | Required explanation | Example of an insufficient account |
 | --- | --- | --- |
@@ -36,6 +52,14 @@ Optimization alone is too broad a criterion: almost every inference project opti
 | **Validation and maintenance** | The tested contract and scope, invalidation conditions, fallback and response to model/device/workload changes | A passing demo treated as general correctness or a one-time build treated as sustainable deployment |
 
 This chain is an analysis requirement, not a demand that every cataloged project already satisfy every engineering obligation. Gaps belong in the record's caveat. A mechanism component with a precise constraint and implementation can remain useful `support` when integration into a deployable system is outside its scope. Conversely, a system built on general infrastructure can be specialized if it makes and validates concrete deployment-specific decisions.
+
+For a core case, ask:
+
+- **Why another execution path?** What constraint or missing control motivated it, and why was an existing implementation or extension point insufficient according to the available evidence?
+- **What does it control?** Identify ownership of graph structure, state, memory placement, scheduling, kernels, synchronization or service behavior.
+- **What is reused and given up?** Name inherited infrastructure and dependencies, along with compatibility, dynamism, portability or service features restricted by the choice.
+- **How was it built?** Trace direct implementation, backend adaptation, compilation/search and agent participation to specific work and artifacts. Distinguish authorship disclosures from an implemented generation workflow.
+- **What remains unknown?** State missing effort, failed-attempt, verification, integration, porting and maintenance costs. Unknown cost is not zero cost.
 
 For example, a constrained-memory MoE account should identify where experts reside, when they move, how movement interacts with execution, and the integrated inference path. A fixed-device video account should identify the affected graph, shapes, state or iteration schedule and the complete generation boundary. “Uses CUDA” and “accelerates diffusion” alone do not supply those links.
 
@@ -64,7 +88,8 @@ The family definitions and navigation examples are stored in [the schema](../cat
 
 | Dimension | What it records | What it must not imply |
 | --- | --- | --- |
-| `catalog_role` | System, concrete construction workflow, or supporting infrastructure | A display role is not a quality or maturity level |
+| `survey_role` | Core case, historical/adjacent route, or shared foundation/reference | Research relevance is not quality, age or AI authorship |
+| `catalog_role` | System, concrete construction workflow, or supporting infrastructure | A software role is not its relevance to the central hypothesis |
 | `family` | The primary mechanism or tool family used for secondary navigation | A family is not the project's full scope or its display role |
 | `domains` | Text, image, video, audio, multimodal, or general-purpose coverage | A domain is not an optimization mechanism; example coverage is not universal support |
 | `constraints` | Model structure, hardware, memory capacity, shapes, workload, or deployment assumptions | A narrow model list alone does not establish substantive specialization |
@@ -123,12 +148,13 @@ Exact prefix reuse, under valid cache keys and compatible model state, is not th
 
 Broad projects can reasonably fit several navigation groups. Sol-Engine, for example, exposes an agent workflow and concrete model runtimes; using the `construction` role emphasizes how it builds specialized engines, while its mechanism tags must retain the runtime's fusion, caching, attention and precision behavior. A future record focused only on one deployed runtime could have the `system` role and a different primary family without contradicting this classification.
 
-## Assigning a role and primary family
+## Assigning the independent roles and primary family
 
-1. Identify the cataloged component and trace constraint → execution decision → artifact → validation and maintenance.
-2. Choose its display role: integrated system, concrete construction workflow, or reusable support.
-3. Read the implementation path, including dispatch and fallback conditions, and choose the primary mechanism/tool family for secondary navigation.
-4. Preserve other substantive mechanisms, constraints and semantic effects as separate tags and prose.
-5. Explain ambiguous boundaries and missing links in the caveat; revise the assignment when the project's scope changes.
+1. Identify the component and trace constraint → execution decision → artifact → validation and maintenance.
+2. Choose `survey_role` from its relationship to the construction, availability and economics question. Explain the decision without using age, AI presence, star count or code size as a substitute.
+3. Choose `catalog_role` from the delivered software: integrated system, concrete construction workflow, or reusable support.
+4. Inspect dispatch and fallback conditions and select the primary mechanism/tool `family`; retain other mechanisms, constraints and semantic effects independently.
+5. For a selected case, document why another path was built, controlled decisions, reuse and sacrificed generality, construction participation and unknown costs in `catalog/cases.json`.
+6. Record ambiguous boundaries and missing evidence in the caveat; revise the assignments when scope or evidence changes.
 
-Counts by role or primary family describe this catalog's editorial organization. They do not measure research importance, prevalence, quality, or mutually exclusive technical populations. Follow the [evidence policy](evidence-policy.md) when converting source observations into claims.
+Counts by either role or primary family describe this survey's editorial organization. They do not measure research importance, prevalence, quality, or mutually exclusive technical populations, and they are not the main reason to read the collection. Follow the [evidence policy](evidence-policy.md) when converting observations into implementation, economic or causal claims.

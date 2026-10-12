@@ -20,7 +20,9 @@ Use the family links below, or search this page for a model, device, mechanism o
 
 ### [DeepSpeed ZeRO-Inference](https://github.com/deepspeedai/DeepSpeedExamples)
 
-[system](systems.md#system) · `backend` · `text` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `backend` · `text` · **public code**
+
+**Survey relevance:** Historical layerwise offload route: establishes that heterogeneous specialized execution predates recent coding agents.
 
 Hosts weights in CPU or NVMe memory and streams them layer by layer to GPU, using prefetch and large token batches to amortize transfer costs while preserving GPU memory for activations.
 
@@ -47,7 +49,9 @@ Hosts weights in CPU or NVMe memory and streams them layer by layer to GPU, usin
 
 ### [Fiddler](https://github.com/efeslab/fiddler)
 
-[system](systems.md#system) · `research-prototype` · `text` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `research-prototype` · `text` · **public code**
+
+**Survey relevance:** Heterogeneous MoE execution route: compare CPU expert computation with transfer-centric designs.
 
 Executes uncached MoE experts on CPU by transferring small activations instead of moving their large weights to GPU, while keeping selected experts resident on GPU.
 
@@ -74,7 +78,9 @@ Executes uncached MoE experts on CPU by transferring small activations instead o
 
 ### [Flash-MoE](https://github.com/danveloper/flash-moe)
 
-[system](systems.md#system) · `research-prototype` · `text` · **public code**
+[core](systems.md#core) · `system` · `research-prototype` · `text` · **public code**
+
+**Survey relevance:** A model-specific implementation links disclosed AI-assisted construction to SSD expert streaming and explicit approximation choices.
 
 Streams selected quantized expert blobs with parallel pread and executes a fixed Qwen hybrid-attention pipeline using custom Metal dequantization and fused expert kernels.
 
@@ -101,7 +107,9 @@ Streams selected quantized expert blobs with parallel pread and executes a fixed
 
 ### [FlexLLMGen (FlexGen)](https://github.com/FMInference/FlexLLMGen)
 
-[system](systems.md#system) · `runtime` · `text` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** Throughput-oriented offload route: a comparison for existing memory scheduling and workload trade-offs.
 
 Uses a block generation schedule and GPU/CPU/disk tensor placement to reuse layer weights across microbatches while overlapping transfers and optionally compressing weights and KV state.
 
@@ -128,7 +136,9 @@ Uses a block generation schedule and GPU/CPU/disk tensor placement to reuse laye
 
 ### [KTransformers / kt-kernel](https://github.com/kvcache-ai/ktransformers)
 
-[system](systems.md#system) · `backend` · `text` · **public code**
+[core](systems.md#core) · `system` · `backend` · `text` · **public code**
+
+**Survey relevance:** A substantial heterogeneous backend provides a core case for rebuilding execution while retaining shared serving infrastructure.
 
 Runs memory-heavy MoE experts through ISA-specific CPU kernels and NUMA-aware placement while integrating with GPU serving runtimes for the remaining model computation.
 
@@ -155,7 +165,9 @@ Runs memory-heavy MoE experts through ISA-specific CPU kernels and NUMA-aware pl
 
 ### [MoE-Infinity](https://github.com/EfficientMoE/MoE-Infinity)
 
-[system](systems.md#system) · `runtime` · `text` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** Expert-offload route: compare established prefetch and residency policies with separately reconstructed runtimes.
 
 Offloads expert weights to host memory and SSD, retains hot experts in an activation-aware GPU cache and uses trace/prediction-driven prefetching through a native transfer engine.
 
@@ -182,7 +194,9 @@ Offloads expert weights to host memory and SSD, retains hot experts in an activa
 
 ### [Mooncake](https://github.com/kvcache-ai/Mooncake)
 
-[support](systems.md#support) · `backend` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `backend` · `text` · **public code**
+
+**Survey relevance:** Reusable execution backend for integration and comparison; component capability is separate from engine construction evidence.
 
 Provides a transfer engine and distributed store for moving and retaining KV data across accelerators, host memory and storage.
 
@@ -209,7 +223,9 @@ Provides a transfer engine and distributed store for moving and retaining KV dat
 
 ### [NIXL](https://github.com/ai-dynamo/nixl)
 
-[support](systems.md#support) · `backend` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `backend` · `text` · **public code**
+
+**Survey relevance:** Reusable execution backend for integration and comparison; component capability is separate from engine construction evidence.
 
 Exposes asynchronous point-to-point transfers through pluggable transports over host/device memory and storage.
 
@@ -236,7 +252,9 @@ Exposes asynchronous point-to-point transfers through pluggable transports over 
 
 ### [Strata](https://github.com/Niko1221/Strata)
 
-[system](systems.md#system) · `runtime` · `text` · **public code**
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** A narrow MoE runtime makes expert placement and execution choices inspectable; AI authorship is not established.
 
 Keeps attention and hot experts on GPU, computes nonresident experts on CPU concurrently, and budgets GPU/RAM/file tiers for experts and long-context KV state.
 
@@ -263,7 +281,9 @@ Keeps attention and hot experts on GPU, computes nonresident experts on CPU conc
 
 ### [vAttention](https://github.com/microsoft/vattention)
 
-[support](systems.md#support) · `backend` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `backend` · `text` · **public code**
+
+**Survey relevance:** Reusable execution backend for integration and comparison; component capability is separate from engine construction evidence.
 
 Uses CUDA virtual memory to decouple contiguous virtual KV tensors from physical allocation, retaining conventional attention-kernel interfaces.
 
@@ -290,7 +310,9 @@ Uses CUDA virtual memory to decouple contiguous virtual KV tensors from physical
 
 ### [vLLM](https://github.com/vllm-project/vllm)
 
-[support](systems.md#support) · `runtime` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `runtime` · `text` · **public code**
+
+**Survey relevance:** General-engine baseline and reusable execution components for controlled comparisons with specialized stacks.
 
 Manages attention state as pooled KV blocks with reference-counted prefix sharing and schedules token-budgeted work across requests, allocating cache slots as execution advances.
 
@@ -323,7 +345,9 @@ Manages attention state as pooled KV blocks with reference-counted prefix sharin
 
 ### [bitnet.cpp](https://github.com/microsoft/BitNet)
 
-[system](systems.md#system) · `runtime` · `text` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** Low-bit model/runtime co-design route: compare representation-specific execution and retained framework lineage.
 
 Executes compatible ternary LLMs with packed low-bit kernels and architecture-specific LUT paths, choosing pre-tuned or generated kernel headers for model shapes.
 
@@ -350,7 +374,9 @@ Executes compatible ternary LLMs with packed low-bit kernels and architecture-sp
 
 ### [DeepCompressor](https://github.com/nunchux-ai/deepcompressor)
 
-[support](systems.md#support) · `optimizer` · `text / image` · **public code**
+[foundation](systems.md#foundation) · `support` · `optimizer` · `text / image` · **public code**
+
+**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
 
 Calibrates quantization and SVDQuant low-rank outlier decomposition, evaluates compressed models and exports checkpoints into runtime-specific deployment layouts.
 
@@ -377,7 +403,9 @@ Calibrates quantization and SVDQuant low-rank outlier decomposition, evaluates c
 
 ### [ExLlamaV3](https://github.com/turboderp-org/exllamav3)
 
-[system](systems.md#system) · `runtime` · `text` · **public code**
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** An integrated quantized-model runtime illustrates rebuilding execution around a chosen representation and supported architectures.
 
 Pairs EXL3 weight quantization with dedicated low-bit execution, 2–8-bit paged KV storage and shape-qualified decode paths, plus CPU expert offload and parallel inference.
 
@@ -404,7 +432,9 @@ Pairs EXL3 weight quantization with dedicated low-bit execution, 2–8-bit paged
 
 ### [ik_llama.cpp](https://github.com/ikawrakow/ik_llama.cpp)
 
-[system](systems.md#system) · `runtime` · `text` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** Deep fork of a general engine: compare compatibility retention and specialized quantized execution.
 
 Extends a llama.cpp fork with additional packed quantization formats, CPU IQK matrix kernels and quantization-specific CUDA dispatch paths.
 
@@ -431,7 +461,9 @@ Extends a llama.cpp fork with additional packed quantization formats, CPU IQK ma
 
 ### [Marlin](https://github.com/IST-DASLab/marlin)
 
-[support](systems.md#support) · `kernel-library` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `kernel-library` · `text` · **public code**
+
+**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
 
 Repacks INT4 weights/scales offline and overlaps asynchronous loads, dequantization and tensor-core MMA in a shape-specialized FP16×INT4 CUDA kernel.
 
@@ -458,7 +490,9 @@ Repacks INT4 weights/scales offline and overlaps asynchronous loads, dequantizat
 
 ### [Nunchaku](https://github.com/nunchux-ai/nunchaku)
 
-[system](systems.md#system) · `runtime` · `image` · **public code**
+[core](systems.md#core) · `system` · `runtime` · `image` · **public code**
+
+**Survey relevance:** A substantial low-bit diffusion backend connects representation-specific execution to reusable pipeline integration.
 
 Executes SVDQuant W4A4 layers by fusing activation quantization with the low-rank down projection and low-bit GEMM with the low-rank output path.
 
@@ -485,7 +519,9 @@ Executes SVDQuant W4A4 layers by fusing activation quantization with the low-ran
 
 ### [QTIP](https://github.com/Cornell-RelaxML/qtip)
 
-[support](systems.md#support) · `optimizer` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `optimizer` · `text` · **public code**
+
+**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
 
 Quantizes incoherence-transformed weights with bitshift trellis codes and executes supported low-bit encodings through matching BitshiftLinear matrix-vector kernels.
 
@@ -512,7 +548,9 @@ Quantizes incoherence-transformed weights with bitshift trellis codes and execut
 
 ### [SageAttention](https://github.com/thu-ml/SageAttention)
 
-[support](systems.md#support) · `kernel-library` · `text / image / video` · **public code**
+[foundation](systems.md#foundation) · `support` · `kernel-library` · `text / image / video` · **public code**
+
+**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
 
 Applies outlier smoothing and hardware-specific low-precision QK and PV attention kernels, dispatching among INT8/FP8 or newer architecture-specific variants.
 
@@ -539,7 +577,9 @@ Applies outlier smoothing and hardware-specific low-precision QK and PV attentio
 
 ### [T-MAC](https://github.com/microsoft/T-MAC)
 
-[support](systems.md#support) · `kernel-library` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `kernel-library` · `text` · **public code**
+
+**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
 
 Generates and tunes CPU low-bit GEMM/GEMV kernels that decompose weights into bit-level operations and use activation lookup tables instead of dequantizing each weight into dense multiply-adds.
 
@@ -572,7 +612,9 @@ Generates and tunes CPU low-bit GEMM/GEMV kernels that decompose weights into bi
 
 ### [FastVideo](https://github.com/hao-ai-lab/FastVideo)
 
-[system](systems.md#system) · `runtime` · `video / audio` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `video / audio` · **public code**
+
+**Survey relevance:** Video-model pipeline route: contrasts integrated optimization and model changes with execution-stack reconstruction.
 
 Provides video-generation pipelines using top-k Video Sparse Attention blocks, sequence parallelism and memory offload alongside sparse and timestep distillation workflows.
 
@@ -599,7 +641,9 @@ Provides video-generation pipelines using top-k Video Sparse Attention blocks, s
 
 ### [MInference](https://github.com/microsoft/MInference)
 
-[support](systems.md#support) · `optimizer` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `optimizer` · `text` · **public code**
+
+**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
 
 Assigns attention heads to offline-discovered sparse pattern families and estimates input-dependent sparse indices online before dispatching pattern-specific long-context prefill kernels.
 
@@ -626,7 +670,9 @@ Assigns attention heads to offline-discovered sparse pattern families and estima
 
 ### [PowerInfer](https://github.com/Tiiny-AI/PowerInfer)
 
-[system](systems.md#system) · `runtime` · `text` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** Model/runtime co-design route: separates sparsity assumptions and changed models from construction-method effects.
 
 Uses profiled neuron activation frequencies and a capacity-constrained split to place hot neurons on GPU, execute cold activated neurons on CPU and dispatch predictor-guided sparse operators.
 
@@ -653,7 +699,9 @@ Uses profiled neuron activation frequencies and a capacity-constrained split to 
 
 ### [SnapKV](https://github.com/FasterDecoding/SnapKV)
 
-[support](systems.md#support) · `optimizer` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `optimizer` · `text` · **public code**
+
+**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
 
 Uses the final prompt observation window to score and pool attention importance, gathers top-ranked historical KV positions and retains the recent window within a fixed prompt-cache capacity.
 
@@ -680,7 +728,9 @@ Uses the final prompt observation window to score and pool attention importance,
 
 ### [SpargeAttention](https://github.com/thu-ml/SpargeAttn)
 
-[support](systems.md#support) · `kernel-library` · `text / image / video` · **public code**
+[foundation](systems.md#foundation) · `support` · `kernel-library` · `text / image / video` · **public code**
+
+**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
 
 Builds a block lookup table from query-key block statistics or a supplied mask and executes selected attention blocks with Sage-style low-precision kernels.
 
@@ -707,7 +757,9 @@ Builds a block lookup table from query-key block statistics or a supplied mask a
 
 ### [Sparse VideoGen](https://github.com/svg-project/Sparse-VideoGen)
 
-[support](systems.md#support) · `research-prototype` · `video` · **public code**
+[foundation](systems.md#foundation) · `support` · `research-prototype` · `video` · **public code**
+
+**Survey relevance:** Related mechanism reference for controlled comparison; source availability alone does not make it a construction case.
 
 Accelerates video attention using profiled spatial-temporal masks in SVG1 and semantic clustering with token permutation and dynamic sparse kernels in SVG2.
 
@@ -734,7 +786,9 @@ Accelerates video attention using profiled spatial-temporal masks in SVG1 and se
 
 ### [ToMe for Stable Diffusion](https://github.com/dbolya/tomesd)
 
-[support](systems.md#support) · `optimizer` · `image` · **public code**
+[foundation](systems.md#foundation) · `support` · `optimizer` · `image` · **public code**
+
+**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
 
 Uses spatially constrained bipartite token matching to merge redundant tokens before selected transformer operations and restores the original token layout afterward.
 
@@ -761,7 +815,9 @@ Uses spatially constrained bipartite token matching to merge redundant tokens be
 
 ### [TurboDiffusion](https://github.com/thu-ml/TurboDiffusion)
 
-[system](systems.md#system) · `runtime` · `video` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `video` · **public code**
+
+**Survey relevance:** Video acceleration route: separates distillation, precision and attention changes from runtime construction.
 
 Integrates SageAttention and sparse-linear attention with timestep-distilled video checkpoints and optional quantized linear layers in an executable generation stack.
 
@@ -794,7 +850,9 @@ Integrates SageAttention and sparse-linear attention with timestep-distilled vid
 
 ### [Cache-DiT](https://github.com/vipshop/cache-dit)
 
-[support](systems.md#support) · `optimizer` · `image / video` · **public code**
+[foundation](systems.md#foundation) · `support` · `optimizer` · `image / video` · **public code**
+
+**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
 
 Wraps supported Diffusers transformer blocks with managed cache contexts for DBCache and feature predictors while composing parallelism, quantization and CPU offload.
 
@@ -821,7 +879,9 @@ Wraps supported Diffusers transformer blocks with managed cache contexts for DBC
 
 ### [DeepCache](https://github.com/horseee/DeepCache)
 
-[support](systems.md#support) · `optimizer` · `image / video` · **public code**
+[foundation](systems.md#foundation) · `support` · `optimizer` · `image / video` · **public code**
+
+**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
 
 Reuses high-level U-Net branch outputs at intermediate denoising steps while recomputing inexpensive lower-level features, controlled by a cache interval and branch index.
 
@@ -848,7 +908,9 @@ Reuses high-level U-Net branch outputs at intermediate denoising steps while rec
 
 ### [DiTFastAttn](https://github.com/thu-nics/DiTFastAttn)
 
-[support](systems.md#support) · `research-prototype` · `image / video` · **public code**
+[foundation](systems.md#foundation) · `support` · `research-prototype` · `image / video` · **public code**
+
+**Survey relevance:** Related mechanism reference for controlled comparison; source availability alone does not make it a construction case.
 
 Calibrates attention compression choices that combine local windows with cached residuals, temporal output reuse and conditional-unconditional computation sharing.
 
@@ -875,7 +937,9 @@ Calibrates attention compression choices that combine local windows with cached 
 
 ### [Learning-to-Cache](https://github.com/horseee/learning-to-cache)
 
-[support](systems.md#support) · `research-prototype` · `image` · **public code**
+[foundation](systems.md#foundation) · `support` · `research-prototype` · `image` · **public code**
+
+**Survey relevance:** Related mechanism reference for controlled comparison; source availability alone does not make it a construction case.
 
 Optimizes a router over denoising steps and transformer layers to decide which layer outputs are recomputed or served from cache while keeping base-model weights fixed.
 
@@ -902,7 +966,9 @@ Optimizes a router over denoising steps and transformer layers to decide which l
 
 ### [LMCache](https://github.com/LMCache/LMCache)
 
-[support](systems.md#support) · `backend` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `backend` · `text` · **public code**
+
+**Survey relevance:** Reusable execution backend for integration and comparison; component capability is separate from engine construction evidence.
 
 Retrieves and persists KV states through tiered storage backends; optional CacheBlend paths selectively recompute states for non-prefix reuse.
 
@@ -929,7 +995,9 @@ Retrieves and persists KV states through tiered storage backends; optional Cache
 
 ### [MagCache](https://github.com/Zehong-Ma/MagCache)
 
-[support](systems.md#support) · `optimizer` · `image / video` · **public code**
+[foundation](systems.md#foundation) · `support` · `optimizer` · `image / video` · **public code**
+
+**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
 
 Uses calibrated residual-magnitude ratios to accumulate an estimated reuse error and skips full transformer evaluation while the error and reuse-length limits permit.
 
@@ -956,7 +1024,9 @@ Uses calibrated residual-magnitude ratios to accumulate an estimated reuse error
 
 ### [SGLang](https://github.com/sgl-project/sglang)
 
-[support](systems.md#support) · `runtime` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `runtime` · `text` · **public code**
+
+**Survey relevance:** General serving baseline and source of shared runtime abstractions and components.
 
 Indexes reusable prefix KV state in a radix tree, protects active nodes with references and offers cache-aware queue policies that prioritize requests using matched-prefix information.
 
@@ -983,7 +1053,9 @@ Indexes reusable prefix KV state in a radix tree, protects active nodes with ref
 
 ### [T-GATE](https://github.com/HaozheLiu-ST/T-GATE)
 
-[support](systems.md#support) · `optimizer` · `image / video` · **public code**
+[foundation](systems.md#foundation) · `support` · `optimizer` · `image / video` · **public code**
+
+**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
 
 Caches and reuses self-attention during early semantic planning and cross-attention during later fidelity refinement according to gate steps and refresh intervals.
 
@@ -1010,7 +1082,9 @@ Caches and reuses self-attention during early semantic planning and cross-attent
 
 ### [TaylorSeer](https://github.com/Shenyi-Z/TaylorSeer)
 
-[support](systems.md#support) · `research-prototype` · `image / video` · **public code**
+[foundation](systems.md#foundation) · `support` · `research-prototype` · `image / video` · **public code**
+
+**Survey relevance:** Related mechanism reference for controlled comparison; source availability alone does not make it a construction case.
 
 Estimates higher-order feature derivatives from earlier full evaluations and substitutes a Taylor-series forecast for selected later block computations.
 
@@ -1037,7 +1111,9 @@ Estimates higher-order feature derivatives from earlier full evaluations and sub
 
 ### [TeaCache](https://github.com/ali-vilab/TeaCache)
 
-[support](systems.md#support) · `optimizer` · `image / video / audio` · **public code**
+[foundation](systems.md#foundation) · `support` · `optimizer` · `image / video / audio` · **public code**
+
+**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
 
 Accumulates a rescaled relative change in timestep-modulated inputs and reuses a cached transformer residual until the model-specific error threshold is exceeded.
 
@@ -1070,7 +1146,9 @@ Accumulates a rescaled relative change in timestep-modulated inputs and reuses a
 
 ### [EAGLE](https://github.com/SafeAILab/EAGLE)
 
-[support](systems.md#support) · `optimizer` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `optimizer` · `text` · **public code**
+
+**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
 
 Builds a draft token tree from target-model features and verifies candidate paths in parallel; EAGLE-3 combines features from several layers.
 
@@ -1097,7 +1175,9 @@ Builds a draft token tree from target-model features and verifies candidate path
 
 ### [Fast-dLLM](https://github.com/NVlabs/Fast-dLLM)
 
-[support](systems.md#support) · `research-prototype` · `text / multimodal` · **public code**
+[foundation](systems.md#foundation) · `support` · `research-prototype` · `text / multimodal` · **public code**
+
+**Survey relevance:** Related mechanism reference for controlled comparison; source availability alone does not make it a construction case.
 
 Combines confidence-aware parallel token updates and cached states; v2 uses block-diffusion checkpoints and hierarchical caching.
 
@@ -1124,7 +1204,9 @@ Combines confidence-aware parallel token updates and cached states; v2 uses bloc
 
 ### [Inferix](https://github.com/alibaba-damo-academy/Inferix)
 
-[system](systems.md#system) · `runtime` · `video` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `video` · **public code**
+
+**Survey relevance:** Stateful world-model execution route: an adjacent case of reorganizing generation state rather than evidence of AI-built native execution.
 
 Manages persistent KV state for semi-autoregressive diffusion blocks while separately chunking VAE decoding and streaming generated video.
 
@@ -1151,7 +1233,9 @@ Manages persistent KV state for semi-autoregressive diffusion blocks while separ
 
 ### [Lookahead Decoding](https://github.com/hao-ai-lab/LookaheadDecoding)
 
-[support](systems.md#support) · `optimizer` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `optimizer` · `text` · **public code**
+
+**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
 
 Collects n-gram candidates from Jacobi trajectories and combines parallel lookahead with target-model verification without a separate draft model.
 
@@ -1178,7 +1262,9 @@ Collects n-gram candidates from Jacobi trajectories and combines parallel lookah
 
 ### [Medusa](https://github.com/FasterDecoding/Medusa)
 
-[support](systems.md#support) · `research-prototype` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `research-prototype` · `text` · **public code**
+
+**Survey relevance:** Related mechanism reference for controlled comparison; source availability alone does not make it a construction case.
 
 Adds multiple future-token heads, packs their candidates into tree attention, and accepts a verified prefix.
 
@@ -1211,7 +1297,9 @@ Adds multiple future-token heads, packs their candidates into tree attention, an
 
 ### [AsyncDiff](https://github.com/czg1225/AsyncDiff)
 
-[system](systems.md#system) · `research-prototype` · `image / video` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `research-prototype` · `image / video` · **public code**
+
+**Survey relevance:** Multi-device diffusion route: compares changed parallel execution and stale-state assumptions.
 
 Partitions a denoiser into device-owned components and broadcasts cached component outputs so later denoising iterations can execute asynchronously in parallel.
 
@@ -1238,7 +1326,9 @@ Partitions a denoiser into device-owned components and broadcasts cached compone
 
 ### [DistriFusion](https://github.com/mit-han-lab/distrifuser)
 
-[system](systems.md#system) · `research-prototype` · `image` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `research-prototype` · `image` · **public code**
+
+**Survey relevance:** Distributed diffusion route: establishes earlier execution and communication specialization.
 
 Splits image computation across devices, synchronizes patch context during warmup, then uses previous-step remote activations while asynchronously communicating fresh updates.
 
@@ -1265,7 +1355,9 @@ Splits image computation across devices, synchronizes patch context during warmu
 
 ### [DistServe](https://github.com/LLMServe/DistServe)
 
-[system](systems.md#system) · `research-prototype` · `text` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `research-prototype` · `text` · **public code**
+
+**Survey relevance:** Serving specialization route: establishes prefill/decode separation independently of recent engine-construction claims.
 
 Separates prefill and decode workers, chooses their resource/parallelism configurations independently, and migrates KV state between them.
 
@@ -1292,7 +1384,9 @@ Separates prefill and decode workers, chooses their resource/parallelism configu
 
 ### [OpenVINO GenAI](https://github.com/openvinotoolkit/openvino.genai)
 
-[support](systems.md#support) · `runtime` · `text / image / video / audio / multimodal` · **public code**
+[foundation](systems.md#foundation) · `support` · `runtime` · `text / image / video / audio / multimodal` · **public code**
+
+**Survey relevance:** General deployment baseline for device coverage, model export and state-management costs.
 
 Adds generative pipelines and continuous-batching policy above OpenVINO compiled models, using device-specific KV layouts, block allocation and prefix-cache reuse.
 
@@ -1319,7 +1413,9 @@ Adds generative pipelines and continuous-batching policy above OpenVINO compiled
 
 ### [ParaAttention](https://github.com/chengzeyi/ParaAttention)
 
-[support](systems.md#support) · `optimizer` · `image / video` · **public code**
+[foundation](systems.md#foundation) · `support` · `optimizer` · `image / video` · **public code**
+
+**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
 
 Provides compile-friendly Ring/Ulysses context parallel adapters and First Block Cache, which gates later transformer blocks using the change in the first block residual.
 
@@ -1346,7 +1442,9 @@ Provides compile-friendly Ring/Ulysses context parallel adapters and First Block
 
 ### [Petals](https://github.com/bigscience-workshop/petals)
 
-[system](systems.md#system) · `runtime` · `text` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** Distributed execution route: compares a different deployment contract and system boundary.
 
 Places transformer blocks on peers and routes stateful inference sessions through a latency-aware sequence of remote block servers.
 
@@ -1373,7 +1471,9 @@ Places transformer blocks on peers and routes stateful inference sessions throug
 
 ### [Punica](https://github.com/punica-ai/punica)
 
-[system](systems.md#system) · `backend` · `text` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `backend` · `text` · **public code**
+
+**Survey relevance:** Multi-adapter execution route: compares workload-specific kernels and shared-model scheduling.
 
 Batches the common base-model computation while segmented gather matrix-vector kernels apply different low-rank adapter updates per request.
 
@@ -1400,7 +1500,9 @@ Batches the common base-model computation while segmented gather matrix-vector k
 
 ### [S-LoRA](https://github.com/S-LoRA/S-LoRA)
 
-[system](systems.md#system) · `research-prototype` · `text` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `research-prototype` · `text` · **public code**
+
+**Survey relevance:** Multi-adapter serving route: establishes prior integrated specialization of memory and batching.
 
 Pages adapter weights and KV states in a unified memory pool and batches heterogeneous adapter ranks using specialized LoRA kernels.
 
@@ -1427,7 +1529,9 @@ Pages adapter weights and KV states in a unified memory pool and batches heterog
 
 ### [Sarathi-Serve](https://github.com/microsoft/sarathi-serve)
 
-[system](systems.md#system) · `research-prototype` · `text` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `research-prototype` · `text` · **public code**
+
+**Survey relevance:** Serving specialization route: compares chunked prefill and batching independently of implementation provenance.
 
 Splits prefills into bounded chunks and schedules ongoing decode tokens before filling the remaining batch budget with prefill work.
 
@@ -1454,7 +1558,9 @@ Splits prefills into bounded chunks and schedules ongoing decode tokens before f
 
 ### [TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM)
 
-[support](systems.md#support) · `runtime` · `text / multimodal` · **public code**
+[foundation](systems.md#foundation) · `support` · `runtime` · `text / multimodal` · **public code**
+
+**Survey relevance:** General GPU serving baseline and kernel source; reuse is distinct from independent full-stack implementation.
 
 Combines NVIDIA-specific LLM kernels with chunked-context scheduling, generation-aware batching and reusable paged KV-cache management.
 
@@ -1481,7 +1587,9 @@ Combines NVIDIA-specific LLM kernels with chunked-context scheduling, generation
 
 ### [VideoSys](https://github.com/NUS-HPC-AI-Lab/VideoSys)
 
-[system](systems.md#system) · `runtime` · `video` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `video` · **public code**
+
+**Survey relevance:** Video-serving framework route: compares reusable parallelization with narrowly reconstructed execution stacks.
 
 Combines Pyramid Attention Broadcast with dynamic sequence parallelism, reusing attention outputs at type-specific intervals and changing sequence partitions across attention axes.
 
@@ -1508,7 +1616,9 @@ Combines Pyramid Attention Broadcast with dynamic sequence parallelism, reusing 
 
 ### [xDiT](https://github.com/xdit-project/xDiT)
 
-[system](systems.md#system) · `runtime` · `image / video` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `image / video` · **public code**
+
+**Survey relevance:** Distributed diffusion route: compares framework-integrated parallel execution and supported-model boundaries.
 
 Combines Ulysses and Ring sequence parallelism with CFG/data parallelism and PipeFusion patch pipelines that reuse earlier-step features to overlap communication.
 
@@ -1541,7 +1651,9 @@ Combines Ulysses and Ring sequence parallelism with CFG/data parallelism and Pip
 
 ### [AITemplate](https://github.com/facebookincubator/AITemplate)
 
-[support](systems.md#support) · `compiler` · `text / image / general` · **public code**
+[foundation](systems.md#foundation) · `support` · `compiler` · `text / image / general` · **public code**
+
+**Survey relevance:** Reusable compiler foundation; compare which lowering and scheduling responsibilities a specialized stack retains or replaces.
 
 Profiles CUDA/HIP kernel choices, performs graph and memory fusion, plans intermediate storage and emits a self-contained model shared library.
 
@@ -1568,7 +1680,9 @@ Profiles CUDA/HIP kernel choices, performs graph and memory fusion, plans interm
 
 ### [Apache TVM](https://github.com/apache/tvm)
 
-[support](systems.md#support) · `compiler` · `text / general` · **public code**
+[foundation](systems.md#foundation) · `support` · `compiler` · `text / general` · **public code**
+
+**Survey relevance:** Reusable compiler foundation and historical source of model and schedule specialization.
 
 Coordinates Relax graph transformations and tensor-level scheduling to fuse operators, dispatch libraries and lower target-specific tensor programs into deployable modules.
 
@@ -1595,7 +1709,9 @@ Coordinates Relax graph transformations and tensor-level scheduling to fuse oper
 
 ### [BladeDISC](https://github.com/alibaba/BladeDISC)
 
-[support](systems.md#support) · `compiler` · `text / image / general` · **public code**
+[foundation](systems.md#foundation) · `support` · `compiler` · `text / image / general` · **public code**
+
+**Survey relevance:** Reusable compiler foundation; compare which lowering and scheduling responsibilities a specialized stack retains or replaces.
 
 Clusters supported framework operations and specializes MLIR fusion kernels with runtime shape predicates while supporting dynamic-shape execution in plugin or standalone modes.
 
@@ -1622,7 +1738,9 @@ Clusters supported framework operations and specializes MLIR fusion kernels with
 
 ### [DeepGEMM](https://github.com/deepseek-ai/DeepGEMM)
 
-[support](systems.md#support) · `kernel-library` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `kernel-library` · `text` · **public code**
+
+**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
 
 JIT-compiles tensor-core kernels with shape, tile and pipeline constants, using MoE-specific grouped layouts and optional fused expert computation/communication paths.
 
@@ -1649,7 +1767,9 @@ JIT-compiles tensor-core kernels with shape, tile and pipeline constants, using 
 
 ### [Draw Things Community](https://github.com/drawthingsai/draw-things-community)
 
-[system](systems.md#system) · `runtime` · `image / video` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `image / video` · **public code**
+
+**Survey relevance:** Local-generation application/runtime route: compares integrated product scope and reusable execution layers.
 
 Provides independent Swift model graphs and samplers with hardware-backed execution and a TeaCache implementation that switches between full and reduced model execution.
 
@@ -1676,7 +1796,9 @@ Provides independent Swift model graphs and samplers with hardware-backed execut
 
 ### [DwarfStar](https://github.com/antirez/ds4)
 
-[system](systems.md#system) · `runtime` · `text` · **public code**
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** A separately implemented runtime links disclosed AI assistance to model execution and expert-residency control.
 
 Executes selected DeepSeek, GLM and Qwen families through native model-specific paths, retaining non-routed state while fetching missing routed experts into a bounded SSD-streaming cache.
 
@@ -1703,7 +1825,9 @@ Executes selected DeepSeek, GLM and Qwen families through native model-specific 
 
 ### [edge-dit.cpp](https://github.com/THU-MIG/edge-dit.cpp)
 
-[system](systems.md#system) · `runtime` · `image / video` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `image / video` · **public code**
+
+**Survey relevance:** Native diffusion route: useful adjacent comparison for component placement, reuse and compatibility boundaries.
 
 Runs DiTs on ggml graphs with automatic quantization and placement, per-component or double-buffered block offload, VAE tiling and model-aware cache policies.
 
@@ -1730,7 +1854,9 @@ Runs DiTs on ggml graphs with automatic quantization and placement, per-componen
 
 ### [ExecuTorch](https://github.com/pytorch/executorch)
 
-[support](systems.md#support) · `runtime` · `text / general` · **public code**
+[foundation](systems.md#foundation) · `support` · `runtime` · `text / general` · **public code**
+
+**Survey relevance:** Reusable runtime foundation or baseline for comparing retained services and implementation boundaries.
 
 Exports PyTorch graphs ahead of time, partitions supported subgraphs to hardware delegates and plans reusable tensor storage for a lightweight on-device runtime.
 
@@ -1757,7 +1883,9 @@ Exports PyTorch graphs ahead of time, partitions supported subgraphs to hardware
 
 ### [Flash Linear Attention](https://github.com/fla-org/flash-linear-attention)
 
-[support](systems.md#support) · `kernel-library` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `kernel-library` · `text` · **public code**
+
+**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
 
 Implements architecture-specific linear-attention and recurrent mixers with chunk-parallel prefill and state-update kernels, including fused gated-delta-rule intra-chunk computation.
 
@@ -1784,7 +1912,9 @@ Implements architecture-specific linear-attention and recurrent mixers with chun
 
 ### [FlashAttention](https://github.com/Dao-AILab/flash-attention)
 
-[support](systems.md#support) · `kernel-library` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `kernel-library` · `text` · **public code**
+
+**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
 
 Implements attention with IO-aware tiled kernels and fused reductions, selecting hardware/shape-specific variants and providing KV-cache update-and-attend inference interfaces.
 
@@ -1811,7 +1941,9 @@ Implements attention with IO-aware tiled kernels and fused reductions, selecting
 
 ### [FlashInfer](https://github.com/flashinfer-ai/flashinfer)
 
-[support](systems.md#support) · `kernel-library` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `kernel-library` · `text` · **public code**
+
+**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
 
 Builds or selects attention/GEMM/MoE kernels from dtype, head geometry, cache layout and workload metadata, with planned paged/ragged KV execution and specialized prefill/decode paths.
 
@@ -1838,7 +1970,9 @@ Builds or selects attention/GEMM/MoE kernels from dtype, head geometry, cache la
 
 ### [FlashMLA](https://github.com/deepseek-ai/FlashMLA)
 
-[support](systems.md#support) · `kernel-library` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `kernel-library` · `text` · **public code**
+
+**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
 
 Uses DeepSeek-specific latent/sparse-attention geometry, precomputed scheduler metadata and quantized KV layouts to run sparse decode/prefill and fused RoPE–attention paths.
 
@@ -1865,7 +1999,9 @@ Uses DeepSeek-specific latent/sparse-attention geometry, precomputed scheduler m
 
 ### [Halogen Flash](https://github.com/peonist-ai/halogen-flash-server)
 
-[system](systems.md#system) · `runtime` · `text` · **closed core**
+[core](systems.md#core) · `system` · `runtime` · `text` · **closed core**
+
+**Survey relevance:** A model-and-device-specific runtime illustrates how narrow deployment contracts reshape implementation choices.
 
 Ships a model-and-chip-specific inference binary with mixed-precision weight layouts, a paged n-gram lookup table and dedicated attention/expert execution for Qwen3.8-Flash-Next.
 
@@ -1892,7 +2028,9 @@ Ships a model-and-chip-specific inference binary with mixed-precision weight lay
 
 ### [Hidet](https://github.com/hidet-org/hidet)
 
-[support](systems.md#support) · `compiler` · `text / image / general` · **public code**
+[foundation](systems.md#foundation) · `support` · `compiler` · `text / image / general` · **public code**
+
+**Survey relevance:** Reusable compiler foundation; compare which lowering and scheduling responsibilities a specialized stack retains or replaces.
 
 Compiles PyTorch or ONNX graphs to CUDA kernels using graph rewrites, tunable operator schedules and explicit mappings from logical tasks to hardware workers.
 
@@ -1919,7 +2057,9 @@ Compiles PyTorch or ONNX graphs to CUDA kernels using graph rewrites, tunable op
 
 ### [IREE](https://github.com/iree-org/iree)
 
-[support](systems.md#support) · `compiler` · `text / image / general` · **public code**
+[foundation](systems.md#foundation) · `support` · `compiler` · `text / image / general` · **public code**
+
+**Survey relevance:** Reusable compiler/runtime foundation for target-specific programs and execution orchestration.
 
 Lowers MLIR programs into device executables and a runtime schedule, partitioning streamable work and planning resource lifetimes and allocations before deployment.
 
@@ -1946,7 +2086,9 @@ Lowers MLIR programs into device executables and a runtime schedule, partitionin
 
 ### [IREE Turbine](https://github.com/iree-org/iree-turbine)
 
-[support](systems.md#support) · `compiler` · `text / general` · **public code**
+[foundation](systems.md#foundation) · `support` · `compiler` · `text / general` · **public code**
+
+**Survey relevance:** Reusable compiler foundation; compare which lowering and scheduling responsibilities a specialized stack retains or replaces.
 
 Captures PyTorch modules or exported programs into IREE-compatible Torch IR, exposing AOT deployment, parameter handling and custom-operation integration.
 
@@ -1973,7 +2115,9 @@ Captures PyTorch modules or exported programs into IREE-compatible Torch IR, exp
 
 ### [Iris](https://github.com/antirez/iris.c)
 
-[system](systems.md#system) · `runtime` · `image` · **public code**
+[core](systems.md#core) · `system` · `runtime` · `image` · **public code**
+
+**Survey relevance:** A native image-model runtime exposes which graph and execution responsibilities are taken out of a general framework.
 
 Implements selected FLUX and Z-Image pipelines in C with Metal or CPU kernels, memory-mapped weights and release of text encoders after conditioning.
 
@@ -2000,7 +2144,9 @@ Implements selected FLUX and Z-Image pipelines in C with Metal or CPU kernels, m
 
 ### [LightX2V](https://github.com/ModelTC/LightX2V)
 
-[system](systems.md#system) · `runtime` · `image / video / audio` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `image / video / audio` · **public code**
+
+**Survey relevance:** Video inference framework route: compares breadth of model integration with narrower execution designs.
 
 Combines model-specific inference paths with quantized operators, cache policies, parallel execution and a two-slot block-loading system for overlapping offload.
 
@@ -2027,7 +2173,9 @@ Combines model-specific inference paths with quantized operators, cache policies
 
 ### [llama.cpp](https://github.com/ggml-org/llama.cpp)
 
-[support](systems.md#support) · `runtime` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `runtime` · `text` · **public code**
+
+**Survey relevance:** General local-inference substrate and baseline; retained components must be distinguished from rewritten execution.
 
 Loads GGUF model tensors and executes a native GGML graph through backend-specific quantized kernels, dispatching by tensor type and geometry with optional CPU/GPU layer placement.
 
@@ -2054,7 +2202,9 @@ Loads GGUF model tensors and executes a native GGML graph through backend-specif
 
 ### [Magnitude](https://github.com/magnitudedev/magnitude)
 
-[system](systems.md#system) · `runtime` · `text` · **public code**
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** A dedicated inference stack exposes its kernel-composition and model-execution boundary for construction analysis.
 
 Its inspected Metal/MLX path captures typed operations, selects compatible kernel plans and emits specialized fused Metal entry points inside MLX native compilation.
 
@@ -2081,7 +2231,9 @@ Its inspected Metal/MLX path captures typed operations, selects compatible kerne
 
 ### [MFLUX](https://github.com/mflux-community/mflux)
 
-[system](systems.md#system) · `runtime` · `image` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `image` · **public code**
+
+**Survey relevance:** MLX-based model implementation route: contrasts retained tensor framework with more extensive native reconstruction.
 
 Implements selected image model components natively in MLX, with on-load low-bit weight quantization and optional adapter baking into inference weights.
 
@@ -2108,7 +2260,9 @@ Implements selected image model components natively in MLX, with on-load low-bit
 
 ### [Mirage Persistent Kernel](https://github.com/mirage-project/mirage)
 
-[construction](systems.md#construction) · `compiler` · `text` · **public code**
+[core](systems.md#core) · `construction` · `compiler` · `text` · **public code**
+
+**Survey relevance:** A model-to-persistent-program construction path connects generated execution schedules to a concrete runtime artifact.
 
 Compiles an explicitly assembled LLM task graph into a persistent CUDA megakernel whose GPU workers and schedulers execute computation and communication across decoding steps.
 
@@ -2135,7 +2289,9 @@ Compiles an explicitly assembled LLM task graph into a persistent CUDA megakerne
 
 ### [MLC LLM](https://github.com/mlc-ai/mlc-llm)
 
-[construction](systems.md#construction) · `runtime` · `text` · **public code**
+[adjacent](systems.md#adjacent) · `construction` · `runtime` · `text` · **public code**
+
+**Survey relevance:** Compiler specialization route: establishes existing model-to-deployment construction and portability trade-offs.
 
 Uses a TVM LLM-specific compilation pipeline to fuse dequantization and normalization, specialize low-batch GEMV, dispatch target-specific KV kernels and execute compiled models through MLCEngine.
 
@@ -2162,7 +2318,9 @@ Uses a TVM LLM-specific compilation pipeline to fuse dequantization and normaliz
 
 ### [NVIDIA TensorRT](https://github.com/NVIDIA/TensorRT)
 
-[support](systems.md#support) · `compiler` · `text / image / general` · **closed core**
+[foundation](systems.md#foundation) · `support` · `compiler` · `text / image / general` · **closed core**
+
+**Survey relevance:** Engine-building baseline with a closed optimizer/runtime core; compare disclosed interfaces and build cost.
 
 Builds NVIDIA inference engines specialized to optimization-profile shapes and selected kernel tactics, recording profiled decisions in a reusable editable timing cache.
 
@@ -2189,7 +2347,9 @@ Builds NVIDIA inference engines specialized to optimization-profile shapes and s
 
 ### [OneDiff](https://github.com/siliconflow/onediff)
 
-[construction](systems.md#construction) · `compiler` · `image / video` · **public code**
+[adjacent](systems.md#adjacent) · `construction` · `compiler` · `image / video` · **public code**
+
+**Survey relevance:** Compiler-backed pipeline adaptation: compares generated execution without reconstructing a full serving stack.
 
 Converts diffusion-model modules into deployable compiled modules through OneFlow or Nexfort and reuses compiled graphs to reduce recurring inference overhead.
 
@@ -2216,7 +2376,9 @@ Converts diffusion-model modules into deployable compiled modules through OneFlo
 
 ### [ONNX Runtime GenAI](https://github.com/microsoft/onnxruntime-genai)
 
-[support](systems.md#support) · `runtime` · `text / audio / multimodal` · **public code**
+[foundation](systems.md#foundation) · `support` · `runtime` · `text / audio / multimodal` · **public code**
+
+**Survey relevance:** General exported-model runtime baseline for portability and generation-state management.
 
 Executes ONNX generative models through execution providers while selecting model- and device-specific convolutional, shared, sliding-window or quantized KV-state managers.
 
@@ -2243,7 +2405,9 @@ Executes ONNX generative models through execution providers while selecting mode
 
 ### [Stable Fast](https://github.com/chengzeyi/stable-fast)
 
-[construction](systems.md#construction) · `compiler` · `image / video` · **public code**
+[adjacent](systems.md#adjacent) · `construction` · `compiler` · `image / video` · **public code**
+
+**Survey relevance:** Framework compilation and capture route: compares incremental specialization and compilation amortization.
 
 Traces Diffusers components into TorchScript, replaces common convolution/GEMM/GEGLU/normalization patterns with fused operators, and optionally captures CUDA graphs.
 
@@ -2270,7 +2434,9 @@ Traces Diffusers components into TorchScript, replaces common convolution/GEMM/G
 
 ### [stable-diffusion.cpp](https://github.com/leejet/stable-diffusion.cpp)
 
-[system](systems.md#system) · `runtime` · `image / video` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `image / video` · **public code**
+
+**Survey relevance:** Native diffusion framework route: compares existing cross-backend implementation and compatibility costs.
 
 Implements image and video diffusion in ggml-backed C/C++ with quantized weights, tiled VAE execution and architecture-gated sample-cache policies.
 
@@ -2297,7 +2463,9 @@ Implements image and video diffusion in ggml-backed C/C++ with quantized weights
 
 ### [SwiftTransformer](https://github.com/LLMServe/SwiftTransformer)
 
-[support](systems.md#support) · `backend` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `backend` · `text` · **public code**
+
+**Survey relevance:** Reusable execution backend for integration and comparison; component capability is separate from engine construction evidence.
 
 Provides transformer execution with paged attention, continuous batching and tensor/pipeline parallelism behind Python bindings.
 
@@ -2324,7 +2492,9 @@ Provides transformer execution with paged attention, continuous batching and ten
 
 ### [TensorFold](https://github.com/ashhart/TensorFold)
 
-[system](systems.md#system) · `runtime` · `text` · **public code**
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** A native Zig runtime exposes explicit model, format and platform contracts as a reconstruction boundary.
 
 Executes a qualified set of model families from a native Zig binary using format-specific packed-weight readers and Metal/CUDA paths, fusing projections only when their packing contracts match.
 
@@ -2351,7 +2521,9 @@ Executes a qualified set of model families from a native Zig binary using format
 
 ### [tinygrad](https://github.com/tinygrad/tinygrad)
 
-[support](systems.md#support) · `compiler` · `text / image / general` · **public code**
+[foundation](systems.md#foundation) · `support` · `compiler` · `text / image / general` · **public code**
+
+**Survey relevance:** Reusable compiler foundation; compare which lowering and scheduling responsibilities a specialized stack retains or replaces.
 
 Fuses lazy tensor graphs, searches kernel schedules and captures compiled execution sequences with TinyJit for reusable memory-planned replay.
 
@@ -2378,7 +2550,9 @@ Fuses lazy tensor graphs, searches kernel schedules and captures compiled execut
 
 ### [Torch-TensorRT](https://github.com/pytorch/TensorRT)
 
-[support](systems.md#support) · `backend` · `text / image / general` · **public code**
+[foundation](systems.md#foundation) · `support` · `backend` · `text / image / general` · **public code**
+
+**Survey relevance:** Reusable execution backend for integration and comparison; component capability is separate from engine construction evidence.
 
 Partitions exported PyTorch graphs into TensorRT-supported regions, compiles and caches those regions as engines and retains PyTorch execution for unsupported regions.
 
@@ -2411,7 +2585,9 @@ Partitions exported PyTorch graphs into TensorRT-supported regions, compiles and
 
 ### [AgentCompile](https://github.com/veneno1213822/AgentCompile)
 
-[construction](systems.md#construction) · `research-prototype` · `text / image` · **review-use restriction**
+[adjacent](systems.md#adjacent) · `construction` · `research-prototype` · `text / image` · **review-use restriction**
+
+**Survey relevance:** Agent-guided fusion route: a narrower construction comparison with explicit verification and timing caveats.
 
 Combines LLM-guided ranking of bounded CUDA template candidates with contract-oriented fusion-kernel generation and an inference runtime.
 
@@ -2438,7 +2614,9 @@ Combines LLM-guided ranking of bounded CUDA template candidates with contract-or
 
 ### [AKG Agents](https://github.com/mindspore-ai/akg)
 
-[construction](systems.md#construction) · `generator` · `general` · **public code**
+[adjacent](systems.md#adjacent) · `construction` · `generator` · `general` · **public code**
+
+**Survey relevance:** Agent-generated operator route: compares local code synthesis with integrated engine construction.
 
 Generates and migrates accelerator kernels through multi-agent workflows, using UCB-based asynchronous candidate search and backend-specific verification and profiling workers.
 
@@ -2465,7 +2643,9 @@ Generates and migrates accelerator kernels through multi-agent workflows, using 
 
 ### [FastKernels](https://github.com/Snowflake-AI-Research/fastkernels)
 
-[support](systems.md#support) · `verification` · `text / image / video / audio / multimodal / general` · **public code**
+[foundation](systems.md#foundation) · `support` · `verification` · `text / image / video / audio / multimodal / general` · **public code**
+
+**Survey relevance:** Evaluation and integration reference for testing generated components in model workloads.
 
 Replaces candidate operators in production-shaped model pipelines and evaluates both kernel-level numerics/timing and end-to-end token outputs, throughput and latency.
 
@@ -2492,7 +2672,9 @@ Replaces candidate operators in production-shaped model pipelines and evaluates 
 
 ### [Helion](https://github.com/pytorch/helion)
 
-[support](systems.md#support) · `compiler` · `text / general` · **public code**
+[foundation](systems.md#foundation) · `support` · `compiler` · `text / general` · **public code**
+
+**Survey relevance:** Reusable compiler foundation; compare which lowering and scheduling responsibilities a specialized stack retains or replaces.
 
 Compiles Python tile programs into GPU kernels and automatically searches tile sizes, indexing, loop order and launch strategies for bound tensor arguments.
 
@@ -2519,7 +2701,9 @@ Compiles Python tile programs into GPU kernels and automatically searches tile s
 
 ### [KernelAgent](https://github.com/meta-pytorch/KernelAgent)
 
-[construction](systems.md#construction) · `generator` · `general` · **public code**
+[adjacent](systems.md#adjacent) · `construction` · `generator` · `general` · **public code**
+
+**Survey relevance:** Agent-generated kernel and composed-workload route: a construction comparison whose integration scope must be established.
 
 Decomposes PyTorch programs into fusable subgraphs, synthesizes Triton kernels, composes them back into a forward pass and iterates using correctness and hardware-profile feedback.
 
@@ -2546,7 +2730,9 @@ Decomposes PyTorch programs into fusable subgraphs, synthesizes Triton kernels, 
 
 ### [KernelBench](https://github.com/ScalingIntelligence/KernelBench)
 
-[support](systems.md#support) · `verification` · `general` · **public code**
+[foundation](systems.md#foundation) · `support` · `verification` · `general` · **public code**
+
+**Survey relevance:** Operator evaluation foundation; local test success does not establish integrated engine validity.
 
 Compiles generated kernel implementations, compares them against PyTorch reference programs on randomized inputs and times only candidates that pass correctness checks.
 
@@ -2573,7 +2759,9 @@ Compiles generated kernel implementations, compares them against PyTorch referen
 
 ### [MetaInfer](https://github.com/MetaInfer/MetaInfer)
 
-[construction](systems.md#construction) · `generator` · `text` · **public code**
+[core](systems.md#core) · `construction` · `generator` · `text` · **public code**
+
+**Survey relevance:** Connects a disclosed construction workflow to the VibeQwen engine case; the toolbox and generated engine are different artifacts.
 
 Orchestrates coding agents to iteratively build deployment-specific inference servers, then launches fixed server contracts through correctness and performance oracle phases.
 
@@ -2600,7 +2788,9 @@ Orchestrates coding agents to iteratively build deployment-specific inference se
 
 ### [Sol-Engine](https://github.com/NVlabs/Sana/tree/sol-engine)
 
-[construction](systems.md#construction) · `optimizer` · `image / video` · **public code**
+[core](systems.md#core) · `construction` · `optimizer` · `image / video` · **public code**
+
+**Survey relevance:** Connects agent-guided optimization with inspectable model runtimes and their acceptance checks.
 
 Composes model-specific video inference patches for fusion, invariant/cross-KV reuse, approximate denoising cache and sparse attention, with agent-guided configuration and visual-quality checks.
 
@@ -2627,7 +2817,9 @@ Composes model-specific video inference patches for fusion, invariant/cross-KV r
 
 ### [Spec-Bench](https://github.com/hemingkx/Spec-Bench)
 
-[support](systems.md#support) · `verification` · `text` · **public code**
+[foundation](systems.md#foundation) · `support` · `verification` · `text` · **public code**
+
+**Survey relevance:** Evaluation reference for matching speculative-decoding workloads and baseline conditions.
 
 Integrates draft/verification methods with shared task data, accepted-token statistics, timing reports and output-comparison scripts.
 
@@ -2654,7 +2846,9 @@ Integrates draft/verification methods with shared task data, accepted-token stat
 
 ### [TileLang](https://github.com/tile-ai/tilelang)
 
-[support](systems.md#support) · `compiler` · `text / image / video / general` · **public code**
+[foundation](systems.md#foundation) · `support` · `compiler` · `text / image / video / general` · **public code**
+
+**Survey relevance:** Reusable compiler foundation; compare which lowering and scheduling responsibilities a specialized stack retains or replaces.
 
 Lowers tile-level kernel programs through target-specific layout and software-pipeline passes, generating GPU/accelerator code for tiled memory movement and matrix operations.
 
@@ -2681,7 +2875,9 @@ Lowers tile-level kernel programs through target-specific layout and software-pi
 
 ### [Triton](https://github.com/triton-lang/triton)
 
-[support](systems.md#support) · `compiler` · `text / image / video / general` · **public code**
+[foundation](systems.md#foundation) · `support` · `compiler` · `text / image / video / general` · **public code**
+
+**Survey relevance:** Reusable compiler foundation; compare which lowering and scheduling responsibilities a specialized stack retains or replaces.
 
 Compiles block-structured kernel programs for a selected GPU target and specializes cached binaries and autotuned launch configurations to argument signatures and compile-time constants.
 

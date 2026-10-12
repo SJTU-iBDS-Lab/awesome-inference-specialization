@@ -11,6 +11,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 CSV_PATH = ROOT / 'catalog' / 'projects.csv'
+CASES_PATH = ROOT / 'catalog' / 'cases.json'
 SCHEMA = json.loads((ROOT / 'catalog' / 'schema.json').read_text(encoding='utf-8'))
 FAMILIES = SCHEMA['families']
 START = '<!-- CATALOG-START -->'
@@ -32,6 +33,10 @@ def load_rows(path: Path = CSV_PATH) -> list[dict[str, str]]:
         return list(csv.DictReader(fp))
 
 
+def load_cases(path: Path = CASES_PATH) -> list[dict]:
+    return json.loads(path.read_text(encoding='utf-8'))
+
+
 def items(row: dict[str, str], field: str) -> list[str]:
     return row[field].split(';')
 
@@ -45,50 +50,79 @@ def project_links(ids: list[str], by_id: dict[str, dict[str, str]], prefix: str 
 
 
 def render_overview(rows: list[dict[str, str]], chinese: bool = False) -> str:
-    by_id = {r['id']: r for r in rows}
+    cases = {c['id']: c for c in load_cases()}
     key = 'title_cn' if chinese else 'title'
-    desc_key = 'description_cn' if chinese else 'description'
-    counts = {role['id']: sum(r['catalog_role'] == role['id'] for r in rows) for role in SCHEMA['roles']}
-    counts_text = ' · '.join(f"{counts[role['id']]} {role[key]}" for role in SCHEMA['roles'])
-    if chinese:
-        lines = [f"**{len(rows)} 个条目：{counts_text}**", '',
-                 '先看系统利用了什么条件，再看它如何构建。完整条目按[三个阅读角色](docs/systems.md)组织，原有八类机制用于交叉检索。', '',
-                 '### 专用推理系统', '', '| 专用化机会 | 代表系统 | 关注的执行改变 |', '| --- | --- | --- |']
-    else:
-        lines = [f"**{len(rows)} entries: {counts_text}**", '',
-                 'Start with the constraints a system exploits, then follow its construction. Browse all entries by [reading role](docs/systems.md); the eight mechanism families remain a cross-cutting index.', '',
-                 '### Specialized inference systems', '', '| Specialization opportunity | Representative systems | Execution decision |', '| --- | --- | --- |']
-    for group in SCHEMA['system_showcases']:
-        lines.append(f"| {group[key]} | {project_links(group['examples'], by_id)} | {group[desc_key]} |")
-    lines += ['', '### 四种构建方式' if chinese else '### Four construction routes', '',
-              '| 构建方式 | 构建什么、怎样构建 | 案例 |' if chinese else '| Route | What is built and how | Cases |', '| --- | --- | --- |']
-    for group in SCHEMA['build_routes']:
-        lines.append(f"| {group[key]} | {group[desc_key]} | {project_links(group['examples'], by_id)} |")
-    lines += ['', '这些方式可以组合；使用智能体不说明产物必然更快，测试通过也只覆盖相应验证条件。' if chinese else 'Routes can be combined. Agent involvement does not establish a faster artifact; passing tests establishes behavior only within their validation scope.', '',
-              '### 支撑基础设施与参照' if chinese else '### Supporting infrastructure and references', '',
-              '以下项目提供复用组件、比较基线和评测条件，帮助构建和评价前面的专用系统。' if chinese else 'These projects supply reusable components, comparison baselines and evaluation conditions for the systems above.', '']
-    for group in SCHEMA['support_groups']:
-        lines.append(f"- **{group[key]}:** {project_links(group['examples'], by_id)}.")
-    lines += ['', '### 按机制继续查找' if chinese else '### Continue by mechanism', '',
-              ' · '.join(f"[{f[key]} ({sum(r['family'] == f['id'] for r in rows)})](docs/catalog.md#{f['id']})" for f in FAMILIES), '',
-              f"来源核查日期：{max(r['checked_on'] for r in rows)}。精选案例属于阅读入口，不代表性能或成熟度排名。" if chinese else f"Source review: {max(r['checked_on'] for r in rows)}. Featured cases are reading entry points, not a performance or maturity ranking."]
+    summary_key = 'summary_cn' if chinese else 'summary'
+    lines = ['先看构建过程与产出系统，再比较复用边界和证据缺口。以下分组只是阅读顺序；AI 参与不代表效果更好，未披露也不代表纯人工实现。' if chinese else
+             'Follow the construction process to its resulting system, then examine reuse boundaries and missing evidence. These groups guide reading; AI involvement does not imply better results, and missing disclosure does not imply human-only implementation.', '']
+    for group in SCHEMA['case_groups']:
+        lines += [f"### {group[key]}", '', '| 案例 | 为什么研究它 |' if chinese else '| Case | Why study it? |', '| --- | --- |']
+        for id in group['examples']:
+            c = cases[id]
+            lines.append(f"| [{md_cell(c['title'].split(':', 1)[0])}](docs/cases.md#{id}) | {md_cell(c[summary_key])} |")
+        lines.append('')
+    lines += ['### 把案例放回已有路线中比较' if chinese else '### Compare the cases with existing routes', '',
+              '- [历史与相邻路线](docs/systems.md#adjacent)：ZeRO-Inference、FlexGen、DistServe、S-LoRA、MLC LLM 等，帮助判断哪些设计早已有之。' if chinese else
+              '- [Historical and adjacent routes](docs/systems.md#adjacent): ZeRO-Inference, FlexGen, DistServe, S-LoRA and MLC LLM help establish which ideas already exist.',
+              '- [共享基础与对照](docs/systems.md#foundation)：通用引擎、编译器、内核和评测工具，说明系统复用了什么、应该与什么比较。' if chinese else
+              '- [Shared foundations and baselines](docs/systems.md#foundation): general engines, compilers, kernels and evaluators reveal what is reused and what a fair comparison requires.', '',
+              '相关性是这些材料在本 Survey 中的作用，不是质量、成熟度或年代排名。完整[资料库](docs/systems.md)保留既有收录。' if chinese else
+              'Relevance describes a record’s role in this survey, not its quality, maturity or age. The full [library](docs/systems.md) retains the broader collection.', '',
+              '<details>', '<summary>按执行机制检索资料库 / Browse the library by execution mechanism</summary>', '',
+              ' · '.join(f"[{f[key]}](docs/catalog.md#{f['id']})" for f in FAMILIES), '', '</details>']
     return '\n'.join(lines)
 
 
 def render_systems(rows: list[dict[str, str]]) -> str:
-    lines = ['# Systems, construction and supporting infrastructure', '',
+    lines = ['# Survey library / 主题资料库', '',
              '> Generated from [projects.csv](../catalog/projects.csv) and [schema.json](../catalog/schema.json).', '',
-             '[Home](../README.md) · [中文首页](../README_CN.md) · [Mechanism index](catalog.md) · [Classification](taxonomy.md) · [Research agenda](research-agenda.md)', '',
-             'Read **constraints → execution decisions → artifacts → validation → maintenance**. The roles below explain why an entry is here; they do not rank quality, maturity or importance. Each project has one editorial reading role and retains independent mechanism and artifact labels.', '',
-             '按专用系统、构建流程和支撑基础设施浏览；点击项目进入机制说明、适用边界与直接证据。角色用于组织阅读，不能据此认定系统更快或更成熟。', '',
-             ' · '.join(f"[{role['title']}](#{role['id']})" for role in SCHEMA['roles']), '']
+             '[Home](../README.md) · [中文首页](../README_CN.md) · [Core case studies](cases.md) · [Construction comparison](comparison.md) · [Mechanism index](catalog.md) · [Classification](taxonomy.md)', '',
+             'The research object is the construction of specialized execution stacks. Browse by **why an entry matters to this question**, independently of whether it is a system, construction workflow or supporting component. Relevance is not a quality or maturity ranking, and the adjacent group is not an age cutoff.', '',
+             '先按与主题的关系阅读，再看产物角色和技术机制。原有资料保留，但相邻优化路线不作为构建范式变化的直接证据。', '',
+             ' · '.join(f"[{role['title']}](#{role['id']})" for role in SCHEMA['survey_roles']), '']
+    # Preserve incoming anchors for the former artifact-role index.
     for role in SCHEMA['roles']:
-        members = sorted((r for r in rows if r['catalog_role'] == role['id']), key=lambda r: r['project'].lower())
+        lines += [f'<a id="{role["id"]}"></a>']
+    lines += ['', 'Artifact roles retained as independent labels: ' + '; '.join(f"`{r['id']}` — {r['title']}" for r in SCHEMA['roles']) + '.', '']
+    for role in SCHEMA['survey_roles']:
+        members = sorted((r for r in rows if r['survey_role'] == role['id']), key=lambda r: r['project'].lower())
         lines += [f'<a id="{role["id"]}"></a>', '', f"## {role['title']} / {role['title_cn']} ({len(members)})", '',
-                  role['description'], '', role['description_cn'], '', '| Project and evidence | Inspected scope | Artifact |', '| --- | --- | --- |']
+                  role['description'], '', role['description_cn'], '', '| Project and evidence | Why it is in this survey | Artifact role |', '| --- | --- | --- |']
         for r in members:
-            lines.append(f"| [{md_cell(r['project'])}](catalog.md#{r['id']}) | {md_cell(r['target'])} | {r['artifact_type']} |")
+            lines.append(f"| [{md_cell(r['project'])}](catalog.md#{r['id']}) | {md_cell(r['relevance_note'])} | {r['catalog_role']} / {r['artifact_type']} |")
         lines.append('')
+    return '\n'.join(lines) + '\n'
+
+
+CASE_QUESTIONS = [
+    ('motivation', 'Why build it? / 为什么另建'),
+    ('boundary', 'Execution ownership / 重构边界'),
+    ('reuse', 'Retained components / 复用什么'),
+    ('tradeoff', 'Scope given up / 取舍与兼容性'),
+    ('construction', 'Construction process / 怎样构建'),
+    ('ai_role', 'AI participation / AI 参与的直接证据'),
+    ('cost', 'Disclosed effort / 构建投入'),
+    ('validation', 'Validation boundary / 验证覆盖'),
+    ('maintenance', 'Evolution evidence / 适配与维护')]
+
+
+def render_cases(rows: list[dict[str, str]]) -> str:
+    by_id = {r['id']: r for r in rows}
+    cases = load_cases()
+    lines = ['# Core cases: how execution stacks are built / 核心案例', '',
+             '> Generated from [cases.json](../catalog/cases.json). Cases connect construction processes to artifacts; they are not additional repository counts.', '',
+             '[Home](../README.md) · [中文首页](../README_CN.md) · [Survey library](systems.md) · [Construction comparison](comparison.md) · [Evidence policy](evidence-policy.md)', '',
+             'Read motivation → execution ownership → retained components and lost generality → construction → validation and maintenance. A case can be selected without AI attribution. Rebuilding an execution path need not mean writing every dependency from scratch.', '',
+             '本页关注“为何重构、重构了多少、怎样构建、是否值得维护”。未知项明确保留；作者披露、源码检查、独立复现和生产使用是不同证据。案例资格不等于证明 AI 降低了总成本。', '',
+             'No case performance was independently reproduced here. “Not disclosed” and “not established” describe the reviewed sources, not an assertion that an activity never occurred.', '',
+             ' · '.join(f"[{md_cell(c['title'])}](#{c['id']})" for c in cases), '']
+    for c in cases:
+        lines += [f'<a id="{c["id"]}"></a>', '', f"## {md_cell(c['title'])}", '',
+                  '**Related project records:** ' + project_links(c['project_ids'], by_id, '') + '.', '']
+        for field, label in CASE_QUESTIONS:
+            lines += [f"- **{label}:** {md_cell(c[field])}"]
+        lines += ['', '**Sources:** ' + ' · '.join(f'[Source {i}]({url})' for i, url in enumerate(c['evidence_urls'], 1)) + '.', '',
+                  f"**Reviewed:** {c['checked_on']}. See the linked project record for mechanism-specific caveats.", '']
     return '\n'.join(lines) + '\n'
 
 
@@ -112,8 +146,8 @@ def render_catalog(rows: list[dict[str, str]]) -> str:
         lines += [f'<a id="{f["id"]}"></a>', '', f"## {f['title']} / {f['title_cn']} ({len(these)})", '', f"**{f['question']}** {f['description']}", '']
         for r in these:
             lines += [f'<a id="{r["id"]}"></a>', '', f"### [{md_cell(r['project'])}]({r['url']})", '',
-                      f"[{r['catalog_role']}](systems.md#{r['catalog_role']}) · `{r['artifact_type']}` · `{' / '.join(items(r, 'domains'))}` · **{SOURCES[r['source_visibility']]}**", '',
-                      md_cell(r['mechanism']), '', f"**Scope:** {md_cell(r['target'])}", '',
+                      f"[{r['survey_role']}](systems.md#{r['survey_role']}) · `{r['catalog_role']}` · `{r['artifact_type']}` · `{' / '.join(items(r, 'domains'))}` · **{SOURCES[r['source_visibility']]}**", '',
+                      f"**Survey relevance:** {md_cell(r['relevance_note'])}", '', md_cell(r['mechanism']), '', f"**Scope:** {md_cell(r['target'])}", '',
                       f"**Boundary:** {md_cell(r['caveat'])}", '',
                       f"**Semantic considerations:** {effect_label(r)}.", '',
                       '<details>', '<summary>Mechanism tags and source evidence / 机制标签与证据</summary>', '',
@@ -126,16 +160,24 @@ def render_catalog(rows: list[dict[str, str]]) -> str:
 
 
 def render_comparison(rows: list[dict[str, str]]) -> str:
-    lines = ['# Comparison by artifact and semantic effect', '',
-             '> Generated from [projects.csv](../catalog/projects.csv). This is a capability index, not a speed or quality ranking.', '',
-             '[Home](../README.md) · [Systems & construction](systems.md) · [Full descriptions and evidence](catalog.md) · [How to read semantic labels](taxonomy.md#semantic-effects)', '',
-             'Reading roles identify systems, construction workflows and supporting references. Modality tags refer to the inspected scope, not exhaustive compatibility. `general` marks tensor/compiler infrastructure. Hardware and model constraints are in each linked record. Source visibility does not establish license suitability.', '']
+    lines = ['# Compare construction boundaries / 构建方式对照', '',
+             '> Generated from [cases.json](../catalog/cases.json) and [projects.csv](../catalog/projects.csv). No speed, maturity or cost ranking is implied.', '',
+             '[Home](../README.md) · [Core case studies](cases.md) · [Survey library](systems.md) · [Evidence policy](evidence-policy.md)', '',
+             'Start with what is rebuilt and what effort is disclosed. Read each case for retained components, sacrificed compatibility, AI participation, validation and maintenance. Unknown costs cannot be treated as zero; reported build effort is not a controlled comparison of development methods.', '',
+             '先比较执行栈边界和已披露的构建投入，再查机制。是否降低总成本，需要计入验证、集成、适配和维护，并与保留通用引擎的方案比较。', '',
+             '| Case | Execution ownership | Construction effort evidence |', '| --- | --- | --- |']
+    for c in load_cases():
+        lines.append(f"| [{md_cell(c['title'].split(':', 1)[0])}](cases.md#{c['id']}) | {md_cell(c['boundary'])} | {md_cell(c['cost'])} |")
+    lines += ['', '## Library facets / 资料库的独立标签', '',
+              'The full mechanism-oriented index is retained below. Survey relevance and artifact role answer different questions. Modality refers to inspected scope; semantic labels identify evaluation obligations, not correctness guarantees.', '',
+              '<details>', '<summary>Expand all project facets / 展开全部项目标签</summary>', '']
     for f in FAMILIES:
-        lines += [f"## {f['title']}", '', '| Project / reading role | Artifact / modality | Semantic considerations |', '| --- | --- | --- |']
+        lines += [f"### {f['title']}", '', '| Project / survey relevance | Artifact role / modality | Semantic considerations |', '| --- | --- | --- |']
         for r in sorted((r for r in rows if r['family'] == f['id']), key=lambda r: r['project'].lower()):
             status = '' if r['source_visibility'] == 'public-code' else f" · **{SOURCES[r['source_visibility']]}**"
-            lines.append(f"| [{md_cell(r['project'])}](catalog.md#{r['id']}) · {r['catalog_role']}{status} | {r['artifact_type']} / {', '.join(items(r, 'domains'))} | {effect_label(r)} |")
+            lines.append(f"| [{md_cell(r['project'])}](catalog.md#{r['id']}) · {r['survey_role']}{status} | {r['catalog_role']} / {r['artifact_type']} / {', '.join(items(r, 'domains'))} | {effect_label(r)} |")
         lines.append('')
+    lines += ['</details>', '']
     return '\n'.join(lines) + '\n'
 
 
@@ -144,6 +186,7 @@ def generated_files(rows: list[dict[str, str]]) -> dict[Path, str]:
     for name, chinese in [('README.md', False), ('README_CN.md', True)]:
         path = ROOT / name
         outputs[path] = updated_text(path.read_text(encoding='utf-8'), render_overview(rows, chinese))
+    outputs[ROOT / 'docs/cases.md'] = render_cases(rows)
     outputs[ROOT / 'docs/systems.md'] = render_systems(rows)
     outputs[ROOT / 'docs/catalog.md'] = render_catalog(rows)
     outputs[ROOT / 'docs/comparison.md'] = render_comparison(rows)
@@ -152,7 +195,7 @@ def generated_files(rows: list[dict[str, str]]) -> dict[Path, str]:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument('--check', action='store_true', help='Check all five generated views')
+    parser.add_argument('--check', action='store_true', help='Check all six generated views')
     args = parser.parse_args()
     rows = load_rows()
     if not rows:
@@ -166,7 +209,7 @@ def main() -> int:
     if args.check and changed:
         print('Generated views are stale: ' + ', '.join(changed), file=sys.stderr)
         return 1
-    print(f'{len(rows)} entries; five generated views ' + ('in sync' if args.check else 'updated'))
+    print(f'{len(rows)} entries; six generated views ' + ('in sync' if args.check else 'updated'))
     return 0
 
 

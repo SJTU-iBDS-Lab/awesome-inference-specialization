@@ -1,0 +1,318 @@
+[
+  {
+    "id": "vibeqwen",
+    "title": "VibeQwen: from MetaInfer workflow to a serving stack",
+    "project_ids": [
+      "metainfer"
+    ],
+    "summary": "An author-reported experiment adapted MetaInfer and reused existing kernels to build a deployment-specific Qwen serving stack.",
+    "summary_cn": "一个改造智能体工作流、复用现有内核来构建专用执行栈的实验案例。",
+    "motivation": "Target lower latency than a general engine for Qwen-3.6-35B-A3B NVFP4 on one B200.",
+    "boundary": "Model execution and serving integration, evaluated as deployed services; public VibeQwen engine source was not established.",
+    "reuse": "vLLM/TensorRT-LLM kernels and references; MetaInfer is the adapted workflow, not VibeQwen source.",
+    "tradeoff": "NVFP4 numerical differences were accepted if accuracy against BF16 was at least as good.",
+    "construction": "Agent build/deploy/profile iterations: about one week, 1.7B mostly cached tokens and approximately 200 B200-hours.",
+    "ai_role": "Disclosed: Claude Code with human steering, deployment access and measurement tools.",
+    "cost": "Resource usage reported; fee estimates do not establish total development cost.",
+    "validation": "Author-reported performance and accuracy checks; experimental, not production. No independent reproduction here.",
+    "maintenance": "Long-term compatibility, regression coverage and maintenance effort were not established by the report.",
+    "evidence_urls": [
+      "https://www.baseten.co/blog/agentic-inference-optimization-faster-than-sota/",
+      "https://github.com/MetaInfer/MetaInfer/blob/HEAD/README.md",
+      "https://github.com/MetaInfer/MetaInfer/blob/HEAD/metainfer/tasks/gen_infer_framework/orchestrator/pipeline.py"
+    ],
+    "checked_on": "2026-10-12"
+  },
+  {
+    "id": "sol-engine",
+    "title": "Sol-Engine: compose and qualify model-specific optimizations",
+    "project_ids": [
+      "sol-engine"
+    ],
+    "summary": "An agent-oriented workflow assembles model-specific video execution paths from reusable optimizations and measured quality constraints.",
+    "summary_cn": "以智能体工作流组合模型专用优化，并以延迟和图像质量约束筛选配置。",
+    "motivation": "The README identifies denoising-step redundancy, sparse interactions and repeated memory-bound operations as optimization opportunities.",
+    "boundary": "The reviewed artifact is an optimized video codebase and configuration workflow, not a replacement for every serving layer.",
+    "reuse": "Builds on SGLang multimodal_gen and existing model pipelines; combines cache, quantization, fusion, sparse attention and pruning.",
+    "tradeoff": "Cache, sparsity and precision choices can change outputs; their effects must be separated from exact implementation changes.",
+    "construction": "Documented workflow: executors explore configurations; an orchestrator checks, deduplicates and integrates results into reproducible run bundles.",
+    "ai_role": "Intrinsic: the documented onboarding and optimization workflow uses coding agents; authored kernels remain reusable components.",
+    "cost": "Total development tokens, GPU-hours and human maintenance costs are not disclosed in reviewed sources.",
+    "validation": "Documented gates include LPIPS, visual review and checks that optimizations actually engaged; these are not equivalence proofs.",
+    "maintenance": "Per-model hooks and backend combinations need qualification; long-term maintenance effort is not established.",
+    "evidence_urls": [
+      "https://github.com/NVlabs/Sana/blob/sol-engine/README.md",
+      "https://github.com/NVlabs/Sana/blob/sol-engine/models/wan22_ti2v_5b/optimized/wan_kernel_runtime.py",
+      "https://github.com/NVlabs/Sana/blob/sol-engine/models/wan22_ti2v_5b/optimized/cache_runtime.py",
+      "https://github.com/NVlabs/Sana/blob/sol-engine/tools/vision/lpips_judge.py",
+      "https://github.com/NVlabs/Sana/blob/sol-engine/techniques/sparse_backends/sol_attn/interface.py",
+      "https://github.com/NVlabs/Sana/blob/sol-engine/site_docs/agent-workflow.md"
+    ],
+    "checked_on": "2026-10-12"
+  },
+  {
+    "id": "flash-moe",
+    "title": "Flash-MoE: SSD-streamed experts in a native prototype",
+    "project_ids": [
+      "flash-moe"
+    ],
+    "summary": "A fixed-model C/Metal prototype streams expert weights from SSD and controls the execution pipeline directly.",
+    "summary_cn": "围绕固定模型和苹果统一内存机器，直接组织 SSD 专家读取与 C/Metal 执行。",
+    "motivation": "The stated target is running Qwen3.5-397B-A17B on a 48 GB MacBook despite weights exceeding RAM.",
+    "boundary": "Owns model inference, routing, I/O and Metal execution; this is a narrow research prototype rather than a generic loader.",
+    "reuse": "Uses Apple Metal, Accelerate BLAS, dispatch groups and the operating-system page cache alongside pretrained model weights.",
+    "tradeoff": "The executable uses four experts although its source identifies ten active experts in the model; quantization adds another change.",
+    "construction": "The author reports human–AI prototype construction; C/Metal sources expose the result. Detailed task division and iteration history are not established.",
+    "ai_role": "Disclosed: the project describes a human-and-AI build. That statement does not establish autonomous correctness.",
+    "cost": "The README reports a 24-hour human–AI prototype build; total lifecycle expenditure is not disclosed.",
+    "validation": "The K=4 source and reported 2-bit JSON failures prevent treating headline speed as an equivalent top-10 baseline.",
+    "maintenance": "Model geometry and packed files are specific; broader compatibility and sustained maintenance are not established.",
+    "evidence_urls": [
+      "https://github.com/danveloper/flash-moe/blob/3601d41882a346d85041f7955c66429d248e8cd9/README.md",
+      "https://github.com/danveloper/flash-moe/blob/3601d41882a346d85041f7955c66429d248e8cd9/CLAUDE.md",
+      "https://github.com/danveloper/flash-moe/blob/3601d41882a346d85041f7955c66429d248e8cd9/metal_infer/infer.m",
+      "https://github.com/danveloper/flash-moe/blob/3601d41882a346d85041f7955c66429d248e8cd9/metal_infer/shaders.metal"
+    ],
+    "checked_on": "2026-10-12"
+  },
+  {
+    "id": "dwarfstar",
+    "title": "DwarfStar: a deliberately narrow native execution stack",
+    "project_ids": [
+      "dwarfstar"
+    ],
+    "summary": "A native stack integrates selected model paths, state management and local serving around consumer-hardware constraints.",
+    "summary_cn": "以少数模型和消费级硬件为边界，联合构建原生执行、状态管理与本地服务。",
+    "motivation": "The author explicitly cites capable local models, expert quantization, compressed KV and fast SSDs as reasons for specialization.",
+    "boundary": "Owns a narrow inference path plus CLI/server integration; it deliberately does not accept arbitrary GGUF models.",
+    "reuse": "Its ds4.c inference path does not link GGML, but credits llama.cpp/GGML and retains or adapts quantization layouts, CPU logic and kernels.",
+    "tradeoff": "Capacity depends on resident state, expert precision and SSD traffic; model coverage is intentionally selective.",
+    "construction": "Public artifacts show native model paths and adapted lower-level code; the author describes humans guiding agent-assisted implementation, testing and debugging.",
+    "ai_role": "Disclosed: strong coding-agent assistance, with humans leading ideas, testing and debugging.",
+    "cost": "Total construction time, token usage and engineering expenditure are not disclosed in reviewed sources.",
+    "validation": "The repository describes release QA and integrated tests; this survey did not reproduce its performance or numerical results.",
+    "maintenance": "The author calls it beta and rapidly changing; supported models may be replaced as the project evolves.",
+    "evidence_urls": [
+      "https://github.com/antirez/ds4/blob/HEAD/README.md",
+      "https://github.com/antirez/ds4/blob/HEAD/docs/SSD_STREAMING.md",
+      "https://github.com/antirez/ds4/blob/HEAD/metal/moe.metal"
+    ],
+    "checked_on": "2026-10-12"
+  },
+  {
+    "id": "strata",
+    "title": "Strata: tier experts around a gaming PC",
+    "project_ids": [
+      "strata"
+    ],
+    "summary": "A Qwen-specific runtime combines GPU-resident work with CPU expert execution and explicit memory budgets.",
+    "summary_cn": "针对普通游戏电脑，将 GPU 热专家、CPU 冷专家和状态存储组合成模型专用运行时。",
+    "motivation": "The stated goal is local Qwen3.8-Flash-Next inference on consumer NVIDIA or AMD PCs rather than server-sized GPU memory.",
+    "boundary": "Integrates inference, memory policy and local APIs around one model family and qualified quantized layouts.",
+    "reuse": "Credits GGML quantization formats, GPU dot/dequantization code, CPU expert kernels and the mtmd vision helper.",
+    "tradeoff": "Eligible configurations enable route-tail-skip by default, dropping some missed experts; residency and CPU/GPU rounding also affect outputs.",
+    "construction": "Public artifacts show a C++ runtime with CUDA/HIP and GGML-derived components. Development tools, task division and iteration history are not disclosed.",
+    "ai_role": "Not established in reviewed sources. Compatibility with coding-agent clients is not evidence of AI-authored implementation.",
+    "cost": "Development time, token expenditure and controlled construction-cost comparisons are not disclosed.",
+    "validation": "Documented benchmark scenarios and source inspection expose configuration differences; no independent performance or quality reproduction was run.",
+    "maintenance": "Device, quantization and skip-policy combinations require version-specific checks; maintenance effort is not disclosed.",
+    "evidence_urls": [
+      "https://github.com/Niko1221/Strata/blob/7695859aa13afb248bdb4d36f9b2e95707db079d/README.md",
+      "https://github.com/Niko1221/Strata/blob/7695859aa13afb248bdb4d36f9b2e95707db079d/docs/DETAILS.md",
+      "https://github.com/Niko1221/Strata/blob/7695859aa13afb248bdb4d36f9b2e95707db079d/src/core/expert_cache.cpp"
+    ],
+    "checked_on": "2026-10-12"
+  },
+  {
+    "id": "iris",
+    "title": "Iris: own the image pipeline in C",
+    "project_ids": [
+      "iris"
+    ],
+    "summary": "A C image-generation pipeline replaces framework-level execution for selected architectures while retaining platform acceleration.",
+    "summary_cn": "用 C 接管选定图像模型的完整推理流程，同时复用系统数学库和 GPU 能力。",
+    "motivation": "The README emphasizes minimal runtime dependencies and memory-mapped execution on machines with limited RAM.",
+    "boundary": "Implements text encoding, diffusion-transformer execution and image decoding for selected FLUX and Z-Image variants.",
+    "reuse": "Consumes existing model weights and safetensors; accelerated paths use system Metal/MPS and optional BLAS.",
+    "tradeoff": "Native implementation narrows dependencies, but CPU fallbacks and different model variants do not have identical performance or quality.",
+    "construction": "Public artifacts show architecture-specific C implementation and platform backends. Sources describe C/Python reference debugging, but not the full development sequence or task division.",
+    "ai_role": "Not established in reviewed sources; disclosure from the author’s other projects must not be transferred to Iris.",
+    "cost": "Construction time, AI-token spending and maintenance economics are not disclosed in reviewed sources.",
+    "validation": "The repository describes reference-image checks and C/Python debugging comparisons; performance and output claims were not independently reproduced.",
+    "maintenance": "New architectures need implementation and reference checks; the reviewed sources do not quantify that continuing effort.",
+    "evidence_urls": [
+      "https://github.com/antirez/iris.c/blob/main/README.md",
+      "https://github.com/antirez/iris.c/blob/main/iris_safetensors.c",
+      "https://github.com/antirez/iris.c/blob/main/iris_transformer_flux.c"
+    ],
+    "checked_on": "2026-10-12"
+  },
+  {
+    "id": "tensorfold",
+    "title": "TensorFold: qualify native paths by checkpoint and platform",
+    "project_ids": [
+      "tensorfold"
+    ],
+    "summary": "A Zig server admits explicit model–format–platform combinations and executes their native Metal or CUDA paths.",
+    "summary_cn": "以模型、权重格式和平台的资格表限定支持范围，再提供原生 Zig 服务与专用执行。",
+    "motivation": "Documented objective: serve qualified language-model checkpoints directly from a binary without a Python or MLX serving installation.",
+    "boundary": "Owns loading, tokenization, serving and execution for admitted combinations; experimental Living Weights is a separate model-changing feature.",
+    "reuse": "Reuses existing model checkpoints, quantization encodings and platform GPU runtimes; reading an MLX format does not mean running MLX.",
+    "tradeoff": "Packed formats and backend capabilities constrain fusion; a supported model name alone does not qualify every checkpoint.",
+    "construction": "Public artifacts show native Zig model paths and format-aware readers. The authoring workflow and division of implementation work are not disclosed.",
+    "ai_role": "Not established in reviewed sources; native code or compact packaging does not identify its authorship process.",
+    "cost": "Development time, token/GPU expenditure and long-term engineering costs are not disclosed.",
+    "validation": "The README provides qualification tables, golden-test commands and cache-state checks; this survey did not rerun them.",
+    "maintenance": "Qualification is versioned and hardware-specific; adding readers or platforms creates additional compatibility obligations.",
+    "evidence_urls": [
+      "https://github.com/ashhart/TensorFold/blob/HEAD/README.md",
+      "https://github.com/ashhart/TensorFold/blob/HEAD/docs/quantization.md",
+      "https://github.com/ashhart/TensorFold/blob/HEAD/zig/src/families/nemotron/forward.zig"
+    ],
+    "checked_on": "2026-10-12"
+  },
+  {
+    "id": "halogen-flash",
+    "title": "Halogen Flash: specialize a closed binary to one chip",
+    "project_ids": [
+      "halogen-flash"
+    ],
+    "summary": "A distributed binary targets one Qwen family and AMD Strix Halo, with public deployment and quantization descriptions.",
+    "summary_cn": "以一个模型家族和一类芯片为边界发布专用二进制，公开部署与量化说明。",
+    "motivation": "The README explicitly trades portability for model-and-chip specialization, targeting long local coding-agent sessions.",
+    "boundary": "Public material exposes deployment and behavior; the core engine and complete tensor-level quantization choices are not publicly inspectable.",
+    "reuse": "Uses pretrained weights and accepts selected llama.cpp GGUF files; underlying implementation reuse is not established by public documentation.",
+    "tradeoff": "Mixed precision and narrow hardware support shape the result; repeatable binary benchmarks cannot substitute for source-level inspection.",
+    "construction": "Documentation describes dedicated attention/expert kernels, separate state budgets and a paged n-gram lookup table.",
+    "ai_role": "Not established in reviewed sources; serving agents does not establish that agents built the engine.",
+    "cost": "Development time, token usage and engineering costs are not disclosed in reviewed sources.",
+    "validation": "The publisher provides verification and benchmark modes; their numerical guarantees and performance were not independently reproduced here.",
+    "maintenance": "Compatibility follows binary releases and supported hardware; maintenance effort and reproducible source builds are not established.",
+    "evidence_urls": [
+      "https://github.com/peonist-ai/halogen-flash-server/blob/HEAD/README.md",
+      "https://github.com/peonist-ai/halogen-flash-server/blob/HEAD/docs/QUANT.md",
+      "https://github.com/peonist-ai/halogen-flash-server/blob/HEAD/LICENSE.md"
+    ],
+    "checked_on": "2026-10-12"
+  },
+  {
+    "id": "magnitude",
+    "title": "Magnitude: specialize kernels inside MLX execution",
+    "project_ids": [
+      "magnitude"
+    ],
+    "summary": "The reviewed Metal path captures typed operations and constructs specialized fused kernels inside MLX’s execution machinery.",
+    "summary_cn": "在 MLX 执行体系内捕获带类型的运算，按数值契约与张量布局构造专用融合内核。",
+    "motivation": "The README presents local, hardware-specific compilation and tuning for agent inference; historical framework bottlenecks are not established.",
+    "boundary": "The inspected kernel layer owns planning and generated entry points, not a second device runtime or independent scheduler.",
+    "reuse": "Retains MLX arrays, tracing, compilation and dependency management, combining upstream primitives with handwritten Metal implementations.",
+    "tradeoff": "Encodings, shapes and numerical contracts restrict legal composition; unfamiliar operations and shapeless compilation retain upstream behavior.",
+    "construction": "Capture operations, select compatible implementations, emit Metal entry points, then reconnect the transformed graph to native MLX compilation.",
+    "ai_role": "Not established in reviewed sources; an engine for agents is not automatically an agent-generated engine.",
+    "cost": "Total development effort and amortization of device-specific tuning are not disclosed in reviewed sources.",
+    "validation": "Design documents define qualification obligations; inspecting compiler code does not prove every handwritten kernel satisfies them.",
+    "maintenance": "The evidence covers inference-v2 Metal/MLX; other backends and continuing qualification costs remain outside this audit.",
+    "evidence_urls": [
+      "https://github.com/magnitudedev/magnitude/blob/HEAD/README.md",
+      "https://github.com/magnitudedev/magnitude/blob/HEAD/inference-v2/design/kernels.md",
+      "https://github.com/magnitudedev/magnitude/blob/HEAD/inference-v2/src/magnitude_engine/kernels/core/compiler.py"
+    ],
+    "checked_on": "2026-10-12"
+  },
+  {
+    "id": "ktransformers",
+    "title": "KTransformers: integrate CPU expert execution with GPU serving",
+    "project_ids": [
+      "ktransformers"
+    ],
+    "summary": "A specialized heterogeneous backend uses CPU capacity and instruction sets for MoE experts while retaining GPU serving components.",
+    "summary_cn": "将面向 CPU 指令集与 NUMA 的专家执行后端接入 GPU 服务路径。",
+    "motivation": "The documented use case is large MoE inference with limited GPU resources and substantial CPU memory.",
+    "boundary": "The reviewed kt-kernel path is an integrated backend; it is distinct from legacy injection examples and separate training features.",
+    "reuse": "Reuses GPU serving integrations, model formats and libraries including a llamafile-based CPU backend, alongside AMX/AVX-specific implementations.",
+    "tradeoff": "The useful partition depends on CPU ISA, NUMA placement, precision and communication costs; CPU capacity alone does not guarantee speed.",
+    "construction": "The project documents kt-kernel implementations and serving integration. Its development iterations and division of work between people and tools are not established.",
+    "ai_role": "Not established in reviewed sources. Supporting agent workloads does not disclose an AI development process.",
+    "cost": "Hardware configurations are documented; controlled construction-time and maintenance-cost accounting is not disclosed.",
+    "validation": "README support matrices and an AMX MoE implementation were inspected; benchmark and correctness claims were not independently reproduced.",
+    "maintenance": "Kernel variants, weight formats and serving integrations evolve separately and require compatible versions.",
+    "evidence_urls": [
+      "https://github.com/kvcache-ai/ktransformers/blob/HEAD/README.md",
+      "https://github.com/kvcache-ai/ktransformers/blob/HEAD/kt-kernel/README.md",
+      "https://github.com/kvcache-ai/ktransformers/blob/HEAD/kt-kernel/operators/amx/moe.hpp"
+    ],
+    "checked_on": "2026-10-12"
+  },
+  {
+    "id": "nunchaku",
+    "title": "Nunchaku: build execution around an SVDQuant artifact",
+    "project_ids": [
+      "nunchaku"
+    ],
+    "summary": "A low-bit diffusion backend co-designs packed weights and fused execution so the outlier-correction branch remains affordable.",
+    "summary_cn": "围绕 SVDQuant 权重与低秩修正分支，联合设计低比特布局和融合执行。",
+    "motivation": "The documented problem is that an otherwise useful low-rank branch adds activation reads and writes that erode quantization gains.",
+    "boundary": "Implements specialized diffusion-model execution components and integrations; it does not replace all text encoding, decoding or application layers.",
+    "reuse": "Uses DeepCompressor-prepared checkpoints and existing PyTorch/Diffusers integrations; low-bit and low-rank CUDA kernels supply the specialized path.",
+    "tradeoff": "Quantization changes numerical computation; reduced offloading, optional caching and checkpoint changes must be separated from kernel-level benefits.",
+    "construction": "Source exposes custom CUDA operations through Python model adapters. The development chronology and division of automated and human work are not established.",
+    "ai_role": "Not established in reviewed sources; model quantization and automatic kernels do not imply coding-agent authorship.",
+    "cost": "Calibration and conversion are preparation work; developer effort and total construction economics are not disclosed.",
+    "validation": "Public examples, quality results and kernels support inspection, but this survey did not independently reproduce image quality or speed.",
+    "maintenance": "Support depends on checkpoint format, model adapters and CUDA/PyTorch compatibility; maintenance effort is not quantified.",
+    "evidence_urls": [
+      "https://github.com/nunchux-ai/nunchaku/blob/main/README.md",
+      "https://github.com/nunchux-ai/nunchaku/blob/main/nunchaku/models/linear.py",
+      "https://github.com/nunchux-ai/nunchaku/blob/main/src/kernels/zgemm/gemm_w4a4.cu"
+    ],
+    "checked_on": "2026-10-12"
+  },
+  {
+    "id": "exllamav3",
+    "title": "ExLlamaV3: couple low-bit artifacts to a dedicated library",
+    "project_ids": [
+      "exllamav3"
+    ],
+    "summary": "A local-inference library couples EXL3 encoding, quantized state and qualified execution paths for consumer GPUs.",
+    "summary_cn": "将 EXL3 编码、低比特状态与专用执行路径配套，服务消费级 GPU 本地推理。",
+    "motivation": "The README targets flexible quantization, parallel inference and large models with limited consumer-GPU resources.",
+    "boundary": "Provides model execution and generation machinery; the recommended OpenAI-compatible server is the separate TabbyAPI project.",
+    "reuse": "EXL3 builds on QTIP; the project uses PyTorch and credits FlashAttention, Marlin and vendored Flash Linear Attention kernels.",
+    "tradeoff": "Weight/KV precision, model layout and decode geometry constrain optimized paths; quantized results are not the full-precision reference.",
+    "construction": "Public artifacts provide a dedicated inference library and conversion tools. The development workflow is not disclosed; weight conversion is deployment preparation, not engine authorship evidence.",
+    "ai_role": "Not established in reviewed sources. Automated conversion and dispatch do not identify the software’s development process.",
+    "cost": "The README reports conversion in minutes to hours on a high-end consumer GPU, depending on model size; total engineering costs are unknown.",
+    "validation": "Optimization documentation and quantized-cache code were inspected; conversion quality and end-to-end speed were not independently reproduced.",
+    "maintenance": "Model support, kernel eligibility and PyTorch/CUDA/Triton versions create separate compatibility obligations.",
+    "evidence_urls": [
+      "https://github.com/turboderp-org/exllamav3/blob/HEAD/README.md",
+      "https://github.com/turboderp-org/exllamav3/blob/HEAD/doc/optimize.md",
+      "https://github.com/turboderp-org/exllamav3/blob/HEAD/exllamav3/cache/quant.py"
+    ],
+    "checked_on": "2026-10-12"
+  },
+  {
+    "id": "mirage",
+    "title": "Mirage MPK: compile an explicit graph into persistent execution",
+    "project_ids": [
+      "mirage"
+    ],
+    "summary": "A compiler/runtime turns an assembled LLM task graph into persistent GPU execution spanning computation and communication.",
+    "summary_cn": "将显式组装的 LLM 任务图编译为覆盖计算与通信的持久 GPU 执行程序。",
+    "motivation": "The documented objective is reducing inference latency by moving model-wide execution into a single persistent megakernel.",
+    "boundary": "This case covers the MPK branch and its supported task graph, not automatic support for arbitrary Hugging Face models.",
+    "reuse": "Attaches existing PyTorch tensors, uses CUDA and NVSHMEM resources, and assembles supported fused operations rather than inventing model weights.",
+    "tradeoff": "Graph coverage, tensor geometry and worker/scheduler allocation constrain generated programs; hardware resources must be budgeted explicitly.",
+    "construction": "Define inputs, outputs and fused tasks, configure GPU workers, compile the graph and execute the resulting persistent program.",
+    "ai_role": "Not established in reviewed sources; compiler automation is not itself evidence of coding-agent participation.",
+    "cost": "End-to-end construction, tuning and maintenance costs are not disclosed in reviewed sources.",
+    "validation": "Public demos and profiling interfaces expose execution; this survey inspected compiler/runtime boundaries without reproducing reported speedups.",
+    "maintenance": "New models require supported task implementations and graph assembly; hardware changes require configuration and compatibility checks.",
+    "evidence_urls": [
+      "https://github.com/mirage-project/mirage/blob/mpk/README.md",
+      "https://github.com/mirage-project/mirage/blob/mpk/python/mirage/mpk/persistent_kernel.py",
+      "https://github.com/mirage-project/mirage/blob/mpk/include/mirage/persistent_kernel/persistent_kernel.cuh"
+    ],
+    "checked_on": "2026-10-12"
+  }
+]
