@@ -84,6 +84,16 @@ def validate(rows: list[dict[str, str]]) -> list[str]:
                     errors.append(f'Missing showcase example: {example}')
                 elif group_name == 'support_groups' and record.get('catalog_role') != 'support':
                     errors.append(f'Support list must point to a supporting entry: {example}')
+    support_ids = [id for group in SCHEMA['support_groups'] for id in group['examples']]
+    if len(support_ids) != len(set(support_ids)) or set(support_ids) != {r['id'] for r in rows if r['catalog_role'] == 'support'}:
+        errors.append('Companion resource groups must cover each support project exactly once')
+    benchmark_ids = [entry['id'] for entry in SCHEMA['benchmark_entries']]
+    if len(benchmark_ids) != len(set(benchmark_ids)) or set(benchmark_ids) != {r['id'] for r in rows if r['catalog_role'] == 'benchmark'}:
+        errors.append('Benchmark index must cover each benchmark project exactly once')
+    by_id = {r['id']: r for r in rows}
+    for entry in SCHEMA['homepage_construction']:
+        if by_id.get(entry['id'], {}).get('catalog_role') != 'construction':
+            errors.append(f'Construction showcase must identify a construction workflow: {entry["id"]}')
     return errors
 
 
@@ -133,9 +143,12 @@ def validate_cases(cases: list[dict], rows: list[dict[str, str]]) -> list[str]:
             errors.append(f"Core project lacks a construction case: {r['id']}")
     featured = [id for group in SCHEMA['case_groups'] for id in group['examples']]
     if len(featured) != len(set(featured)):
-        errors.append('Duplicate homepage case')
+        errors.append('Duplicate case-index entry')
     if set(featured) != ids:
-        errors.append('Homepage cases must match the curated case collection')
+        errors.append('Case index must match the curated case collection')
+    for group in SCHEMA['case_groups']:
+        if not set(group.get('featured', [])).issubset(group['examples']):
+            errors.append('Homepage selection must belong to its case reading route')
     return errors
 
 

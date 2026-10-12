@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "families": [
     {
       "id": "memory",
@@ -11,8 +11,8 @@
       "description_cn": "权重、专家和 KV 的驻留、分页、预取与卸载。",
       "examples": [
         "ktransformers",
-        "vattention",
-        "mooncake"
+        "strata",
+        "flash-moe"
       ]
     },
     {
@@ -25,8 +25,7 @@
       "description_cn": "联合设计低比特格式、布局和执行内核。",
       "examples": [
         "exllamav3",
-        "nunchaku",
-        "t-mac"
+        "nunchaku"
       ]
     },
     {
@@ -38,9 +37,7 @@
       "description": "Select neurons, tokens or attention blocks; expose approximation.",
       "description_cn": "选择神经元、token 或注意力块，并明确近似条件。",
       "examples": [
-        "minference",
-        "snapkv",
-        "sparse-videogen"
+        "powerinfer"
       ]
     },
     {
@@ -52,9 +49,7 @@
       "description": "Reuse request prefixes, features or attention across steps.",
       "description_cn": "复用请求前缀、特征或跨时间步注意力结果。",
       "examples": [
-        "lmcache",
-        "teacache",
-        "taylorseer"
+        "videosys"
       ]
     },
     {
@@ -66,8 +61,6 @@
       "description": "Draft and verify tokens, or reorganize block generation.",
       "description_cn": "候选生成与验证，或重新组织块生成流程。",
       "examples": [
-        "eagle",
-        "lookahead",
         "inferix"
       ]
     },
@@ -80,8 +73,6 @@
       "description": "Partition stages, devices and requests around workload constraints.",
       "description_cn": "围绕负载约束安排阶段、设备与请求。",
       "examples": [
-        "distserve",
-        "sarathi-serve",
         "xdit"
       ]
     },
@@ -94,8 +85,8 @@
       "description": "Fuse, lower, specialize and dispatch graphs or native kernels.",
       "description_cn": "融合、降低抽象层级、专用化及分派原生内核。",
       "examples": [
+        "iris",
         "mirage",
-        "flash-attention",
         "mlc-llm"
       ]
     },
@@ -130,7 +121,10 @@
     "kernel-library",
     "research-prototype",
     "generator",
-    "verification"
+    "verification",
+    "benchmark",
+    "diagnostic",
+    "knowledge-base"
   ],
   "source_visibility": [
     "public-code",
@@ -151,24 +145,38 @@
   "roles": [
     {
       "id": "system",
-      "title": "Specialized inference systems",
-      "title_cn": "专用推理系统",
-      "description": "Integrated runtimes and substantial execution backends organized around concrete model, device or workload constraints.",
-      "description_cn": "围绕具体模型、设备或负载约束组织执行的运行时和专用后端。"
+      "title": "Specialized inference engines",
+      "title_cn": "专用推理引擎",
+      "description": "Integrated model runtimes and substantial specialized backends, including native implementations and earlier execution-stack precedents.",
+      "description_cn": "集成模型运行时和实质专用后端，涵盖原生实现与有直接参照意义的既有执行栈。"
     },
     {
       "id": "construction",
-      "title": "Construction workflows",
-      "title_cn": "专用系统的构建流程",
-      "description": "Concrete model- or deployment-oriented workflows that generate, compile or adapt executable programs.",
-      "description_cn": "面向具体模型或部署，生成、编译或改造可执行程序的构建流程。"
+      "title": "Engine construction and optimization",
+      "title_cn": "引擎构建与优化方案",
+      "description": "Agent harnesses, compiler workflows and model-specific optimization procedures. State whether the output is a kernel, model program or serving stack.",
+      "description_cn": "Agent harness、编译流程与模型专用优化；区分内核、模型程序与服务执行栈的产出边界。"
+    },
+    {
+      "id": "validation",
+      "title": "Correctness and quality validation",
+      "title_cn": "正确性与质量验证方案",
+      "description": "Methods that check numerical behavior, model state, generation quality or service contracts. Embedded validators are indexed as methods without duplicating their parent project.",
+      "description_cn": "检验数值行为、模型状态、生成质量或服务契约；内嵌验证模块按方案索引，不重复计算所属仓库。"
+    },
+    {
+      "id": "benchmark",
+      "title": "Benchmarks and task suites",
+      "title_cn": "评测基准与任务集",
+      "description": "Executable workloads and comparison protocols for generated kernels and integrated inference paths.",
+      "description_cn": "用于生成内核和集成推理路径的可执行负载、参考实现与比较协议。"
     },
     {
       "id": "support",
-      "title": "Supporting infrastructure and references",
-      "title_cn": "支撑基础设施与参照",
-      "description": "General engines, reusable compilers, languages, kernels, mechanism components and evaluation tools.",
-      "description_cn": "通用引擎、可复用编译器与语言、内核、机制组件和评测工具。"
+      "title": "Companion resources",
+      "title_cn": "配套资源",
+      "description": "Performance diagnosis, construction knowledge, and selected infrastructure with a named connection to an included engine or construction workflow.",
+      "description_cn": "性能诊断、构建知识，以及与收录引擎或构建流程有明确关系的精选基础设施。"
     }
   ],
   "build_routes": [
@@ -216,8 +224,32 @@
   ],
   "support_groups": [
     {
+      "id": "diagnostics",
+      "title": "Performance diagnosis",
+      "title_cn": "性能诊断",
+      "description": "Turn measured hardware behavior into actionable optimization feedback; not a correctness certificate.",
+      "description_cn": "把硬件测量转成可执行的优化反馈；诊断本身不证明正确性。",
+      "examples": [
+        "ncu-report-skill"
+      ]
+    },
+    {
+      "id": "knowledge",
+      "title": "Construction knowledge and experience",
+      "title_cn": "构建知识与优化经验",
+      "description": "Traceable optimization knowledge and hardware experiments that can inform another construction attempt.",
+      "description_cn": "有来源的优化知识与硬件实验，用于后续构建复用。",
+      "examples": [
+        "kernelwiki",
+        "ane-field-guide"
+      ]
+    },
+    {
+      "id": "engine-baselines",
       "title": "General-engine baselines",
       "title_cn": "通用引擎参照",
+      "description": "Shared services, fork origins and comparison points for included specialized stacks.",
+      "description_cn": "收录执行栈的共享服务、分叉来源与比较对象。",
       "examples": [
         "vllm",
         "sglang",
@@ -226,31 +258,32 @@
       ]
     },
     {
-      "title": "Compilers and languages",
-      "title_cn": "编译器与语言",
+      "id": "compilers",
+      "title": "Compilers and kernel languages",
+      "title_cn": "编译器与内核语言",
+      "description": "Compilation dependencies and output languages of included construction workflows.",
+      "description_cn": "收录构建流程实际使用的编译依赖与输出语言。",
       "examples": [
         "tvm",
-        "iree",
+        "tensorrt",
         "triton",
         "tilelang"
       ]
     },
     {
-      "title": "Reusable kernels and components",
-      "title_cn": "可复用内核与组件",
+      "id": "components",
+      "title": "Reusable execution and model preparation",
+      "title_cn": "可复用执行组件与模型准备",
+      "description": "Selected dependencies used in the engine cases; model preparation remains distinct from runtime execution.",
+      "description_cn": "引擎案例中使用的精选依赖；模型准备与运行时执行分开记录。",
       "examples": [
+        "deepcompressor",
+        "qtip",
+        "marlin",
+        "flash-linear-attention",
         "flash-attention",
-        "flashinfer",
-        "lmcache"
-      ]
-    },
-    {
-      "title": "Evaluation and integration checks",
-      "title_cn": "评测与集成检查",
-      "examples": [
-        "kernelbench",
-        "fastkernels",
-        "spec-bench"
+        "sageattention",
+        "flashinfer"
       ]
     }
   ],
@@ -273,8 +306,8 @@
       "id": "foundation",
       "title": "Shared foundations and baselines",
       "title_cn": "共享基础与对照",
-      "description": "General engines, compilers, kernels, components and evaluators used for reuse and controlled comparison.",
-      "description_cn": "提供复用关系与公平比较条件的通用引擎、编译器、内核、组件和评测工具。"
+      "description": "Selected shared infrastructure, knowledge and evaluators with an explicit construction, validation or comparison relationship.",
+      "description_cn": "与构建、验证或比较有明确关系的精选基础设施、知识与评测资源。"
     }
   ],
   "case_groups": [
@@ -312,6 +345,11 @@
         "ane-cpp",
         "cactus",
         "fastflowlm"
+      ],
+      "featured": [
+        "splash",
+        "gufo",
+        "ninfer"
       ]
     },
     {
@@ -382,6 +420,56 @@
         "parakeet-ggml",
         "parakeet-axiom"
       ]
+    }
+  ],
+  "homepage_construction": [
+    {
+      "id": "metainfer",
+      "output": "Model/server construction; see the linked VibeQwen case",
+      "output_cn": "模型／服务构建；关联 VibeQwen 产出案例"
+    },
+    {
+      "id": "sol-engine",
+      "output": "Model-specific video execution and quality-constrained optimization",
+      "output_cn": "模型专用视频执行与质量约束优化"
+    },
+    {
+      "id": "mirage",
+      "output": "Compiled task graphs and persistent GPU execution",
+      "output_cn": "任务图编译与持久 GPU 执行"
+    },
+    {
+      "id": "kernelagent",
+      "output": "Generated kernels and recomposed model forward programs",
+      "output_cn": "生成内核并重新组合模型前向程序"
+    },
+    {
+      "id": "atrex-kernel-agent",
+      "output": "Profile-guided kernel construction with acceptance gates",
+      "output_cn": "性能反馈驱动的内核构建与验收流程"
+    }
+  ],
+  "benchmark_entries": [
+    {
+      "id": "fastkernels",
+      "scope": "Kernel → fused operation → block → end-to-end model pipeline",
+      "scope_cn": "内核 → 融合算子 → 模块 → 端到端模型流水线",
+      "question": "Do candidate-kernel gains survive model integration?",
+      "question_cn": "候选内核的收益能否在模型集成后保留？"
+    },
+    {
+      "id": "atrex-bench",
+      "scope": "Production-trace operator generation",
+      "scope_cn": "生产执行轨迹中的算子生成",
+      "question": "Does a generated operator compile, meet numerical checks and use the target hardware effectively?",
+      "question_cn": "生成算子能否编译、通过数值检查并有效利用目标硬件？"
+    },
+    {
+      "id": "kernelbench",
+      "scope": "Operator, fusion and model-program generation tasks",
+      "scope_cn": "算子、融合与模型程序生成任务",
+      "question": "How do generated implementations compare with executable references under a stated evaluation protocol?",
+      "question_cn": "在指定评测协议下，生成实现与可执行参考程序相比如何？"
     }
   ]
 }

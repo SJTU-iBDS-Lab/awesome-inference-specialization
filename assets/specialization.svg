@@ -1,83 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="548" viewBox="0 0 1000 548" role="img" aria-labelledby="specialization-title specialization-desc">
-  <title id="specialization-title">Why build a specialized inference stack?</title>
-  <desc id="specialization-desc">Core cases follow a four-step chain: known deployment constraints, rebuilding execution decisions, building and validating the system, then deploying and maintaining it. AI-assisted coding and code generation may change construction and maintenance cost; this is a hypothesis to investigate, not a demonstrated benefit. Historical and adjacent routes provide comparison, while general engines, compilers, domain-specific languages, kernel libraries and evaluation tools form shared foundations and baselines. Implementation language does not establish who wrote the code or whether components were reused.</desc>
-  <style>
-    text { font-family: Inter, Segoe UI, Arial, sans-serif; fill: #173449; }
-    .muted { fill: #5d6d77; }
-    .teal { fill: #147b76; }
-    .orange { fill: #a45632; }
-    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; }
-    .step-title { font-size: 18px; font-weight: 650; }
-    .detail { font-size: 13px; fill: #5d6d77; }
-    .flow { fill: none; stroke: #147b76; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-    .hypothesis { fill: none; stroke: #b9673f; stroke-width: 1.5; stroke-dasharray: 4 4; stroke-linecap: round; }
-  </style>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="596" viewBox="0 0 1000 596" role="img" aria-labelledby="specialization-title specialization-desc">
+  <title id="specialization-title">Specialized inference: engines, construction and validation</title>
+  <desc id="specialization-desc">Three central subjects form a connected process: construction methods produce specialized inference engines, validation methods check them and feed results back into construction. Benchmarks provide separate tasks and comparison protocols. Diagnostics, construction knowledge and reusable components support the process. The research question is whether building and maintaining specialized execution stacks becomes more practical, with total cost and evidence still to be established.</desc>
   <defs>
-    <marker id="specialization-arrow" markerWidth="7" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M1 1 L6 4 L1 7" fill="none" stroke="#147b76" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-    </marker>
-    <marker id="hypothesis-arrow" markerWidth="7" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="userSpaceOnUse">
-      <path d="M1 1 L6 4 L1 7" fill="none" stroke="#b9673f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </marker>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M1 1 L6 4 L1 7" fill="none" stroke="#177d75" stroke-width="1.5"/></marker>
   </defs>
-  <rect width="1000" height="548" rx="20" fill="#f7f5ef"/>
-  <text x="38" y="33" class="eyebrow teal">WHEN IS A SPECIALIZED INFERENCE STACK WORTH BUILDING?</text>
-  <text x="38" y="69" font-size="29" font-weight="650">From deployment constraints to a purpose-built stack</text>
-  <text x="38" y="95" font-size="15" class="muted">The execution design and the cost of constructing it are separate questions.</text>
+  <style>
+    text { font-family: Inter, Segoe UI, Arial, sans-serif; fill: #193c4d; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; fill: #177d75; }
+    .title { font-size: 21px; font-weight: 650; }
+    .body { font-size: 14px; fill: #536c76; }
+    .label { font-size: 12px; font-weight: 600; fill: #177d75; }
+    .line { fill: none; stroke: #177d75; stroke-width: 1.6; marker-end: url(#arrow); }
+  </style>
+  <rect width="1000" height="596" rx="20" fill="#f7f6f0"/>
+  <text x="36" y="35" class="eyebrow">AWESOME INFERENCE SPECIALIZATION</text>
+  <text x="36" y="73" font-size="30" font-weight="650">What do we build, and how do we trust it?</text>
+  <text x="36" y="101" class="body">Follow the execution stack from construction to qualified behavior.</text>
 
-  <g id="core-cases">
-    <rect x="20" y="112" width="960" height="268" rx="16" fill="#eaf1eb" stroke="#d5e3d9"/>
-    <text x="38" y="137" font-size="16" font-weight="700" class="teal">Core cases</text>
-    <text x="158" y="137" font-size="13" class="muted">A deployment target motivates a different execution stack.</text>
+  <rect x="22" y="121" width="956" height="225" rx="15" fill="#e8f1eb" stroke="#d4e2d9"/>
+  <text x="40" y="145" class="eyebrow">THREE CENTRAL SUBJECTS</text>
+  <g id="construction">
+    <rect x="40" y="162" width="282" height="124" rx="12" fill="#fffefb" stroke="#c8dcd0"/>
+    <text x="58" y="191" class="title">Construction methods</text>
+    <text x="58" y="222" class="body">Implementation &amp; substantial forks</text>
+    <text x="58" y="244" class="body">Compilation, search &amp; agents</text>
+    <text x="58" y="270" class="label">What is the actual output?</text>
+  </g>
+  <path d="M330 221 H349" class="line"/>
+  <g id="engines">
+    <rect x="358" y="162" width="282" height="124" rx="12" fill="#fffefb" stroke="#c8dcd0"/>
+    <text x="376" y="191" class="title">Specialized engines</text>
+    <text x="376" y="222" class="body">Model, hardware &amp; workload</text>
+    <text x="376" y="244" class="body">Execution ownership &amp; reuse</text>
+    <text x="376" y="270" class="label">What changed, and why?</text>
+  </g>
+  <path d="M649 221 H668" class="line"/>
+  <g id="validation">
+    <rect x="676" y="162" width="282" height="124" rx="12" fill="#fffefb" stroke="#c8dcd0"/>
+    <text x="694" y="191" class="title">Validation methods</text>
+    <text x="694" y="222" class="body">Numerics, state, quality &amp; service</text>
+    <text x="694" y="244" class="body">Coverage, cost &amp; failure limits</text>
+    <text x="694" y="270" class="label">What evidence supports acceptance?</text>
+  </g>
+  <path d="M817 294 V321 H181 V294" class="line"/>
+  <rect x="350" y="307" width="300" height="26" rx="10" fill="#e8f1eb"/>
+  <text x="500" y="325" text-anchor="middle" class="label">Checking results inform the next revision</text>
 
-    <g id="deployment-constraints">
-      <rect x="38" y="153" width="209" height="128" rx="12" fill="#fffefa" stroke="#c7d6cb"/>
-      <text x="55" y="181" class="step-title">Known deployment</text>
-      <text x="55" y="204" class="step-title">constraints</text>
-      <text x="55" y="238" class="detail">Model · hardware</text>
-      <text x="55" y="259" class="detail">Workload · quality budget</text>
-    </g>
-    <path d="M254 217 H268" class="flow" marker-end="url(#specialization-arrow)"/>
-    <g id="execution-decisions">
-      <rect x="276" y="153" width="209" height="128" rx="12" fill="#fffefa" stroke="#c7d6cb"/>
-      <text x="293" y="181" class="step-title">Rebuild execution</text>
-      <text x="293" y="204" class="step-title">decisions</text>
-      <text x="293" y="238" class="detail">State · data movement</text>
-      <text x="293" y="259" class="detail">Scheduling · kernels</text>
-    </g>
-    <path d="M492 217 H506" class="flow" marker-end="url(#specialization-arrow)"/>
-    <g id="build-validate">
-      <rect x="514" y="153" width="209" height="128" rx="12" fill="#fffefa" stroke="#c7d6cb"/>
-      <text x="531" y="181" class="step-title">Build and validate</text>
-      <text x="531" y="238" class="detail">Implement · compare</text>
-      <text x="531" y="259" class="detail">Check quality and cost</text>
-    </g>
-    <path d="M730 217 H744" class="flow" marker-end="url(#specialization-arrow)"/>
-    <g id="deploy-maintain">
-      <rect x="752" y="153" width="208" height="128" rx="12" fill="#fffefa" stroke="#c7d6cb"/>
-      <text x="769" y="181" class="step-title">Deploy &amp; maintain</text>
-      <text x="769" y="238" class="detail">Integrate · monitor</text>
-      <text x="769" y="259" class="detail">Adapt as targets change</text>
-    </g>
-
-    <path d="M618 306 V289" class="hypothesis" marker-end="url(#hypothesis-arrow)"/>
-    <path d="M856 306 V289" class="hypothesis" marker-end="url(#hypothesis-arrow)"/>
-    <g id="construction-economics-hypothesis">
-      <rect x="38" y="306" width="922" height="58" rx="10" fill="#f7eade" stroke="#e8d3c0"/>
-      <text x="55" y="330" font-size="15" font-weight="600">AI-assisted coding + code generation</text>
-      <text x="55" y="350" font-size="11.5" font-weight="600" class="orange">A construction-cost hypothesis</text>
-      <text x="435" y="341" font-size="17" font-weight="500">Can they change build and maintenance cost?</text>
-    </g>
+  <g id="benchmarks">
+    <rect x="40" y="364" width="918" height="65" rx="11" fill="#f7eadb" stroke="#e8d4be"/>
+    <text x="58" y="392" class="title">Benchmarks</text>
+    <text x="260" y="392" class="body">Tasks, reference implementations &amp; comparison protocols</text>
+    <text x="260" y="414" font-size="12" fill="#8d5b39">Keep kernel, model-program and whole-service results distinct.</text>
   </g>
 
-  <g id="historical-adjacent-routes">
-    <rect x="38" y="395" width="922" height="56" rx="11" fill="#fffefa" stroke="#d8dfda"/>
-    <text x="55" y="418" font-size="16" font-weight="600">Historical &amp; adjacent routes</text>
-    <text x="55" y="440" font-size="13.5" class="muted">Prior bespoke runtimes · specialized backends · compiler-generated execution</text>
+  <text x="40" y="459" class="eyebrow">SUPPORTING RESOURCES</text>
+  <g id="support">
+    <rect x="40" y="474" width="282" height="62" rx="10" fill="#eeeee8" stroke="#dadfd7"/>
+    <text x="58" y="498" font-size="17" font-weight="600">Performance diagnostics</text>
+    <text x="58" y="521" font-size="12" fill="#536c76">Profiles → bottlenecks → next experiment</text>
+    <rect x="358" y="474" width="282" height="62" rx="10" fill="#eeeee8" stroke="#dadfd7"/>
+    <text x="376" y="498" font-size="17" font-weight="600">Construction knowledge</text>
+    <text x="376" y="521" font-size="12" fill="#536c76">Hardware findings, recipes &amp; failed attempts</text>
+    <rect x="676" y="474" width="282" height="62" rx="10" fill="#eeeee8" stroke="#dadfd7"/>
+    <text x="694" y="498" font-size="17" font-weight="600">Reusable components</text>
+    <text x="694" y="521" font-size="12" fill="#536c76">Engines, compilers, DSLs &amp; kernels</text>
   </g>
-  <g id="shared-foundations-baselines">
-    <rect x="38" y="465" width="922" height="62" rx="11" fill="#efeee8" stroke="#dedfd6"/>
-    <text x="55" y="490" font-size="16" font-weight="600">Shared foundations &amp; baselines</text>
-    <text x="55" y="514" font-size="13.5" class="muted">General engines · compilers &amp; DSLs · kernel libraries · evaluation</text>
-  </g>
+  <text x="40" y="572" font-size="13" fill="#536c76">Research question: when do construction savings survive validation, integration and maintenance?</text>
 </svg>

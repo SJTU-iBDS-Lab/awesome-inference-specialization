@@ -2,7 +2,11 @@
 
 This survey studies **whether the ways specialized execution stacks are built, who can obtain and maintain them, and their economics are changing**. It follows concrete decisions about model execution rather than treating all inference optimization as specialization. AI-assisted construction is one candidate explanation for change; lower total cost is a causal hypothesis to test, not an inclusion rule or an established result.
 
-Start with the [selected cases](cases.md). Each case connects a reason to build a separate execution path with the decisions it controls, the infrastructure it reuses, the generality it gives up, the construction work actually performed, and the costs that remain unknown. The broader [project index](systems.md) and [mechanism catalog](catalog.md) preserve historical context, alternative routes, shared infrastructure and comparison baselines.
+Start with the [selected cases](cases.md). Each case connects a reason to build a separate execution path with the decisions it controls, the infrastructure it reuses, the generality it gives up, the construction work actually performed, and the costs that remain unknown. The [project index](systems.md) is organized around engines and construction workflows, with dedicated entries for [validation methods](validation.md), [benchmarks](benchmarks.md) and [supporting resources](resources.md). Mechanisms and model domains remain secondary search facets.
+
+## Five entry points: the primary navigation
+
+The three central subjects are **specialized inference engines, construction methods, and correctness/quality validation methods**. Benchmarks are a separate collection of tasks and comparison protocols. Diagnostics, construction knowledge and reusable execution components are supporting resources. A method embedded in an engine or harness can appear in the validation guide without becoming a duplicate project row.
 
 ## Survey role: relation to the research question
 
@@ -11,8 +15,8 @@ Each project has one `survey_role`, independently of what kind of software it de
 | Survey role | Why the project is included | Reading purpose |
 | --- | --- | --- |
 | `core` | A direct case for examining the construction, availability or economics of a specialized execution stack | Explain why a separate path was built, which decisions it controls, how it was constructed, and what remains unmeasured |
-| `adjacent` | A historical precedent or nearby route that helps establish alternatives, continuity or boundaries | Compare earlier and neighboring designs without claiming that they demonstrate the present hypothesis |
-| `foundation` | Shared infrastructure, reusable components, evaluation tools or general reference systems used to build or compare stacks | Trace dependencies, alternative implementations, validation and counterfactual baselines |
+| `adjacent` | A directly relevant alternative construction route or comparison needed to interpret an included case | Explain the specific relationship; general topical similarity is insufficient |
+| `foundation` | A resource with a concrete role in building, validating or comparing included execution stacks | Trace the actual dependency, diagnostic use, knowledge transfer or comparison contract |
 
 These roles describe relevance to the survey, **not quality, maturity, novelty or an ordering of merit**. Age does not decide the role: an older system can be a core case if it directly answers the construction question. AI involvement is neither necessary nor sufficient. A project can be central even when it builds on an existing runtime, compiler or kernel library; building everything from scratch is not required.
 
@@ -27,22 +31,24 @@ Records in the [project index](systems.md) retain an independent `catalog_role` 
 | Catalog role | What belongs here | What to inspect first |
 | --- | --- | --- |
 | `system` | An integrated execution system or specialized backend whose decisions are shaped by identifiable model, device or workload constraints | The changed state/layout/scheduling/execution decision, integration boundary and deployable artifact |
-| `construction` | A concrete workflow that builds model- or deployment-specific programs, through direct native implementation, backend integration, compilation/search, agents, or a combination | Its inputs, construction decisions, emitted artifact, validation gates and update process |
-| `support` | General reference engines, reusable compilers/DSLs/kernels, mechanism components and evaluation infrastructure | What it supplies to a system or construction workflow, its interface and its limits |
+| `construction` | A concrete workflow that builds or optimizes deployment-specific programs through implementation, adaptation, compilation/search or agents | Its inputs, construction decisions, emitted artifact, validation gates and update process |
+| `validation` | A method or tool whose primary contribution is checking candidate correctness or output quality | Reference or oracle, acceptance rule, coverage, cost and failure modes |
+| `benchmark` | A task set and evaluation protocol used to compare candidate implementations or construction approaches | Task provenance, integration level, baselines, metrics and reproducibility |
+| `support` | Diagnostics, construction knowledge and reusable components with a documented role in the process | The specific resource supplied, where it is used and its limits |
 
 `survey_role` answers **why study this project here**; `catalog_role` answers **what role its software plays**. A `system` may be a core case, an adjacent precedent, or a foundational reference engine. A construction workflow can be core while producing only one subsystem. Neither role replaces `artifact_type`, the eight `family` values, or evidence about the actual artifact.
 
-A compiler may have the `construction` catalog role when the record describes a concrete model-to-deployment workflow, or `support` when it concerns reusable compiler infrastructure. An agent framework does not qualify as a concrete workflow merely because it can write code. `catalog_role=construction` also differs from `family=construction`: the latter is a secondary index for languages, agents and checking tools. A DSL or benchmark can have that family and the `support` catalog role.
+A compiler may have the `construction` catalog role when the record describes a concrete model-to-deployment workflow, or `support` when it concerns reusable compiler infrastructure. An agent framework does not qualify as a concrete workflow merely because it can write code. `catalog_role=construction` also differs from `family=construction`: the latter is a secondary index for languages, agents and checking tools. A DSL, validator or benchmark can share that secondary family while having a different `catalog_role`. The main role follows the focus of the record; other roles are explained without duplicating the repository.
 
-Read in this order:
+## Inclusion and removal
 
-1. **Core cases:** why build another execution path, how was it obtained, and what evidence bears on its cost?
-2. **Historical and adjacent routes:** what was already possible, and what alternatives constrain the explanation?
-3. **Foundations and mechanisms:** what is reused, what is compared, and which execution changes implement the choice?
+A project must show a direct relationship to **constructing, validating or evaluating a specialized execution stack**. Being an inference optimization, a popular compiler, or a useful general development tool is insufficient. For supporting resources, identify the actual reuse, diagnostic, knowledge or comparison relationship.
 
-The project inventory retains its existing records. Selection for a case note and placement on the homepage are editorial choices, not a claim that every retained project establishes the central hypothesis. Tiny or “nano” teaching reimplementations whose purpose is explaining a standard engine are outside the collection's scope; line count alone is not a criterion, and a small substantive system should be assessed by the same case questions.
+Remove unrelated records from the maintained catalog and generated views; do not move them to a backup collection. A prior inclusion does not exempt a project from the current scope. Preserve the evidence needed for retained cases and correct their references when removing entries. Tiny or “nano” teaching reproductions of standard engines are outside scope; line count alone is not a criterion.
 
-The homepage groups cases into reading routes; those groups are not mutually exclusive scientific categories. The separate [model-domain index](domains.md) covers language, multimodal interaction, image/video generation and processing, speech/audio, and shared infrastructure. A project can carry several domain labels, so domain counts overlap. Inspect whether a video path performs generation, restoration or understanding, and whether an action-model result measures inference throughput or closed-loop behavior. Domain breadth alone does not qualify a system as a core case.
+Use the [validation guide](validation.md) for acceptance methods and their coverage. Use the [benchmark directory](benchmarks.md) for tasks and measurement protocols. A benchmark may implement validation, and a construction harness may contain both, but these are different responsibilities. The validation guide can therefore link to methods inside existing records without requiring a standalone `validation` project or artificially increasing counts.
+
+The homepage presents the five entry points and selected examples. Detailed case notes use reading routes, which are not mutually exclusive scientific categories. The separate [model-domain index](domains.md) covers language, multimodal interaction, image/video generation and processing, speech/audio, and shared infrastructure. A project can carry several domain labels, so domain counts overlap. Inspect whether a video path performs generation, restoration or understanding, and whether an action-model result measures inference throughput or closed-loop behavior. Domain breadth alone does not qualify a system as a core case.
 
 ## What counts as specialization here?
 
@@ -71,7 +77,7 @@ For example, a constrained-memory MoE account should identify where experts resi
 
 ![Mechanism landscape across execution and supporting tools](../assets/landscape.svg)
 
-Once the system or construction path is understood, the mechanism families help find related techniques. A record has one editorial primary `family` and multiple `mechanisms`. The family is neither a quality ranking nor a claim that the project implements only one mechanism.
+Once the system or construction path is understood, the mechanism families help find related techniques. A record has one editorial primary `family` and multiple `mechanisms`. The family is neither a quality ranking nor a claim that the project implements only one mechanism. A family need not have a standalone project: its mechanisms may appear as secondary tags inside retained engines.
 
 | ID | Organizing question | Typical mechanisms |
 | --- | --- | --- |
@@ -93,7 +99,7 @@ The family definitions and navigation examples are stored in [the schema](../cat
 | Dimension | What it records | What it must not imply |
 | --- | --- | --- |
 | `survey_role` | Core case, historical/adjacent route, or shared foundation/reference | Research relevance is not quality, age or AI authorship |
-| `catalog_role` | System, concrete construction workflow, or supporting infrastructure | A software role is not its relevance to the central hypothesis |
+| `catalog_role` | System, construction, validation, benchmark, or supporting resource | A software role is not its relevance to the central hypothesis |
 | `family` | The primary mechanism or tool family used for secondary navigation | A family is not the project's full scope or its display role |
 | `domains` | Text, image, video, audio, multimodal, or general-purpose coverage | A domain is not an optimization mechanism; example coverage is not universal support |
 | `constraints` | Model structure, hardware, memory capacity, shapes, workload, or deployment assumptions | A narrow model list alone does not establish substantive specialization |
@@ -113,7 +119,10 @@ A constraint explains **why** specialization is useful; a mechanism explains **w
 - `kernel-library`: supplies operator or kernel implementations for integration elsewhere.
 - `research-prototype`: packages an experimental system whose component boundaries or supported scope remain specific to the demonstrated setup.
 - `generator`: constructs source, kernels, graphs, or engines, including agent-driven workflows.
-- `verification`: evaluates correctness, quality, or performance of candidate implementations.
+- `verification`: checks correctness or quality of candidate implementations.
+- `benchmark`: supplies tasks, reference implementations and comparison protocols.
+- `diagnostic`: translates measurements or profiles into bottleneck evidence and optimization feedback.
+- `knowledge-base`: organizes traceable hardware knowledge, implementation recipes or experimental findings for construction.
 
 These are component descriptions, not a maturity ladder. Choose the type of the component being cataloged and describe other roles in the mechanism summary or caveat. A project may evolve: for example, FastKernels has both evaluation machinery and a documented [minimal serving framework](https://github.com/Snowflake-AI-Research/fastkernels/blob/HEAD/docs/serving-framework-guide.md). Its evaluation role and serving coverage should be stated separately.
 
@@ -134,7 +143,7 @@ These are component descriptions, not a maturity ladder. Choose the type of the 
 | `configurable` | Different enabled modes have materially different effects | The exact active configuration; add the specific applicable effect tags where known |
 | `tool-dependent` | Effects depend on the program generated, selected, or tested by a tool | The emitted artifact, integration, validation coverage and measured configuration |
 
-Exact prefix reuse, under valid cache keys and compatible model state, is not the same as substituting an earlier diffusion residual. The latter needs a stale-state quality assessment. This tag also covers history-based feature prediction: TaylorSeer extrapolates features rather than simply returning a cached value. Similarly, a draft-and-verify interface does not by itself prove distribution preservation: the acceptance and correction implementation matters. A trained draft model and a trained replacement target also have different implications; record which component changed.
+Exact prefix reuse, under valid cache keys and compatible model state, is not the same as substituting an earlier diffusion residual. The latter needs a stale-state quality assessment. This tag also covers history-based feature prediction, which extrapolates features rather than simply returning a cached value. Similarly, a draft-and-verify interface does not by itself prove distribution preservation: the acceptance and correction implementation matters. A trained draft model and a trained replacement target also have different implications; record which component changed.
 
 ## Cross-domain examples and classification boundaries
 
@@ -156,7 +165,7 @@ Broad projects can reasonably fit several navigation groups. Sol-Engine, for exa
 
 1. Identify the component and trace constraint → execution decision → artifact → validation and maintenance.
 2. Choose `survey_role` from its relationship to the construction, availability and economics question. Explain the decision without using age, AI presence, star count or code size as a substitute.
-3. Choose `catalog_role` from the delivered software: integrated system, concrete construction workflow, or reusable support.
+3. Choose `catalog_role` from the main delivered resource: integrated system, construction workflow, validation method, benchmark or supporting resource.
 4. Inspect dispatch and fallback conditions and select the primary mechanism/tool `family`; retain other mechanisms, constraints and semantic effects independently.
 5. For a selected case, document why another path was built, controlled decisions, reuse and sacrificed generality, construction participation and unknown costs in `catalog/cases.json`.
 6. Record ambiguous boundaries and missing evidence in the caveat; revise the assignments when scope or evidence changes.

@@ -4,7 +4,7 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Systems & construction](systems.md) · [Comparison](comparison.md) · [Taxonomy](taxonomy.md) · [Evidence policy](evidence-policy.md)
 
-161 entries. Source review: 2026-10-12. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
+121 entries. Source review: 2026-10-12. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
 
 Use the family links below, or search this page for a model, device, mechanism or project. Source visibility is not a license or correctness certification. Semantic labels identify evaluation obligations, not proven equivalence.
 
@@ -12,7 +12,7 @@ Use the family links below, or search this page for a model, device, mechanism o
 
 <a id="memory"></a>
 
-## Data residency & movement / 数据驻留与搬移 (19)
+## Data residency & movement / 数据驻留与搬移 (16)
 
 **What stays close to compute?** Place, page, prefetch or offload weights, experts and KV state.
 
@@ -306,64 +306,6 @@ Offloads expert weights to host memory and SSD, retains hot experts in an activa
 
 </details>
 
-<a id="mooncake"></a>
-
-### [Mooncake](https://github.com/kvcache-ai/Mooncake)
-
-[foundation](systems.md#foundation) · `support` · `backend` · `text` · **public code**
-
-**Survey relevance:** Reusable execution backend for integration and comparison; component capability is separate from engine construction evidence.
-
-Provides a transfer engine and distributed store for moving and retaining KV data across accelerators, host memory and storage.
-
-**Scope:** Disaggregated inference and distributed KV storage
-
-**Boundary:** The published transfer/store components and a complete serving deployment are different artifacts; transport and hardware configuration remain workload-dependent.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `kv-transfer`, `tiered-kv`, `prefill-decode-disaggregation`.
-
-**Constraints:** `workload`, `execution`.
-
-**Evidence:** [Source 1](https://github.com/kvcache-ai/Mooncake/blob/main/README.md) · [Source 2](https://github.com/kvcache-ai/Mooncake/blob/main/mooncake-transfer-engine/src/transfer_engine.cpp).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="nixl"></a>
-
-### [NIXL](https://github.com/ai-dynamo/nixl)
-
-[foundation](systems.md#foundation) · `support` · `backend` · `text` · **public code**
-
-**Survey relevance:** Reusable execution backend for integration and comparison; component capability is separate from engine construction evidence.
-
-Exposes asynchronous point-to-point transfers through pluggable transports over host/device memory and storage.
-
-**Scope:** Inference data transfers across heterogeneous memory and storage
-
-**Boundary:** Transport infrastructure does not decide cache admission or serving placement by itself; the documented platform is Linux.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `asynchronous-transfer`, `tiered-memory`.
-
-**Constraints:** `workload`, `execution`.
-
-**Evidence:** [Source 1](https://github.com/ai-dynamo/nixl/blob/main/README.md) · [Source 2](https://github.com/ai-dynamo/nixl/blob/main/docs/nixl.md).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
-
-</details>
-
 <a id="strata"></a>
 
 ### [Strata](https://github.com/Niko1221/Strata)
@@ -509,42 +451,13 @@ Keeps common weights and FP16 KV resident, reads routed experts with bounded pre
 
 </details>
 
-<a id="vattention"></a>
-
-### [vAttention](https://github.com/microsoft/vattention)
-
-[foundation](systems.md#foundation) · `support` · `backend` · `text` · **public code**
-
-**Survey relevance:** Reusable execution backend for integration and comparison; component capability is separate from engine construction evidence.
-
-Uses CUDA virtual memory to decouple contiguous virtual KV tensors from physical allocation, retaining conventional attention-kernel interfaces.
-
-**Scope:** Growing KV state with contiguous virtual address requirements
-
-**Boundary:** The artifact includes Sarathi integration and experiments with modified UVM support; page-size and driver assumptions affect deployability.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `virtual-kv`, `cuda-virtual-memory`.
-
-**Constraints:** `workload`, `execution`.
-
-**Evidence:** [Source 1](https://github.com/microsoft/vattention/blob/main/README.md) · [Source 2](https://github.com/microsoft/vattention/blob/main/sarathi-lean/sarathi/worker/cache_engine/vATTN_cache_engine.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
 <a id="vllm"></a>
 
 ### [vLLM](https://github.com/vllm-project/vllm)
 
 [foundation](systems.md#foundation) · `support` · `runtime` · `text` · **public code**
 
-**Survey relevance:** General-engine baseline and reusable execution components for controlled comparisons with specialized stacks.
+**Survey relevance:** General-engine reference for the VibeQwen construction case and upstream serving infrastructure retained by the Radiance specialized backend.
 
 Manages attention state as pooled KV blocks with reference-counted prefix sharing and schedules token-budgeted work across requests, allocating cache slots as execution advances.
 
@@ -561,7 +474,7 @@ Manages attention state as pooled KV blocks with reference-counted prefix sharin
 
 **Constraints:** `memory`, `workload`, `context`, `model`.
 
-**Evidence:** [Source 1](https://github.com/vllm-project/vllm/blob/HEAD/README.md) · [Source 2](https://github.com/vllm-project/vllm/blob/HEAD/vllm/v1/core/block_pool.py) · [Source 3](https://github.com/vllm-project/vllm/blob/HEAD/vllm/v1/core/sched/scheduler.py) · [Source 4](https://github.com/vllm-project/vllm/blob/HEAD/docs/design/hybrid_kv_cache_manager.md).
+**Evidence:** [Source 1](https://github.com/vllm-project/vllm/blob/HEAD/README.md) · [Source 2](https://github.com/vllm-project/vllm/blob/HEAD/vllm/v1/core/block_pool.py) · [Source 3](https://github.com/vllm-project/vllm/blob/HEAD/vllm/v1/core/sched/scheduler.py) · [Source 4](https://github.com/vllm-project/vllm/blob/HEAD/docs/design/hybrid_kv_cache_manager.md) · [Source 5](https://github.com/magiccodingman/vllm-radiance/blob/d5c07c52d2121901654b203da3e44553172a1a46/README.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
@@ -569,7 +482,7 @@ Manages attention state as pooled KV blocks with reference-counted prefix sharin
 
 <a id="precision"></a>
 
-## Numerical representation / 数值表示与低比特执行 (10)
+## Numerical representation / 数值表示与低比特执行 (9)
 
 **How is each value represented?** Co-design low-bit formats, layouts and execution kernels.
 
@@ -608,7 +521,7 @@ Executes compatible ternary LLMs with packed low-bit kernels and architecture-sp
 
 [foundation](systems.md#foundation) · `support` · `optimizer` · `text / image` · **public code**
 
-**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
+**Survey relevance:** Model preparation used for the Nunchaku/SVDQuant execution path; calibration and exported weights must be distinguished from runtime gains.
 
 Calibrates quantization and SVDQuant low-rank outlier decomposition, evaluates compressed models and exports checkpoints into runtime-specific deployment layouts.
 
@@ -625,7 +538,7 @@ Calibrates quantization and SVDQuant low-rank outlier decomposition, evaluates c
 
 **Constraints:** `low-precision`, `calibration`, `deployment-backend`.
 
-**Evidence:** [Source 1](https://github.com/nunchux-ai/deepcompressor/blob/main/README.md) · [Source 2](https://github.com/nunchux-ai/deepcompressor/blob/main/examples/diffusion/README.md).
+**Evidence:** [Source 1](https://github.com/nunchux-ai/deepcompressor/blob/main/README.md) · [Source 2](https://github.com/nunchux-ai/deepcompressor/blob/main/examples/diffusion/README.md) · [Source 3](https://github.com/nunchux-ai/nunchaku/blob/main/README.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
@@ -695,7 +608,7 @@ Extends a llama.cpp fork with additional packed quantization formats, CPU IQK ma
 
 [foundation](systems.md#foundation) · `support` · `kernel-library` · `text` · **public code**
 
-**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
+**Survey relevance:** Quantized linear-kernel and packing reference used in the ExLlamaV3 construction account; separates reusable low-level work from engine ownership.
 
 Repacks INT4 weights/scales offline and overlaps asynchronous loads, dequantization and tensor-core MMA in a shape-specialized FP16×INT4 CUDA kernel.
 
@@ -712,7 +625,7 @@ Repacks INT4 weights/scales offline and overlaps asynchronous loads, dequantizat
 
 **Constraints:** `hardware`, `precision`, `shape`, `layout`.
 
-**Evidence:** [Source 1](https://github.com/IST-DASLab/marlin/blob/HEAD/README.md) · [Source 2](https://github.com/IST-DASLab/marlin/blob/HEAD/marlin/marlin_cuda_kernel.cu).
+**Evidence:** [Source 1](https://github.com/IST-DASLab/marlin/blob/HEAD/README.md) · [Source 2](https://github.com/IST-DASLab/marlin/blob/HEAD/marlin/marlin_cuda_kernel.cu) · [Source 3](https://github.com/turboderp-org/exllamav3/blob/HEAD/README.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
@@ -753,7 +666,7 @@ Executes SVDQuant W4A4 layers by fusing activation quantization with the low-ran
 
 [foundation](systems.md#foundation) · `support` · `optimizer` · `text` · **public code**
 
-**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
+**Survey relevance:** Trellis quantization and matching execution provide a representation-design reference credited in the ExLlamaV3 case, rather than a second complete engine.
 
 Quantizes incoherence-transformed weights with bitshift trellis codes and executes supported low-bit encodings through matching BitshiftLinear matrix-vector kernels.
 
@@ -770,7 +683,7 @@ Quantizes incoherence-transformed weights with bitshift trellis codes and execut
 
 **Constraints:** `precision`, `codebook`, `shape`, `hardware`.
 
-**Evidence:** [Source 1](https://github.com/Cornell-RelaxML/qtip/blob/HEAD/README.md) · [Source 2](https://github.com/Cornell-RelaxML/qtip/blob/HEAD/lib/codebook/bitshift.py).
+**Evidence:** [Source 1](https://github.com/Cornell-RelaxML/qtip/blob/HEAD/README.md) · [Source 2](https://github.com/Cornell-RelaxML/qtip/blob/HEAD/lib/codebook/bitshift.py) · [Source 3](https://github.com/turboderp-org/exllamav3/blob/HEAD/README.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
@@ -811,7 +724,7 @@ A llama.cpp downstream defines ROCmFPX quantization blocks, conversion policies 
 
 [foundation](systems.md#foundation) · `support` · `kernel-library` · `text / image / video` · **public code**
 
-**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
+**Survey relevance:** Low-precision attention component integrated into the included FastVideo/video execution paths, with a separate quality-validation obligation.
 
 Applies outlier smoothing and hardware-specific low-precision QK and PV attention kernels, dispatching among INT8/FP8 or newer architecture-specific variants.
 
@@ -828,36 +741,7 @@ Applies outlier smoothing and hardware-specific low-precision QK and PV attentio
 
 **Constraints:** `device`, `low-precision`, `attention-shape`.
 
-**Evidence:** [Source 1](https://github.com/thu-ml/SageAttention/blob/main/README.md) · [Source 2](https://github.com/thu-ml/SageAttention/blob/main/sageattention/core.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
-
-</details>
-
-<a id="t-mac"></a>
-
-### [T-MAC](https://github.com/microsoft/T-MAC)
-
-[foundation](systems.md#foundation) · `support` · `kernel-library` · `text` · **public code**
-
-**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
-
-Generates and tunes CPU low-bit GEMM/GEMV kernels that decompose weights into bit-level operations and use activation lookup tables instead of dequantizing each weight into dense multiply-adds.
-
-**Scope:** Weight bit width, group size, matrix dimensions and CPU vector/lookup capabilities parameterize the generated layout and schedule.
-
-**Boundary:** It is a kernel library integrated into other runtimes, with hardware-dependent gains; the NPU extension has its own path and should not be inferred from CPU measurements.
-
-**Semantic considerations:** reduced precision.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `lookup-table`, `bitwise-decomposition`, `kernel-autotuning`.
-
-**Constraints:** `precision`, `hardware`, `shape`, `layout`.
-
-**Evidence:** [Source 1](https://github.com/microsoft/T-MAC/blob/HEAD/README.md) · [Source 2](https://github.com/microsoft/T-MAC/blob/HEAD/python/t_mac/ops/qgemm.py).
+**Evidence:** [Source 1](https://github.com/thu-ml/SageAttention/blob/main/README.md) · [Source 2](https://github.com/thu-ml/SageAttention/blob/main/sageattention/core.py) · [Source 3](https://github.com/hao-ai-lab/FastVideo/blob/d5253fd71055927f12aa6c4aa679b93a00238851/fastvideo/attention/backends/sage_attn.py).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
@@ -865,38 +749,9 @@ Generates and tunes CPU low-bit GEMM/GEMV kernels that decompose weights into bi
 
 <a id="selection"></a>
 
-## Selective computation / 选择性计算 (7)
+## Selective computation / 选择性计算 (2)
 
 **Which work can be omitted?** Select neurons, tokens or attention blocks; expose approximation.
-
-<a id="minference"></a>
-
-### [MInference](https://github.com/microsoft/MInference)
-
-[foundation](systems.md#foundation) · `support` · `optimizer` · `text` · **public code**
-
-**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
-
-Assigns attention heads to offline-discovered sparse pattern families and estimates input-dependent sparse indices online before dispatching pattern-specific long-context prefill kernels.
-
-**Scope:** Long prompts, per-layer/head sparse-pattern configurations and supported attention layouts make selective attention computation useful.
-
-**Boundary:** This replaces dense attention with an approximation and patches existing HF/vLLM paths; quality and speed depend on model, context and sparsity configuration rather than a universal exactness guarantee.
-
-**Semantic considerations:** selective approximation.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `offline-head-pattern`, `online-sparse-index`, `sparse-prefill`.
-
-**Constraints:** `workload`, `sparsity`, `model`, `context`.
-
-**Evidence:** [Source 1](https://github.com/microsoft/MInference/blob/HEAD/README.md) · [Source 2](https://github.com/microsoft/MInference/blob/HEAD/minference/modules/minference_forward.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
 
 <a id="powerinfer"></a>
 
@@ -922,122 +777,6 @@ Uses profiled neuron activation frequencies and a capacity-constrained split to 
 **Constraints:** `sparsity`, `hardware`, `memory`, `model`.
 
 **Evidence:** [Source 1](https://github.com/Tiiny-AI/PowerInfer/blob/HEAD/README.md) · [Source 2](https://github.com/Tiiny-AI/PowerInfer/blob/HEAD/powerinfer-py/powerinfer/solver.py) · [Source 3](https://github.com/Tiiny-AI/PowerInfer/blob/HEAD/ggml-cuda.cu).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="snapkv"></a>
-
-### [SnapKV](https://github.com/FasterDecoding/SnapKV)
-
-[foundation](systems.md#foundation) · `support` · `optimizer` · `text` · **public code**
-
-**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
-
-Uses the final prompt observation window to score and pool attention importance, gathers top-ranked historical KV positions and retains the recent window within a fixed prompt-cache capacity.
-
-**Scope:** A bounded KV budget and the assumption that prompt-end attention predicts useful historical positions enable head-specific cache selection.
-
-**Boundary:** KV eviction is approximate and can remove later-needed information; the released monkeypatches target specific Llama/Mistral/Mixtral Transformers versions and are not a standalone serving runtime.
-
-**Semantic considerations:** selective approximation.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `observation-window-selection`, `kv-pruning`.
-
-**Constraints:** `context`, `workload`, `memory`, `model`.
-
-**Evidence:** [Source 1](https://github.com/FasterDecoding/SnapKV/blob/HEAD/README.md) · [Source 2](https://github.com/FasterDecoding/SnapKV/blob/HEAD/snapkv/monkeypatch/snapkv_utils.py) · [Source 3](https://github.com/FasterDecoding/SnapKV/blob/HEAD/snapkv/monkeypatch/monkeypatch.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
-
-</details>
-
-<a id="spargeattn"></a>
-
-### [SpargeAttention](https://github.com/thu-ml/SpargeAttn)
-
-[foundation](systems.md#foundation) · `support` · `kernel-library` · `text / image / video` · **public code**
-
-**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
-
-Builds a block lookup table from query-key block statistics or a supplied mask and executes selected attention blocks with Sage-style low-precision kernels.
-
-**Scope:** Requires supported head dimensions and block layouts, with top-k or threshold settings controlling sparse work and approximation.
-
-**Boundary:** The inspected API asserts head dimensions 64 or 128 and exposes a sparsity-quality trade-off; it is not a universal lossless replacement for every attention call.
-
-**Semantic considerations:** selective approximation, reduced precision.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `block-sparse-attention`, `quantized-attention`, `online-block-selection`.
-
-**Constraints:** `device`, `attention-shape`, `quality-budget`.
-
-**Evidence:** [Source 1](https://github.com/thu-ml/SpargeAttn/blob/main/README.md) · [Source 2](https://github.com/thu-ml/SpargeAttn/blob/main/spas_sage_attn/core.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
-
-</details>
-
-<a id="sparse-videogen"></a>
-
-### [Sparse VideoGen](https://github.com/svg-project/Sparse-VideoGen)
-
-[foundation](systems.md#foundation) · `support` · `research-prototype` · `video` · **public code**
-
-**Survey relevance:** Related mechanism reference for controlled comparison; source availability alone does not make it a construction case.
-
-Accelerates video attention using profiled spatial-temporal masks in SVG1 and semantic clustering with token permutation and dynamic sparse kernels in SVG2.
-
-**Scope:** Requires supported video-model attention adapters and enough sequence length for sparse selection and layout transformations to amortize their overhead.
-
-**Boundary:** SVG1, SVG2 and SVG-EAR are distinct methods in one repository; this audit checked README and integration arguments but did not inspect their kernel internals.
-
-**Semantic considerations:** selective approximation.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `block-sparse-attention`, `online-profiling`, `token-permutation`.
-
-**Constraints:** `long-sequence`, `attention-pattern`, `quality-budget`.
-
-**Evidence:** [Source 1](https://github.com/svg-project/Sparse-VideoGen/blob/main/README.md) · [Source 2](https://github.com/svg-project/Sparse-VideoGen/blob/main/wan_t2v_inference.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="tomesd"></a>
-
-### [ToMe for Stable Diffusion](https://github.com/dbolya/tomesd)
-
-[foundation](systems.md#foundation) · `support` · `optimizer` · `image` · **public code**
-
-**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
-
-Uses spatially constrained bipartite token matching to merge redundant tokens before selected transformer operations and restores the original token layout afterward.
-
-**Scope:** Targets supported Stable Diffusion transformer blocks, with merge ratio and spatial partition parameters controlling saved work.
-
-**Boundary:** Token merging is explicitly lossy, and its random partitioning may require controlled seeds; model and attention backend compatibility must be checked.
-
-**Semantic considerations:** selective approximation.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `token-merging`, `token-unmerging`.
-
-**Constraints:** `token-redundancy`, `quality-budget`, `model-family`.
-
-**Evidence:** [Source 1](https://github.com/dbolya/tomesd/blob/main/README.md) · [Source 2](https://github.com/dbolya/tomesd/blob/main/tomesd/merge.py) · [Source 3](https://github.com/dbolya/tomesd/blob/main/tomesd/patch.py).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 
@@ -1074,183 +813,9 @@ Integrates SageAttention and sparse-linear attention with timestep-distilled vid
 
 <a id="reuse"></a>
 
-## Computation reuse / 计算复用 (10)
+## Computation reuse / 计算复用 (2)
 
 **Which earlier results can be reused?** Reuse request prefixes, features or attention across steps.
-
-<a id="cache-dit"></a>
-
-### [Cache-DiT](https://github.com/vipshop/cache-dit)
-
-[foundation](systems.md#foundation) · `support` · `optimizer` · `image / video` · **public code**
-
-**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
-
-Wraps supported Diffusers transformer blocks with managed cache contexts for DBCache and feature predictors while composing parallelism, quantization and CPU offload.
-
-**Scope:** Relies on compatible Diffusers block adapters and user-selected cache thresholds or schedules for repeated denoising.
-
-**Boundary:** It retains PyTorch and should not be equated with a native standalone runtime; each adapter and optimization combination has its own support boundary.
-
-**Semantic considerations:** earlier-state reuse.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `activation-reuse`, `feature-extrapolation`, `hybrid-parallelism`, `block-offload`.
-
-**Constraints:** `model-family`, `denoising-steps`, `quality-budget`.
-
-**Evidence:** [Source 1](https://github.com/vipshop/cache-dit/blob/main/README.md) · [Source 2](https://github.com/vipshop/cache-dit/blob/main/src/cache_dit/caching/cache_contexts/cache_manager.py) · [Source 3](https://github.com/vipshop/cache-dit/blob/main/src/cache_dit/caching/cache_blocks/pattern_0_1_2.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `initial`.
-
-</details>
-
-<a id="deepcache"></a>
-
-### [DeepCache](https://github.com/horseee/DeepCache)
-
-[foundation](systems.md#foundation) · `support` · `optimizer` · `image / video` · **public code**
-
-**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
-
-Reuses high-level U-Net branch outputs at intermediate denoising steps while recomputing inexpensive lower-level features, controlled by a cache interval and branch index.
-
-**Scope:** Relies on supported U-Net skip-branch structure and temporal feature redundancy in SD-family pipelines.
-
-**Boundary:** It is an approximate architecture-aware patch, not a general DiT cache; cache interval and branch depth trade computation against output drift.
-
-**Semantic considerations:** earlier-state reuse.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `activation-reuse`, `branch-skipping`.
-
-**Constraints:** `unet-architecture`, `denoising-steps`, `quality-budget`.
-
-**Evidence:** [Source 1](https://github.com/horseee/DeepCache/blob/master/README.md) · [Source 2](https://github.com/horseee/DeepCache/blob/master/DeepCache/extension/deepcache.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="ditfastattn"></a>
-
-### [DiTFastAttn](https://github.com/thu-nics/DiTFastAttn)
-
-[foundation](systems.md#foundation) · `support` · `research-prototype` · `image / video` · **public code**
-
-**Survey relevance:** Related mechanism reference for controlled comparison; source availability alone does not make it a construction case.
-
-Calibrates attention compression choices that combine local windows with cached residuals, temporal output reuse and conditional-unconditional computation sharing.
-
-**Scope:** Targets supported DiT architectures and calibration settings where spatial, temporal or CFG redundancy is measurable.
-
-**Boundary:** The implementation and xDiT integration have version and parallelism restrictions; compression thresholds trade approximation error against speed.
-
-**Semantic considerations:** earlier-state reuse, selective approximation.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `window-attention`, `residual-reuse`, `cfg-reuse`, `calibrated-attention-policy`.
-
-**Constraints:** `attention-redundancy`, `calibration`, `quality-budget`.
-
-**Evidence:** [Source 1](https://github.com/thu-nics/DiTFastAttn/blob/main/README.md) · [Source 2](https://github.com/thu-nics/DiTFastAttn/blob/main/dit_fast_attention.py) · [Source 3](https://github.com/xdit-project/xDiT/blob/main/docs/methods/ditfastattn.md).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
-
-</details>
-
-<a id="learning-to-cache"></a>
-
-### [Learning-to-Cache](https://github.com/horseee/learning-to-cache)
-
-[foundation](systems.md#foundation) · `support` · `research-prototype` · `image` · **public code**
-
-**Survey relevance:** Related mechanism reference for controlled comparison; source availability alone does not make it a construction case.
-
-Optimizes a router over denoising steps and transformer layers to decide which layer outputs are recomputed or served from cache while keeping base-model weights fixed.
-
-**Scope:** Requires architecture- and sampling-schedule-specific router training or released router checkpoints for DiT or U-ViT.
-
-**Boundary:** The base denoiser can remain fixed but the router is learned, so this should not be categorized as an entirely training-free cache.
-
-**Semantic considerations:** earlier-state reuse, model / router training.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `learned-layer-gating`, `activation-reuse`.
-
-**Constraints:** `model-family`, `trained-router`, `quality-budget`.
-
-**Evidence:** [Source 1](https://github.com/horseee/learning-to-cache/blob/main/README.md) · [Source 2](https://github.com/horseee/learning-to-cache/blob/main/DiT/README.md).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
-
-</details>
-
-<a id="lmcache"></a>
-
-### [LMCache](https://github.com/LMCache/LMCache)
-
-[foundation](systems.md#foundation) · `support` · `backend` · `text` · **public code**
-
-**Survey relevance:** Reusable execution backend for integration and comparison; component capability is separate from engine construction evidence.
-
-Retrieves and persists KV states through tiered storage backends; optional CacheBlend paths selectively recompute states for non-prefix reuse.
-
-**Scope:** Repeated or shared LLM context across requests and engines
-
-**Boundary:** Exact prefix reuse and approximate/non-prefix blending have different equivalence conditions; token identity, positional context and cache configuration matter.
-
-**Semantic considerations:** configuration-dependent.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `kv-reuse`, `tiered-kv`, `cache-blending`.
-
-**Constraints:** `workload`, `execution`.
-
-**Evidence:** [Source 1](https://github.com/LMCache/LMCache/blob/dev/README.md) · [Source 2](https://github.com/LMCache/LMCache/blob/dev/lmcache/v1/cache_engine.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="magcache"></a>
-
-### [MagCache](https://github.com/Zehong-Ma/MagCache)
-
-[foundation](systems.md#foundation) · `support` · `optimizer` · `image / video` · **public code**
-
-**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
-
-Uses calibrated residual-magnitude ratios to accumulate an estimated reuse error and skips full transformer evaluation while the error and reuse-length limits permit.
-
-**Scope:** Requires a model and denoising-schedule magnitude profile plus threshold and maximum-reuse settings.
-
-**Boundary:** Calibration and schedule interpolation affect validity; the inspected FLUX implementation also contains a schedule-specific refresh exception.
-
-**Semantic considerations:** earlier-state reuse.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `activation-reuse`, `calibrated-step-gating`.
-
-**Constraints:** `denoising-steps`, `calibration`, `quality-budget`.
-
-**Evidence:** [Source 1](https://github.com/Zehong-Ma/MagCache/blob/main/README.md) · [Source 2](https://github.com/Zehong-Ma/MagCache/blob/main/MagCache4FLUX/magcache_flux.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
 
 <a id="sglang"></a>
 
@@ -1258,7 +823,7 @@ Uses calibrated residual-magnitude ratios to accumulate an estimated reuse error
 
 [foundation](systems.md#foundation) · `support` · `runtime` · `text` · **public code**
 
-**Survey relevance:** General serving baseline and source of shared runtime abstractions and components.
+**Survey relevance:** Shared serving infrastructure used alongside KTransformers and model components reused by Sol-Engine; separates specialized execution from shared services.
 
 Indexes reusable prefix KV state in a radix tree, protects active nodes with references and offers cache-aware queue policies that prioritize requests using matched-prefix information.
 
@@ -1275,94 +840,36 @@ Indexes reusable prefix KV state in a radix tree, protects active nodes with ref
 
 **Constraints:** `workload`, `memory`, `context`, `model`.
 
-**Evidence:** [Source 1](https://github.com/sgl-project/sglang/blob/HEAD/README.md) · [Source 2](https://github.com/sgl-project/sglang/blob/HEAD/python/sglang/srt/mem_cache/radix_cache.py) · [Source 3](https://github.com/sgl-project/sglang/blob/HEAD/python/sglang/srt/managers/schedule_policy.py).
+**Evidence:** [Source 1](https://github.com/sgl-project/sglang/blob/HEAD/README.md) · [Source 2](https://github.com/sgl-project/sglang/blob/HEAD/python/sglang/srt/mem_cache/radix_cache.py) · [Source 3](https://github.com/sgl-project/sglang/blob/HEAD/python/sglang/srt/managers/schedule_policy.py) · [Source 4](https://github.com/NVlabs/Sana/blob/sol-engine/README.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
 </details>
 
-<a id="t-gate"></a>
+<a id="videosys"></a>
 
-### [T-GATE](https://github.com/HaozheLiu-ST/T-GATE)
+### [VideoSys](https://github.com/NUS-HPC-AI-Lab/VideoSys)
 
-[foundation](systems.md#foundation) · `support` · `optimizer` · `image / video` · **public code**
+[adjacent](systems.md#adjacent) · `system` · `runtime` · `video` · **public code**
 
-**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
+**Survey relevance:** Integrated video execution combining attention reuse and dynamic device partitioning; a concrete comparison for the reconstructed video runtimes in this collection.
 
-Caches and reuses self-attention during early semantic planning and cross-attention during later fidelity refinement according to gate steps and refresh intervals.
+Combines Pyramid Attention Broadcast with dynamic sequence parallelism, reusing attention outputs at type-specific intervals and changing sequence partitions across attention axes.
 
-**Scope:** Targets text-conditioned diffusion pipelines whose attention contributions vary across denoising phases.
+**Scope:** Targets supported video transformers with separable spatial, temporal and cross-modal attention and multi-GPU execution.
 
-**Boundary:** Gate position and refresh intervals depend on the pipeline and sampling schedule; reused attention changes outputs and need not preserve every quality dimension.
+**Boundary:** PAB is approximate reuse and its supported model set differs from the broader framework; the repository also contains training optimizations that are not inference mechanisms.
 
-**Semantic considerations:** earlier-state reuse.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `attention-output-reuse`, `phase-gating`.
-
-**Constraints:** `attention-phase`, `denoising-steps`, `quality-budget`.
-
-**Evidence:** [Source 1](https://github.com/HaozheLiu-ST/T-GATE/blob/main/README.md) · [Source 2](https://github.com/HaozheLiu-ST/T-GATE/blob/main/tgate/tgate_utils.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="taylorseer"></a>
-
-### [TaylorSeer](https://github.com/Shenyi-Z/TaylorSeer)
-
-[foundation](systems.md#foundation) · `support` · `research-prototype` · `image / video` · **public code**
-
-**Survey relevance:** Related mechanism reference for controlled comparison; source availability alone does not make it a construction case.
-
-Estimates higher-order feature derivatives from earlier full evaluations and substitutes a Taylor-series forecast for selected later block computations.
-
-**Scope:** Assumes sufficiently smooth feature evolution across denoising steps and requires a refresh schedule and Taylor order.
-
-**Boundary:** Forecast error depends on interval, order, model and scheduler; claimed quality preservation is metric-based, not numerical identity.
-
-**Semantic considerations:** earlier-state reuse.
+**Semantic considerations:** configuration-dependent, earlier-state reuse.
 
 <details>
 <summary>Mechanism tags and source evidence / 机制标签与证据</summary>
 
-**Mechanisms:** `feature-extrapolation`, `activation-reuse`.
+**Mechanisms:** `attention-output-reuse`, `axis-switching-parallelism`.
 
-**Constraints:** `denoising-steps`, `quality-budget`.
+**Constraints:** `spatiotemporal-architecture`, `multi-device`, `denoising-steps`.
 
-**Evidence:** [Source 1](https://github.com/Shenyi-Z/TaylorSeer/blob/main/README.md) · [Source 2](https://github.com/Shenyi-Z/TaylorSeer/blob/main/TaylorSeer-DiT/taylor_utils/__init__.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="teacache"></a>
-
-### [TeaCache](https://github.com/ali-vilab/TeaCache)
-
-[foundation](systems.md#foundation) · `support` · `optimizer` · `image / video / audio` · **public code**
-
-**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
-
-Accumulates a rescaled relative change in timestep-modulated inputs and reuses a cached transformer residual until the model-specific error threshold is exceeded.
-
-**Scope:** Benefits from redundancy across denoising iterations and requires model-specific rescaling coefficients and thresholds.
-
-**Boundary:** Skipping transformer computation changes the denoising trajectory; coefficients and threshold quality do not automatically transfer between models or schedules.
-
-**Semantic considerations:** earlier-state reuse.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `activation-reuse`, `adaptive-step-gating`.
-
-**Constraints:** `denoising-steps`, `quality-budget`, `model-family`.
-
-**Evidence:** [Source 1](https://github.com/ali-vilab/TeaCache/blob/main/README.md) · [Source 2](https://github.com/ali-vilab/TeaCache/blob/main/TeaCache4Wan2.1/teacache_generate.py).
+**Evidence:** [Source 1](https://github.com/NUS-HPC-AI-Lab/VideoSys/blob/master/README.md) · [Source 2](https://github.com/NUS-HPC-AI-Lab/VideoSys/blob/master/docs/pab.md) · [Source 3](https://github.com/NUS-HPC-AI-Lab/VideoSys/blob/master/docs/dsp.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
@@ -1370,67 +877,9 @@ Accumulates a rescaled relative change in timestep-modulated inputs and reuses a
 
 <a id="decoding"></a>
 
-## Generation order / 生成顺序 (6)
+## Generation order / 生成顺序 (2)
 
 **Can more output be produced per step?** Draft and verify tokens, or reorganize block generation.
-
-<a id="eagle"></a>
-
-### [EAGLE](https://github.com/SafeAILab/EAGLE)
-
-[foundation](systems.md#foundation) · `support` · `optimizer` · `text` · **public code**
-
-**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
-
-Builds a draft token tree from target-model features and verifies candidate paths in parallel; EAGLE-3 combines features from several layers.
-
-**Scope:** Autoregressive decoding with compatible EAGLE draft checkpoints
-
-**Boundary:** Draft checkpoints must match the target model; acceptance, sampling settings and draft overhead determine benefit. EAGLE versions use different drafting designs.
-
-**Semantic considerations:** target-verified proposals.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `speculative-decoding`, `tree-verification`.
-
-**Constraints:** `workload`, `execution`.
-
-**Evidence:** [Source 1](https://github.com/SafeAILab/EAGLE/blob/main/README.md) · [Source 2](https://github.com/SafeAILab/EAGLE/blob/main/eagle/model/ea_model.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="fast-dllm"></a>
-
-### [Fast-dLLM](https://github.com/NVlabs/Fast-dLLM)
-
-[foundation](systems.md#foundation) · `support` · `research-prototype` · `text / multimodal` · **public code**
-
-**Survey relevance:** Related mechanism reference for controlled comparison; source availability alone does not make it a construction case.
-
-Combines confidence-aware parallel token updates and cached states; v2 uses block-diffusion checkpoints and hierarchical caching.
-
-**Scope:** Diffusion language models and supported multimodal derivatives
-
-**Boundary:** Version-dependent semantics: v1 is training-free, while v2 uses fine-tuned block-diffusion models. Do not compare all variants as unchanged autoregressive execution.
-
-**Semantic considerations:** configuration-dependent, model / router training, earlier-state reuse.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `block-generation`, `kv-reuse`, `parallel-decoding`.
-
-**Constraints:** `workload`, `execution`.
-
-**Evidence:** [Source 1](https://github.com/NVlabs/Fast-dLLM/blob/main/README.md) · [Source 2](https://github.com/NVlabs/Fast-dLLM/blob/main/v2/generation_functions.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
 
 <a id="inferix"></a>
 
@@ -1490,156 +939,11 @@ Extends the llama.cpp/TurboQuant lineage with SM86 verification kernels, a draft
 
 </details>
 
-<a id="lookahead"></a>
-
-### [Lookahead Decoding](https://github.com/hao-ai-lab/LookaheadDecoding)
-
-[foundation](systems.md#foundation) · `support` · `optimizer` · `text` · **public code**
-
-**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
-
-Collects n-gram candidates from Jacobi trajectories and combines parallel lookahead with target-model verification without a separate draft model.
-
-**Scope:** Autoregressive decoding with spare parallel compute
-
-**Boundary:** More parallel work is exchanged for fewer sequential steps; window size, accepted-token count and model integration determine benefit.
-
-**Semantic considerations:** target-verified proposals.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `jacobi-decoding`, `ngram-pool`, `tree-verification`.
-
-**Constraints:** `workload`, `execution`.
-
-**Evidence:** [Source 1](https://github.com/hao-ai-lab/LookaheadDecoding/blob/main/README.md) · [Source 2](https://github.com/hao-ai-lab/LookaheadDecoding/blob/main/lade/decoding.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="medusa"></a>
-
-### [Medusa](https://github.com/FasterDecoding/Medusa)
-
-[foundation](systems.md#foundation) · `support` · `research-prototype` · `text` · **public code**
-
-**Survey relevance:** Related mechanism reference for controlled comparison; source availability alone does not make it a construction case.
-
-Adds multiple future-token heads, packs their candidates into tree attention, and accepts a verified prefix.
-
-**Scope:** Autoregressive LLMs with trained auxiliary prediction heads
-
-**Boundary:** Medusa-1 keeps the base model fixed; Medusa-2 can jointly train it. Typical acceptance in non-greedy modes is not a blanket guarantee of the original sampling distribution.
-
-**Semantic considerations:** configuration-dependent, model / router training.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `multi-token-heads`, `tree-verification`.
-
-**Constraints:** `workload`, `execution`.
-
-**Evidence:** [Source 1](https://github.com/FasterDecoding/Medusa/blob/main/README.md) · [Source 2](https://github.com/FasterDecoding/Medusa/blob/main/medusa/model/medusa_model.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
 <a id="serving"></a>
 
-## Parallelism & scheduling / 并行与调度 (17)
+## Parallelism & scheduling / 并行与调度 (7)
 
 **Who executes what, and when?** Partition stages, devices and requests around workload constraints.
-
-<a id="asyncdiff"></a>
-
-### [AsyncDiff](https://github.com/czg1225/AsyncDiff)
-
-[adjacent](systems.md#adjacent) · `system` · `research-prototype` · `image / video` · **public code**
-
-**Survey relevance:** Multi-device diffusion route: compares changed parallel execution and stale-state assumptions.
-
-Partitions a denoiser into device-owned components and broadcasts cached component outputs so later denoising iterations can execute asynchronously in parallel.
-
-**Scope:** Requires multiple GPUs and temporal hidden-state redundancy, with component count, warmup and stride controlling parallel behavior.
-
-**Boundary:** Using earlier-step states changes computation and adds communication; warmup and optional time shifting alter the speed-quality trade-off.
-
-**Semantic considerations:** earlier-state reuse.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `asynchronous-model-parallelism`, `stale-activation-reuse`.
-
-**Constraints:** `multi-device`, `interconnect`, `denoising-steps`.
-
-**Evidence:** [Source 1](https://github.com/czg1225/AsyncDiff/blob/main/README.md) · [Source 2](https://github.com/czg1225/AsyncDiff/blob/main/asyncdiff/async_sd.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
-
-</details>
-
-<a id="distrifusion"></a>
-
-### [DistriFusion](https://github.com/mit-han-lab/distrifuser)
-
-[adjacent](systems.md#adjacent) · `system` · `research-prototype` · `image` · **public code**
-
-**Survey relevance:** Distributed diffusion route: establishes earlier execution and communication specialization.
-
-Splits image computation across devices, synchronizes patch context during warmup, then uses previous-step remote activations while asynchronously communicating fresh updates.
-
-**Scope:** Targets high-resolution diffusion on multiple GPUs with temporal activation redundancy and sufficient work to hide communication.
-
-**Boundary:** Stale remote features and corrected asynchronous normalization approximate synchronous inference; additional GPUs and resolution change the speed trade-off.
-
-**Semantic considerations:** earlier-state reuse.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `patch-parallelism`, `stale-activation-reuse`, `communication-overlap`.
-
-**Constraints:** `multi-device`, `high-resolution`, `interconnect`.
-
-**Evidence:** [Source 1](https://github.com/mit-han-lab/distrifuser/blob/main/README.md) · [Source 2](https://github.com/mit-han-lab/distrifuser/blob/main/distrifuser/modules/pp/attn.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="distserve"></a>
-
-### [DistServe](https://github.com/LLMServe/DistServe)
-
-[adjacent](systems.md#adjacent) · `system` · `research-prototype` · `text` · **public code**
-
-**Survey relevance:** Serving specialization route: establishes prefill/decode separation independently of recent engine-construction claims.
-
-Separates prefill and decode workers, chooses their resource/parallelism configurations independently, and migrates KV state between them.
-
-**Scope:** Latency-constrained online LLM serving on multiple GPUs
-
-**Boundary:** KV transfer and placement costs depend on the interconnect; the released research stack supports a narrower model/software set than current general engines.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `prefill-decode-disaggregation`, `kv-transfer`, `pipeline-parallelism`.
-
-**Constraints:** `workload`, `execution`.
-
-**Evidence:** [Source 1](https://github.com/LLMServe/DistServe/blob/main/README.md) · [Source 2](https://github.com/LLMServe/DistServe/blob/main/distserve/context_stage_scheduler.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
 
 <a id="gufo-rdma"></a>
 
@@ -1694,180 +998,6 @@ Builds model-specific compute graphs and rank plans, placing tensor/pipeline sta
 **Constraints:** `hardware`, `model`, `workload`.
 
 **Evidence:** [Source 1](https://github.com/Llaminar/llaminar/blob/454741b1b2228bc6874e46ade75bbf523a8385d5/README.md) · [Source 2](https://github.com/Llaminar/llaminar/blob/454741b1b2228bc6874e46ade75bbf523a8385d5/src/v2/execution/local_execution/engine/ForwardExecutionEngine.cpp) · [Source 3](https://github.com/Llaminar/llaminar/blob/454741b1b2228bc6874e46ade75bbf523a8385d5/src/v2/collective/backends/HeterogeneousBackend.cpp) · [Source 4](https://github.com/Llaminar/llaminar/blob/454741b1b2228bc6874e46ade75bbf523a8385d5/src/v2/planning/AutomaticOrchestrationPlanner.cpp).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="openvino-genai"></a>
-
-### [OpenVINO GenAI](https://github.com/openvinotoolkit/openvino.genai)
-
-[foundation](systems.md#foundation) · `support` · `runtime` · `text / image / video / audio / multimodal` · **public code**
-
-**Survey relevance:** General deployment baseline for device coverage, model export and state-management costs.
-
-Adds generative pipelines and continuous-batching policy above OpenVINO compiled models, using device-specific KV layouts, block allocation and prefix-cache reuse.
-
-**Scope:** OpenVINO-supported CPU/GPU/NPU devices, model export format, cache precision and per-device feature support constrain execution.
-
-**Boundary:** It reuses the OpenVINO runtime rather than replacing the lower compiler stack; cache eviction and sparse-attention options may change model outputs and require separate quality checks.
-
-**Semantic considerations:** configuration-dependent.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `backend-delegation`, `kv-management`, `workload-scheduling`, `prefix-reuse`.
-
-**Constraints:** `hardware`, `memory`, `workload`, `precision`.
-
-**Evidence:** [Source 1](https://github.com/openvinotoolkit/openvino.genai/blob/HEAD/README.md) · [Source 2](https://github.com/openvinotoolkit/openvino.genai/blob/HEAD/src/cpp/src/continuous_batching/pipeline.cpp) · [Source 3](https://github.com/openvinotoolkit/openvino.genai/blob/HEAD/src/cpp/src/continuous_batching/cache/kv_cache_manager.hpp).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="para-attention"></a>
-
-### [ParaAttention](https://github.com/chengzeyi/ParaAttention)
-
-[foundation](systems.md#foundation) · `support` · `optimizer` · `image / video` · **public code**
-
-**Survey relevance:** Optimization component for integration and comparison; its mechanism alone does not establish a reconstructed execution stack.
-
-Provides compile-friendly Ring/Ulysses context parallel adapters and First Block Cache, which gates later transformer blocks using the change in the first block residual.
-
-**Scope:** Requires compatible Diffusers adapters; distributed speed depends on communication, while cache behavior depends on a residual threshold.
-
-**Boundary:** Context parallelism and approximate residual reuse are separate features and must be enabled and evaluated independently.
-
-**Semantic considerations:** configuration-dependent, earlier-state reuse.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `sequence-parallelism`, `first-block-gating`, `activation-reuse`, `graph-compilation`.
-
-**Constraints:** `multi-device`, `denoising-steps`, `quality-budget`.
-
-**Evidence:** [Source 1](https://github.com/chengzeyi/ParaAttention/blob/main/README.md) · [Source 2](https://github.com/chengzeyi/ParaAttention/blob/main/src/para_attn/first_block_cache/utils.py) · [Source 3](https://github.com/chengzeyi/ParaAttention/blob/main/src/para_attn/first_block_cache/diffusers_adapters/flux.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
-
-</details>
-
-<a id="petals"></a>
-
-### [Petals](https://github.com/bigscience-workshop/petals)
-
-[adjacent](systems.md#adjacent) · `system` · `runtime` · `text` · **public code**
-
-**Survey relevance:** Distributed execution route: compares a different deployment contract and system boundary.
-
-Places transformer blocks on peers and routes stateful inference sessions through a latency-aware sequence of remote block servers.
-
-**Scope:** Models distributed across networked user-contributed devices
-
-**Boundary:** Network latency, peer availability and trust assumptions differ from a controlled single-cluster deployment; this is not a local drop-in engine.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `pipeline-parallelism`, `peer-routing`.
-
-**Constraints:** `workload`, `execution`.
-
-**Evidence:** [Source 1](https://github.com/bigscience-workshop/petals/blob/main/README.md) · [Source 2](https://github.com/bigscience-workshop/petals/blob/main/src/petals/client/routing/sequence_manager.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="punica"></a>
-
-### [Punica](https://github.com/punica-ai/punica)
-
-[adjacent](systems.md#adjacent) · `system` · `backend` · `text` · **public code**
-
-**Survey relevance:** Multi-adapter execution route: compares workload-specific kernels and shared-model scheduling.
-
-Batches the common base-model computation while segmented gather matrix-vector kernels apply different low-rank adapter updates per request.
-
-**Scope:** Concurrent LoRA requests with shared base weights
-
-**Boundary:** Adapter rank, layout and supported kernels constrain batching; compare against a tuned multi-adapter serving baseline.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `multi-adapter-batching`, `segmented-gather-matvec`.
-
-**Constraints:** `workload`, `execution`.
-
-**Evidence:** [Source 1](https://github.com/punica-ai/punica/blob/master/README.md) · [Source 2](https://github.com/punica-ai/punica/blob/master/csrc/sgmv/sgmv_cutlass.cu).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="s-lora"></a>
-
-### [S-LoRA](https://github.com/S-LoRA/S-LoRA)
-
-[adjacent](systems.md#adjacent) · `system` · `research-prototype` · `text` · **public code**
-
-**Survey relevance:** Multi-adapter serving route: establishes prior integrated specialization of memory and batching.
-
-Pages adapter weights and KV states in a unified memory pool and batches heterogeneous adapter ranks using specialized LoRA kernels.
-
-**Scope:** Many LoRA adapters sharing one base model
-
-**Boundary:** Requires a shared base-model family and supported adapter layouts; this is not batching arbitrary independent models.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `multi-adapter-batching`, `unified-paging`.
-
-**Constraints:** `workload`, `execution`.
-
-**Evidence:** [Source 1](https://github.com/S-LoRA/S-LoRA/blob/main/README.md) · [Source 2](https://github.com/S-LoRA/S-LoRA/blob/main/slora/models/bmm/lora_bmm_infer.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="sarathi-serve"></a>
-
-### [Sarathi-Serve](https://github.com/microsoft/sarathi-serve)
-
-[adjacent](systems.md#adjacent) · `system` · `research-prototype` · `text` · **public code**
-
-**Survey relevance:** Serving specialization route: compares chunked prefill and batching independently of implementation provenance.
-
-Splits prefills into bounded chunks and schedules ongoing decode tokens before filling the remaining batch budget with prefill work.
-
-**Scope:** Mixed prefill/decode traffic with token-latency targets
-
-**Boundary:** Chunk size trades throughput against latency; this research fork does not promise full feature parity with upstream vLLM.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `chunked-prefill`, `decode-first-batching`.
-
-**Constraints:** `workload`, `execution`.
-
-**Evidence:** [Source 1](https://github.com/microsoft/sarathi-serve/blob/main/README.md) · [Source 2](https://github.com/microsoft/sarathi-serve/blob/main/sarathi/core/scheduler/sarathi_scheduler.py).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 
@@ -1966,7 +1096,7 @@ Owns model pipelines and staged denoising, plus an actor-based streaming schedul
 
 [foundation](systems.md#foundation) · `support` · `runtime` · `text / multimodal` · **public code**
 
-**Survey relevance:** General GPU serving baseline and kernel source; reuse is distinct from independent full-stack implementation.
+**Survey relevance:** General-engine comparison point in the VibeQwen case; record matching model, hardware, precision and workload before comparing the specialized result.
 
 Combines NVIDIA-specific LLM kernels with chunked-context scheduling, generation-aware batching and reusable paged KV-cache management.
 
@@ -1984,35 +1114,6 @@ Combines NVIDIA-specific LLM kernels with chunked-context scheduling, generation
 **Constraints:** `hardware`, `workload`, `memory`, `precision`.
 
 **Evidence:** [Source 1](https://github.com/NVIDIA/TensorRT-LLM/blob/HEAD/README.md) · [Source 2](https://github.com/NVIDIA/TensorRT-LLM/blob/HEAD/tensorrt_llm/_torch/pyexecutor/scheduler/scheduler.py) · [Source 3](https://github.com/NVIDIA/TensorRT-LLM/blob/HEAD/cpp/tensorrt_llm/batch_manager/kvCacheManager.cpp).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
-
-</details>
-
-<a id="videosys"></a>
-
-### [VideoSys](https://github.com/NUS-HPC-AI-Lab/VideoSys)
-
-[adjacent](systems.md#adjacent) · `system` · `runtime` · `video` · **public code**
-
-**Survey relevance:** Video-serving framework route: compares reusable parallelization with narrowly reconstructed execution stacks.
-
-Combines Pyramid Attention Broadcast with dynamic sequence parallelism, reusing attention outputs at type-specific intervals and changing sequence partitions across attention axes.
-
-**Scope:** Targets supported video transformers with separable spatial, temporal and cross-modal attention and multi-GPU execution.
-
-**Boundary:** PAB is approximate reuse and its supported model set differs from the broader framework; the repository also contains training optimizations that are not inference mechanisms.
-
-**Semantic considerations:** configuration-dependent, earlier-state reuse.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `attention-output-reuse`, `axis-switching-parallelism`.
-
-**Constraints:** `spatiotemporal-architecture`, `multi-device`, `denoising-steps`.
-
-**Evidence:** [Source 1](https://github.com/NUS-HPC-AI-Lab/VideoSys/blob/master/README.md) · [Source 2](https://github.com/NUS-HPC-AI-Lab/VideoSys/blob/master/docs/pab.md) · [Source 3](https://github.com/NUS-HPC-AI-Lab/VideoSys/blob/master/docs/dsp.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
@@ -2049,38 +1150,9 @@ Combines Ulysses and Ring sequence parallelism with CFG/data parallelism and Pip
 
 <a id="execution"></a>
 
-## Compiled & native execution / 编译与原生执行 (81)
+## Compiled & native execution / 编译与原生执行 (69)
 
 **How does a graph become an executable?** Fuse, lower, specialize and dispatch graphs or native kernels.
-
-<a id="aitemplate"></a>
-
-### [AITemplate](https://github.com/facebookincubator/AITemplate)
-
-[foundation](systems.md#foundation) · `support` · `compiler` · `text / image / general` · **public code**
-
-**Survey relevance:** Reusable compiler foundation; compare which lowering and scheduling responsibilities a specialized stack retains or replaces.
-
-Profiles CUDA/HIP kernel choices, performs graph and memory fusion, plans intermediate storage and emits a self-contained model shared library.
-
-**Scope:** GPU architecture, supported operator templates, FP16-oriented execution and declared shape ranges constrain compilation.
-
-**Boundary:** Operator coverage is incomplete and hardware/compiler compatibility matters; FX2AIT can leave unsupported portions outside the generated engine.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `aot-specialization`, `graph-fusion`, `kernel-autotuning`, `memory-planning`.
-
-**Constraints:** `hardware`, `precision`, `shape`.
-
-**Evidence:** [Source 1](https://github.com/facebookincubator/AITemplate/blob/HEAD/README.md) · [Source 2](https://github.com/facebookincubator/AITemplate/blob/HEAD/python/aitemplate/compiler/compiler.py) · [Source 3](https://github.com/facebookincubator/AITemplate/blob/HEAD/python/aitemplate/compiler/transform/memory_planning.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
 
 <a id="ane-lm"></a>
 
@@ -2175,7 +1247,7 @@ Splits and converts model components into ANE-oriented stateful packages, with p
 
 [foundation](systems.md#foundation) · `support` · `compiler` · `text / general` · **public code**
 
-**Survey relevance:** Reusable compiler foundation and historical source of model and schedule specialization.
+**Survey relevance:** Compiler infrastructure underlying the included MLC LLM model-to-runtime construction route.
 
 Coordinates Relax graph transformations and tensor-level scheduling to fuse operators, dispatch libraries and lower target-specific tensor programs into deployable modules.
 
@@ -2192,7 +1264,7 @@ Coordinates Relax graph transformations and tensor-level scheduling to fuse oper
 
 **Constraints:** `hardware`, `shape`, `workload`.
 
-**Evidence:** [Source 1](https://github.com/apache/tvm/blob/HEAD/README.md) · [Source 2](https://github.com/apache/tvm/blob/HEAD/python/tvm/relax/backend/cuda/pipeline.py) · [Source 3](https://github.com/apache/tvm/blob/HEAD/docs/deep_dive/tensor_ir/tutorials/dlight_gpu_scheduling.py).
+**Evidence:** [Source 1](https://github.com/apache/tvm/blob/HEAD/README.md) · [Source 2](https://github.com/apache/tvm/blob/HEAD/python/tvm/relax/backend/cuda/pipeline.py) · [Source 3](https://github.com/apache/tvm/blob/HEAD/docs/deep_dive/tensor_ir/tutorials/dlight_gpu_scheduling.py) · [Source 4](https://github.com/mlc-ai/mlc-llm/blob/HEAD/README.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
@@ -2251,35 +1323,6 @@ A proprietary native engine executes models packaged by an open converter and ex
 **Constraints:** `model`, `hardware`, `memory`, `precision`.
 
 **Evidence:** [Source 1](https://github.com/basecompute/baseRT/blob/24badc8dd173e4111b64996a718d0e056405ea62/README.md) · [Source 2](https://github.com/basecompute/baseRT/blob/24badc8dd173e4111b64996a718d0e056405ea62/CONTRIBUTING.md) · [Source 3](https://github.com/basecompute/baseRT/blob/24badc8dd173e4111b64996a718d0e056405ea62/base-convert/FORMAT.md).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="bladedisc"></a>
-
-### [BladeDISC](https://github.com/alibaba/BladeDISC)
-
-[foundation](systems.md#foundation) · `support` · `compiler` · `text / image / general` · **public code**
-
-**Survey relevance:** Reusable compiler foundation; compare which lowering and scheduling responsibilities a specialized stack retains or replaces.
-
-Clusters supported framework operations and specializes MLIR fusion kernels with runtime shape predicates while supporting dynamic-shape execution in plugin or standalone modes.
-
-**Scope:** Dynamic dimensions, supported fusion patterns, framework integration and CPU/GPU target capabilities constrain generated regions.
-
-**Boundary:** Its README contains older framework validation matrices; current compatibility and performance should be checked against a pinned build, and unsupported operations may stay in the host framework.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `dynamic-shape-specialization`, `graph-fusion`, `graph-partitioning`, `hardware-codegen`.
-
-**Constraints:** `shape`, `hardware`, `framework`.
-
-**Evidence:** [Source 1](https://github.com/alibaba/BladeDISC/blob/HEAD/README.md) · [Source 2](https://github.com/alibaba/BladeDISC/blob/HEAD/tao_compiler/mlir/disc/transforms/disc_specialize_fusion_with_speculation.cc) · [Source 3](https://github.com/alibaba/BladeDISC/blob/HEAD/docs/developers/bladedisc_torch_overview.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 
@@ -2459,35 +1502,6 @@ Orchestrates chunked CoreML model execution and KV state, with reshaped convolut
 
 </details>
 
-<a id="deepgemm"></a>
-
-### [DeepGEMM](https://github.com/deepseek-ai/DeepGEMM)
-
-[foundation](systems.md#foundation) · `support` · `kernel-library` · `text` · **public code**
-
-**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
-
-JIT-compiles tensor-core kernels with shape, tile and pipeline constants, using MoE-specific grouped layouts and optional fused expert computation/communication paths.
-
-**Scope:** Supported NVIDIA architectures, precision/scaling formats, alignment and shared expert N/K dimensions determine legal GEMM and grouped-GEMM specializations.
-
-**Boundary:** Input casting and transposition remain caller responsibilities, grouped experts have shape/alignment contracts, and broad feature listings do not establish support on every NVIDIA generation.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `jit-specialization`, `grouped-gemm`, `layout-specialization`, `compute-communication-fusion`.
-
-**Constraints:** `hardware`, `precision`, `shape`, `layout`.
-
-**Evidence:** [Source 1](https://github.com/deepseek-ai/DeepGEMM/blob/HEAD/README.md) · [Source 2](https://github.com/deepseek-ai/DeepGEMM/blob/HEAD/csrc/jit_kernels/impls/sm90_fp8_gemm_1d1d.hpp) · [Source 3](https://github.com/deepseek-ai/DeepGEMM/blob/HEAD/csrc/apis/gemm.hpp).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
 <a id="diffusion-rs"></a>
 
 ### [diffusion-rs](https://github.com/EricLBuehler/diffusion-rs)
@@ -2604,35 +1618,6 @@ Runs DiTs on ggml graphs with automatic quantization and placement, per-componen
 
 </details>
 
-<a id="executorch"></a>
-
-### [ExecuTorch](https://github.com/pytorch/executorch)
-
-[foundation](systems.md#foundation) · `support` · `runtime` · `text / general` · **public code**
-
-**Survey relevance:** Reusable runtime foundation or baseline for comparing retained services and implementation boundaries.
-
-Exports PyTorch graphs ahead of time, partitions supported subgraphs to hardware delegates and plans reusable tensor storage for a lightweight on-device runtime.
-
-**Scope:** Mobile and embedded device capabilities, delegate operator coverage and bounded memory requirements determine the exported program.
-
-**Boundary:** Backend delegates may retain vendor SDK dependencies, and unsupported operators can remain in portable execution; whole-model acceleration depends on partition coverage.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `aot-specialization`, `backend-delegation`, `memory-planning`, `selective-runtime`.
-
-**Constraints:** `hardware`, `memory`, `deployment-footprint`.
-
-**Evidence:** [Source 1](https://github.com/pytorch/executorch/blob/HEAD/README.md) · [Source 2](https://github.com/pytorch/executorch/blob/HEAD/exir/backend/backend_api.py) · [Source 3](https://github.com/pytorch/executorch/blob/HEAD/exir/passes/memory_planning_pass.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
 <a id="fastflowlm"></a>
 
 ### [FastFlowLM](https://github.com/ROCm/FastFlowLM)
@@ -2697,7 +1682,7 @@ Owns model and pipeline registries, component loading and staged denoising over 
 
 [foundation](systems.md#foundation) · `support` · `kernel-library` · `text` · **public code**
 
-**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
+**Survey relevance:** Reusable recurrent and linear-attention kernels in the ExLlamaV3 execution stack; state semantics must survive integration.
 
 Implements architecture-specific linear-attention and recurrent mixers with chunk-parallel prefill and state-update kernels, including fused gated-delta-rule intra-chunk computation.
 
@@ -2714,7 +1699,7 @@ Implements architecture-specific linear-attention and recurrent mixers with chun
 
 **Constraints:** `architecture`, `hardware`, `shape`, `state`.
 
-**Evidence:** [Source 1](https://github.com/fla-org/flash-linear-attention/blob/HEAD/README.md) · [Source 2](https://github.com/fla-org/flash-linear-attention/blob/HEAD/fla/ops/gated_delta_rule/chunk.py).
+**Evidence:** [Source 1](https://github.com/fla-org/flash-linear-attention/blob/HEAD/README.md) · [Source 2](https://github.com/fla-org/flash-linear-attention/blob/HEAD/fla/ops/gated_delta_rule/chunk.py) · [Source 3](https://github.com/turboderp-org/exllamav3/blob/HEAD/README.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
@@ -2726,7 +1711,7 @@ Implements architecture-specific linear-attention and recurrent mixers with chun
 
 [foundation](systems.md#foundation) · `support` · `kernel-library` · `text` · **public code**
 
-**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
+**Survey relevance:** Attention implementation reused by included model runtimes such as ExLlamaV3; an optimized component does not establish an end-to-end gain.
 
 Implements attention with IO-aware tiled kernels and fused reductions, selecting hardware/shape-specific variants and providing KV-cache update-and-attend inference interfaces.
 
@@ -2743,7 +1728,7 @@ Implements attention with IO-aware tiled kernels and fused reductions, selecting
 
 **Constraints:** `hardware`, `shape`, `precision`, `memory`.
 
-**Evidence:** [Source 1](https://github.com/Dao-AILab/flash-attention/blob/HEAD/README.md) · [Source 2](https://github.com/Dao-AILab/flash-attention/blob/HEAD/flash_attn/flash_attn_interface.py).
+**Evidence:** [Source 1](https://github.com/Dao-AILab/flash-attention/blob/HEAD/README.md) · [Source 2](https://github.com/Dao-AILab/flash-attention/blob/HEAD/flash_attn/flash_attn_interface.py) · [Source 3](https://github.com/turboderp-org/exllamav3/blob/HEAD/README.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
@@ -2755,7 +1740,7 @@ Implements attention with IO-aware tiled kernels and fused reductions, selecting
 
 [foundation](systems.md#foundation) · `support` · `kernel-library` · `text` · **public code**
 
-**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
+**Survey relevance:** Optional standard paged-attention backend used by MoE-Infinity where supported; preserves the distinction between reusable kernels and the reconstructed engine.
 
 Builds or selects attention/GEMM/MoE kernels from dtype, head geometry, cache layout and workload metadata, with planned paged/ragged KV execution and specialized prefill/decode paths.
 
@@ -2772,38 +1757,9 @@ Builds or selects attention/GEMM/MoE kernels from dtype, head geometry, cache la
 
 **Constraints:** `hardware`, `shape`, `precision`, `workload`.
 
-**Evidence:** [Source 1](https://github.com/flashinfer-ai/flashinfer/blob/HEAD/README.md) · [Source 2](https://github.com/flashinfer-ai/flashinfer/blob/HEAD/flashinfer/decode.py).
+**Evidence:** [Source 1](https://github.com/flashinfer-ai/flashinfer/blob/HEAD/README.md) · [Source 2](https://github.com/flashinfer-ai/flashinfer/blob/HEAD/flashinfer/decode.py) · [Source 3](https://github.com/EfficientMoE/MoE-Infinity/blob/HEAD/README.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
-
-</details>
-
-<a id="flashmla"></a>
-
-### [FlashMLA](https://github.com/deepseek-ai/FlashMLA)
-
-[foundation](systems.md#foundation) · `support` · `kernel-library` · `text` · **public code**
-
-**Survey relevance:** Reusable kernel foundation; isolates component reuse from claims of complete engine reconstruction.
-
-Uses DeepSeek-specific latent/sparse-attention geometry, precomputed scheduler metadata and quantized KV layouts to run sparse decode/prefill and fused RoPE–attention paths.
-
-**Scope:** At the checked HEAD, DeepSeek-V4.1 geometry, NVIDIA SM100/SM103 or Ascend 950, sparse indices and explicit FP8/FP4 KV layouts constrain the available kernels.
-
-**Boundary:** The 2026-09-30 breaking release removed Hopper and earlier-model support and changed KV formats; old SM90/V3 descriptions apply only to the linked legacy commit. Fused RoPE paths have narrower backend support.
-
-**Semantic considerations:** layout / scheduling, reduced precision.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `model-specific-attention`, `sparse-attention-kernel`, `fused-attention-boundary`.
-
-**Constraints:** `model`, `hardware`, `precision`, `shape`.
-
-**Evidence:** [Source 1](https://github.com/deepseek-ai/FlashMLA/blob/2e5429fc5653bab6e081f09477126f731882a6a9/README.md) · [Source 2](https://github.com/deepseek-ai/FlashMLA/blob/2e5429fc5653bab6e081f09477126f731882a6a9/flash_mla/flash_mla_interface.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 
 </details>
 
@@ -2894,35 +1850,6 @@ Rebuilds CLIP, UNet, VAE, sampler and node execution in Rust, reusing CubeCL/wgp
 
 </details>
 
-<a id="hidet"></a>
-
-### [Hidet](https://github.com/hidet-org/hidet)
-
-[foundation](systems.md#foundation) · `support` · `compiler` · `text / image / general` · **public code**
-
-**Survey relevance:** Reusable compiler foundation; compare which lowering and scheduling responsibilities a specialized stack retains or replaces.
-
-Compiles PyTorch or ONNX graphs to CUDA kernels using graph rewrites, tunable operator schedules and explicit mappings from logical tasks to hardware workers.
-
-**Scope:** NVIDIA GPU inference, operator coverage, task layouts and tuning-space size constrain the generated execution.
-
-**Boundary:** Hidet is an optimizing compiler/backend rather than a deployment-specific serving engine; tuning and frontend compatibility must be evaluated for the chosen workload.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `hardware-codegen`, `task-mapping`, `kernel-autotuning`, `graph-fusion`.
-
-**Constraints:** `hardware`, `shape`, `workload`.
-
-**Evidence:** [Source 1](https://github.com/hidet-org/hidet/blob/HEAD/README.md) · [Source 2](https://github.com/hidet-org/hidet/blob/HEAD/python/hidet/transforms/lower_task_mapping.py) · [Source 3](https://github.com/hidet-org/hidet/blob/HEAD/python/hidet/ir/library/tune.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
 <a id="hilum-engine"></a>
 
 ### [Hilum LLM Engine](https://github.com/hilum-labs/hilum-local-llm-engine)
@@ -3007,64 +1934,6 @@ A C++/CUDA engine owns model loading, attention/MoE/recurrent execution, paged K
 **Evidence:** [Source 1](https://github.com/kekzl/imp/blob/e583b0ac6f181d760b62cfd20fecd51d013656ad/README.md) · [Source 2](https://github.com/kekzl/imp/blob/e583b0ac6f181d760b62cfd20fecd51d013656ad/CONTRIBUTING.md) · [Source 3](https://github.com/kekzl/imp/blob/e583b0ac6f181d760b62cfd20fecd51d013656ad/src/runtime/engine.cpp) · [Source 4](https://github.com/kekzl/imp/blob/e583b0ac6f181d760b62cfd20fecd51d013656ad/src/runtime/engine_scheduler.cpp) · [Source 5](https://github.com/kekzl/imp/blob/e583b0ac6f181d760b62cfd20fecd51d013656ad/docs/MISSION_JOURNAL.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `disclosed` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="iree"></a>
-
-### [IREE](https://github.com/iree-org/iree)
-
-[foundation](systems.md#foundation) · `support` · `compiler` · `text / image / general` · **public code**
-
-**Survey relevance:** Reusable compiler/runtime foundation for target-specific programs and execution orchestration.
-
-Lowers MLIR programs into device executables and a runtime schedule, partitioning streamable work and planning resource lifetimes and allocations before deployment.
-
-**Scope:** Hardware target, memory lifetime, asynchronous dependencies and the accepted input dialect constrain generated programs.
-
-**Boundary:** IREE is a general compiler/runtime toolkit; importing a model and selecting a target do not by themselves establish competitive model-level performance.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `aot-specialization`, `asynchronous-execution`, `memory-planning`, `hardware-codegen`.
-
-**Constraints:** `hardware`, `memory`, `shape`.
-
-**Evidence:** [Source 1](https://github.com/iree-org/iree/blob/HEAD/README.md) · [Source 2](https://github.com/iree-org/iree/blob/HEAD/compiler/src/iree/compiler/Dialect/Stream/Transforms/ScheduleExecution.cpp) · [Source 3](https://github.com/iree-org/iree/blob/HEAD/compiler/src/iree/compiler/Dialect/Stream/Transforms/ScheduleAllocation.cpp).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="iree-turbine"></a>
-
-### [IREE Turbine](https://github.com/iree-org/iree-turbine)
-
-[foundation](systems.md#foundation) · `support` · `compiler` · `text / general` · **public code**
-
-**Survey relevance:** Reusable compiler foundation; compare which lowering and scheduling responsibilities a specialized stack retains or replaces.
-
-Captures PyTorch modules or exported programs into IREE-compatible Torch IR, exposing AOT deployment, parameter handling and custom-operation integration.
-
-**Scope:** PyTorch exportability, dynamic-shape representation, custom operations and compatible IREE compiler/runtime versions constrain deployment.
-
-**Boundary:** Turbine is the PyTorch-to-IREE frontend and tooling layer, not an independent serving engine; the README warns that some dynamic-shape paths do not work with every head/release combination.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `aot-specialization`, `graph-capture`, `custom-op-lowering`.
-
-**Constraints:** `framework`, `shape`, `hardware`.
-
-**Evidence:** [Source 1](https://github.com/iree-org/iree-turbine/blob/HEAD/README.md) · [Source 2](https://github.com/iree-org/iree-turbine/blob/HEAD/iree/turbine/aot/exporter.py) · [Source 3](https://github.com/iree-org/iree-turbine/blob/HEAD/iree/turbine/aot/compiled_module.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
 </details>
 
@@ -3219,7 +2088,7 @@ Compiles typed model graphs into layer-mixer megakernels plus conventional kerne
 
 [foundation](systems.md#foundation) · `support` · `runtime` · `text` · **public code**
 
-**Survey relevance:** General local-inference substrate and baseline; retained components must be distinguished from rewritten execution.
+**Survey relevance:** Upstream execution stack for the llamAmpere, CIRU, Strix and ANEMLL Flash forks; makes inherited code and changed execution paths comparable.
 
 Loads GGUF model tensors and executes a native GGML graph through backend-specific quantized kernels, dispatching by tensor type and geometry with optional CPU/GPU layer placement.
 
@@ -3236,7 +2105,7 @@ Loads GGUF model tensors and executes a native GGML graph through backend-specif
 
 **Constraints:** `precision`, `hardware`, `layout`, `shape`, `memory`.
 
-**Evidence:** [Source 1](https://github.com/ggml-org/llama.cpp/blob/HEAD/README.md) · [Source 2](https://github.com/ggml-org/llama.cpp/blob/HEAD/ggml/src/ggml-cpu/ggml-cpu.c) · [Source 3](https://github.com/ggml-org/llama.cpp/blob/HEAD/ggml/src/ggml-cuda/mmvq.cu).
+**Evidence:** [Source 1](https://github.com/ggml-org/llama.cpp/blob/HEAD/README.md) · [Source 2](https://github.com/ggml-org/llama.cpp/blob/HEAD/ggml/src/ggml-cpu/ggml-cpu.c) · [Source 3](https://github.com/ggml-org/llama.cpp/blob/HEAD/ggml/src/ggml-cuda/mmvq.cu) · [Source 4](https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/QWEN_AMPERE.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
@@ -3509,7 +2378,7 @@ A continuation of the NInfer/Don-Chad fork supplies SM86 quantized tensor-core p
 
 [foundation](systems.md#foundation) · `support` · `compiler` · `text / image / general` · **closed core**
 
-**Survey relevance:** Engine-building baseline with a closed optimizer/runtime core; compare disclosed interfaces and build cost.
+**Survey relevance:** Model-compilation and execution foundation for the included TensorRT Edge-LLM deployment route.
 
 Builds NVIDIA inference engines specialized to optimization-profile shapes and selected kernel tactics, recording profiled decisions in a reusable editable timing cache.
 
@@ -3526,7 +2395,7 @@ Builds NVIDIA inference engines specialized to optimization-profile shapes and s
 
 **Constraints:** `hardware`, `shape`, `precision`.
 
-**Evidence:** [Source 1](https://github.com/NVIDIA/TensorRT/blob/HEAD/README.md) · [Source 2](https://github.com/NVIDIA/TensorRT/blob/HEAD/samples/sampleDynamicReshape/sampleDynamicReshape.cpp) · [Source 3](https://github.com/NVIDIA/TensorRT/blob/HEAD/samples/sampleEditableTimingCache/README.md).
+**Evidence:** [Source 1](https://github.com/NVIDIA/TensorRT/blob/HEAD/README.md) · [Source 2](https://github.com/NVIDIA/TensorRT/blob/HEAD/samples/sampleDynamicReshape/sampleDynamicReshape.cpp) · [Source 3](https://github.com/NVIDIA/TensorRT/blob/HEAD/samples/sampleEditableTimingCache/README.md) · [Source 4](https://github.com/NVIDIA/TensorRT-Edge-LLM/blob/0f52705723abfa8c6702654bfdcc082a728ed353/README.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
@@ -3558,35 +2427,6 @@ Converts diffusion-model modules into deployable compiled modules through OneFlo
 **Evidence:** [Source 1](https://github.com/siliconflow/onediff/blob/main/README.md) · [Source 2](https://github.com/siliconflow/onediff/blob/main/src/onediff/infer_compiler/backends/nexfort/README.md) · [Source 3](https://github.com/siliconflow/onediff/blob/main/src/onediff/infer_compiler/backends/nexfort/deployable_module.py).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
-
-</details>
-
-<a id="onnxruntime-genai"></a>
-
-### [ONNX Runtime GenAI](https://github.com/microsoft/onnxruntime-genai)
-
-[foundation](systems.md#foundation) · `support` · `runtime` · `text / audio / multimodal` · **public code**
-
-**Survey relevance:** General exported-model runtime baseline for portability and generation-state management.
-
-Executes ONNX generative models through execution providers while selecting model- and device-specific convolutional, shared, sliding-window or quantized KV-state managers.
-
-**Scope:** ONNX model contracts, execution-provider policy, attention/convolution structure and KV quantization determine the state-management path.
-
-**Boundary:** This is a generative runtime on top of ONNX Runtime, not evidence that every execution provider accelerates every model or feature equally.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `backend-delegation`, `kv-management`, `model-state-specialization`, `generation-loop`.
-
-**Constraints:** `hardware`, `model`, `memory`, `precision`.
-
-**Evidence:** [Source 1](https://github.com/microsoft/onnxruntime-genai/blob/HEAD/README.md) · [Source 2](https://github.com/microsoft/onnxruntime-genai/blob/HEAD/src/models/io/kv_cache.cpp) · [Source 3](https://github.com/microsoft/onnxruntime-genai/blob/HEAD/src/models/io/ep_managed_sliding_kv_cache.cpp).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 
 </details>
 
@@ -3967,35 +2807,6 @@ A community llama.cpp fork adds guarded gfx1151 matmul, MoE and Gated DeltaNet f
 
 </details>
 
-<a id="swifttransformer"></a>
-
-### [SwiftTransformer](https://github.com/LLMServe/SwiftTransformer)
-
-[foundation](systems.md#foundation) · `support` · `backend` · `text` · **public code**
-
-**Survey relevance:** Reusable execution backend for integration and comparison; component capability is separate from engine construction evidence.
-
-Provides transformer execution with paged attention, continuous batching and tensor/pipeline parallelism behind Python bindings.
-
-**Scope:** C++/CUDA execution substrate used by DistServe and FastServe
-
-**Boundary:** Included as a concrete research backend dependency, not because of small code size; supported model families and software versions are limited.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `paged-attention`, `continuous-batching`, `native-runtime`.
-
-**Constraints:** `workload`, `execution`.
-
-**Evidence:** [Source 1](https://github.com/LLMServe/SwiftTransformer/blob/main/README.md) · [Source 2](https://github.com/LLMServe/SwiftTransformer/blob/main/src/csrc/layer/attention.cc).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
-
-</details>
-
 <a id="tensorfold"></a>
 
 ### [TensorFold](https://github.com/ashhart/TensorFold)
@@ -4051,64 +2862,6 @@ Exports models to ONNX, builds target-specific TensorRT engines, then runs them 
 **Evidence:** [Source 1](https://github.com/NVIDIA/TensorRT-Edge-LLM/blob/0f52705723abfa8c6702654bfdcc082a728ed353/README.md) · [Source 2](https://github.com/NVIDIA/TensorRT-Edge-LLM/blob/0f52705723abfa8c6702654bfdcc082a728ed353/docs/source/developer_guide/software-design/engine-builder.md) · [Source 3](https://github.com/NVIDIA/TensorRT-Edge-LLM/blob/0f52705723abfa8c6702654bfdcc082a728ed353/docs/source/developer_guide/software-design/llm-inference-runtime.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="tinygrad"></a>
-
-### [tinygrad](https://github.com/tinygrad/tinygrad)
-
-[foundation](systems.md#foundation) · `support` · `compiler` · `text / image / general` · **public code**
-
-**Survey relevance:** Reusable compiler foundation; compare which lowering and scheduling responsibilities a specialized stack retains or replaces.
-
-Fuses lazy tensor graphs, searches kernel schedules and captures compiled execution sequences with TinyJit for reusable memory-planned replay.
-
-**Scope:** Tensor metadata, chosen device backend and available schedule actions determine the captured and optimized execution.
-
-**Boundary:** tinygrad is a full deep-learning stack with training support, not inherently a single-model inference engine; compact code size is not evidence of runtime superiority.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `graph-fusion`, `kernel-autotuning`, `graph-replay`, `memory-planning`.
-
-**Constraints:** `hardware`, `shape`, `memory`.
-
-**Evidence:** [Source 1](https://github.com/tinygrad/tinygrad/blob/HEAD/README.md) · [Source 2](https://github.com/tinygrad/tinygrad/blob/HEAD/tinygrad/engine/jit.py) · [Source 3](https://github.com/tinygrad/tinygrad/blob/HEAD/tinygrad/codegen/opt/search.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
-
-</details>
-
-<a id="torch-tensorrt"></a>
-
-### [Torch-TensorRT](https://github.com/pytorch/TensorRT)
-
-[foundation](systems.md#foundation) · `support` · `backend` · `text / image / general` · **public code**
-
-**Survey relevance:** Reusable execution backend for integration and comparison; component capability is separate from engine construction evidence.
-
-Partitions exported PyTorch graphs into TensorRT-supported regions, compiles and caches those regions as engines and retains PyTorch execution for unsupported regions.
-
-**Scope:** NVIDIA target hardware, TensorRT converter coverage, shape profiles and partition size constrain the delegated graph.
-
-**Boundary:** It depends on TensorRT and can produce mixed PyTorch/TensorRT execution rather than a completely standalone runtime.
-
-**Semantic considerations:** layout / scheduling.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `backend-delegation`, `graph-partitioning`, `aot-specialization`, `engine-caching`.
-
-**Constraints:** `hardware`, `framework`, `shape`.
-
-**Evidence:** [Source 1](https://github.com/pytorch/TensorRT/blob/HEAD/README.md) · [Source 2](https://github.com/pytorch/TensorRT/blob/HEAD/py/torch_tensorrt/dynamo/_compiler.py) · [Source 3](https://github.com/pytorch/TensorRT/blob/HEAD/py/torch_tensorrt/dynamo/partitioning/_global_partitioner.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
 </details>
 
@@ -4404,7 +3157,7 @@ Rust runtimes own model loading, graph execution and state. Inspected paths impl
 
 <a id="construction"></a>
 
-## Construction & validation tools / 构建与验证工具 (11)
+## Construction & validation tools / 构建与验证工具 (14)
 
 **How are specialized programs built and checked?** Agents, kernel languages and evaluation infrastructure.
 
@@ -4466,11 +3219,98 @@ Generates and migrates accelerator kernels through multi-agent workflows, using 
 
 </details>
 
+<a id="ane-field-guide"></a>
+
+### [Apple Neural Engine Field Guide](https://github.com/skyfallsin/apple-neural-engine-field-guide)
+
+[foundation](systems.md#foundation) · `support` · `knowledge-base` · `text` · **public code**
+
+**Survey relevance:** Concrete hardware-investigation knowledge and accepted/rejected experiments feed the separately cataloged ane.cpp engine.
+
+Uses small MIL/ANE probes and CPU-reference checks to investigate execution limits, records kept and discarded experiments, and transfers supported findings into ane.cpp.
+
+**Scope:** Empirical Apple M3 Max ANE behavior, private framework APIs and Qwen-family execution motivate targeted probes.
+
+**Boundary:** Findings and timing reports are author-measured and primarily M3-Max-specific; private APIs may change. This is a knowledge/probe resource linked to ane.cpp, not an additional inference engine.
+
+**Semantic considerations:** generated-artifact dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `hardware-probing`, `experiment-ledger`, `knowledge-transfer`.
+
+**Constraints:** `hardware`, `model`, `toolchain`.
+
+**Evidence:** [Source 1](https://github.com/skyfallsin/apple-neural-engine-field-guide/blob/83e73eb94051dc67431829d0f3d3eb67db0b8e9b/README.md) · [Source 2](https://github.com/skyfallsin/apple-neural-engine-field-guide/blob/83e73eb94051dc67431829d0f3d3eb67db0b8e9b/program.md) · [Source 3](https://github.com/skyfallsin/apple-neural-engine-field-guide/blob/83e73eb94051dc67431829d0f3d3eb67db0b8e9b/results.tsv) · [Source 4](https://github.com/skyfallsin/apple-neural-engine-field-guide/blob/83e73eb94051dc67431829d0f3d3eb67db0b8e9b/tests/test_dispatch_scaling.cpp).
+
+**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
+
+</details>
+
+<a id="atrex-kernel-agent"></a>
+
+### [Atrex Kernel Agent (AKA)](https://github.com/alibaba/atrex-kernel-agent)
+
+[adjacent](systems.md#adjacent) · `construction` · `generator` · `general` · **public code**
+
+**Survey relevance:** Operator-level construction harness connecting coding agents, measured feedback, acceptance gates and reusable optimization knowledge.
+
+Runs coding episodes in isolated worktrees, evaluates numerical and performance results before promotion, and uses profiler feedback plus scoped GPU Wiki retrieval to guide further revisions.
+
+**Scope:** Evaluator-owned GPU operator tasks, target DSL/device and fixed optimization budgets constrain candidate search and acceptance.
+
+**Boundary:** Produces operator kernels, not a complete inference engine. Fast and full episodes use different measurement gates; production policy and finite numerical probes do not prove arbitrary-input correctness. GPU Wiki is a component of this record, not another repository count.
+
+**Semantic considerations:** generated-artifact dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `agent-generation`, `profile-feedback`, `candidate-validation`, `knowledge-retrieval`.
+
+**Constraints:** `hardware`, `workload`, `dsl`, `validation-budget`.
+
+**Evidence:** [Source 1](https://github.com/alibaba/atrex-kernel-agent/blob/b708d9fcd0eff5214bcc5b91aae62357356e525c/README.md) · [Source 2](https://github.com/alibaba/atrex-kernel-agent/blob/b708d9fcd0eff5214bcc5b91aae62357356e525c/long_horizon/campaign.py) · [Source 3](https://github.com/alibaba/atrex-kernel-agent/blob/b708d9fcd0eff5214bcc5b91aae62357356e525c/orchestrator/optimization_policy.py) · [Source 4](https://github.com/alibaba/atrex-kernel-agent/blob/b708d9fcd0eff5214bcc5b91aae62357356e525c/tools/profile_nvidia.sh) · [Source 5](https://github.com/alibaba/atrex-kernel-agent/blob/b708d9fcd0eff5214bcc5b91aae62357356e525c/gpu-wiki/README.md).
+
+**Reviewed:** 2026-10-12 · **AI involvement:** `intrinsic` · **Discovery:** `dependency`.
+
+</details>
+
+<a id="atrex-bench"></a>
+
+### [Atrex-Bench](https://github.com/alibaba/atrex-bench)
+
+[foundation](systems.md#foundation) · `benchmark` · `benchmark` · `general` · **public code**
+
+**Survey relevance:** Production-derived operator tasks and separated evaluation provide a benchmark for generated execution components.
+
+Packages reference programs and input/shape generators, separates agent-visible tasks from evaluator metadata, and checks compilation, numerical outputs/input mutations and forward timing against a roofline estimate.
+
+**Scope:** Production-trace operator shapes, executable PyTorch references and target GPU/DSL determine the generation and evaluation contract.
+
+**Boundary:** End-to-end refers to operator generation and evaluation, not a complete serving stack; correctness uses finite inputs and tolerances, and roofline efficiency is not an application-level speedup.
+
+**Semantic considerations:** generated-artifact dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `trace-derived-tasks`, `reference-validation`, `roofline-evaluation`.
+
+**Constraints:** `workload`, `hardware`, `dsl`, `precision`.
+
+**Evidence:** [Source 1](https://github.com/alibaba/atrex-bench/blob/22d6a57b98ebb45c8db76e98815158d820c1dca3/README.md) · [Source 2](https://github.com/alibaba/atrex-bench/blob/22d6a57b98ebb45c8db76e98815158d820c1dca3/src/atrex_bench/eval/correctness.py) · [Source 3](https://github.com/alibaba/atrex-bench/blob/22d6a57b98ebb45c8db76e98815158d820c1dca3/src/atrex_bench/eval/performance.py).
+
+**Reviewed:** 2026-10-12 · **AI involvement:** `intrinsic` · **Discovery:** `dependency`.
+
+</details>
+
 <a id="fastkernels"></a>
 
 ### [FastKernels](https://github.com/Snowflake-AI-Research/fastkernels)
 
-[foundation](systems.md#foundation) · `support` · `verification` · `text / image / video / audio / multimodal / general` · **public code**
+[foundation](systems.md#foundation) · `benchmark` · `benchmark` · `text / image / video / audio / multimodal / general` · **public code**
 
 **Survey relevance:** Evaluation and integration reference for testing generated components in model workloads.
 
@@ -4492,35 +3332,6 @@ Replaces candidate operators in production-shaped model pipelines and evaluates 
 **Evidence:** [Source 1](https://github.com/Snowflake-AI-Research/fastkernels/blob/HEAD/README.md) · [Source 2](https://github.com/Snowflake-AI-Research/fastkernels/blob/HEAD/fastkernels/bench.py) · [Source 3](https://github.com/Snowflake-AI-Research/fastkernels/blob/HEAD/fastkernels/eval.py) · [Source 4](https://github.com/Snowflake-AI-Research/fastkernels/blob/HEAD/docs/serving-framework-guide.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `initial`.
-
-</details>
-
-<a id="helion"></a>
-
-### [Helion](https://github.com/pytorch/helion)
-
-[foundation](systems.md#foundation) · `support` · `compiler` · `text / general` · **public code**
-
-**Survey relevance:** Reusable compiler foundation; compare which lowering and scheduling responsibilities a specialized stack retains or replaces.
-
-Compiles Python tile programs into GPU kernels and automatically searches tile sizes, indexing, loop order and launch strategies for bound tensor arguments.
-
-**Scope:** Input shapes/strides, device backend, traceable operations and autotuning budget constrain each bound kernel.
-
-**Boundary:** Helion is a kernel authoring/compiler layer, not a serving runtime; first-use tuning can be substantial and optional agent source optimization is separate from the default configuration search.
-
-**Semantic considerations:** generated-artifact dependent.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `tile-layouts`, `kernel-autotuning`, `kernel-specialization`.
-
-**Constraints:** `hardware`, `shape`, `layout`.
-
-**Evidence:** [Source 1](https://github.com/pytorch/helion/blob/HEAD/README.md) · [Source 2](https://github.com/pytorch/helion/blob/HEAD/helion/runtime/kernel.py) · [Source 3](https://github.com/pytorch/helion/blob/HEAD/docs/api/autotuner.md).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 
 </details>
 
@@ -4557,9 +3368,9 @@ Decomposes PyTorch programs into fusable subgraphs, synthesizes Triton kernels, 
 
 ### [KernelBench](https://github.com/ScalingIntelligence/KernelBench)
 
-[foundation](systems.md#foundation) · `support` · `verification` · `general` · **public code**
+[foundation](systems.md#foundation) · `benchmark` · `benchmark` · `general` · **public code**
 
-**Survey relevance:** Operator evaluation foundation; local test success does not establish integrated engine validity.
+**Survey relevance:** Executable tasks for kernel and model-program construction workflows such as KernelAgent; task-level acceptance remains separate from deployed-engine validation.
 
 Compiles generated kernel implementations, compares them against PyTorch reference programs on randomized inputs and times only candidates that pass correctness checks.
 
@@ -4582,6 +3393,35 @@ Compiles generated kernel implementations, compares them against PyTorch referen
 
 </details>
 
+<a id="kernelwiki"></a>
+
+### [KernelWiki](https://github.com/mit-han-lab/KernelWiki)
+
+[foundation](systems.md#foundation) · `support` · `knowledge-base` · `general` · **public code**
+
+**Survey relevance:** Retrievable hardware and kernel experience connects prior engineering work with subsequent specialized implementation decisions.
+
+Indexes upstream PRs, hardware documents and optimization notes with architecture/symptom filters, and links synthesized pages to captured kernel artifacts and provenance.
+
+**Scope:** NVIDIA Blackwell / Hopper kernel programming, hardware features and version-specific CUDA/DSL behavior delimit the knowledge corpus.
+
+**Boundary:** Kernel-level knowledge support rather than an engine or proof of lower development cost. Corpus cutoffs and source confidence matter; included assets retain upstream licensing and are not independently reproduced by this survey.
+
+**Semantic considerations:** generated-artifact dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `source-linked-knowledge`, `scoped-retrieval`, `versioned-provenance`.
+
+**Constraints:** `hardware`, `dsl`, `toolchain`.
+
+**Evidence:** [Source 1](https://github.com/mit-han-lab/KernelWiki/blob/b6b4301f15e8ce6955a56776690643ce5db369e6/README.md) · [Source 2](https://github.com/mit-han-lab/KernelWiki/blob/b6b4301f15e8ce6955a56776690643ce5db369e6/scripts/query.py) · [Source 3](https://github.com/mit-han-lab/KernelWiki/blob/b6b4301f15e8ce6955a56776690643ce5db369e6/wiki/techniques/warp-specialization.md) · [Source 4](https://github.com/mit-han-lab/KernelWiki/blob/b6b4301f15e8ce6955a56776690643ce5db369e6/artifacts/kernels/warp-specialization/full/PROVENANCE.yaml).
+
+**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
+
+</details>
+
 <a id="metainfer"></a>
 
 ### [MetaInfer](https://github.com/MetaInfer/MetaInfer)
@@ -4594,7 +3434,7 @@ Orchestrates coding agents to iteratively build deployment-specific inference se
 
 **Scope:** Requested model, hardware, parallelism, precision, API contract and iteration budget define the generated artifact.
 
-**Boundary:** The inspected correctness oracle uses fixed prompts and LLM or heuristic judgments with hard/soft cases, which does not establish numerical equivalence to the original model.
+**Boundary:** The inspected correctness oracle uses fixed prompts with LLM or heuristic judgments; only hard-case results determine its aggregate pass. This checks selected functional behavior, not numerical equivalence or unrestricted model correctness.
 
 **Semantic considerations:** generated-artifact dependent.
 
@@ -4608,6 +3448,35 @@ Orchestrates coding agents to iteratively build deployment-specific inference se
 **Evidence:** [Source 1](https://github.com/MetaInfer/MetaInfer/blob/HEAD/README.md) · [Source 2](https://github.com/MetaInfer/MetaInfer/blob/HEAD/metainfer/tasks/gen_infer_framework/orchestrator/pipeline.py) · [Source 3](https://github.com/MetaInfer/MetaInfer/blob/HEAD/metainfer/tasks/gen_infer_framework/orchestrator/oracles/correctness.py).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `intrinsic` · **Discovery:** `initial`.
+
+</details>
+
+<a id="ncu-report-skill"></a>
+
+### [ncu-report-skill](https://github.com/mit-han-lab/ncu-report-skill)
+
+[foundation](systems.md#foundation) · `support` · `diagnostic` · `general` · **public code**
+
+**Survey relevance:** Diagnostic companion for connecting measured kernel bottlenecks to an agent-guided optimization decision.
+
+Provides a profiling harness, extracts and compares NCU metrics and source-level stall evidence, and maps observed signals to candidate optimization directions.
+
+**Scope:** CUDA kernel profiling with Nsight Compute; metric selection and examples primarily target NVIDIA B200 / sm_100.
+
+**Boundary:** A reusable diagnosis workflow rather than a kernel generator or inference runtime; counter names and heuristics require device-specific checking, and suggested fixes need measured validation.
+
+**Semantic considerations:** generated-artifact dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `profile-feedback`, `counter-analysis`, `diagnosis-playbook`.
+
+**Constraints:** `hardware`, `workload`, `toolchain`.
+
+**Evidence:** [Source 1](https://github.com/mit-han-lab/ncu-report-skill/blob/74a12918e9f64d78036f14da5f8765e435b949a4/README.md) · [Source 2](https://github.com/mit-han-lab/ncu-report-skill/blob/74a12918e9f64d78036f14da5f8765e435b949a4/helpers/analyze_reports.py) · [Source 3](https://github.com/mit-han-lab/ncu-report-skill/blob/74a12918e9f64d78036f14da5f8765e435b949a4/reference/06-diagnosis-playbook.md).
+
+**Reviewed:** 2026-10-12 · **AI involvement:** `intrinsic` · **Discovery:** `dependency`.
 
 </details>
 
@@ -4640,42 +3509,13 @@ Composes model-specific video inference patches for fusion, invariant/cross-KV r
 
 </details>
 
-<a id="spec-bench"></a>
-
-### [Spec-Bench](https://github.com/hemingkx/Spec-Bench)
-
-[foundation](systems.md#foundation) · `support` · `verification` · `text` · **public code**
-
-**Survey relevance:** Evaluation reference for matching speculative-decoding workloads and baseline conditions.
-
-Integrates draft/verification methods with shared task data, accepted-token statistics, timing reports and output-comparison scripts.
-
-**Scope:** Comparing speculative decoding under matched devices and workloads
-
-**Boundary:** A benchmark artifact rather than a runtime; published leaderboard conditions do not validate unrelated hardware, checkpoints or serving loads.
-
-**Semantic considerations:** generated-artifact dependent.
-
-<details>
-<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
-
-**Mechanisms:** `speculative-evaluation`, `output-comparison`.
-
-**Constraints:** `workload`, `execution`.
-
-**Evidence:** [Source 1](https://github.com/hemingkx/Spec-Bench/blob/main/Readme.md) · [Source 2](https://github.com/hemingkx/Spec-Bench/blob/main/evaluation/speed.py) · [Source 3](https://github.com/hemingkx/Spec-Bench/blob/main/evaluation/equal.py).
-
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
-
-</details>
-
 <a id="tilelang"></a>
 
 ### [TileLang](https://github.com/tile-ai/tilelang)
 
 [foundation](systems.md#foundation) · `support` · `compiler` · `text / image / video / general` · **public code**
 
-**Survey relevance:** Reusable compiler foundation; compare which lowering and scheduling responsibilities a specialized stack retains or replaces.
+**Survey relevance:** Kernel language supported by the included Atrex Kernel Agent campaigns; a generated kernel remains distinct from a complete model runtime.
 
 Lowers tile-level kernel programs through target-specific layout and software-pipeline passes, generating GPU/accelerator code for tiled memory movement and matrix operations.
 
@@ -4692,7 +3532,7 @@ Lowers tile-level kernel programs through target-specific layout and software-pi
 
 **Constraints:** `hardware`, `shape`, `precision`.
 
-**Evidence:** [Source 1](https://github.com/tile-ai/tilelang/blob/HEAD/README.md) · [Source 2](https://github.com/tile-ai/tilelang/blob/HEAD/tilelang/engine/lower.py) · [Source 3](https://github.com/tile-ai/tilelang/blob/HEAD/src/transform/pipeline_planning.cc).
+**Evidence:** [Source 1](https://github.com/tile-ai/tilelang/blob/HEAD/README.md) · [Source 2](https://github.com/tile-ai/tilelang/blob/HEAD/tilelang/engine/lower.py) · [Source 3](https://github.com/tile-ai/tilelang/blob/HEAD/src/transform/pipeline_planning.cc) · [Source 4](https://github.com/alibaba/atrex-kernel-agent/blob/b708d9fcd0eff5214bcc5b91aae62357356e525c/README.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
@@ -4704,7 +3544,7 @@ Lowers tile-level kernel programs through target-specific layout and software-pi
 
 [foundation](systems.md#foundation) · `support` · `compiler` · `text / image / video / general` · **public code**
 
-**Survey relevance:** Reusable compiler foundation; compare which lowering and scheduling responsibilities a specialized stack retains or replaces.
+**Survey relevance:** Kernel language emitted or optimized by KernelAgent and Atrex Kernel Agent, linking generated programs to their compilation and validation boundary.
 
 Compiles block-structured kernel programs for a selected GPU target and specializes cached binaries and autotuned launch configurations to argument signatures and compile-time constants.
 
@@ -4721,7 +3561,7 @@ Compiles block-structured kernel programs for a selected GPU target and speciali
 
 **Constraints:** `hardware`, `shape`, `precision`.
 
-**Evidence:** [Source 1](https://github.com/triton-lang/triton/blob/HEAD/README.md) · [Source 2](https://github.com/triton-lang/triton/blob/HEAD/python/triton/compiler/compiler.py) · [Source 3](https://github.com/triton-lang/triton/blob/HEAD/python/triton/runtime/autotuner.py).
+**Evidence:** [Source 1](https://github.com/triton-lang/triton/blob/HEAD/README.md) · [Source 2](https://github.com/triton-lang/triton/blob/HEAD/python/triton/compiler/compiler.py) · [Source 3](https://github.com/triton-lang/triton/blob/HEAD/python/triton/runtime/autotuner.py) · [Source 4](https://github.com/meta-pytorch/KernelAgent/blob/HEAD/README.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 

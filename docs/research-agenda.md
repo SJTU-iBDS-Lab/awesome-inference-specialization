@@ -86,4 +86,4 @@ Productivity, defects, review and maintenance are legitimate software-engineerin
 - Deciding when to stop specialization, reuse a backend or fall back to a shared engine.
 - Maintaining provenance, licensing obligations and dependency updates for directly assembled and generated systems alike.
 
-See the [taxonomy](taxonomy.md), [evidence policy](evidence-policy.md) and [reading list](reading-list.md). Historical survey documents retain their original inspection scope; the selected cases and current navigation do not rewrite those records.
+See the [taxonomy](taxonomy.md), [evidence policy](evidence-policy.md) and [reading list](reading-list.md). The current collection follows the focused inclusion boundary; source evidence lives with retained project and case records.

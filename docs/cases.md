@@ -10,7 +10,7 @@ Read motivation → execution ownership → retained components and lost general
 
 No case performance was independently reproduced here. “Not disclosed” and “not established” describe the reviewed sources, not an assertion that an activity never occurred.
 
-The grouped index below follows the homepage reading routes. / 分组索引与首页阅读路线一致。
+The complete reading routes below expand the homepage selections. / 以下阅读路线展开首页精选，覆盖全部构建案例。
 
 ### Construction workflows and generated execution / 构建流程与生成的执行程序
 

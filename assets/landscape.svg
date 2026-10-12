@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="772" viewBox="0 0 1000 772" role="img" aria-labelledby="title desc">
-<title id="title">Inference specialization landscape</title><desc id="desc">Seven complementary execution choices: memory, precision, selection, reuse, decoding, serving and execution. Construction and verification form a supporting tool layer. Domains and artifact types are independent labels.</desc>
+<title id="title">Inference specialization landscape</title><desc id="desc">Seven complementary execution choices: memory, precision, selection, reuse, decoding, serving and execution. Construction and verification are cross-cutting tools, distinct from execution mechanisms. Domains and artifact types are independent labels.</desc>
 <style>text{font-family:Inter,Segoe UI,Arial,sans-serif;fill:#173449}.muted{fill:#5d6d77}.teal{fill:#147b76}.orange{fill:#b9673f}.eyebrow{font-size:11px;font-weight:700;letter-spacing:1.5px}.small{font-size:13px}.body{font-size:14px}.title{font-size:21px;font-weight:650}.line{fill:none;stroke:#147b76;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}</style>
 <defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L7,3.5 L0,7" fill="none" stroke="#147b76" stroke-width="1.5"/></marker><marker id="arrowOrange" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L7,3.5 L0,7" fill="none" stroke="#b9673f" stroke-width="1.5"/></marker></defs>
 <rect width="1000" height="772" rx="20" fill="#f7f5ef"/>
 <text x="38" y="40" font-size="14" class="eyebrow teal">WHERE SPECIALIZATION CHANGES EXECUTION</text>
 <text x="38" y="83" font-size="33" font-weight="650">Inference specialization</text>
-<text x="38" y="112" font-size="16" class="muted">Seven execution choices, supported by tools that build and validate them.</text>
+<text x="38" y="112" font-size="16" class="muted">Seven execution choices, with tools for construction and validation.</text>
 <g id="memory">
 <rect x="38" y="145" width="220" height="165" rx="13" fill="#fffefa" stroke="#d8dfda"/>
 <g transform="translate(56 165)" class="line">

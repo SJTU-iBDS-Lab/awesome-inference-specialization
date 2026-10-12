@@ -2,19 +2,19 @@
 
 Contribute evidence about **how specialized execution stacks are built, who can obtain and maintain them, and what they cost**. A core case should explain why another execution path was built, the decisions it controls, what it reuses or gives up, actual construction and AI participation, and unresolved validation and maintenance costs. Corrections, failed attempts and independent negative results are as useful as successful cases.
 
-The survey does not require a new project, AI involvement or an implementation from scratch. General engines, compilers, libraries and evaluators remain as shared foundations and comparison points. Teaching-oriented “nano” reproductions of standard engines are outside scope; small size alone does not exclude a substantive execution system. Adding entries or maximizing counts is not the objective.
+The survey does not require a new project, AI involvement or an implementation from scratch. General engines, compilers, libraries and evaluators qualify only when a concrete reuse or comparison relationship to an included stack is documented. Teaching-oriented “nano” reproductions of standard engines are outside scope; small size alone does not exclude a substantive execution system. Adding entries or maximizing counts is not the objective.
 
 ## Add or correct a project
 
 1. Read the [scope](README.md#what-belongs-here), [taxonomy](docs/taxonomy.md), [selected cases](docs/cases.md) and [evidence policy](docs/evidence-policy.md).
-2. Edit **`catalog/projects.csv`** for repository-level facts. Use the canonical upstream repository; do not count renamed repositories, integration wrappers or multiple methods in the same repository twice. Keep the existing inventory when changing editorial focus.
+2. Edit **`catalog/projects.csv`** for repository-level facts. Use the canonical upstream repository; do not count renamed repositories, integration wrappers or multiple methods in the same repository twice. Remove records that no longer have a direct relationship to the scope; do not preserve unrelated projects in a backup directory. Update dependent case notes and links together.
 3. Assign `survey_role` (`core`, `adjacent`, `foundation`) and a concise English `relevance_note` explaining why the project belongs in this survey. This describes its relation to the research question, not quality, age or AI authorship. A `core` project must be associated with a selected case.
-4. Independently choose `catalog_role` (`system`, `construction`, `support`) for the delivered software, then one primary `family` for secondary mechanism browsing. Keep modality, artifact type, mechanisms and semantic effects independent.
+4. Independently choose `catalog_role` (`system`, `construction`, `validation`, `benchmark`, `support`) for the main delivered resource, then one primary `family` for secondary mechanism browsing. Keep modality, artifact type, mechanisms and semantic effects independent.
 5. Supply at least two distinct official evidence pointers, ideally a design/README plus a relevant implementation file. For closed cores, identify the public interface or documentation boundary. Two links alone do not establish correctness.
 6. State concrete scope and caveats: quantization, omitted work, stale state, changed models, unsupported configurations and incomplete verification where relevant. Do not infer that a kernel generator delivers a complete engine.
 7. Mark AI involvement only from direct disclosure or an inspected construction method. Name the actual work and human intervention where known; an `AGENTS.md` or `CLAUDE.md` filename alone establishes neither authorship nor saved cost.
 8. Set `checked_on` to the direct source-review date. Prefer commit-pinned evidence for sensitive or version-dependent claims. Summarize inspection depth and discovery path in the PR.
-9. Add or update the associated selected case when the change affects a core project's construction account. Regenerate and validate all seven views using the commands below.
+9. Add or update the associated selected case when the change affects a core project's construction account. Regenerate and validate all nine views using the commands below.
 
 ## Add or correct a selected case
 
@@ -43,6 +43,14 @@ Write concise English case prose and a Chinese `summary_cn`. Unknown effort or m
 
 Every `core` project needs a case association. A case may also reference an adjacent project or foundation where needed to explain its construction or counterfactual. Do not promote all dependencies to core merely because a case uses them.
 
+## Validation methods and benchmarks
+
+Use `validation` when the main contribution is a correctness or quality checking method; use `benchmark` when it supplies tasks and a comparison protocol. A benchmark or construction framework can expose validation methods without receiving duplicate rows. Record embedded checks in [the validation guide](docs/validation.md), with direct source links and the containing project.
+
+Distinguish numerical checks, composed model/state checks, generated-output quality and service behavior. State the reference, tolerance or judge, sampled configurations, failure handling, runtime cost and checks not performed. Finite tests, perceptual similarity and LLM judging do not establish general numerical or distributional equivalence. A method is not efficient merely because it is automated; report measured checking cost and its coverage trade-off when available.
+
+For supporting diagnostics and knowledge resources, explain the construction feedback they enable. A hardware guide must delimit tested devices; an optimization recipe needs traceable implementation evidence. Do not turn general documentation or an uninspected agent memory into a claim of reduced development cost.
+
 ## Regenerate and validate
 
 ```sh
@@ -52,25 +60,25 @@ python scripts/update_readme.py --check
 python -m unittest discover -s tests
 ```
 
-The seven generated views are the catalog sections of `README.md` and `README_CN.md`, plus `docs/cases.md`, `docs/systems.md`, `docs/catalog.md`, `docs/comparison.md` and `docs/domains.md`. Do not edit those outputs directly. Hand-written README introductions and guides can be edited normally.
+The nine generated views are the catalog sections of `README.md` and `README_CN.md`, plus `docs/cases.md`, `docs/systems.md`, `docs/catalog.md`, `docs/comparison.md`, `docs/domains.md`, `docs/benchmarks.md` and `docs/resources.md`. The validation guide (`docs/validation.md`) is maintained by hand and can link to methods embedded in existing engines or construction frameworks. Do not edit those outputs directly. Hand-written README introductions and guides can be edited normally.
 
-Homepage case groups are reading routes, not disjoint scientific categories. Every case appears once, with longer groups folded after three entry points. Domain facets overlap and are independent of survey relevance and construction route; do not add their counts as unique projects. A repository with multiple models remains one record, while a substantial fork needs an explicit execution delta and upstream provenance.
+The homepage foregrounds engines, construction and validation, with benchmarks separate and diagnostics/knowledge/components as support. Detailed case groups are reading routes, not disjoint scientific categories; the complete set belongs in `docs/cases.md`. Domain facets overlap and are independent of survey relevance and construction route; do not add their counts as unique projects. A repository with multiple models remains one record, while a substantial fork needs an explicit execution delta and upstream provenance.
 
 Use `catalog/schema.json` for controlled facets and navigation configuration, `catalog/projects.csv` for project records, and `catalog/cases.json` for selected-case narratives. Keep both homepages and original diagrams consistent with classification changes. Construction routes can overlap; distinguish generated kernels, composed model programs and complete servers. The homepage should foreground cases and research questions rather than entry totals.
 
 ## Project data dictionary
 
-Schema version: **4**. `survey_role` describes relevance to the survey; `catalog_role` describes the software's role. Neither is a quality tier, and neither replaces `artifact_type` or mechanism families. The former `category`, `tier`, `axes` and single `evidence_url` fields remain superseded.
+Schema version: **5**. `survey_role` describes relevance to the survey; `catalog_role` describes the software's role. Neither is a quality tier, and neither replaces `artifact_type` or mechanism families. The former `category`, `tier`, `axes` and single `evidence_url` fields remain superseded.
 
 | Field | Meaning |
 | --- | --- |
 | `id`, `project` | Stable identifier and display name; preserve identifiers when renaming |
 | `survey_role` | `core` case, `adjacent` historical/neighboring route, or `foundation` infrastructure/reference |
 | `relevance_note` | Required concise English explanation of why the project belongs in this survey |
-| `catalog_role` | Delivered-software role: system, construction workflow or supporting infrastructure |
+| `catalog_role` | Main role: system, construction, validation, benchmark or supporting resource |
 | `family` | One of eight secondary mechanism/tool browsing families in `schema.json` |
 | `domains` | Semicolon-separated inspected modalities: text, image, video, audio, multimodal, general |
-| `artifact_type` | Runtime, backend, compiler, optimizer, kernel library, research prototype, generator or verification tool |
+| `artifact_type` | Runtime, backend, compiler, optimizer, kernel library, research prototype, generator, verification tool, benchmark, diagnostic or knowledge base |
 | `constraints` | Semicolon-separated concise tags for known deployment assumptions |
 | `mechanisms` | Multiple kebab-case mechanism tags; primary family is not an exclusive boundary |
 | `target` | Specific model, hardware, shape or workload scope in prose |
@@ -84,7 +92,7 @@ Schema version: **4**. `survey_role` describes relevance to the survey; `catalog
 | `checked_on` | ISO date of direct source review |
 | `discovery` | `initial` (original 25), `keyword`, or `dependency` expansion; not an evidence score |
 
-The dated survey is a historical account. Do not silently rewrite its counts when adding later records or changing focus; add a dated follow-up when appropriate.
+Record new source inspections in the [resource audit](docs/resources-audit-2026-10-12.md), without treating rejected candidates or obsolete broad surveys as a backup project inventory. The maintained catalog is the source of truth for current inclusion.
 
 ## Comparisons and attribution
 

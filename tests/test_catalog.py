@@ -99,13 +99,32 @@ class CatalogTests(unittest.TestCase):
         self.assertCountEqual(links, [r['id'] for r in self.rows])
         self.assertEqual(len(links), len(set(links)))
 
-    def test_homepage_keeps_all_cases_reachable_in_both_languages(self):
-        expected = [c['id'] for c in render.load_cases()]
+    def test_homepage_separates_roles_and_links_complete_case_index(self):
+        expected = {c['id'] for c in render.load_cases()}
         for chinese in (False, True):
             text = render.render_overview(self.rows, chinese)
             links = re.findall(r'\]\(docs/cases.md#([a-z0-9-]+)\)', text)
-            self.assertCountEqual(links, expected)
+            self.assertTrue(set(links) <= expected)
+            self.assertEqual(len(links), len(set(links)))
+            for target in ('docs/cases.md', 'docs/systems.md#system', 'docs/systems.md#construction',
+                           'docs/validation.md#numerical', 'docs/benchmarks.md', 'docs/resources.md#diagnostics',
+                           'docs/resources.md#knowledge'):
+                self.assertIn(f']({target})', text)
             self.assertEqual(text.count('<details>'), text.count('</details>'))
+        case_index = render.render_cases(self.rows)
+        self.assertTrue(expected <= anchors(case_index))
+
+    def test_specialized_resource_indices_cover_primary_roles_without_duplicates(self):
+        for renderer, role in [(render.render_benchmarks, 'benchmark'), (render.render_resources, 'support')]:
+            text = renderer(self.rows)
+            pattern = r'^\| \[[^\]]+\]\(catalog.md#([a-z0-9-]+)\)' if role == 'support' else r'\]\(catalog.md#([a-z0-9-]+)\)'
+            links = re.findall(pattern, text, flags=re.M)
+            members = {r['id'] for r in self.rows if r['catalog_role'] == role}
+            for id in members:
+                self.assertEqual(links.count(id), 1)
+        rows = copy.deepcopy(self.rows)
+        next(r for r in rows if r['id'] == 'fastkernels')['catalog_role'] = 'validation'
+        self.assertTrue(any('Benchmark index must cover' in e for e in validate(rows)))
 
     def test_domain_index_retains_each_overlapping_membership(self):
         text = render.render_domains(self.rows)

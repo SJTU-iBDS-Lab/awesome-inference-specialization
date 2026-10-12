@@ -4,8 +4,6 @@ This list is intentionally selective and **not** an exhaustive survey. Entries a
 
 ## Inference-system surveys and baselines
 
-- [A Survey on Inference Engines for Large Language Models](https://arxiv.org/abs/2505.01658) — engine landscape and major mechanisms.
-- [A Survey of LLM Inference Systems](https://arxiv.org/abs/2506.21901) — systems stack from kernels through scheduling and distributed inference.
 - [xDiT: an Inference Engine for Diffusion Transformers with Massive Parallelism](https://arxiv.org/abs/2411.01738) — a DiT-domain system, not merely an LLM runtime port.
 
 ## Engine generation, testing, and evidence

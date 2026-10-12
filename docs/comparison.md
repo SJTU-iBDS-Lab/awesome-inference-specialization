@@ -95,14 +95,11 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [Infernix](catalog.md#infernix) · core | system / runtime / text, multimodal | configuration-dependent |
 | [KTransformers / kt-kernel](catalog.md#ktransformers) · core | system / backend / text | layout / scheduling |
 | [MoE-Infinity](catalog.md#moe-infinity) · adjacent | system / runtime / text | layout / scheduling |
-| [Mooncake](catalog.md#mooncake) · foundation | support / backend / text | layout / scheduling |
-| [NIXL](catalog.md#nixl) · foundation | support / backend / text | layout / scheduling |
 | [Strata](catalog.md#strata) · core | system / runtime / text | configuration-dependent, selective approximation |
 | [Swiftlet](catalog.md#swiftlet) · core | system / runtime / text | configuration-dependent |
 | [SwiftLM](catalog.md#swiftlm) · core | system / backend / text, multimodal | configuration-dependent |
 | [TUFF](catalog.md#tuff) · core | system / runtime / text, multimodal | configuration-dependent |
 | [TurboFieldfare](catalog.md#turbo-fieldfare) · core | system / runtime / text, multimodal | configuration-dependent |
-| [vAttention](catalog.md#vattention) · foundation | support / backend / text | layout / scheduling |
 | [vLLM](catalog.md#vllm) · foundation | support / runtime / text | configuration-dependent |
 
 ### Numerical representation
@@ -118,107 +115,71 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [QTIP](catalog.md#qtip) · foundation | support / optimizer / text | reduced precision |
 | [ROCmFPX](catalog.md#rocmfpx) · adjacent | system / backend / text | reduced precision |
 | [SageAttention](catalog.md#sageattention) · foundation | support / kernel-library / text, image, video | reduced precision |
-| [T-MAC](catalog.md#t-mac) · foundation | support / kernel-library / text | reduced precision |
 
 ### Selective computation
 
 | Project / survey relevance | Artifact role / modality | Semantic considerations |
 | --- | --- | --- |
-| [MInference](catalog.md#minference) · foundation | support / optimizer / text | selective approximation |
 | [PowerInfer](catalog.md#powerinfer) · adjacent | system / runtime / text | selective approximation, model / router training |
-| [SnapKV](catalog.md#snapkv) · foundation | support / optimizer / text | selective approximation |
-| [SpargeAttention](catalog.md#spargeattn) · foundation | support / kernel-library / text, image, video | selective approximation, reduced precision |
-| [Sparse VideoGen](catalog.md#sparse-videogen) · foundation | support / research-prototype / video | selective approximation |
-| [ToMe for Stable Diffusion](catalog.md#tomesd) · foundation | support / optimizer / image | selective approximation |
 | [TurboDiffusion](catalog.md#turbodiffusion) · adjacent | system / runtime / video | selective approximation, reduced precision, model / router training |
 
 ### Computation reuse
 
 | Project / survey relevance | Artifact role / modality | Semantic considerations |
 | --- | --- | --- |
-| [Cache-DiT](catalog.md#cache-dit) · foundation | support / optimizer / image, video | earlier-state reuse |
-| [DeepCache](catalog.md#deepcache) · foundation | support / optimizer / image, video | earlier-state reuse |
-| [DiTFastAttn](catalog.md#ditfastattn) · foundation | support / research-prototype / image, video | earlier-state reuse, selective approximation |
-| [Learning-to-Cache](catalog.md#learning-to-cache) · foundation | support / research-prototype / image | earlier-state reuse, model / router training |
-| [LMCache](catalog.md#lmcache) · foundation | support / backend / text | configuration-dependent |
-| [MagCache](catalog.md#magcache) · foundation | support / optimizer / image, video | earlier-state reuse |
 | [SGLang](catalog.md#sglang) · foundation | support / runtime / text | configuration-dependent |
-| [T-GATE](catalog.md#t-gate) · foundation | support / optimizer / image, video | earlier-state reuse |
-| [TaylorSeer](catalog.md#taylorseer) · foundation | support / research-prototype / image, video | earlier-state reuse |
-| [TeaCache](catalog.md#teacache) · foundation | support / optimizer / image, video, audio | earlier-state reuse |
+| [VideoSys](catalog.md#videosys) · adjacent | system / runtime / video | configuration-dependent, earlier-state reuse |
 
 ### Generation order
 
 | Project / survey relevance | Artifact role / modality | Semantic considerations |
 | --- | --- | --- |
-| [EAGLE](catalog.md#eagle) · foundation | support / optimizer / text | target-verified proposals |
-| [Fast-dLLM](catalog.md#fast-dllm) · foundation | support / research-prototype / text, multimodal | configuration-dependent, model / router training, earlier-state reuse |
 | [Inferix](catalog.md#inferix) · adjacent | system / runtime / video | layout / scheduling |
 | [llamAmpere](catalog.md#llamampere) · core | system / runtime / text | target-verified proposals, reduced precision, model / router training |
-| [Lookahead Decoding](catalog.md#lookahead) · foundation | support / optimizer / text | target-verified proposals |
-| [Medusa](catalog.md#medusa) · foundation | support / research-prototype / text | configuration-dependent, model / router training |
 
 ### Parallelism & scheduling
 
 | Project / survey relevance | Artifact role / modality | Semantic considerations |
 | --- | --- | --- |
-| [AsyncDiff](catalog.md#asyncdiff) · adjacent | system / research-prototype / image, video | earlier-state reuse |
-| [DistriFusion](catalog.md#distrifusion) · adjacent | system / research-prototype / image | earlier-state reuse |
-| [DistServe](catalog.md#distserve) · adjacent | system / research-prototype / text | layout / scheduling |
 | [Gufo RDMA](catalog.md#gufo-rdma) · core | system / runtime / text, multimodal | configuration-dependent |
 | [Llaminar](catalog.md#llaminar) · core | system / runtime / text | configuration-dependent |
-| [OpenVINO GenAI](catalog.md#openvino-genai) · foundation | support / runtime / text, image, video, audio, multimodal | configuration-dependent |
-| [ParaAttention](catalog.md#para-attention) · foundation | support / optimizer / image, video | configuration-dependent, earlier-state reuse |
-| [Petals](catalog.md#petals) · adjacent | system / runtime / text | layout / scheduling |
-| [Punica](catalog.md#punica) · adjacent | system / backend / text | layout / scheduling |
-| [S-LoRA](catalog.md#s-lora) · adjacent | system / research-prototype / text | layout / scheduling |
-| [Sarathi-Serve](catalog.md#sarathi-serve) · adjacent | system / research-prototype / text | layout / scheduling |
 | [StreamDiffusion](catalog.md#streamdiffusion) · adjacent | system / runtime / image, video | layout / scheduling, selective approximation, model / router training |
 | [StreamDiffusionV2](catalog.md#streamdiffusion-v2) · core | system / runtime / video | layout / scheduling, model / router training, configuration-dependent |
 | [TeleFuser](catalog.md#telefuser) · core | system / runtime / video, image, audio, multimodal | configuration-dependent |
 | [TensorRT-LLM](catalog.md#tensorrt-llm) · foundation | support / runtime / text, multimodal | layout / scheduling |
-| [VideoSys](catalog.md#videosys) · adjacent | system / runtime / video | configuration-dependent, earlier-state reuse |
 | [xDiT](catalog.md#xdit) · adjacent | system / runtime / image, video | configuration-dependent, earlier-state reuse |
 
 ### Compiled & native execution
 
 | Project / survey relevance | Artifact role / modality | Semantic considerations |
 | --- | --- | --- |
-| [AITemplate](catalog.md#aitemplate) · foundation | support / compiler / text, image, general | layout / scheduling |
 | [ANE-LM](catalog.md#ane-lm) · adjacent | system / runtime / text | configuration-dependent |
 | [ane.cpp](catalog.md#ane-cpp) · core | system / runtime / text | configuration-dependent |
 | [ANEMLL](catalog.md#anemll) · adjacent | construction / compiler / text | configuration-dependent |
 | [Apache TVM](catalog.md#tvm) · foundation | support / compiler / text, general | layout / scheduling |
 | [Aria](catalog.md#aria) · core | system / runtime / audio | configuration-dependent |
 | [BaseRT](catalog.md#basert) · adjacent · **closed core** | system / runtime / text, multimodal | configuration-dependent |
-| [BladeDISC](catalog.md#bladedisc) · foundation | support / compiler / text, image, general | layout / scheduling |
 | [BRaiN](catalog.md#brain) · adjacent | system / runtime / text, image, video, audio, multimodal | configuration-dependent |
 | [brodiffusion](catalog.md#brodiffusion) · core | system / runtime / image | configuration-dependent |
 | [Cactus](catalog.md#cactus) · core | system / runtime / text, image, audio, multimodal | layout / scheduling, reduced precision, configuration-dependent |
 | [Cactus Needle](catalog.md#needle) · adjacent · **closed core** | system / runtime / text, audio | model / router training, reduced precision |
 | [CIRU runtime](catalog.md#ciru-runtime) · core | system / backend / text, multimodal | configuration-dependent |
 | [CoreML LLM CLI](catalog.md#coreml-llm-cli) · adjacent | system / research-prototype / text | configuration-dependent |
-| [DeepGEMM](catalog.md#deepgemm) · foundation | support / kernel-library / text | layout / scheduling |
 | [diffusion-rs](catalog.md#diffusion-rs) · adjacent | system / runtime / image | configuration-dependent |
 | [Draw Things Community](catalog.md#draw-things) · adjacent | system / runtime / image, video | configuration-dependent |
 | [DwarfStar](catalog.md#dwarfstar) · core | system / runtime / text | configuration-dependent |
 | [edge-dit.cpp](catalog.md#edge-dit) · core | system / runtime / image, video | configuration-dependent |
-| [ExecuTorch](catalog.md#executorch) · foundation | support / runtime / text, general | layout / scheduling |
 | [FastFlowLM](catalog.md#fastflowlm) · core · **closed core** | system / runtime / text, audio, image, multimodal | configuration-dependent |
 | [FastVideo](catalog.md#fastvideo) · core | system / runtime / video, audio | configuration-dependent |
 | [Flash Linear Attention](catalog.md#flash-linear-attention) · foundation | support / kernel-library / text | layout / scheduling |
 | [FlashAttention](catalog.md#flash-attention) · foundation | support / kernel-library / text | layout / scheduling |
 | [FlashInfer](catalog.md#flashinfer) · foundation | support / kernel-library / text | layout / scheduling |
-| [FlashMLA](catalog.md#flashmla) · foundation | support / kernel-library / text | layout / scheduling, reduced precision |
 | [Gufo](catalog.md#gufo) · core | system / runtime / text, audio, image, video, multimodal | configuration-dependent, reduced precision, target-verified proposals |
 | [Halogen Flash](catalog.md#halogen-flash) · core · **closed core** | system / runtime / text | reduced precision |
 | [Hearth](catalog.md#hearth) · core | system / runtime / image | configuration-dependent |
-| [Hidet](catalog.md#hidet) · foundation | support / compiler / text, image, general | layout / scheduling |
 | [Hilum LLM Engine](catalog.md#hilum-engine) · adjacent | system / backend / text, multimodal | configuration-dependent |
 | [hipEngine](catalog.md#hipengine) · core | system / runtime / text, multimodal, audio | configuration-dependent |
 | [imp](catalog.md#imp) · core | system / runtime / text, multimodal | configuration-dependent |
-| [IREE](catalog.md#iree) · foundation | support / compiler / text, image, general | layout / scheduling |
-| [IREE Turbine](catalog.md#iree-turbine) · foundation | support / compiler / text, general | layout / scheduling |
 | [Iris](catalog.md#iris) · core | system / runtime / image | layout / scheduling |
 | [Kipp](catalog.md#kipp) · core | system / runtime / text | configuration-dependent |
 | [LightX2V](catalog.md#lightx2v) · core | system / runtime / image, video, audio | configuration-dependent |
@@ -236,7 +197,6 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [NInfer-3090](catalog.md#ninfer-3090) · core | system / runtime / text, multimodal | configuration-dependent |
 | [NVIDIA TensorRT](catalog.md#tensorrt) · foundation · **closed core** | support / compiler / text, image, general | layout / scheduling |
 | [OneDiff](catalog.md#onediff) · adjacent | construction / compiler / image, video | layout / scheduling |
-| [ONNX Runtime GenAI](catalog.md#onnxruntime-genai) · foundation | support / runtime / text, audio, multimodal | layout / scheduling |
 | [parakeet.cpp (axiom)](catalog.md#parakeet-axiom) · core | system / runtime / audio | configuration-dependent |
 | [parakeet.cpp (ggml)](catalog.md#parakeet-ggml) · core | system / runtime / audio | configuration-dependent |
 | [PMetal](catalog.md#pmetal) · adjacent | system / runtime / general | configuration-dependent |
@@ -250,11 +210,8 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [stable-diffusion.cpp](catalog.md#stable-diffusion-cpp) · core | system / runtime / image, video | configuration-dependent |
 | [stable-diffusion.rs](catalog.md#stable-diffusion-rs) · core | system / runtime / image | configuration-dependent |
 | [strix-llama.cpp](catalog.md#strix-llama-cpp) · core | system / backend / text, multimodal | configuration-dependent |
-| [SwiftTransformer](catalog.md#swifttransformer) · foundation | support / backend / text | layout / scheduling |
 | [TensorFold](catalog.md#tensorfold) · core | system / runtime / text | configuration-dependent |
 | [TensorRT Edge-LLM](catalog.md#tensorrt-edge-llm) · adjacent | system / runtime / text, image, audio, multimodal | configuration-dependent |
-| [tinygrad](catalog.md#tinygrad) · foundation | support / compiler / text, image, general | layout / scheduling |
-| [Torch-TensorRT](catalog.md#torch-tensorrt) · foundation | support / backend / text, image, general | layout / scheduling |
 | [Uzu](catalog.md#uzu) · adjacent | system / runtime / text | configuration-dependent |
 | [Vidax](catalog.md#vidax) · core | system / runtime / video | configuration-dependent |
 | [vla.simd](catalog.md#vla-simd) · core | system / runtime / multimodal | configuration-dependent |
@@ -272,13 +229,16 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | --- | --- | --- |
 | [AgentCompile](catalog.md#agentcompile) · adjacent · **review-use restriction** | construction / research-prototype / text, image | generated-artifact dependent |
 | [AKG Agents](catalog.md#akg-agents) · adjacent | construction / generator / general | generated-artifact dependent |
-| [FastKernels](catalog.md#fastkernels) · foundation | support / verification / text, image, video, audio, multimodal, general | generated-artifact dependent |
-| [Helion](catalog.md#helion) · foundation | support / compiler / text, general | generated-artifact dependent |
+| [Apple Neural Engine Field Guide](catalog.md#ane-field-guide) · foundation | support / knowledge-base / text | generated-artifact dependent |
+| [Atrex Kernel Agent (AKA)](catalog.md#atrex-kernel-agent) · adjacent | construction / generator / general | generated-artifact dependent |
+| [Atrex-Bench](catalog.md#atrex-bench) · foundation | benchmark / benchmark / general | generated-artifact dependent |
+| [FastKernels](catalog.md#fastkernels) · foundation | benchmark / benchmark / text, image, video, audio, multimodal, general | generated-artifact dependent |
 | [KernelAgent](catalog.md#kernelagent) · adjacent | construction / generator / general | generated-artifact dependent |
-| [KernelBench](catalog.md#kernelbench) · foundation | support / verification / general | generated-artifact dependent |
+| [KernelBench](catalog.md#kernelbench) · foundation | benchmark / benchmark / general | generated-artifact dependent |
+| [KernelWiki](catalog.md#kernelwiki) · foundation | support / knowledge-base / general | generated-artifact dependent |
 | [MetaInfer](catalog.md#metainfer) · core | construction / generator / text | generated-artifact dependent |
+| [ncu-report-skill](catalog.md#ncu-report-skill) · foundation | support / diagnostic / general | generated-artifact dependent |
 | [Sol-Engine](catalog.md#sol-engine) · core | construction / optimizer / image, video | generated-artifact dependent, configuration-dependent |
-| [Spec-Bench](catalog.md#spec-bench) · foundation | support / verification / text | generated-artifact dependent |
 | [TileLang](catalog.md#tilelang) · foundation | support / compiler / text, image, video, general | generated-artifact dependent |
 | [Triton](catalog.md#triton) · foundation | support / compiler / text, image, video, general | generated-artifact dependent |
 

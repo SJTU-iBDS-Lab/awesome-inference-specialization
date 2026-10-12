@@ -14,7 +14,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Multimodal understanding & interaction / 多模态理解与交互
 
-25 core/adjacent entries; 5 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+25 core/adjacent entries; 2 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
@@ -47,7 +47,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 <details>
 <summary>Shared foundations and comparison components / 共享基础与对照组件</summary>
 
-[Fast-dLLM](catalog.md#fast-dllm) · [FastKernels](catalog.md#fastkernels) · [ONNX Runtime GenAI](catalog.md#onnxruntime-genai) · [OpenVINO GenAI](catalog.md#openvino-genai) · [TensorRT-LLM](catalog.md#tensorrt-llm)
+[FastKernels](catalog.md#fastkernels) · [TensorRT-LLM](catalog.md#tensorrt-llm)
 
 </details>
 
@@ -55,7 +55,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Image generation & processing / 图像生成与处理
 
-28 core/adjacent entries; 24 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+26 core/adjacent entries; 6 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
@@ -76,10 +76,8 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [TeleFuser](catalog.md#telefuser) | core | Streaming generative/world-model workloads with per-session state, bounded queues and GPU resource groups. |
 | [zLLM](catalog.md#zllm) | core | Selected model/backend pairs across Metal, CUDA, ROCm and CPU; experimental Snapdragon HTP paths. |
 | [AgentCompile](catalog.md#agentcompile) | adjacent | The documented artifact targets selected models and an A800/SM80-oriented CUDA environment with model-specific fusion contracts. |
-| [AsyncDiff](catalog.md#asyncdiff) | adjacent | Requires multiple GPUs and temporal hidden-state redundancy, with component count, warmup and stride controlling parallel behavior. |
 | [BRaiN](catalog.md#brain) | adjacent | Multiple native model ports across CPU and GPU/WebGPU; support is architecture- and action-specific. |
 | [diffusion-rs](catalog.md#diffusion-rs) | adjacent | FLUX image generation through Rust tensor operations and optional component offload. |
-| [DistriFusion](catalog.md#distrifusion) | adjacent | Targets high-resolution diffusion on multiple GPUs with temporal activation redundancy and sufficient work to hide communication. |
 | [Draw Things Community](catalog.md#draw-things) | adjacent | Serves local image and video generation across supported macOS and CUDA server deployments. |
 | [MFLUX](catalog.md#mflux) | adjacent | Primarily targets local Apple Silicon execution and explicitly supported MLX model implementations, with documented newer NVIDIA support. |
 | [OneDiff](catalog.md#onediff) | adjacent | Requires a compatible compiler backend, PyTorch/CUDA versions and shape policy, with dynamic shapes trading specialization against recompilation. |
@@ -91,7 +89,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 <details>
 <summary>Shared foundations and comparison components / 共享基础与对照组件</summary>
 
-[AITemplate](catalog.md#aitemplate) · [BladeDISC](catalog.md#bladedisc) · [Cache-DiT](catalog.md#cache-dit) · [DeepCache](catalog.md#deepcache) · [DeepCompressor](catalog.md#deepcompressor) · [DiTFastAttn](catalog.md#ditfastattn) · [FastKernels](catalog.md#fastkernels) · [Hidet](catalog.md#hidet) · [IREE](catalog.md#iree) · [Learning-to-Cache](catalog.md#learning-to-cache) · [MagCache](catalog.md#magcache) · [NVIDIA TensorRT](catalog.md#tensorrt) · [OpenVINO GenAI](catalog.md#openvino-genai) · [ParaAttention](catalog.md#para-attention) · [SageAttention](catalog.md#sageattention) · [SpargeAttention](catalog.md#spargeattn) · [T-GATE](catalog.md#t-gate) · [TaylorSeer](catalog.md#taylorseer) · [TeaCache](catalog.md#teacache) · [TileLang](catalog.md#tilelang) · [tinygrad](catalog.md#tinygrad) · [ToMe for Stable Diffusion](catalog.md#tomesd) · [Torch-TensorRT](catalog.md#torch-tensorrt) · [Triton](catalog.md#triton)
+[DeepCompressor](catalog.md#deepcompressor) · [FastKernels](catalog.md#fastkernels) · [NVIDIA TensorRT](catalog.md#tensorrt) · [SageAttention](catalog.md#sageattention) · [TileLang](catalog.md#tilelang) · [Triton](catalog.md#triton)
 
 </details>
 
@@ -99,7 +97,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Video generation & processing / 视频生成与处理
 
-22 core/adjacent entries; 15 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+21 core/adjacent entries; 4 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
@@ -115,7 +113,6 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [TeleFuser](catalog.md#telefuser) | core | Streaming generative/world-model workloads with per-session state, bounded queues and GPU resource groups. |
 | [Vidax](catalog.md#vidax) | core | Selected video-generation models on JAX/Flax TPU meshes. |
 | [zLLM](catalog.md#zllm) | core | Selected model/backend pairs across Metal, CUDA, ROCm and CPU; experimental Snapdragon HTP paths. |
-| [AsyncDiff](catalog.md#asyncdiff) | adjacent | Requires multiple GPUs and temporal hidden-state redundancy, with component count, warmup and stride controlling parallel behavior. |
 | [BRaiN](catalog.md#brain) | adjacent | Multiple native model ports across CPU and GPU/WebGPU; support is architecture- and action-specific. |
 | [Draw Things Community](catalog.md#draw-things) | adjacent | Serves local image and video generation across supported macOS and CUDA server deployments. |
 | [Inferix](catalog.md#inferix) | adjacent | Requires block-diffusion or semi-autoregressive world-model execution and must manage long-lived generation state under memory limits. |
@@ -129,7 +126,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 <details>
 <summary>Shared foundations and comparison components / 共享基础与对照组件</summary>
 
-[Cache-DiT](catalog.md#cache-dit) · [DeepCache](catalog.md#deepcache) · [DiTFastAttn](catalog.md#ditfastattn) · [FastKernels](catalog.md#fastkernels) · [MagCache](catalog.md#magcache) · [OpenVINO GenAI](catalog.md#openvino-genai) · [ParaAttention](catalog.md#para-attention) · [SageAttention](catalog.md#sageattention) · [SpargeAttention](catalog.md#spargeattn) · [Sparse VideoGen](catalog.md#sparse-videogen) · [T-GATE](catalog.md#t-gate) · [TaylorSeer](catalog.md#taylorseer) · [TeaCache](catalog.md#teacache) · [TileLang](catalog.md#tilelang) · [Triton](catalog.md#triton)
+[FastKernels](catalog.md#fastkernels) · [SageAttention](catalog.md#sageattention) · [TileLang](catalog.md#tilelang) · [Triton](catalog.md#triton)
 
 </details>
 
@@ -137,7 +134,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Speech & audio / 语音与音频
 
-22 core/adjacent entries; 4 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+22 core/adjacent entries; 1 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
@@ -167,7 +164,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 <details>
 <summary>Shared foundations and comparison components / 共享基础与对照组件</summary>
 
-[FastKernels](catalog.md#fastkernels) · [ONNX Runtime GenAI](catalog.md#onnxruntime-genai) · [OpenVINO GenAI](catalog.md#openvino-genai) · [TeaCache](catalog.md#teacache)
+[FastKernels](catalog.md#fastkernels)
 
 </details>
 
@@ -175,7 +172,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Language models / 语言模型
 
-67 core/adjacent entries; 43 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+62 core/adjacent entries; 17 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
@@ -229,7 +226,6 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [Cactus Needle](catalog.md#needle) | adjacent | Small automation models across desktop, mobile, embedded and browser targets; current source generation is Needle 3. |
 | [CoreML LLM CLI](catalog.md#coreml-llm-cli) | adjacent | CoreML-converted Llama 2 on ANE with fixed chunking and IOSurface-backed buffers. |
 | [DeepSpeed ZeRO-Inference](catalog.md#zero-inference) | adjacent | Models exceeding GPU memory and throughput-oriented workloads that tolerate large batches or sequences motivate layerwise offload and transfer/computation overlap. |
-| [DistServe](catalog.md#distserve) | adjacent | Latency-constrained online LLM serving on multiple GPUs |
 | [Fiddler](catalog.md#fiddler) | adjacent | Small-batch local Mixtral-8x7B inference and GPU memory smaller than the unquantized model make activation transfer cheaper than expert-weight transfer. |
 | [FlexLLMGen (FlexGen)](catalog.md#flexllmgen) | adjacent | Throughput-oriented workloads with large effective batches, limited GPU memory and available host/SSD capacity expose the latency–throughput trade-off. |
 | [Hilum LLM Engine](catalog.md#hilum-engine) | adjacent | Android Adreno/Vulkan and Apple Metal mobile deployments with GGUF models. |
@@ -238,19 +234,15 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [MetalChat](catalog.md#metalchat) | adjacent | Selected Llama/Gemma-family models on Apple Silicon through a native C++/Metal library. |
 | [MLC LLM](catalog.md#mlc-llm) | adjacent | Target device, model architecture, quantization, sequence bounds, tensor parallelism and low-batch workload determine compilation and runtime choices. |
 | [MoE-Infinity](catalog.md#moe-infinity) | adjacent | Sparse expert activation, per-model offload stores, GPU-memory budgets and model-specific resident tensors constrain caching and transfer decisions. |
-| [Petals](catalog.md#petals) | adjacent | Models distributed across networked user-contributed devices |
 | [PowerInfer](catalog.md#powerinfer) | adjacent | ReLU-sparse model families, learned predictor weights, activation profiles and a user GPU-memory budget enable neuron-level CPU/GPU partitioning. |
-| [Punica](catalog.md#punica) | adjacent | Concurrent LoRA requests with shared base weights |
 | [ROCmFPX](catalog.md#rocmfpx) | adjacent | AMD RDNA execution motivates compact weight blocks with explicit disk contracts and matching CPU, Vulkan and HIP arithmetic. |
-| [S-LoRA](catalog.md#s-lora) | adjacent | Many LoRA adapters sharing one base model |
-| [Sarathi-Serve](catalog.md#sarathi-serve) | adjacent | Mixed prefill/decode traffic with token-latency targets |
 | [TensorRT Edge-LLM](catalog.md#tensorrt-edge-llm) | adjacent | Supported Jetson, DRIVE and other qualified NVIDIA platforms; model and precision support follow the release matrix. |
 | [Uzu](catalog.md#uzu) | adjacent | On-device Apple deployment using its supported configurations, converted model format and native Metal backend. |
 
 <details>
 <summary>Shared foundations and comparison components / 共享基础与对照组件</summary>
 
-[AITemplate](catalog.md#aitemplate) · [Apache TVM](catalog.md#tvm) · [BladeDISC](catalog.md#bladedisc) · [DeepCompressor](catalog.md#deepcompressor) · [DeepGEMM](catalog.md#deepgemm) · [EAGLE](catalog.md#eagle) · [ExecuTorch](catalog.md#executorch) · [Fast-dLLM](catalog.md#fast-dllm) · [FastKernels](catalog.md#fastkernels) · [Flash Linear Attention](catalog.md#flash-linear-attention) · [FlashAttention](catalog.md#flash-attention) · [FlashInfer](catalog.md#flashinfer) · [FlashMLA](catalog.md#flashmla) · [Helion](catalog.md#helion) · [Hidet](catalog.md#hidet) · [IREE](catalog.md#iree) · [IREE Turbine](catalog.md#iree-turbine) · [llama.cpp](catalog.md#llama-cpp) · [LMCache](catalog.md#lmcache) · [Lookahead Decoding](catalog.md#lookahead) · [Marlin](catalog.md#marlin) · [Medusa](catalog.md#medusa) · [MInference](catalog.md#minference) · [Mooncake](catalog.md#mooncake) · [NIXL](catalog.md#nixl) · [NVIDIA TensorRT](catalog.md#tensorrt) · [ONNX Runtime GenAI](catalog.md#onnxruntime-genai) · [OpenVINO GenAI](catalog.md#openvino-genai) · [QTIP](catalog.md#qtip) · [SageAttention](catalog.md#sageattention) · [SGLang](catalog.md#sglang) · [SnapKV](catalog.md#snapkv) · [SpargeAttention](catalog.md#spargeattn) · [Spec-Bench](catalog.md#spec-bench) · [SwiftTransformer](catalog.md#swifttransformer) · [T-MAC](catalog.md#t-mac) · [TensorRT-LLM](catalog.md#tensorrt-llm) · [TileLang](catalog.md#tilelang) · [tinygrad](catalog.md#tinygrad) · [Torch-TensorRT](catalog.md#torch-tensorrt) · [Triton](catalog.md#triton) · [vAttention](catalog.md#vattention) · [vLLM](catalog.md#vllm)
+[Apache TVM](catalog.md#tvm) · [Apple Neural Engine Field Guide](catalog.md#ane-field-guide) · [DeepCompressor](catalog.md#deepcompressor) · [FastKernels](catalog.md#fastkernels) · [Flash Linear Attention](catalog.md#flash-linear-attention) · [FlashAttention](catalog.md#flash-attention) · [FlashInfer](catalog.md#flashinfer) · [llama.cpp](catalog.md#llama-cpp) · [Marlin](catalog.md#marlin) · [NVIDIA TensorRT](catalog.md#tensorrt) · [QTIP](catalog.md#qtip) · [SageAttention](catalog.md#sageattention) · [SGLang](catalog.md#sglang) · [TensorRT-LLM](catalog.md#tensorrt-llm) · [TileLang](catalog.md#tilelang) · [Triton](catalog.md#triton) · [vLLM](catalog.md#vllm)
 
 </details>
 
@@ -258,18 +250,19 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Cross-domain infrastructure / 跨模态基础设施
 
-3 core/adjacent entries; 15 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+4 core/adjacent entries; 9 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
 | [AKG Agents](catalog.md#akg-agents) | adjacent | Target backend/DSL, device architecture, reference framework, precision tolerance and concurrent-search budget constrain generated operators. |
+| [Atrex Kernel Agent (AKA)](catalog.md#atrex-kernel-agent) | adjacent | Evaluator-owned GPU operator tasks, target DSL/device and fixed optimization budgets constrain candidate search and acceptance. |
 | [KernelAgent](catalog.md#kernelagent) | adjacent | Traceable workload structure, target GPU, shape signatures, reference tensors and search/refinement budgets constrain synthesized code. |
 | [PMetal](catalog.md#pmetal) | adjacent | Apple Silicon training and inference across MLX, native Metal and ANE-oriented components. |
 
 <details>
 <summary>Shared foundations and comparison components / 共享基础与对照组件</summary>
 
-[AITemplate](catalog.md#aitemplate) · [Apache TVM](catalog.md#tvm) · [BladeDISC](catalog.md#bladedisc) · [ExecuTorch](catalog.md#executorch) · [FastKernels](catalog.md#fastkernels) · [Helion](catalog.md#helion) · [Hidet](catalog.md#hidet) · [IREE](catalog.md#iree) · [IREE Turbine](catalog.md#iree-turbine) · [KernelBench](catalog.md#kernelbench) · [NVIDIA TensorRT](catalog.md#tensorrt) · [TileLang](catalog.md#tilelang) · [tinygrad](catalog.md#tinygrad) · [Torch-TensorRT](catalog.md#torch-tensorrt) · [Triton](catalog.md#triton)
+[Apache TVM](catalog.md#tvm) · [Atrex-Bench](catalog.md#atrex-bench) · [FastKernels](catalog.md#fastkernels) · [KernelBench](catalog.md#kernelbench) · [KernelWiki](catalog.md#kernelwiki) · [ncu-report-skill](catalog.md#ncu-report-skill) · [NVIDIA TensorRT](catalog.md#tensorrt) · [TileLang](catalog.md#tilelang) · [Triton](catalog.md#triton)
 
 </details>
 

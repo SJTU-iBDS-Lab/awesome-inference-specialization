@@ -1,229 +1,115 @@
 # Awesome Inference Specialization
 
-**Specialized inference execution stacks built for particular models, hardware and workloads—with a focus on whether AI-assisted development and code generation change how they are implemented, optimized and maintained.**
+**Specialized inference engines, the workflows that build them, and the methods that validate them.**
 
-[中文](README_CN.md) · [Core cases](docs/cases.md) · [Construction comparison](docs/comparison.md) · [Survey library](docs/systems.md) · [Model domains](docs/domains.md) · [Research questions](docs/research-agenda.md) · [Contribute](CONTRIBUTING.md)
+[中文](README_CN.md) · [Engines](docs/systems.md#system) · [Construction](docs/systems.md#construction) · [Validation](docs/validation.md) · [Benchmarks](docs/benchmarks.md) · [Supporting resources](docs/resources.md)
 
 ## Why this repository?
 
-Specialized inference systems are not new. The question is **whether their construction methods, accessibility and economics are changing—and which system designs become practical as a result.**
+When models, hardware and workloads are known, developers can rebuild parts of the execution stack around those conditions. This repository studies **what they rebuild, how they obtain the resulting engine, and how they establish that it works**—across language, multimodal, image, video and audio models.
 
-We study systems that reclaim control of model execution through direct implementation, substantial adaptation or generated code, together with the workflows that build them. This can include the model graph, kernel dispatch, state, data movement or request execution while retaining shared services and lower-level libraries.
+Specialized systems are not new. The research question is whether AI-assisted development and code generation change their construction, availability and maintenance costs, making more narrowly targeted designs practical. Agent use or a reported speedup alone does not answer that question.
 
-The cases help investigate an unproven causal chain:
+We connect three kinds of evidence:
 
-> AI-assisted coding or code generation may lower implementation and revision costs → some narrowly targeted execution stacks may become worth building → feasible system designs and delivery practices may change.
+- **Engines:** the execution decisions they control, the components they reuse and the compatibility they give up.
+- **Construction methods:** direct implementation, substantial forks, model-to-program compilation and agent workflows, with the actual scope of their outputs.
+- **Validation methods:** numerical, state, output-quality and service checks, including their coverage, cost and failure limits.
 
-**A faster engine, a short development period or the use of an agent does not establish that chain.** Record the motivation, reconstruction and reuse boundary, compatibility given up, actual AI participation, disclosed effort, and missing validation or maintenance evidence.
+[Benchmarks](docs/benchmarks.md) provide separate tasks and comparison protocols. [Diagnostics, construction knowledge and reusable components](docs/resources.md) support this work when their relationship to an engine or construction workflow is explicit.
 
-![Known deployment constraints lead to rebuilt execution decisions, construction and validation, then deployment and maintenance, compared with historical routes and shared foundations](assets/specialization.svg)
+![Three connected subjects: specialized inference engines, construction methods and validation methods; benchmarks supply evaluation protocols, while diagnostics, knowledge and components provide support](assets/specialization.svg)
 
-## Start with the core cases
+## Explore the collection
 
 <!-- CATALOG-START -->
 
-**[Full directory: 161 projects](docs/systems.md) · [Selected analyses: 63 cases](docs/cases.md)**
+### Specialized inference engines
 
-Follow the construction process to its resulting system, then examine reuse boundaries and missing evidence. These groups guide reading; AI involvement does not imply better results, and missing disclosure does not imply human-only implementation.
+Start with how execution is rebuilt, then filter by model, device and mechanism. These are entry points into the full engine index and case analyses.
+
+| Execution-stack reading route | Selected cases |
+| --- | --- |
+| Native runtimes for qualified models and devices | [Splash](docs/cases.md#splash) · [Gufo](docs/cases.md#gufo) · [NInfer](docs/cases.md#ninfer) |
+| Rebuilding around memory and expert placement | [Flash-MoE](docs/cases.md#flash-moe) · [Strata](docs/cases.md#strata) · [Swiftlet](docs/cases.md#swiftlet) |
+| Substantial forks and specialized backends | [llamAmpere](docs/cases.md#llamampere) · [vLLM Radiance](docs/cases.md#vllm-radiance) · [ANEMLL Flash llama.cpp](docs/cases.md#anemll-flash-llama) |
+| Reconstructing image-generation pipelines | [Iris](docs/cases.md#iris) · [stable-diffusion.cpp](docs/cases.md#stable-diffusion-cpp) · [Nunchaku](docs/cases.md#nunchaku) |
+| Video execution, device migration and streaming | [LightX2V](docs/cases.md#lightx2v) · [Vidax](docs/cases.md#vidax) · [TeleFuser](docs/cases.md#telefuser) |
+| Speech, audio diffusion and action-model runtimes | [Aria](docs/cases.md#aria) · [Qwen-ASR](docs/cases.md#qwen-asr-c) · [vla.simd](docs/cases.md#vla-simd) |
+
+[All engines](docs/systems.md#system) · [All construction cases](docs/cases.md) · [Compare reconstruction boundaries](docs/comparison.md)
 
 [Multimodal understanding & interaction](docs/domains.md#multimodal) · [Image generation & processing](docs/domains.md#image) · [Video generation & processing](docs/domains.md#video) · [Speech & audio](docs/domains.md#audio) · [Language models](docs/domains.md#text) · [Cross-domain infrastructure](docs/domains.md#general)
 
-Modalities are overlapping search facets, not construction categories. Each group shows three entry points; expand for the remaining cases, all retained in the case index.
+### Construction and optimization
 
-### Construction workflows and generated execution
+Connect each workflow to its output. A kernel, model forward program and complete serving stack have different scopes.
 
-| Case | Why study it? |
+| Workflow | Output scope |
 | --- | --- |
-| [MetaInfer → VibeQwen](docs/cases.md#vibeqwen) | An author-reported experiment adapted MetaInfer and reused existing kernels to build a deployment-specific Qwen serving stack. |
-| [Sol-Engine](docs/cases.md#sol-engine) | An agent-oriented workflow assembles model-specific video execution paths from reusable optimizations and measured quality constraints. |
-| [Mirage MPK](docs/cases.md#mirage) | A compiler/runtime turns an assembled LLM task graph into persistent GPU execution spanning computation and communication. |
+| [MetaInfer](docs/catalog.md#metainfer) | Model/server construction; see the linked VibeQwen case |
+| [Sol-Engine](docs/catalog.md#sol-engine) | Model-specific video execution and quality-constrained optimization |
+| [Mirage Persistent Kernel](docs/catalog.md#mirage) | Compiled task graphs and persistent GPU execution |
+| [KernelAgent](docs/catalog.md#kernelagent) | Generated kernels and recomposed model forward programs |
+| [Atrex Kernel Agent (AKA)](docs/catalog.md#atrex-kernel-agent) | Profile-guided kernel construction with acceptance gates |
 
-<details>
-<summary>Show 2 more cases in this group</summary>
+[All construction workflows](docs/systems.md#construction) · [MetaInfer → VibeQwen case chain](docs/cases.md#vibeqwen)
 
-| Case | Why study it? |
+### Correctness and quality validation
+
+| Contract to check | Method entry point |
 | --- | --- |
-| [Lithos Metal](docs/cases.md#lithos-metal) | A standalone compiler/runtime turns selected model graphs into Apple-specific execution programs. |
-| [Magnitude](docs/cases.md#magnitude) | The reviewed Metal path captures typed operations and constructs specialized fused kernels inside MLX’s execution machinery. |
+| Numerics and operator composition | [Reference comparisons and recomposition checks](docs/validation.md#numerical) |
+| Model composition and state coverage | [Composed-forward checks and state coverage](docs/validation.md#model-state) |
+| Image / video quality | [Perceptual quality and error constraints](docs/validation.md#quality) |
+| Service interfaces and function | [Interface tests, judges and coverage limits](docs/validation.md#service) |
 
-</details>
+A validator can live inside an engine or construction framework; methods are indexed without duplicating repositories. Numerical, perceptual and functional checks are distinct contracts.
 
-### Native runtimes for qualified models and devices
+### Benchmarks and task suites
 
-| Case | Why study it? |
+| Benchmark | Comparison question |
 | --- | --- |
-| [Splash](docs/cases.md#splash) | Integrates a matched draft, specialized kernels and memory policy into a local Apple-silicon serving stack. |
-| [Gufo](docs/cases.md#gufo) | A native C++/HIP engine chooses a narrow hardware target and selected models, owning execution, state and serving while adapting existing components. |
-| [zLLM](docs/cases.md#zllm) | Reimplements model-specific visual and generative pipelines inside a native runtime with explicit backend limits. |
+| [FastKernels](docs/benchmarks.md#fastkernels) | Do candidate-kernel gains survive model integration? |
+| [Atrex-Bench](docs/benchmarks.md#atrex-bench) | Does a generated operator compile, meet numerical checks and use the target hardware effectively? |
+| [KernelBench](docs/benchmarks.md#kernelbench) | How do generated implementations compare with executable references under a stated evaluation protocol? |
 
-<details>
-<summary>Show 16 more cases in this group</summary>
+Benchmarks supply tasks, references and comparison protocols. Passing operator tasks does not validate a complete engine. [Read evaluation scopes and limits](docs/benchmarks.md).
 
-| Case | Why study it? |
+### Companion resources
+
+| Purpose | Selected resources |
 | --- | --- |
-| [NInfer](docs/cases.md#ninfer) | Owns model execution, state and serving within a deliberately narrow checkpoint and GPU contract. |
-| [Lily](docs/cases.md#lily) | A narrowly qualified Rust/Metal engine exposes the compatibility decisions made when rebuilding model execution. |
-| [hipEngine](docs/cases.md#hipengine) | torch-free model execution for selected Radeon targets |
-| [imp](docs/cases.md#imp) | an explicitly agent-built stack for consumer Blackwell |
-| [VTE](docs/cases.md#vte) | a measured RDNA3 runtime with generated HIP kernels |
-| [ZINC](docs/cases.md#zinc) | a Zig stack built around consumer GPU execution |
-| [memra](docs/cases.md#memra) | a Rust/CUDA engine qualified one hardware lane at a time |
-| [Kipp](docs/cases.md#kipp) | a checkpoint-bounded C11 Qwen execution stack |
-| [Saragossa](docs/cases.md#saragossa) | A Rust/Metal engine concentrates on local latency and controlled model-state lifetimes. |
-| [TensorFold](docs/cases.md#tensorfold) | A Zig server admits explicit model–format–platform combinations and executes their native Metal or CUDA paths. |
-| [Halogen Flash](docs/cases.md#halogen-flash) | A distributed binary targets one Qwen family and AMD Strix Halo, with public deployment and quantization descriptions. |
-| [ExLlamaV3](docs/cases.md#exllamav3) | A local-inference library couples EXL3 encoding, quantized state and qualified execution paths for consumer GPUs. |
-| [Llaminar](docs/cases.md#llaminar) | constructing native execution plans for mixed hardware |
-| [ane.cpp](docs/cases.md#ane-cpp) | An ANE-LM fork uses empirical hardware probes to guide runtime fusion, chunking and dispatch changes. |
-| [Cactus](docs/cases.md#cactus) | Connects model capture and graph lowering to a mobile stack that owns quantization, state and execution. |
-| [FastFlowLM](docs/cases.md#fastflowlm) | Builds around AMD NPU execution with separate model, kernel-provider and device boundaries. |
+| [Performance diagnosis](docs/resources.md#diagnostics) | [ncu-report-skill](docs/catalog.md#ncu-report-skill) |
+| [Construction knowledge and experience](docs/resources.md#knowledge) | [KernelWiki](docs/catalog.md#kernelwiki), [Apple Neural Engine Field Guide](docs/catalog.md#ane-field-guide) |
+| [General-engine baselines](docs/resources.md#engine-baselines) | [vLLM](docs/catalog.md#vllm), [SGLang](docs/catalog.md#sglang), [TensorRT-LLM](docs/catalog.md#tensorrt-llm), [llama.cpp](docs/catalog.md#llama-cpp) |
+| [Compilers and kernel languages](docs/resources.md#compilers) | [Apache TVM](docs/catalog.md#tvm), [NVIDIA TensorRT](docs/catalog.md#tensorrt), [Triton](docs/catalog.md#triton), [TileLang](docs/catalog.md#tilelang) |
+| [Reusable execution and model preparation](docs/resources.md#components) | [DeepCompressor](docs/catalog.md#deepcompressor), [QTIP](docs/catalog.md#qtip), [Marlin](docs/catalog.md#marlin), [Flash Linear Attention](docs/catalog.md#flash-linear-attention) |
 
-</details>
+[Atrex GPU Wiki: optimization traces → reusable experience](docs/resources.md#embedded-knowledge). Each companion resource must identify the construction, validation or comparison it supports.
 
-### Rebuilding around memory and expert placement
-
-| Case | Why study it? |
-| --- | --- |
-| [Flash-MoE](docs/cases.md#flash-moe) | A fixed-model C/Metal prototype streams expert weights from SSD and controls the execution pipeline directly. |
-| [Strata](docs/cases.md#strata) | A Qwen-specific runtime combines GPU-resident work with CPU expert execution and explicit memory budgets. |
-| [Swiftlet](docs/cases.md#swiftlet) | A native Qwen hybrid-MoE runtime makes model format, streaming and device limits explicit. |
-
-<details>
-<summary>Show 6 more cases in this group</summary>
-
-| Case | Why study it? |
-| --- | --- |
-| [DwarfStar](docs/cases.md#dwarfstar) | A native stack integrates selected model paths, state management and local serving around consumer-hardware constraints. |
-| [TurboFieldfare](docs/cases.md#turbo-fieldfare) | A Gemma-specific Swift/Metal runtime makes storage and execution policy part of the same design. |
-| [TUFF](docs/cases.md#tuff) | A substantive TurboFieldfare fork retains bounded streaming while adding model-specific execution paths. |
-| [SwiftLM](docs/cases.md#swiftlm) | SwiftLM retains MLX while changing expert I/O, scheduling and error handling for oversized MoE inference. |
-| [Colibri](docs/cases.md#colibri) | A collection of architecture-specific C engines treats expert residency and model execution as explicit design responsibilities. |
-| [KTransformers](docs/cases.md#ktransformers) | A specialized heterogeneous backend uses CPU capacity and instruction sets for MoE experts while retaining GPU serving components. |
-
-</details>
-
-### Substantial forks and specialized backends
-
-| Case | Why study it? |
-| --- | --- |
-| [llamAmpere](docs/cases.md#llamampere) | A deep llama.cpp fork integrates MTP verification, compressed KV state and SM86 execution for local long-context Qwen inference. |
-| [vLLM Radiance](docs/cases.md#vllm-radiance) | a qualified RDNA4 backend inside a pinned vLLM stack |
-| [ANEMLL Flash llama.cpp](docs/cases.md#anemll-flash-llama) | A specialized fork retains a general engine while rebuilding routed-expert storage and execution handoffs. |
-
-<details>
-<summary>Show 5 more cases in this group</summary>
-
-| Case | Why study it? |
-| --- | --- |
-| [NInfer-3090](docs/cases.md#ninfer-3090) | retargeting NInfer to Ampere’s kernels and memory budget |
-| [Infernix](docs/cases.md#infernix) | extending NInfer across GPU, CPU and NVMe tiers |
-| [CIRU runtime](docs/cases.md#ciru-runtime) | integrating a model-specific Strix Halo runtime |
-| [Gufo RDMA](docs/cases.md#gufo-rdma) | from one Strix Halo runtime to two-host tensor parallelism |
-| [strix-llama.cpp](docs/cases.md#strix-llama-cpp) | a device-specific fork with an explicit upstream boundary |
-
-</details>
-
-### Reconstructing image-generation pipelines
-
-| Case | Why study it? |
-| --- | --- |
-| [Iris](docs/cases.md#iris) | A C image-generation pipeline replaces framework-level execution for selected architectures while retaining platform acceleration. |
-| [stable-diffusion.cpp](docs/cases.md#stable-diffusion-cpp) | A cross-backend native implementation reconstructs full diffusion pipelines and their component lifecycles. |
-| [Nunchaku](docs/cases.md#nunchaku) | A low-bit diffusion backend co-designs packed weights and fused execution so the outlier-correction branch remains affordable. |
-
-<details>
-<summary>Show 5 more cases in this group</summary>
-
-| Case | Why study it? |
-| --- | --- |
-| [edge-dit.cpp](docs/cases.md#edge-dit) | A native diffusion runtime controls the model graph and memory lifecycle over shared ggml primitives. |
-| [Hearth](docs/cases.md#hearth) | A native image pipeline owns model graphs and node scheduling while reusing CubeCL and wgpu. |
-| [brodiffusion](docs/cases.md#brodiffusion) | C++ model pipelines reuse a tensor backend while owning sampler integration and denoiser graph replay. |
-| [stable-diffusion.rs](docs/cases.md#stable-diffusion-rs) | A Rust diffusion implementation documents the interface and numerical work needed to migrate its execution backend. |
-| [Quartz](docs/cases.md#saient-quartz) | The repository exposes a Rust image stack and developing native video path, alongside a distinct production companion. |
-
-</details>
-
-### Video execution, device migration and streaming
-
-| Case | Why study it? |
-| --- | --- |
-| [LightX2V](docs/cases.md#lightx2v) | A shared-framework runtime owns model execution and explicit asynchronous weight-storage contracts. |
-| [Vidax](docs/cases.md#vidax) | JAX model ports and sharding policies make the device migration boundary explicit. |
-| [TeleFuser](docs/cases.md#telefuser) | A workload-specific runtime connects generative model stages to bounded, session-aware execution. |
-
-<details>
-<summary>Show 3 more cases in this group</summary>
-
-| Case | Why study it? |
-| --- | --- |
-| [FastVideo](docs/cases.md#fastvideo) | A model-aware video runtime rebuilds component resolution and denoising execution on shared tensor backends. |
-| [MiniMax-H3 MLX](docs/cases.md#minimax-h3-mlx) | A full MLX model port exposes exact precomputation opportunities and the remaining dense-attention limit. |
-| [StreamDiffusionV2](docs/cases.md#streamdiffusion-v2) | Streaming video execution owns chunk boundaries, denoising arrangement and distributed KV-cache movement. |
-
-</details>
-
-### Speech, audio diffusion and action-model runtimes
-
-| Case | Why study it? |
-| --- | --- |
-| [Aria](docs/cases.md#aria) | The author explicitly reports LLM assistance while the repository exposes the resulting C execution path and parity harness. |
-| [Qwen-ASR](docs/cases.md#qwen-asr-c) | A model-family C implementation owns the complete ASR execution path, including streaming policy. |
-| [vla.simd](docs/cases.md#vla-simd) | The runtime rebuilds selected robot-policy model paths around CPU SIMD execution. |
-
-<details>
-<summary>Show 5 more cases in this group</summary>
-
-| Case | Why study it? |
-| --- | --- |
-| [Qwen3-TTS](docs/cases.md#qwen3-tts-c) | Native synthesis modules are paired with an explicit engineering and measurement workflow. |
-| [Qingming Qwen3-TTS](docs/cases.md#qingming-qwen3-tts) | Two fixed consumer GPU targets receive distinct native synthesis implementations and concurrency policies. |
-| [VoxGen](docs/cases.md#voxgen) | A Rust runtime connects VoxCPM2 model stages to directly managed Vulkan execution. |
-| [parakeet.cpp (ggml)](docs/cases.md#parakeet-ggml) | The NeMo-to-ggml port carries model-specific state and documents the limits of its reference comparisons. |
-| [parakeet.cpp (axiom)](docs/cases.md#parakeet-axiom) | A separate C++ port uses axiom and MPSGraph while owning cached speech-model execution. |
-
-</details>
-
-### Compare the cases with existing routes
-
-- [Historical and adjacent routes](docs/systems.md#adjacent): ZeRO-Inference, FlexGen, DistServe, S-LoRA and MLC LLM help establish which ideas already exist.
-- [Shared foundations and baselines](docs/systems.md#foundation): general engines, compilers, kernels and evaluators reveal what is reused and what a fair comparison requires.
-
-Relevance describes a record’s role in this survey, not its quality, maturity or age. The full [library](docs/systems.md) retains the broader collection.
-
-<details>
-<summary>按执行机制检索资料库 / Browse the library by execution mechanism</summary>
-
-[Data residency & movement](docs/catalog.md#memory) · [Numerical representation](docs/catalog.md#precision) · [Selective computation](docs/catalog.md#selection) · [Computation reuse](docs/catalog.md#reuse) · [Generation order](docs/catalog.md#decoding) · [Parallelism & scheduling](docs/catalog.md#serving) · [Compiled & native execution](docs/catalog.md#execution) · [Construction & validation tools](docs/catalog.md#construction)
-
-</details>
+Current collection: 121 projects and 63 construction cases. Browse by [project role](docs/systems.md), [execution mechanism](docs/catalog.md) or [model domain](docs/domains.md).
 
 <!-- CATALOG-END -->
 
-## Read each case as a construction decision
+## Read a case from motivation to evidence
 
-**Why build another stack → what is rebuilt → what is retained or given up → how it is constructed → how it is validated and maintained.**
+**Why build another path → what it controls → what it reuses or gives up → how it is built → how it is validated and maintained.**
 
-For example, [VibeQwen](docs/cases.md#vibeqwen) is an engine outcome; [MetaInfer](docs/catalog.md#metainfer) supplies the construction workflow that was adapted for it. A case card connects them without treating the workflow and its output as the same artifact or duplicating repository counts. Author disclosures, public implementation, validation coverage and unknown effort remain distinct.
+For example, [MetaInfer → VibeQwen](docs/cases.md#vibeqwen) connects a construction workflow with an author-reported engine outcome. [Sol-Engine](docs/cases.md#sol-engine) connects model-specific video optimization with quality checks. A generated kernel, a composed forward pass and a complete inference service are different outputs; a case must identify its boundary.
 
-The [construction comparison](docs/comparison.md) starts with execution ownership and disclosed effort. Eight [mechanism families](docs/catalog.md) remain secondary search labels for understanding how these designs execute.
+Use the [case notes](docs/cases.md) and [construction comparison](docs/comparison.md) for this analysis. [Model domains](docs/domains.md) and [execution mechanisms](docs/catalog.md) are secondary, overlapping search dimensions—not the repository's top-level identity.
 
 ## What belongs here?
 
-A **core case** must explain why it illuminates the construction of a specialized execution stack, beyond identifying a deployment constraint and an optimization. Identify the resulting program, the execution decisions it owns, retained dependencies and traceable sources. Unknown construction and maintenance costs are acceptable when explicitly marked unknown.
+A record must have a **direct, documented relationship to building or validating a specialized execution stack**. We include substantive native engines and backends, construction workflows, relevant validation methods, benchmarks, and supporting resources with an identifiable use in that process.
 
-- **Core cases:** purposeful execution-stack reconstruction, or construction workflows connected to concrete specialized artifacts. Neither a dependency-free implementation nor established AI authorship is required.
-- **Historical and adjacent routes:** earlier and contemporary specialized systems, compiler specialization, heterogeneous execution and related construction methods that establish what already exists and what may be changing.
-- **Shared foundations and baselines:** general engines, compilers, kernels, optimization components and evaluators that explain reuse and fair comparison.
+General engines, compilers and kernel libraries qualify only through a concrete reuse or comparison relationship. A generic inference optimization, a thin wrapper, or a teaching-oriented nano implementation does not qualify by itself. Unrelated entries are removed from the maintained collection rather than retained in a backup directory. See the [classification and inclusion guide](docs/taxonomy.md).
 
-Relevance and artifact type are independent. Recency, a small codebase, agent use or speed alone does not qualify a core case. Teaching-oriented nano implementations are outside the collection’s scope. See the [classification and inclusion guide](docs/taxonomy.md).
+## Evidence and open questions
 
-## Evidence and research
+This is a source-reviewed collection, not an independent performance reproduction. Separate author reports from inspected implementation, and runtime changes from quantization, approximation or changed models. AI participation requires direct disclosure or an inspectable workflow; missing disclosure means unknown. See the [evidence policy](docs/evidence-policy.md) and [latest resource audit](docs/resources-audit-2026-10-12.md).
 
-The [current discovery audit](docs/discovery-2026-10-12.md) records source tracing, inclusion decisions and unresolved candidates.
+The [research agenda](docs/research-agenda.md) asks whether construction savings survive verification, integration and maintenance, and what happens when the model, hardware or workload changes. Unknown costs and incomplete coverage remain visible.
 
-This collection reviews sources; it does not independently reproduce project performance. Author results are not independent validation. Separate effects of quantization, approximation and model changes from runtime effects. Establish AI participation through direct disclosure or an inspectable construction workflow, never filenames, coding style or repository size. The [evidence policy](docs/evidence-policy.md) specifies appropriate claim boundaries.
-
-The [research agenda](docs/research-agenda.md) asks what is changing: which general abstractions are worth replacing, which construction steps become automated, whether savings cover verification and maintenance, and what model or hardware changes cost to accommodate. The [historical survey](docs/survey-2026-10-12.md) records the earlier broad search; the [library](docs/systems.md) retains all existing entries.
-
-[Project records](catalog/projects.csv) and [case records](catalog/cases.json) generate the homepage selections, case studies, relevance index, mechanism catalog and comparison. See [CONTRIBUTING.md](CONTRIBUTING.md) for maintenance. Metadata, original diagrams, commentary and scripts use the [MIT License](LICENSE); linked projects and models retain their own licenses.
+[Project records](catalog/projects.csv) and [case records](catalog/cases.json) generate the directories and comparisons. Follow [CONTRIBUTING.md](CONTRIBUTING.md) to maintain them. Metadata, original diagrams, commentary and scripts use the [MIT License](LICENSE); linked projects and models retain their own licenses.
