@@ -1,0 +1,28 @@
+name: Suggest an inference specialization project
+description: Propose a project with an identifiable execution-level specialization
+labels: [project-suggestion]
+body:
+  - type: input
+    id: project
+    attributes:
+      label: Project and official link
+      placeholder: 'Project — https://github.com/owner/repo'
+    validations:
+      required: true
+  - type: textarea
+    id: mechanism
+    attributes:
+      label: What is specialized?
+      description: Describe a concrete execution, memory, communication, scheduling, or generation mechanism. Not just a speedup headline.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope and limitations
+      description: Model, hardware, workload, public source availability and known equivalence caveats.
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Implementation and evaluation evidence
+      description: Direct README/code/paper links; benchmark configuration, if available.
