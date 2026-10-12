@@ -11,14 +11,14 @@ git init
 git add .
 git commit -m "Initial curated inference specialization catalog"
 git branch -M main
-gh repo create awesome-inference-specialization --public --source=. --remote=origin --push
+gh repo create SJTU-iBDS-Lab/awesome-inference-specialization --private --source=. --remote=origin --push
 ```
 
-The command creates a new public repository in the GitHub account selected by `gh`; verify the owner beforehand with `gh auth status`. If the target repository already exists, do not run `gh repo create` again; add the correct remote and push instead.
+The command creates a new private repository in the `SJTU-iBDS-Lab` organization. Check the signed-in account with `gh auth status` and ensure it has permission to create repositories in that organization. If the target repository already exists, do not run `gh repo create` again; use the correct remote and push instead.
 
 ## Without the GitHub CLI
 
-Create an **empty public repository** named `awesome-inference-specialization` using https://github.com/new. Do not initialize the repository with a README, license, or .gitignore (this archive already includes those files).
+Create an **empty private repository** named `awesome-inference-specialization` under `SJTU-iBDS-Lab` using https://github.com/organizations/SJTU-iBDS-Lab/repositories/new. Confirm that the owner is `SJTU-iBDS-Lab` and visibility is **Private**. Do not initialize the repository with a README, license, or .gitignore (this archive already includes those files).
 
 Then, from the extracted project directory:
 
@@ -27,11 +27,11 @@ git init
 git add .
 git commit -m "Initial curated inference specialization catalog"
 git branch -M main
-git remote add origin https://github.com/OWNER/awesome-inference-specialization.git
+git remote add origin https://github.com/SJTU-iBDS-Lab/awesome-inference-specialization.git
 git push -u origin main
 ```
 
-Replace `OWNER` with the intended GitHub username or organization, and authenticate with an approved GitHub credential method. This archive contains **no access tokens or private keys**.
+Authenticate with an approved GitHub credential method. This archive contains **no access tokens or private keys**.
 
 ## Verify
 
