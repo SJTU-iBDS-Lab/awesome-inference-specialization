@@ -12,6 +12,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 CSV_PATH = ROOT / 'catalog' / 'projects.csv'
 CASES_PATH = ROOT / 'catalog' / 'cases.json'
+SHOWCASE_PATH = ROOT / 'catalog' / 'showcase.json'
 SCHEMA = json.loads((ROOT / 'catalog' / 'schema.json').read_text(encoding='utf-8'))
 FAMILIES = SCHEMA['families']
 START = '<!-- CATALOG-START -->'
@@ -48,6 +49,10 @@ def load_cases(path: Path = CASES_PATH) -> list[dict]:
     return json.loads(path.read_text(encoding='utf-8'))
 
 
+def load_showcase(path: Path = SHOWCASE_PATH) -> list[dict[str, str]]:
+    return json.loads(path.read_text(encoding='utf-8'))
+
+
 def items(row: dict[str, str], field: str) -> list[str]:
     return row[field].split(';')
 
@@ -62,56 +67,30 @@ def project_links(ids: list[str], by_id: dict[str, dict[str, str]], prefix: str 
 
 def render_overview(rows: list[dict[str, str]], chinese: bool = False) -> str:
     cases = {c['id']: c for c in load_cases()}
-    by_id = {r['id']: r for r in rows}
-    key = 'title_cn' if chinese else 'title'
-    lines = ['### 专用推理引擎' if chinese else '### Specialized inference engines', '',
-             '从执行栈重建方式入手，再按模型、设备和机制筛选。下面是阅读入口，完整引擎索引和案例分析另页列出。' if chinese else
-             'Start with how execution is rebuilt, then filter by model, device and mechanism. These are entry points into the full engine index and case analyses.', '',
-             '| 执行栈阅读路线 | 代表案例 |' if chinese else '| Execution-stack reading route | Selected cases |', '| --- | --- |']
-    for group in SCHEMA['case_groups'][1:]:
-        selected = group.get('featured', group['examples'][:3])
-        links = ' · '.join(f"[{md_cell(cases[id]['title'].split(':', 1)[0])}](docs/cases.md#{id})" for id in selected)
-        lines.append(f"| {group[key]} | {links} |")
-    lines += ['', '[全部引擎](docs/systems.md#system) · [全部构建案例](docs/cases.md) · [重构边界对照](docs/comparison.md)' if chinese else
-              '[All engines](docs/systems.md#system) · [All construction cases](docs/cases.md) · [Compare reconstruction boundaries](docs/comparison.md)', '',
+    showcase = load_showcase()
+    count = len(showcase)
+    key = 'why_cn' if chinese else 'why'
+    lines = [f'### {count} 个起点：读完能学到什么' if chinese else f'### {count} starting points: what you can learn', '',
+             '按执行控制、复用方式、构建路径和验证边界选例，覆盖引擎、编译与 Agent 工作流。这是阅读路线，不按星标、速度或成熟度排名。' if chinese else
+             'Chosen to contrast execution control, reuse, construction routes and validation across engines, compilation and agent workflows. This is a reading route, not a star, speed or maturity ranking.', '',
+             '| 案例 | 阅读收益 |' if chinese else '| Case | Read it to understand |', '| --- | --- |']
+    for item in showcase:
+        c = cases[item['case_id']]
+        lines.append(f"| [{md_cell(c['title'].split(':', 1)[0])}](docs/cases.md#{c['id']}) | {md_cell(item[key])} |")
+    lines += ['', f'[{count} 案例速查：模型／设备、产物、复用与验证](docs/representative-comparison.md#chinese) · [完整对照](docs/comparison.md) · [全部案例](docs/cases.md)' if chinese else
+              f'[{count}-case matrix: model/device, artifact, reuse and checks](docs/representative-comparison.md) · [Full comparison](docs/comparison.md) · [All cases](docs/cases.md)', '',
+              '### 按任务继续找' if chinese else '### Continue by task', '',
+              '- **找引擎：**[全部引擎](docs/systems.md#system)，再按下方模型领域筛选。' if chinese else
+              '- **Find an engine:** open [all engines](docs/systems.md#system), then use the model-domain links below.',
+              '- **构建或优化：**[工作流索引](docs/systems.md#construction)区分内核、模型前向程序和完整服务；[内嵌构建知识](docs/resources.md#embedded-knowledge)连接优化经验与后续尝试。' if chinese else
+              '- **Build or optimize:** the [workflow index](docs/systems.md#construction) distinguishes kernels, model forward programs and full services; [embedded knowledge](docs/resources.md#embedded-knowledge) connects optimization experience to later attempts.',
+              '- **验证结果：**[数值](docs/validation.md#numerical)、[模型／状态](docs/validation.md#model-state)、[生成质量](docs/validation.md#quality)、[服务行为](docs/validation.md#service)是不同契约；[基准](docs/benchmarks.md)提供任务和比较协议。' if chinese else
+              '- **Validate results:** [numerics](docs/validation.md#numerical), [model/state](docs/validation.md#model-state), [output quality](docs/validation.md#quality) and [service behavior](docs/validation.md#service) are different contracts; [benchmarks](docs/benchmarks.md) supply tasks and comparison protocols.',
+              '- **找配套工具：**[性能诊断](docs/resources.md#diagnostics)、[构建知识](docs/resources.md#knowledge)和[复用组件](docs/resources.md#components)。' if chinese else
+              '- **Find supporting tools:** [diagnostics](docs/resources.md#diagnostics), [construction knowledge](docs/resources.md#knowledge) and [reusable components](docs/resources.md#components).', '',
               domain_links(chinese), '',
-              '### 构建与优化方案' if chinese else '### Construction and optimization', '',
-              '把构建流程与生成产物连起来。内核、模型前向程序和完整服务是不同的产出范围。' if chinese else
-              'Connect each workflow to its output. A kernel, model forward program and complete serving stack have different scopes.', '',
-              '| 方案 | 实际产出范围 |' if chinese else '| Workflow | Output scope |', '| --- | --- |']
-    for item in SCHEMA['homepage_construction']:
-        row = by_id[item['id']]
-        lines.append(f"| [{md_cell(row['project'])}](docs/catalog.md#{row['id']}) | {item['output_cn' if chinese else 'output']} |")
-    lines += ['', '[全部构建方案](docs/systems.md#construction) · [MetaInfer → VibeQwen 案例链](docs/cases.md#vibeqwen)' if chinese else
-              '[All construction workflows](docs/systems.md#construction) · [MetaInfer → VibeQwen case chain](docs/cases.md#vibeqwen)', '',
-              '### 正确性与质量验证方案' if chinese else '### Correctness and quality validation', '',
-              '| 检验对象 | 方案入口 |' if chinese else '| Contract to check | Method entry point |', '| --- | --- |',
-              '| 数值与算子组合 | [参考实现差分、组合后复检](docs/validation.md#numerical) |' if chinese else
-              '| Numerics and operator composition | [Reference comparisons and recomposition checks](docs/validation.md#numerical) |',
-              '| 模型组合与状态覆盖 | [模型组合检查与状态覆盖要求](docs/validation.md#model-state) |' if chinese else
-              '| Model composition and state coverage | [Composed-forward checks and state coverage](docs/validation.md#model-state) |',
-              '| 图像／视频质量 | [感知质量与误差约束](docs/validation.md#quality) |' if chinese else
-              '| Image / video quality | [Perceptual quality and error constraints](docs/validation.md#quality) |',
-              '| 服务接口与功能 | [接口测试、判定器及其覆盖边界](docs/validation.md#service) |' if chinese else
-              '| Service interfaces and function | [Interface tests, judges and coverage limits](docs/validation.md#service) |', '',
-              '验证器可以内嵌在引擎或构建框架中；这里索引方案，不重复计算仓库。数值检查、感知质量和功能测试不能相互替代。' if chinese else
-              'A validator can live inside an engine or construction framework; methods are indexed without duplicating repositories. Numerical, perceptual and functional checks are distinct contracts.', '',
-              '### 评测基准与任务集' if chinese else '### Benchmarks and task suites', '',
-              '| 基准 | 比较的问题 |' if chinese else '| Benchmark | Comparison question |', '| --- | --- |']
-    for item in SCHEMA['benchmark_entries']:
-        row = by_id[item['id']]
-        lines.append(f"| [{md_cell(row['project'])}](docs/benchmarks.md#{row['id']}) | {item['question_cn' if chinese else 'question']} |")
-    lines += ['', '基准提供任务、参考程序和比较协议；通过算子评测不等于完成整个引擎的验收。[查看评测范围与限制](docs/benchmarks.md)。' if chinese else
-              'Benchmarks supply tasks, references and comparison protocols. Passing operator tasks does not validate a complete engine. [Read evaluation scopes and limits](docs/benchmarks.md).', '',
-              '### 配套资源' if chinese else '### Companion resources', '',
-              '| 用途 | 精选入口 |' if chinese else '| Purpose | Selected resources |', '| --- | --- |']
-    for group in SCHEMA['support_groups']:
-        links = project_links(group['examples'][:4], by_id)
-        lines.append(f"| [{group[key]}](docs/resources.md#{group['id']}) | {links} |")
-    lines += ['', '[Atrex GPU Wiki：优化轨迹 → 可复用经验](docs/resources.md#embedded-knowledge)。配套资源必须说明服务于哪个构建、验证或比较过程。' if chinese else
-              '[Atrex GPU Wiki: optimization traces → reusable experience](docs/resources.md#embedded-knowledge). Each companion resource must identify the construction, validation or comparison it supports.', '',
-              f'当前目录：{len(rows)} 个项目、{len(cases)} 个构建案例。按[项目角色](docs/systems.md)、[执行机制](docs/catalog.md)或[模型领域](docs/domains.md)继续查找。' if chinese else
-              f'Current collection: {len(rows)} projects and {len(cases)} construction cases. Browse by [project role](docs/systems.md), [execution mechanism](docs/catalog.md) or [model domain](docs/domains.md).']
+              f'完整资料：{len(rows)} 个项目、{len(cases)} 个构建案例。按[执行机制](docs/catalog.md)查找，或读[跨案例结论](docs/synthesis.md)。' if chinese else
+              f'Full collection: {len(rows)} projects, {len(cases)} construction cases. Browse [execution mechanisms](docs/catalog.md) or read the [cross-case synthesis](docs/synthesis.md).']
     return '\n'.join(lines)
 
 
@@ -278,7 +257,7 @@ def render_catalog(rows: list[dict[str, str]]) -> str:
 def render_comparison(rows: list[dict[str, str]]) -> str:
     lines = ['# Compare construction boundaries / 构建方式对照', '',
              '> Generated from [cases.json](../catalog/cases.json) and [projects.csv](../catalog/projects.csv). No speed, maturity or cost ranking is implied.', '',
-             '[Home](../README.md) · [Core case studies](cases.md) · [Survey library](systems.md) · [Evidence policy](evidence-policy.md)', '',
+             '[Home](../README.md) · [Representative quick comparison](representative-comparison.md) · [Cross-case synthesis](synthesis.md) · [Core case studies](cases.md) · [Survey library](systems.md) · [Evidence policy](evidence-policy.md)', '',
              'Start with what is rebuilt and what effort is disclosed. Read each case for retained components, sacrificed compatibility, AI participation, validation and maintenance. Unknown costs cannot be treated as zero; reported build effort is not a controlled comparison of development methods.', '',
              '先比较执行栈边界和已披露的构建投入，再查机制。是否降低总成本，需要计入验证、集成、适配和维护，并与保留通用引擎的方案比较。', '',
              '| Case | Execution ownership | Construction effort evidence |', '| --- | --- | --- |']
@@ -297,6 +276,41 @@ def render_comparison(rows: list[dict[str, str]]) -> str:
     return '\n'.join(lines) + '\n'
 
 
+def render_representative_comparison(rows: list[dict[str, str]]) -> str:
+    by_id = {r['id']: r for r in rows}
+    cases = {c['id']: c for c in load_cases()}
+    showcase = load_showcase()
+    count = len(showcase)
+    lines = ['# Representative comparison / 代表案例速查', '',
+             '> Generated from [showcase.json](../catalog/showcase.json), [cases.json](../catalog/cases.json) and [projects.csv](../catalog/projects.csv).', '',
+             '[Home](../README.md) · [中文表格](#chinese) · [Full comparison](comparison.md) · [Case synthesis](synthesis.md) · [Validation guide](validation.md)', '',
+             f'{count} deliberately different reading examples: native runtimes, a deep fork, memory/representation-driven execution, compilation, agent workflows and model ports. Selection balances construction and validation lessons across model domains; it is not a popularity, performance or maturity ranking.', '',
+             'Scope means the reviewed configuration, not a complete current support list. Where a record does not enumerate model names or devices, the table says so rather than guessing. Open the case for the selection lesson, construction/AI evidence, effort and maintenance, and the source for exact version limits.', '',
+             'These are source-review summaries, not reproduced benchmarks. Unknown lifecycle costs remain in the full cases; absence of disclosure is not zero cost. [Evidence policy](evidence-policy.md).', '']
+    for chinese in (False, True):
+        if chinese:
+            lines += ['<a id="chinese"></a>', '', '## 中文速查', '',
+                      f'这 {count} 个例子覆盖原生运行时、深度分叉、内存与表示驱动的执行、编译、Agent 工作流和模型移植。选例依据是构建与验证的阅读价值，不是星标、速度或成熟度。范围只代表已检查的配置，不是完整支持列表；记录未列明的模型／设备不会补猜。全部记录均未在本仓库独立复现性能，完整案例保留投入与维护的未知项。', '']
+        lines += ['| 案例／来源 | 已查模型与设备 | 产物与执行控制 | 保留的组件 | 验证边界 |' if chinese else
+                  '| Case / source | Reviewed model & device | Artifact & execution control | Retained components | Validation boundary |',
+                  '| --- | --- | --- | --- | --- |']
+        for item in showcase:
+            c, r = cases[item['case_id']], by_id[item['project_id']]
+            label = md_cell(c['title'].split(':', 1)[0])
+            links = f"[{label}](cases.md#{c['id']}) · [upstream]({r['url']}) · [source]({c['evidence_urls'][0]})"
+            suffix = '_cn' if chinese else ''
+            cells = [md_cell(item[field + suffix]) for field in ('scope', 'boundary', 'reuse', 'validation')]
+            lines.append('| ' + ' | '.join([links, *cells]) + ' |')
+        lines.append('')
+    lines += ['## Why these cases? / 为什么选这些案例', '',
+              '| Case / 案例 | Reading benefit / 阅读收益 |', '| --- | --- |']
+    for item in showcase:
+        c = cases[item['case_id']]
+        lines.append(f"| [{md_cell(c['title'].split(':', 1)[0])}](cases.md#{c['id']}) | {md_cell(item['why'])} / {md_cell(item['why_cn'])} |")
+    lines += ['', 'For all cases and disclosed construction effort, use the [full comparison](comparison.md). For references, trade-offs and maintenance details, use the [case collection](cases.md). / 全量边界与投入见完整对照，具体来源、取舍及维护见案例全文。', '']
+    return '\n'.join(lines)
+
+
 def generated_files(rows: list[dict[str, str]]) -> dict[Path, str]:
     outputs = {}
     for name, chinese in [('README.md', False), ('README_CN.md', True)]:
@@ -306,6 +320,7 @@ def generated_files(rows: list[dict[str, str]]) -> dict[Path, str]:
     outputs[ROOT / 'docs/systems.md'] = render_systems(rows)
     outputs[ROOT / 'docs/catalog.md'] = render_catalog(rows)
     outputs[ROOT / 'docs/comparison.md'] = render_comparison(rows)
+    outputs[ROOT / 'docs/representative-comparison.md'] = render_representative_comparison(rows)
     outputs[ROOT / 'docs/domains.md'] = render_domains(rows)
     outputs[ROOT / 'docs/benchmarks.md'] = render_benchmarks(rows)
     outputs[ROOT / 'docs/resources.md'] = render_resources(rows)
@@ -320,7 +335,8 @@ def main() -> int:
     if not rows:
         parser.error('Catalog is empty')
     changed = []
-    for path, content in generated_files(rows).items():
+    outputs = generated_files(rows)
+    for path, content in outputs.items():
         if not path.exists() or path.read_text(encoding='utf-8') != content:
             changed.append(str(path.relative_to(ROOT)))
             if not args.check:
@@ -328,7 +344,7 @@ def main() -> int:
     if args.check and changed:
         print('Generated views are stale: ' + ', '.join(changed), file=sys.stderr)
         return 1
-    print(f'{len(rows)} entries; nine generated views ' + ('in sync' if args.check else 'updated'))
+    print(f'{len(rows)} entries; {len(outputs)} generated views ' + ('in sync' if args.check else 'updated'))
     return 0
 
 

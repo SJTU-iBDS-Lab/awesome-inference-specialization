@@ -10,7 +10,7 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 import update_readme as render
-from validate_catalog import validate, validate_cases
+from validate_catalog import validate, validate_cases, validate_showcase
 
 
 def anchors(text):
@@ -33,6 +33,7 @@ class CatalogTests(unittest.TestCase):
     def test_catalog_valid(self):
         self.assertEqual(validate(self.rows), [])
         self.assertEqual(validate_cases(render.load_cases(), self.rows), [])
+        self.assertEqual(validate_showcase(render.load_showcase(), render.load_cases(), self.rows), [])
 
     def test_core_case_requires_linked_project_and_explicit_evidence(self):
         cases = copy.deepcopy(render.load_cases())
@@ -141,6 +142,47 @@ class CatalogTests(unittest.TestCase):
         self.assertTrue(any('Support list must point to a supporting entry' in e for e in validate(rows)))
         next(r for r in rows if r['id'] == example)['catalog_role'] = 'unknown'
         self.assertTrue(any('unsupported catalog_role' in e for e in validate(rows)))
+
+    def test_showcase_requires_existing_cases_bilingual_text_and_linked_projects(self):
+        for field, replacement, expected in [
+            ('case_id', 'missing-case', 'missing case'),
+            ('project_id', 'vllm', 'must belong'),
+            ('scope_cn', '', 'nonempty bilingual'),
+        ]:
+            choices = copy.deepcopy(render.load_showcase())
+            choices[0][field] = replacement
+            self.assertTrue(any(expected in e for e in validate_showcase(choices, render.load_cases(), self.rows)))
+        choices = render.load_showcase()
+        self.assertTrue(any('Duplicate' in e for e in validate_showcase(choices + [choices[0]], render.load_cases(), self.rows)))
+        self.assertTrue(validate_showcase([], render.load_cases(), self.rows))
+
+    def test_homepages_share_exact_reasoned_selection(self):
+        choices = render.load_showcase()
+        expected = [entry['case_id'] for entry in choices]
+        self.assertTrue(10 <= len(expected) <= 15)
+        for chinese in (False, True):
+            text = render.render_overview(self.rows, chinese)
+            links = re.findall(r'\]\(docs/cases.md#([a-z0-9-]+)\)', text)
+            self.assertEqual(links, expected)
+            for entry in choices:
+                self.assertIn(render.md_cell(entry['why_cn' if chinese else 'why']), text)
+
+    def test_compact_matrix_retains_source_scope_reuse_and_validation(self):
+        text = render.render_representative_comparison(self.rows)
+        cases = {c['id']: c for c in render.load_cases()}
+        rows = {r['id']: r for r in self.rows}
+        self.assertIn('not a popularity, performance or maturity ranking', text)
+        self.assertIn('not a complete current support list', text)
+        for entry in render.load_showcase():
+            self.assertIn(f"[upstream]({rows[entry['project_id']]['url']})", text)
+            self.assertIn(f"[source]({cases[entry['case_id']]['evidence_urls'][0]})", text)
+            for field in ('scope', 'boundary', 'reuse', 'validation'):
+                for suffix in ('', '_cn'):
+                    self.assertIn(render.md_cell(entry[field + suffix]), text)
+        full = render.render_comparison(self.rows)
+        for case in cases.values():
+            self.assertIn(f"(cases.md#{case['id']})", full)
+            self.assertIn(render.md_cell(case['cost']), full)
 
     def test_local_links_and_anchors(self):
         paths = [*ROOT.glob('*.md'), *ROOT.glob('docs/*.md')]

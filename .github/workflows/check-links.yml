@@ -1,0 +1,32 @@
+name: Spot-check external links (manual)
+
+on:
+  workflow_dispatch:
+    inputs:
+      paths:
+        description: 'Space-separated Markdown paths (no recursive audit)'
+        required: true
+        default: 'README.md README_CN.md docs/representative-comparison.md'
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  spot-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test checker offline
+        run: python -m unittest discover -s tests -p test_external_links.py
+      - name: Check at most 25 unique URLs
+        env:
+          LINK_PATHS: ${{ inputs.paths }}
+        shell: bash
+        run: |
+          read -r -a paths <<< "$LINK_PATHS"
+          python scripts/check_external_links.py --check --strict --max-links 25 -- "${paths[@]}"

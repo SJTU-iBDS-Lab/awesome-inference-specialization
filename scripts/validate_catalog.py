@@ -7,7 +7,7 @@ import re
 import sys
 from urllib.parse import urlparse
 
-from update_readme import CSV_PATH, FAMILIES, SCHEMA, CASE_QUESTIONS, load_rows, load_cases
+from update_readme import CSV_PATH, FAMILIES, SCHEMA, CASE_QUESTIONS, load_rows, load_cases, load_showcase
 
 FIELDS = set('id project survey_role relevance_note catalog_role family domains artifact_type constraints mechanisms target mechanism semantic_effect source_visibility ai_involvement url evidence_urls caveat checked_on discovery'.split())
 TAG = re.compile(r'[a-z0-9][a-z0-9-]*\Z')
@@ -152,9 +152,39 @@ def validate_cases(cases: list[dict], rows: list[dict[str, str]]) -> list[str]:
     return errors
 
 
+def validate_showcase(selections: list[dict], cases: list[dict], rows: list[dict[str, str]]) -> list[str]:
+    """Keep compact bilingual summaries tied to existing, sourced case records."""
+    errors = []
+    text_fields = {field + suffix for field in ('why', 'scope', 'boundary', 'reuse', 'validation')
+                   for suffix in ('', '_cn')}
+    fields = {'case_id', 'project_id'} | text_fields
+    by_case = {c['id']: c for c in cases}
+    by_project = {r['id']: r for r in rows}
+    seen = set()
+    if not 10 <= len(selections) <= 15:
+        errors.append('Reading selection must contain 10–15 cases')
+    for entry in selections:
+        if not isinstance(entry, dict) or set(entry) != fields:
+            errors.append('Reading selection fields do not match schema')
+            continue
+        if any(not isinstance(v, str) or not v.strip() for v in entry.values()):
+            errors.append('Reading selection requires nonempty bilingual text and identifiers')
+            continue
+        case_id = entry['case_id']
+        if case_id in seen:
+            errors.append(f'Duplicate reading selection: {case_id}')
+        seen.add(case_id)
+        case = by_case.get(case_id)
+        if case is None:
+            errors.append(f'Reading selection references missing case: {case_id}')
+        elif entry['project_id'] not in case['project_ids'] or entry['project_id'] not in by_project:
+            errors.append(f'Reading selection project must belong to its case: {case_id}')
+    return errors
+
+
 def main() -> int:
     rows, cases = load_rows(), load_cases()
-    errors = validate(rows) + validate_cases(cases, rows)
+    errors = validate(rows) + validate_cases(cases, rows) + validate_showcase(load_showcase(), cases, rows)
     if errors:
         print('\n'.join('ERROR ' + e for e in errors), file=sys.stderr)
         return 1
