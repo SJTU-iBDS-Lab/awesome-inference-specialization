@@ -42,6 +42,8 @@ Read in this order:
 
 The project inventory retains its existing records. Selection for a case note and placement on the homepage are editorial choices, not a claim that every retained project establishes the central hypothesis. Tiny or “nano” teaching reimplementations whose purpose is explaining a standard engine are outside the collection's scope; line count alone is not a criterion, and a small substantive system should be assessed by the same case questions.
 
+The homepage groups cases into reading routes; those groups are not mutually exclusive scientific categories. The separate [model-domain index](domains.md) covers language, multimodal interaction, image/video generation and processing, speech/audio, and shared infrastructure. A project can carry several domain labels, so domain counts overlap. Inspect whether a video path performs generation, restoration or understanding, and whether an action-model result measures inference throughput or closed-loop behavior. Domain breadth alone does not qualify a system as a core case.
+
 ## What counts as specialization here?
 
 Optimization alone is too broad a criterion: almost every inference project optimizes something. A useful specialization account connects four elements; a core case must additionally explain the decision to construct a distinct path and the resulting trade-offs:

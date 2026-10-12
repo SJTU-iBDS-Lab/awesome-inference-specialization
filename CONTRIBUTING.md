@@ -14,7 +14,7 @@ The survey does not require a new project, AI involvement or an implementation f
 6. State concrete scope and caveats: quantization, omitted work, stale state, changed models, unsupported configurations and incomplete verification where relevant. Do not infer that a kernel generator delivers a complete engine.
 7. Mark AI involvement only from direct disclosure or an inspected construction method. Name the actual work and human intervention where known; an `AGENTS.md` or `CLAUDE.md` filename alone establishes neither authorship nor saved cost.
 8. Set `checked_on` to the direct source-review date. Prefer commit-pinned evidence for sensitive or version-dependent claims. Summarize inspection depth and discovery path in the PR.
-9. Add or update the associated selected case when the change affects a core project's construction account. Regenerate and validate all six views using the commands below.
+9. Add or update the associated selected case when the change affects a core project's construction account. Regenerate and validate all seven views using the commands below.
 
 ## Add or correct a selected case
 
@@ -52,7 +52,9 @@ python scripts/update_readme.py --check
 python -m unittest discover -s tests
 ```
 
-The six generated views are the catalog sections of `README.md` and `README_CN.md`, plus `docs/cases.md`, `docs/systems.md`, `docs/catalog.md` and `docs/comparison.md`. Do not edit those outputs directly. Hand-written README introductions and guides can be edited normally.
+The seven generated views are the catalog sections of `README.md` and `README_CN.md`, plus `docs/cases.md`, `docs/systems.md`, `docs/catalog.md`, `docs/comparison.md` and `docs/domains.md`. Do not edit those outputs directly. Hand-written README introductions and guides can be edited normally.
+
+Homepage case groups are reading routes, not disjoint scientific categories. Every case appears once, with longer groups folded after three entry points. Domain facets overlap and are independent of survey relevance and construction route; do not add their counts as unique projects. A repository with multiple models remains one record, while a substantial fork needs an explicit execution delta and upstream provenance.
 
 Use `catalog/schema.json` for controlled facets and navigation configuration, `catalog/projects.csv` for project records, and `catalog/cases.json` for selected-case narratives. Keep both homepages and original diagrams consistent with classification changes. Construction routes can overlap; distinguish generated kernels, composed model programs and complete servers. The homepage should foreground cases and research questions rather than entry totals.
 

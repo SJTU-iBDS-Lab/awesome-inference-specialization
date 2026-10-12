@@ -99,6 +99,22 @@ class CatalogTests(unittest.TestCase):
         self.assertCountEqual(links, [r['id'] for r in self.rows])
         self.assertEqual(len(links), len(set(links)))
 
+    def test_homepage_keeps_all_cases_reachable_in_both_languages(self):
+        expected = [c['id'] for c in render.load_cases()]
+        for chinese in (False, True):
+            text = render.render_overview(self.rows, chinese)
+            links = re.findall(r'\]\(docs/cases.md#([a-z0-9-]+)\)', text)
+            self.assertCountEqual(links, expected)
+            self.assertEqual(text.count('<details>'), text.count('</details>'))
+
+    def test_domain_index_retains_each_overlapping_membership(self):
+        text = render.render_domains(self.rows)
+        links = re.findall(r'\]\(catalog.md#([a-z0-9-]+)\)', text)
+        expected = [r['id'] for r in self.rows for _ in r['domains'].split(';')]
+        self.assertCountEqual(links, expected)
+        for domain in render.SCHEMA['domains']:
+            self.assertIn(domain, anchors(text))
+
     def test_support_example_cannot_silently_become_a_system(self):
         rows = copy.deepcopy(self.rows)
         example = render.SCHEMA['support_groups'][0]['examples'][0]

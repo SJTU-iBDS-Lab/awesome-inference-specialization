@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate bilingual overviews and detailed views from the canonical CSV."""
+"""Generate bilingual overviews and detailed views from the canonical catalog."""
 from __future__ import annotations
 
 import argparse
@@ -22,6 +22,17 @@ EFFECTS = {'layout-scheduling': 'layout / scheduling', 'reduced-precision': 'red
            'selective-approximation': 'selective approximation', 'stale-state': 'earlier-state reuse',
            'verified-proposals': 'target-verified proposals', 'trained-model': 'model / router training',
            'configurable': 'configuration-dependent', 'tool-dependent': 'generated-artifact dependent'}
+DOMAINS = [('multimodal', 'Multimodal understanding & interaction', '多模态理解与交互'),
+           ('image', 'Image generation & processing', '图像生成与处理'),
+           ('video', 'Video generation & processing', '视频生成与处理'),
+           ('audio', 'Speech & audio', '语音与音频'),
+           ('text', 'Language models', '语言模型'),
+           ('general', 'Cross-domain infrastructure', '跨模态基础设施')]
+
+
+def domain_links(chinese: bool = False, prefix: str = 'docs/') -> str:
+    return ' · '.join(f'[{cn if chinese else en}]({prefix}domains.md#{id})'
+                      for id, en, cn in DOMAINS)
 
 
 def md_cell(value: str) -> str:
@@ -56,12 +67,22 @@ def render_overview(rows: list[dict[str, str]], chinese: bool = False) -> str:
     inventory = (f"**[完整目录：{len(rows)} 个项目](docs/systems.md) · [精选分析：{len(cases)} 个案例](docs/cases.md)**" if chinese else
                  f"**[Full directory: {len(rows)} projects](docs/systems.md) · [Selected analyses: {len(cases)} cases](docs/cases.md)**")
     lines = [inventory, '', '先看构建过程与产出系统，再比较复用边界和证据缺口。以下分组只是阅读顺序；AI 参与不代表效果更好，未披露也不代表纯人工实现。' if chinese else
-             'Follow the construction process to its resulting system, then examine reuse boundaries and missing evidence. These groups guide reading; AI involvement does not imply better results, and missing disclosure does not imply human-only implementation.', '']
+             'Follow the construction process to its resulting system, then examine reuse boundaries and missing evidence. These groups guide reading; AI involvement does not imply better results, and missing disclosure does not imply human-only implementation.', '',
+             domain_links(chinese), '',
+             '模态是交叉检索标签，不替代构建分类；每组先展示三个入口，其余案例可展开，全部保留在案例索引。' if chinese else
+             'Modalities are overlapping search facets, not construction categories. Each group shows three entry points; expand for the remaining cases, all retained in the case index.', '']
     for group in SCHEMA['case_groups']:
         lines += [f"### {group[key]}", '', '| 案例 | 为什么研究它 |' if chinese else '| Case | Why study it? |', '| --- | --- |']
-        for id in group['examples']:
+        for i, id in enumerate(group['examples']):
+            if i == 3:
+                count = len(group['examples']) - 3
+                label = f'展开本组其余 {count} 个案例' if chinese else f'Show {count} more cases in this group'
+                lines += ['', '<details>', f'<summary>{label}</summary>', '',
+                          '| 案例 | 为什么研究它 |' if chinese else '| Case | Why study it? |', '| --- | --- |']
             c = cases[id]
             lines.append(f"| [{md_cell(c['title'].split(':', 1)[0])}](docs/cases.md#{id}) | {md_cell(c[summary_key])} |")
+        if len(group['examples']) > 3:
+            lines += ['', '</details>']
         lines.append('')
     lines += ['### 把案例放回已有路线中比较' if chinese else '### Compare the cases with existing routes', '',
               '- [历史与相邻路线](docs/systems.md#adjacent)：ZeRO-Inference、FlexGen、DistServe、S-LoRA、MLC LLM 等，帮助判断哪些设计早已有之。' if chinese else
@@ -78,7 +99,7 @@ def render_overview(rows: list[dict[str, str]], chinese: bool = False) -> str:
 def render_systems(rows: list[dict[str, str]]) -> str:
     lines = ['# Survey library / 主题资料库', '',
              '> Generated from [projects.csv](../catalog/projects.csv) and [schema.json](../catalog/schema.json).', '',
-             '[Home](../README.md) · [中文首页](../README_CN.md) · [Core case studies](cases.md) · [Construction comparison](comparison.md) · [Mechanism index](catalog.md) · [Classification](taxonomy.md)', '',
+             '[Home](../README.md) · [中文首页](../README_CN.md) · [Core case studies](cases.md) · [Model domains](domains.md) · [Construction comparison](comparison.md) · [Mechanism index](catalog.md) · [Classification](taxonomy.md)', '',
              'The research object is the construction of specialized execution stacks. Browse by **why an entry matters to this question**, independently of whether it is a system, construction workflow or supporting component. Relevance is not a quality or maturity ranking, and the adjacent group is not an age cutoff.', '',
              '先按与主题的关系阅读，再看产物角色和技术机制。原有资料保留，但相邻优化路线不作为构建范式变化的直接证据。', '',
              ' · '.join(f"[{role['title']}](#{role['id']})" for role in SCHEMA['survey_roles']), '']
@@ -92,6 +113,30 @@ def render_systems(rows: list[dict[str, str]]) -> str:
                   role['description'], '', role['description_cn'], '', '| Project and evidence | Why it is in this survey | Artifact role |', '| --- | --- | --- |']
         for r in members:
             lines.append(f"| [{md_cell(r['project'])}](catalog.md#{r['id']}) | {md_cell(r['relevance_note'])} | {r['catalog_role']} / {r['artifact_type']} |")
+        lines.append('')
+    return '\n'.join(lines) + '\n'
+
+
+def render_domains(rows: list[dict[str, str]]) -> str:
+    lines = ['# Browse by model domain / 按模型领域查找', '',
+             '> Generated from [projects.csv](../catalog/projects.csv). Domain labels overlap; counts below must not be summed as unique projects.', '',
+             '[Home](../README.md) · [中文首页](../README_CN.md) · [Core cases](cases.md) · [Survey roles](systems.md) · [Execution mechanisms](catalog.md)', '',
+             'Use these facets to find relevant workloads, then inspect what the system actually rebuilds. Image/video processing includes generation, restoration and perception; the row describes which task is implemented. A multimodal label does not mean every input/output combination is supported.', '',
+             '模态标签可重叠，数量不能相加。图像和视频包含生成、修复与感知，具体能力以条目为准；多模态标签不表示支持所有输入输出组合。先列核心与相邻系统，再折叠共享基础。', '',
+             domain_links(prefix=''), '']
+    for id, en, cn in DOMAINS:
+        members = [r for r in rows if id in items(r, 'domains')]
+        systems = sorted((r for r in members if r['survey_role'] != 'foundation'),
+                         key=lambda r: (r['survey_role'] != 'core', r['project'].lower()))
+        foundations = sorted((r for r in members if r['survey_role'] == 'foundation'), key=lambda r: r['project'].lower())
+        lines += [f'<a id="{id}"></a>', '', f'## {en} / {cn}', '',
+                  f'{len(systems)} core/adjacent entries; {len(foundations)} shared foundations. Counts reflect reviewed scope, not identical capability or maturity.', '',
+                  '| Project | Survey role | Inspected execution scope |', '| --- | --- | --- |']
+        for r in systems:
+            lines.append(f"| [{md_cell(r['project'])}](catalog.md#{r['id']}) | {r['survey_role']} | {md_cell(r['target'])} |")
+        if foundations:
+            lines += ['', '<details>', '<summary>Shared foundations and comparison components / 共享基础与对照组件</summary>', '',
+                      ' · '.join(f"[{md_cell(r['project'])}](catalog.md#{r['id']})" for r in foundations), '', '</details>']
         lines.append('')
     return '\n'.join(lines) + '\n'
 
@@ -117,8 +162,13 @@ def render_cases(rows: list[dict[str, str]]) -> str:
              'Read motivation → execution ownership → retained components and lost generality → construction → validation and maintenance. A case can be selected without AI attribution. Rebuilding an execution path need not mean writing every dependency from scratch.', '',
              '本页关注“为何重构、重构了多少、怎样构建、是否值得维护”。未知项明确保留；作者披露、源码检查、独立复现和生产使用是不同证据。案例资格不等于证明 AI 降低了总成本。', '',
              'No case performance was independently reproduced here. “Not disclosed” and “not established” describe the reviewed sources, not an assertion that an activity never occurred.', '',
-             ' · '.join(f"[{md_cell(c['title'])}](#{c['id']})" for c in cases), '']
-    for c in cases:
+             'The grouped index below follows the homepage reading routes. / 分组索引与首页阅读路线一致。', '']
+    by_case = {c['id']: c for c in cases}
+    for group in SCHEMA['case_groups']:
+        lines += [f"### {group['title']} / {group['title_cn']}", '',
+                  ' · '.join(f"[{md_cell(by_case[id]['title'].split(':', 1)[0])}](#{id})" for id in group['examples']), '']
+    for id in [id for group in SCHEMA['case_groups'] for id in group['examples']]:
+        c = by_case[id]
         lines += [f'<a id="{c["id"]}"></a>', '', f"## {md_cell(c['title'])}", '',
                   '**Related project records:** ' + project_links(c['project_ids'], by_id, '') + '.', '']
         for field, label in CASE_QUESTIONS:
@@ -192,12 +242,13 @@ def generated_files(rows: list[dict[str, str]]) -> dict[Path, str]:
     outputs[ROOT / 'docs/systems.md'] = render_systems(rows)
     outputs[ROOT / 'docs/catalog.md'] = render_catalog(rows)
     outputs[ROOT / 'docs/comparison.md'] = render_comparison(rows)
+    outputs[ROOT / 'docs/domains.md'] = render_domains(rows)
     return outputs
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument('--check', action='store_true', help='Check all six generated views')
+    parser.add_argument('--check', action='store_true', help='Check all generated views')
     args = parser.parse_args()
     rows = load_rows()
     if not rows:
@@ -211,7 +262,7 @@ def main() -> int:
     if args.check and changed:
         print('Generated views are stale: ' + ', '.join(changed), file=sys.stderr)
         return 1
-    print(f'{len(rows)} entries; six generated views ' + ('in sync' if args.check else 'updated'))
+    print(f'{len(rows)} entries; seven generated views ' + ('in sync' if args.check else 'updated'))
     return 0
 
 

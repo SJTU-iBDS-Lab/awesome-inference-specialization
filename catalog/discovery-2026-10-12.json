@@ -1,0 +1,2741 @@
+{
+  "review_date": "2026-10-12",
+  "method": "Bounded project-reference snowball discovery; source audit, no upstream execution",
+  "baseline_projects": 102,
+  "baseline_cases": 17,
+  "new_projects": 59,
+  "updated_existing_projects": [
+    "edge-dit",
+    "stable-diffusion-cpp",
+    "lightx2v",
+    "fastvideo"
+  ],
+  "ledger": [
+    {
+      "stream": "apple",
+      "id": "lily",
+      "name": "Lily",
+      "url": "https://github.com/perplexityai/pplx-garden/tree/main/lily",
+      "round": 1,
+      "found_from": "Keyword cross-check from Splash/Apple-Metal engines",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "A deliberately single-checkpoint execution stack makes the compatibility cost of reconstruction explicit. Greedy, text-only, non-streaming API; unsupported checkpoints and sampling options are rejected. Published comparisons do not establish independent reproduction.",
+      "evidence_urls": [
+        "https://github.com/perplexityai/pplx-garden/blob/1ed972ed3f0bd5616c997c9507c25616c63394fc/lily/README.md",
+        "https://github.com/perplexityai/pplx-garden/blob/1ed972ed3f0bd5616c997c9507c25616c63394fc/lily/src/config.rs",
+        "https://github.com/perplexityai/pplx-garden/blob/1ed972ed3f0bd5616c997c9507c25616c63394fc/lily/src/model.rs",
+        "https://github.com/perplexityai/pplx-garden/blob/1ed972ed3f0bd5616c997c9507c25616c63394fc/lily/CONTRIBUTING.md"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "lithos-metal",
+      "name": "Lithos Metal",
+      "url": "https://github.com/lithos-ai/lithos-metal",
+      "round": 1,
+      "found_from": "Keyword cross-check from Splash/Apple-Metal engines",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Connects a graph compiler and chip-specific recipes to a concrete standalone inference runtime. Some chip backends are unmeasured, hybrid MoE integration is experimental, and default normalization fusion changes BF16 rounding; target-compute projections exclude draft and verification overhead.",
+      "evidence_urls": [
+        "https://github.com/lithos-ai/lithos-metal/blob/08d9d53067eab538e3ad8435a6a5b50b80088554/README.md",
+        "https://github.com/lithos-ai/lithos-metal/blob/08d9d53067eab538e3ad8435a6a5b50b80088554/docs/design/design.md",
+        "https://github.com/lithos-ai/lithos-metal/blob/08d9d53067eab538e3ad8435a6a5b50b80088554/docs/design/extensions.md",
+        "https://github.com/lithos-ai/lithos-metal/blob/08d9d53067eab538e3ad8435a6a5b50b80088554/monolith/runtime/engine.py",
+        "https://github.com/lithos-ai/lithos-metal/blob/08d9d53067eab538e3ad8435a6a5b50b80088554/CONTRIBUTING.md"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "saragossa",
+      "name": "Saragossa",
+      "url": "https://github.com/azerozero/saragossa",
+      "round": 1,
+      "found_from": "Keyword cross-check for native Apple engines",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Replaces array-framework execution with an explicitly owned local runtime and regression oracles. Model and precision coverage is explicit; the single-user serving design and configuration-dependent KV precision do not imply general multi-tenant performance.",
+      "evidence_urls": [
+        "https://github.com/azerozero/saragossa/blob/57f409b76925dfa810b279a128f4028704299cae/README.md",
+        "https://github.com/azerozero/saragossa/blob/57f409b76925dfa810b279a128f4028704299cae/src/decode_resident.rs",
+        "https://github.com/azerozero/saragossa/blob/57f409b76925dfa810b279a128f4028704299cae/src/decode_resident/attention.rs",
+        "https://github.com/azerozero/saragossa/blob/57f409b76925dfa810b279a128f4028704299cae/src/runtime_flags.rs",
+        "https://github.com/azerozero/saragossa/blob/57f409b76925dfa810b279a128f4028704299cae/tests/golden/README.md"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "turbo-fieldfare",
+      "name": "TurboFieldfare",
+      "url": "https://github.com/drumih/turbo-fieldfare",
+      "round": 2,
+      "found_from": "TUFF README explicitly credits the original fork source",
+      "direction": "backward",
+      "decision": "core",
+      "reason": "A single-model native runtime publishes a detailed sequence of accepted and rejected construction experiments. Research system with a narrow architecture contract; reported footprint excludes the full disk checkpoint and throughput depends on cache warmth, context and hardware.",
+      "evidence_urls": [
+        "https://github.com/drumih/turbo-fieldfare/blob/77e8f9c02ec5345f4d9b633961c938bbafefb757/README.md",
+        "https://github.com/drumih/turbo-fieldfare/blob/77e8f9c02ec5345f4d9b633961c938bbafefb757/docs/SYSTEM_DESIGN.md",
+        "https://github.com/drumih/turbo-fieldfare/blob/77e8f9c02ec5345f4d9b633961c938bbafefb757/docs/OPTIMIZATION_JOURNEY.md",
+        "https://github.com/drumih/turbo-fieldfare/blob/77e8f9c02ec5345f4d9b633961c938bbafefb757/docs/experiments/EXPERIMENT_INVENTORY.md",
+        "https://github.com/drumih/turbo-fieldfare/blob/77e8f9c02ec5345f4d9b633961c938bbafefb757/docs/IMPLEMENTATION_REFERENCES.md"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "tuff",
+      "name": "TUFF",
+      "url": "https://github.com/rexmhall09/TUFF",
+      "round": 1,
+      "found_from": "Keyword cross-check for native Apple engines",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "A disclosed substantial fork shows how a narrow streaming runtime is adapted into several qualified model paths. Author testing centers on a 16 GB M2; model capability, vision support and performance differ by machine. A UI feature comparison is not a speed benchmark.",
+      "evidence_urls": [
+        "https://github.com/rexmhall09/TUFF/blob/0dd6dd7bacbd335edf59a5c46e06f3cc2da0de71/README.md",
+        "https://github.com/rexmhall09/TUFF/blob/0dd6dd7bacbd335edf59a5c46e06f3cc2da0de71/CONTRIBUTING.md",
+        "https://github.com/rexmhall09/TUFF/blob/0dd6dd7bacbd335edf59a5c46e06f3cc2da0de71/docs/HOW_TUFF_WORKS.md",
+        "https://github.com/rexmhall09/TUFF/blob/0dd6dd7bacbd335edf59a5c46e06f3cc2da0de71/Sources/TUFFEngine/Infrastructure/Streaming/PreadExpertStreamer.swift",
+        "https://github.com/rexmhall09/TUFF/blob/0dd6dd7bacbd335edf59a5c46e06f3cc2da0de71/Sources/TUFFEngine/Runtime/Inference/RealForwardRunner.swift"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "colibri",
+      "name": "Colibri",
+      "url": "https://github.com/JustVugg/colibri",
+      "round": 2,
+      "found_from": "TUFF README names Colibri in its feature comparison",
+      "direction": "comparison",
+      "decision": "core",
+      "reason": "Exposes the alternative of several small architecture-specific execution programs sharing selected components. Backend maturity, numerical formats and speculative/approximate options vary per engine; synthetic oracle agreement does not establish every advertised model/backend combination.",
+      "evidence_urls": [
+        "https://github.com/JustVugg/colibri/blob/bf2442915d6e3dd4cdfd2eb9c2a3d2aa44a25850/README.md",
+        "https://github.com/JustVugg/colibri/blob/bf2442915d6e3dd4cdfd2eb9c2a3d2aa44a25850/c/qwen36.c",
+        "https://github.com/JustVugg/colibri/blob/bf2442915d6e3dd4cdfd2eb9c2a3d2aa44a25850/docs/qwen36.md",
+        "https://github.com/JustVugg/colibri/blob/bf2442915d6e3dd4cdfd2eb9c2a3d2aa44a25850/CONTRIBUTING.md",
+        "https://github.com/JustVugg/colibri/blob/bf2442915d6e3dd4cdfd2eb9c2a3d2aa44a25850/THIRD_PARTY_NOTICES.md"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "ane-cpp",
+      "name": "ane.cpp",
+      "url": "https://github.com/skyfallsin/ane.cpp",
+      "round": 1,
+      "found_from": "Independent ANE runtime search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Connects hardware probes and a documented keep/discard workflow to concrete changes in a specialized execution stack. Private APIs can change; tested ANE paths do not move every operator off CPU, and measured speculative variants have been slower than baseline.",
+      "evidence_urls": [
+        "https://github.com/skyfallsin/ane.cpp/blob/b87bf57356c26025853a60cddfe4b58784ee4fda/README.md",
+        "https://github.com/skyfallsin/ane.cpp/blob/b87bf57356c26025853a60cddfe4b58784ee4fda/core/ane_runtime.cpp",
+        "https://github.com/skyfallsin/apple-neural-engine-field-guide/blob/83e73eb94051dc67431829d0f3d3eb67db0b8e9b/README.md",
+        "https://github.com/skyfallsin/apple-neural-engine-field-guide/blob/83e73eb94051dc67431829d0f3d3eb67db0b8e9b/program.md",
+        "https://github.com/skyfallsin/apple-neural-engine-field-guide/blob/83e73eb94051dc67431829d0f3d3eb67db0b8e9b/results.tsv"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "swiftlet",
+      "name": "Swiftlet",
+      "url": "https://github.com/leonickson1/Swiftlet",
+      "round": 3,
+      "found_from": "Colibri THIRD_PARTY_NOTICES documents adapted Swiftlet kernels and format",
+      "direction": "backward",
+      "decision": "core",
+      "reason": "Links explicit AI-assisted authorship to a model-family-specific runtime and documented reference-based validation. The public roadmap notes expensive long-prompt prefill and limited phone throughput; quantization tiers have different quality behavior.",
+      "evidence_urls": [
+        "https://github.com/leonickson1/Swiftlet/blob/de1a942241f65ac43290cecffc85d69ea5b52310/README.md",
+        "https://github.com/leonickson1/Swiftlet/blob/de1a942241f65ac43290cecffc85d69ea5b52310/Sources/SwiftletCore/ExpertCache.swift",
+        "https://github.com/leonickson1/Swiftlet/blob/de1a942241f65ac43290cecffc85d69ea5b52310/Sources/SwiftletCore/QwenCPUModel.swift",
+        "https://github.com/leonickson1/Swiftlet/blob/de1a942241f65ac43290cecffc85d69ea5b52310/Tests/SwiftletCoreTests/IncrementalDecodeTests.swift"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "swiftlm",
+      "name": "SwiftLM",
+      "url": "https://github.com/SharpAI/SwiftLM",
+      "round": 3,
+      "found_from": "TurboFieldfare implementation-reference ledger credits SSD-streaming design",
+      "direction": "backward",
+      "decision": "core",
+      "reason": "Shows substantial backend reconstruction while retaining the MLX ecosystem and serving integration. Streaming and speculative verification can multiply I/O; upstream synchronization broke quantized streaming in earlier releases, and fixed-version results must not be generalized.",
+      "evidence_urls": [
+        "https://github.com/SharpAI/SwiftLM/blob/b1ae6cc44e308986d8a10638d9a0410cd039b876/README.md",
+        "https://github.com/SharpAI/SwiftLM/blob/b1ae6cc44e308986d8a10638d9a0410cd039b876/Package.swift",
+        "https://github.com/SharpAI/SwiftLM/blob/b1ae6cc44e308986d8a10638d9a0410cd039b876/docs/moe_ssd_streaming_architecture.md",
+        "https://github.com/SharpAI/SwiftLM/blob/b1ae6cc44e308986d8a10638d9a0410cd039b876/Sources/MLXInferenceCore/SSDStreamingRecovery.swift",
+        "https://github.com/SharpAI/mlx-swift-lm/blob/4f1fdaabeb490d3e97b0ff71fc0132bca4078fa2/Libraries/MLXLMCommon/SwitchLayers.swift"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "anemll-flash-llama",
+      "name": "ANEMLL Flash llama.cpp",
+      "url": "https://github.com/Anemll/anemll-flash-llama.cpp",
+      "round": 3,
+      "found_from": "ANEMLL official organization lists the slot-bank llama.cpp fork",
+      "direction": "forward",
+      "decision": "core",
+      "reason": "A substantial fork exposes exactly which graph/runtime boundary must change to support explicit expert residency. Model maturity varies; optional top-k reductions and shared-only diagnostics change computation and must not be compared as exact execution.",
+      "evidence_urls": [
+        "https://github.com/Anemll/anemll-flash-llama.cpp/blob/a809594fd2035979ad2b7ef23398127c1d07e891/README.md",
+        "https://github.com/Anemll/anemll-flash-llama.cpp/blob/a809594fd2035979ad2b7ef23398127c1d07e891/src/llama-context.cpp",
+        "https://github.com/Anemll/anemll-flash-llama.cpp/blob/a809594fd2035979ad2b7ef23398127c1d07e891/docs/native-slot-bank-porting.md",
+        "https://github.com/Anemll/anemll-flash-llama.cpp/blob/a809594fd2035979ad2b7ef23398127c1d07e891/docs/flashmoe-layer-major-dedup-single-sidecar.md",
+        "https://github.com/Anemll/anemll-flash-llama.cpp/blob/a809594fd2035979ad2b7ef23398127c1d07e891/docs/moe-bank-modeling-workflow.md"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "uzu",
+      "name": "Uzu",
+      "url": "https://github.com/trymirai/uzu",
+      "round": 1,
+      "found_from": "Keyword cross-check for native Apple engines",
+      "direction": "keyword",
+      "decision": "adjacent",
+      "reason": "A broader on-device engine and model-conversion ecosystem provides a reference for reusable native construction. Its broad SDK scope differs from a single deployment-specific case; source inspection does not establish performance or AI authorship.",
+      "evidence_urls": [
+        "https://github.com/trymirai/uzu/blob/bd374af567221e281538de47987ce35429f91376/README.md",
+        "https://github.com/trymirai/uzu/blob/bd374af567221e281538de47987ce35429f91376/crates/uzu-engine/src/encodable_block/decoder.rs",
+        "https://github.com/trymirai/uzu/blob/bd374af567221e281538de47987ce35429f91376/crates/uzu-engine/build/metal/bindgen/specialize.rs",
+        "https://github.com/trymirai/lalamo/blob/831accb8252a6b6606c378048caeb44178f1a050/README.md"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "pmetal",
+      "name": "PMetal",
+      "url": "https://github.com/Epistates/pmetal",
+      "round": 1,
+      "found_from": "Keyword cross-check for native Apple engines",
+      "direction": "keyword",
+      "decision": "adjacent",
+      "reason": "A training-and-inference platform is an adjacent route for studying when specialized paths live inside a reusable ecosystem. The inspection covers a Qwen native forward path and cached-decode tests, not every advertised model or ANE capability.",
+      "evidence_urls": [
+        "https://github.com/Epistates/pmetal/blob/b469853656d3587dfb84ba083d8cca59c77dad7d/README.md",
+        "https://github.com/Epistates/pmetal/blob/b469853656d3587dfb84ba083d8cca59c77dad7d/CONTRIBUTING.md",
+        "https://github.com/Epistates/pmetal/blob/b469853656d3587dfb84ba083d8cca59c77dad7d/crates/pmetal-bridge/src/qwen3_native/forward.rs",
+        "https://github.com/Epistates/pmetal/blob/b469853656d3587dfb84ba083d8cca59c77dad7d/crates/pmetal-models/tests/cached_decode.rs"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "metalchat",
+      "name": "MetalChat",
+      "url": "https://github.com/ybubnov/metalchat",
+      "round": 1,
+      "found_from": "Keyword cross-check for native Apple engines",
+      "direction": "keyword",
+      "decision": "adjacent",
+      "reason": "An adjacent native framework illustrates reusable model abstractions rather than a narrowly documented reconstruction experiment. The API is explicitly unstable and the inspected integration test demonstrates generation without a comprehensive quality gate.",
+      "evidence_urls": [
+        "https://github.com/ybubnov/metalchat/blob/be9f19a7cdc9559f3f814ad25a1ce77f7e7cc466/README.md",
+        "https://github.com/ybubnov/metalchat/blob/be9f19a7cdc9559f3f814ad25a1ce77f7e7cc466/src/gemma.cc",
+        "https://github.com/ybubnov/metalchat/blob/be9f19a7cdc9559f3f814ad25a1ce77f7e7cc466/test/test_gemma.cc",
+        "https://github.com/ybubnov/metalchat/blob/be9f19a7cdc9559f3f814ad25a1ce77f7e7cc466/documentation/guides/getting_started.rst"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "basert",
+      "name": "BaseRT",
+      "url": "https://github.com/basecompute/baseRT",
+      "round": 1,
+      "found_from": "Keyword cross-check for native Metal engines",
+      "direction": "keyword",
+      "decision": "adjacent",
+      "reason": "Provides a contrasting delivery model: public format/conversion tooling around a closed specialized engine. The execution core is not in the public repository; kernel mechanisms and performance rely on author documentation rather than source verification.",
+      "evidence_urls": [
+        "https://github.com/basecompute/baseRT/blob/24badc8dd173e4111b64996a718d0e056405ea62/README.md",
+        "https://github.com/basecompute/baseRT/blob/24badc8dd173e4111b64996a718d0e056405ea62/CONTRIBUTING.md",
+        "https://github.com/basecompute/baseRT/blob/24badc8dd173e4111b64996a718d0e056405ea62/base-convert/FORMAT.md"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "anemll",
+      "name": "ANEMLL",
+      "url": "https://github.com/Anemll/Anemll",
+      "round": 1,
+      "found_from": "Independent ANE runtime search",
+      "direction": "keyword",
+      "decision": "adjacent",
+      "reason": "An existing converter-plus-runtime route helps distinguish compiler-mediated specialization from direct native reconstruction. CoreML chooses actual placement; unsupported operators, OS versions, package sizing and quantization require target-specific verification.",
+      "evidence_urls": [
+        "https://github.com/Anemll/Anemll/blob/f4ad26d061dc2e426faa19f81c367343bdeb9f0d/README.md",
+        "https://github.com/Anemll/Anemll/blob/f4ad26d061dc2e426faa19f81c367343bdeb9f0d/docs/ANE_converter.md",
+        "https://github.com/Anemll/Anemll/blob/f4ad26d061dc2e426faa19f81c367343bdeb9f0d/anemll/ane_converter/llama_converter.py"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "ane-lm",
+      "name": "ANE-LM",
+      "url": "https://github.com/johnmai-dev/ANE-LM",
+      "round": 2,
+      "found_from": "ane.cpp README explicitly identifies its upstream",
+      "direction": "backward",
+      "decision": "adjacent",
+      "reason": "The direct precursor of ane.cpp anchors what the later measurement-driven fork actually changed. Private API dependence and narrow model support limit portability; public generation examples do not establish broad quality qualification.",
+      "evidence_urls": [
+        "https://github.com/johnmai-dev/ANE-LM/blob/04b1af12aa30b3f280f511d286398469764b4326/README.md",
+        "https://github.com/johnmai-dev/ANE-LM/blob/04b1af12aa30b3f280f511d286398469764b4326/models/llm/qwen3.cpp",
+        "https://github.com/johnmai-dev/ANE-LM/blob/04b1af12aa30b3f280f511d286398469764b4326/core/ane_runtime.cpp"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "coreml-llm-cli",
+      "name": "CoreML LLM CLI",
+      "url": "https://github.com/smpanaro/coreml-llm-cli",
+      "round": 2,
+      "found_from": "ANEMLL README credits CoreML LLM CLI",
+      "direction": "backward",
+      "decision": "adjacent",
+      "reason": "A cited predecessor of ANEMLL makes earlier compiled-model and host-runtime specialization visible. Demonstration-focused scope with a small model/device matrix; the compiled model and runtime must be evaluated together.",
+      "evidence_urls": [
+        "https://github.com/smpanaro/coreml-llm-cli/blob/9d141fc6a5182c0ce8befb2711284205cc928e10/README.md",
+        "https://github.com/smpanaro/coreml-llm-cli/blob/9d141fc6a5182c0ce8befb2711284205cc928e10/Sources/Kit/ModelPipeline.swift",
+        "https://github.com/smpanaro/coreml-llm-cli/blob/9d141fc6a5182c0ce8befb2711284205cc928e10/Sources/Kit/KVCacheProcessor.swift",
+        "https://github.com/smpanaro/coreml-llm-cli/blob/9d141fc6a5182c0ce8befb2711284205cc928e10/Sources/Kit/MultiArrayStore.swift"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "splash",
+      "name": "Splash",
+      "url": "https://github.com/incoai/splash",
+      "round": 1,
+      "found_from": "Seed",
+      "direction": "seed",
+      "decision": "already-included",
+      "reason": "Retained seed; model-specific runtime already present.",
+      "evidence_urls": [
+        "https://github.com/incoai/splash"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "iris",
+      "name": "Iris",
+      "url": "https://github.com/antirez/iris.c",
+      "round": 1,
+      "found_from": "Seed",
+      "direction": "seed",
+      "decision": "already-included",
+      "reason": "Retained image runtime seed; its cited FLUX implementation is model/reference material, not another engine.",
+      "evidence_urls": [
+        "https://github.com/antirez/iris.c"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "llama-cpp",
+      "name": "llama.cpp",
+      "url": "https://github.com/ggml-org/llama.cpp",
+      "round": 1,
+      "found_from": "Seed and cited execution reference",
+      "direction": "backward",
+      "decision": "already-included",
+      "reason": "Shared general-engine reference already present.",
+      "evidence_urls": [
+        "https://github.com/ggml-org/llama.cpp"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "lily-engine-fork",
+      "name": "Lily Engine fork",
+      "url": "https://github.com/RavenXAILabs/lily-engine",
+      "round": 1,
+      "found_from": "Apple Metal engine query",
+      "direction": "keyword",
+      "decision": "deferred",
+      "reason": "Claims model-agnostic generalization but carries upstream Lily benchmark numbers; distinct supported paths and validation were not sufficiently established in this audit.",
+      "evidence_urls": [
+        "https://github.com/RavenXAILabs/lily-engine"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "lalamo",
+      "name": "Lalamo",
+      "url": "https://github.com/trymirai/lalamo",
+      "round": 2,
+      "found_from": "Uzu README model-format exporter",
+      "direction": "backward",
+      "decision": "excluded",
+      "reason": "Recorded as Uzu construction evidence; model adaptation tooling is not counted again as a separate specialized execution stack.",
+      "evidence_urls": [
+        "https://github.com/trymirai/lalamo"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "anemll-server",
+      "name": "Anemll Server",
+      "url": "https://github.com/alexgusevski/anemll-server",
+      "round": 2,
+      "found_from": "ANEMLL README named adopter",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "API wrapper around included ANEMLL inference; no substantial new execution ownership established.",
+      "evidence_urls": [
+        "https://github.com/alexgusevski/anemll-server"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "maderix-ane",
+      "name": "ANE",
+      "url": "https://github.com/maderix/ANE",
+      "round": 2,
+      "found_from": "ane.cpp and ANE-LM acknowledgments",
+      "direction": "backward",
+      "decision": "deferred",
+      "reason": "Training/reverse-engineering dependency; checkout encountered missing git-lfs. No execution-stack record is inferred from incomplete inspection.",
+      "evidence_urls": [
+        "https://github.com/maderix/ANE"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "ane-field-guide",
+      "name": "ANE field guide",
+      "url": "https://github.com/skyfallsin/apple-neural-engine-field-guide",
+      "round": 2,
+      "found_from": "ane.cpp companion research project",
+      "direction": "backward",
+      "decision": "excluded",
+      "reason": "Probes and autonomous-workflow record linked directly to the ane.cpp case, not counted as another runtime.",
+      "evidence_urls": [
+        "https://github.com/skyfallsin/apple-neural-engine-field-guide"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "basert-binding",
+      "name": "BaseRT 4D component",
+      "url": "https://github.com/miyako/BaseRT",
+      "round": 2,
+      "found_from": "BaseRT forward search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Lifecycle and launcher integration around BaseRT, without another substantive execution path.",
+      "evidence_urls": [
+        "https://github.com/miyako/BaseRT"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "basert-fork",
+      "name": "BaseRT mirror fork",
+      "url": "https://github.com/hunter-arton/basert",
+      "round": 2,
+      "found_from": "BaseRT forward search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "No independent runtime contribution established; canonical BaseRT is used.",
+      "evidence_urls": [
+        "https://github.com/hunter-arton/basert"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "flash-moe",
+      "name": "Flash-MoE",
+      "url": "https://github.com/danveloper/flash-moe",
+      "round": 3,
+      "found_from": "TurboFieldfare implementation references",
+      "direction": "backward",
+      "decision": "already-included",
+      "reason": "Native streaming seed already included.",
+      "evidence_urls": [
+        "https://github.com/danveloper/flash-moe"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "anemll-flash-moe",
+      "name": "ANEMLL Flash-MoE fork",
+      "url": "https://github.com/Anemll/flash-moe",
+      "round": 3,
+      "found_from": "TurboFieldfare implementation references",
+      "direction": "backward",
+      "decision": "deferred",
+      "reason": "Quantized kernels and I/O fanout are substantive modifications; distinction from the existing Flash-MoE case needs a dedicated lineage and validation audit before separate counting.",
+      "evidence_urls": [
+        "https://github.com/Anemll/flash-moe"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "mlx",
+      "name": "MLX",
+      "url": "https://github.com/ml-explore/mlx",
+      "round": 3,
+      "found_from": "Uzu/Swiftlet/SwiftLM/TurboFieldfare references",
+      "direction": "backward",
+      "decision": "excluded",
+      "reason": "Shared framework dependency recorded in case reuse fields; this branch of the audit focuses additions on execution systems rather than expanding every foundation.",
+      "evidence_urls": [
+        "https://github.com/ml-explore/mlx"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "vllm-metal",
+      "name": "vLLM Metal",
+      "url": "https://github.com/vllm-project/vllm-metal",
+      "round": 3,
+      "found_from": "TurboFieldfare kernel-reference ledger",
+      "direction": "backward",
+      "decision": "deferred",
+      "reason": "Reusable backend named as a reference; no separate construction-boundary audit performed.",
+      "evidence_urls": [
+        "https://github.com/vllm-project/vllm-metal"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "colibri-qwen-fork",
+      "name": "Colibri Qwen fork",
+      "url": "https://github.com/czemar/colibri-qwen3.6-35B-A3B",
+      "round": 3,
+      "found_from": "Colibri forward fork search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Qwen model-family variant overlaps the canonical Colibri Qwen path; distinct current execution contribution not established.",
+      "evidence_urls": [
+        "https://github.com/czemar/colibri-qwen3.6-35B-A3B"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "turbo-fieldfare-uncensored",
+      "name": "TurboFieldfare uncensored fork",
+      "url": "https://github.com/Lookoff-AIMLAPI/turbo-fieldfare-uncensored",
+      "round": 3,
+      "found_from": "TurboFieldfare forward fork search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Model-policy variant does not by itself establish a distinct execution-stack construction case.",
+      "evidence_urls": [
+        "https://github.com/Lookoff-AIMLAPI/turbo-fieldfare-uncensored"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "swiftlet-app",
+      "name": "Priv AI application",
+      "url": "https://github.com/leonickson1/localLLM",
+      "round": 4,
+      "found_from": "Swiftlet README names embedding app",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Deployment adopter of the same SwiftletCore runtime, not another engine.",
+      "evidence_urls": [
+        "https://github.com/leonickson1/localLLM"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "retort",
+      "name": "Retort",
+      "url": "https://github.com/adrianco/retort",
+      "round": 4,
+      "found_from": "Swiftlet forward search; docs/future-experiments.md",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Backend integration/benchmark setup; its own note separates built adapter from an unperformed smoke test.",
+      "evidence_urls": [
+        "https://github.com/adrianco/retort"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "rapid-mlx",
+      "name": "Rapid-MLX",
+      "url": "https://github.com/raullenchai/Rapid-MLX",
+      "round": 4,
+      "found_from": "SwiftLM adoption discussion #1150",
+      "direction": "forward",
+      "decision": "deferred",
+      "reason": "Maintainer reports model-limited disk streaming; the implementation and current repository identity require source verification before inclusion.",
+      "evidence_urls": [
+        "https://github.com/raullenchai/Rapid-MLX"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "melix",
+      "name": "Melix",
+      "url": "https://github.com/Keith-CY/melix",
+      "round": 4,
+      "found_from": "SwiftLM reference issue #1394",
+      "direction": "forward",
+      "decision": "deferred",
+      "reason": "Issue proposes explicit SSD streaming; an issue alone is not evidence of a completed execution subsystem.",
+      "evidence_urls": [
+        "https://github.com/Keith-CY/melix"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "crossfire",
+      "name": "Crossfire",
+      "url": "https://github.com/Murai-Labs/Crossfire",
+      "round": 4,
+      "found_from": "ANEMLL Flash llama.cpp forward reference search",
+      "direction": "forward",
+      "decision": "deferred",
+      "reason": "Search exposed a staged experiment plan; completed multi-device integration and validation were not established.",
+      "evidence_urls": [
+        "https://github.com/Murai-Labs/Crossfire"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "hypura",
+      "name": "Hypura",
+      "url": "https://github.com/t8/hypura",
+      "round": 4,
+      "found_from": "scasella/gemma4-m4-pro references Hypura and ANEMLL Flash llama.cpp",
+      "direction": "backward",
+      "decision": "deferred",
+      "reason": "Strong candidate: custom GGML NVMe buffer and tier placement are documented, but source/quality audit remains incomplete.",
+      "evidence_urls": [
+        "https://github.com/t8/hypura"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "gemma4-m4-pro",
+      "name": "Gemma4 M4 Pro tuning",
+      "url": "https://github.com/scasella/gemma4-m4-pro",
+      "round": 4,
+      "found_from": "ANEMLL Flash llama.cpp forward search",
+      "direction": "forward",
+      "decision": "deferred",
+      "reason": "Reproducible tuning/workflow candidate; requires checking whether changes exceed configuration and measurement of Hypura.",
+      "evidence_urls": [
+        "https://github.com/scasella/gemma4-m4-pro"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "rustane",
+      "name": "Rustane",
+      "url": "https://github.com/ncdrone/rustane",
+      "round": 4,
+      "found_from": "ANEMLL Flash-MoE credits page-aligned pread fanout",
+      "direction": "backward",
+      "decision": "deferred",
+      "reason": "Training-focused ANE/Metal engine now documents checkpoint inference; contradictory planned/current status in README requires actual path verification.",
+      "evidence_urls": [
+        "https://github.com/ncdrone/rustane"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "rapidai",
+      "name": "rapidAI",
+      "url": "https://github.com/muharremyurtsever/rapidAI",
+      "round": 4,
+      "found_from": "Independent disk-stream search during final frontier",
+      "direction": "keyword",
+      "decision": "deferred",
+      "reason": "Disk-backed MoE implementation and measurement archive appear relevant; not fully source-audited in this round.",
+      "evidence_urls": [
+        "https://github.com/muharremyurtsever/rapidAI"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "llamaondisk",
+      "name": "LlamaOnDisk",
+      "url": "https://github.com/DumbGreenFish/LlamaOnDisk",
+      "round": 4,
+      "found_from": "Independent disk-stream search during final frontier",
+      "direction": "keyword",
+      "decision": "deferred",
+      "reason": "llama.cpp expert-streaming derivative; substantive delta and parity evidence need inspection.",
+      "evidence_urls": [
+        "https://github.com/DumbGreenFish/LlamaOnDisk"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "hipfire",
+      "name": "Hipfire",
+      "url": "https://github.com/warpfront/hipfire",
+      "round": 4,
+      "found_from": "Rustane search exposed credited architecture transfer",
+      "direction": "forward",
+      "decision": "deferred",
+      "reason": "Cross-device candidate relayed to the GPU branch of the audit; no duplicate Apple record created.",
+      "evidence_urls": [
+        "https://github.com/warpfront/hipfire"
+      ]
+    },
+    {
+      "stream": "apple",
+      "id": "npumoe",
+      "name": "NPUMoE",
+      "url": "https://arxiv.org/abs/2604.18788",
+      "round": 1,
+      "found_from": "Independent ANE runtime search",
+      "direction": "keyword",
+      "decision": "deferred",
+      "reason": "Paper describes static expert tiers and ANE offload, but a source artifact was not located and the full paper was not audited; abstract claims alone are insufficient.",
+      "evidence_urls": [
+        "https://arxiv.org/abs/2604.18788"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "hipengine",
+      "name": "hipEngine",
+      "url": "https://github.com/shisa-ai/hipEngine",
+      "round": 1,
+      "found_from": "gufo README Reference Projects",
+      "direction": "backward",
+      "decision": "core",
+      "reason": "Native AMD reconstruction with explicit model/device qualification; Gufo cites this runtime as a design reference.",
+      "evidence_urls": [
+        "https://github.com/shisa-ai/hipEngine/blob/3621f3a672f9a151f36a02ad2aea7e2049323054/README.md",
+        "https://github.com/shisa-ai/hipEngine/blob/3621f3a672f9a151f36a02ad2aea7e2049323054/hipengine/runtime/qwen35_gguf_runner.py",
+        "https://github.com/shisa-ai/hipEngine/blob/3621f3a672f9a151f36a02ad2aea7e2049323054/hipengine/generation/batch_scheduler.py",
+        "https://github.com/shisa-ai/hipEngine/blob/3621f3a672f9a151f36a02ad2aea7e2049323054/docs/RDNA3-TUNING-GUIDE.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "vte",
+      "name": "VTE",
+      "url": "https://github.com/kyuubyN/VTE",
+      "round": 1,
+      "found_from": "independent AMD from-scratch runtime search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Integrated consumer-GPU runtime with public profiling and bug-history evidence explaining why it was rebuilt.",
+      "evidence_urls": [
+        "https://github.com/kyuubyN/VTE/blob/07e1396f6e071698171e285cc03d1ca29cd62220/README.md",
+        "https://github.com/kyuubyN/VTE/blob/07e1396f6e071698171e285cc03d1ca29cd62220/docs/ARCHITECTURE.md",
+        "https://github.com/kyuubyN/VTE/blob/07e1396f6e071698171e285cc03d1ca29cd62220/docs/PERFORMANCE.md",
+        "https://github.com/kyuubyN/VTE/blob/07e1396f6e071698171e285cc03d1ca29cd62220/vte/core/model.py"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "zinc",
+      "name": "ZINC",
+      "url": "https://github.com/zolotukhin/zinc",
+      "round": 1,
+      "found_from": "independent keyword search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Consumer-hardware execution-stack reconstruction with inspectable native model paths and backend-specific measurements.",
+      "evidence_urls": [
+        "https://github.com/zolotukhin/zinc/blob/29bc350ac4cbf9f110ec628b9e177ea04ac816fb/README.md",
+        "https://github.com/zolotukhin/zinc/blob/29bc350ac4cbf9f110ec628b9e177ea04ac816fb/src/compute/forward.zig",
+        "https://github.com/zolotukhin/zinc/blob/29bc350ac4cbf9f110ec628b9e177ea04ac816fb/src/rocm/rocm_shim.c",
+        "https://github.com/zolotukhin/zinc/blob/29bc350ac4cbf9f110ec628b9e177ea04ac816fb/docs/DEVELOPMENT.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "imp",
+      "name": "imp",
+      "url": "https://github.com/kekzl/imp",
+      "round": 1,
+      "found_from": "independent keyword search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Explicit single-architecture reconstruction plus a direct author disclosure of end-to-end coding-agent implementation.",
+      "evidence_urls": [
+        "https://github.com/kekzl/imp/blob/e583b0ac6f181d760b62cfd20fecd51d013656ad/README.md",
+        "https://github.com/kekzl/imp/blob/e583b0ac6f181d760b62cfd20fecd51d013656ad/CONTRIBUTING.md",
+        "https://github.com/kekzl/imp/blob/e583b0ac6f181d760b62cfd20fecd51d013656ad/src/runtime/engine.cpp",
+        "https://github.com/kekzl/imp/blob/e583b0ac6f181d760b62cfd20fecd51d013656ad/src/runtime/engine_scheduler.cpp",
+        "https://github.com/kekzl/imp/blob/e583b0ac6f181d760b62cfd20fecd51d013656ad/docs/MISSION_JOURNAL.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "memra",
+      "name": "memra",
+      "url": "https://github.com/avifenesh/memra",
+      "round": 1,
+      "found_from": "independent keyword search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Native runtime with per-model/device exactness gates and explicit evidence of the maintenance and qualification burden.",
+      "evidence_urls": [
+        "https://github.com/avifenesh/memra/blob/89b749cae9f32b286358b6ce09170408027f13ab/README.md",
+        "https://github.com/avifenesh/memra/blob/89b749cae9f32b286358b6ce09170408027f13ab/ARCHITECTURE.md",
+        "https://github.com/avifenesh/memra/blob/89b749cae9f32b286358b6ce09170408027f13ab/crates/memra-engine/src/forward.rs",
+        "https://github.com/avifenesh/memra/blob/89b749cae9f32b286358b6ce09170408027f13ab/crates/memra-engine/THIRD-PARTY.md",
+        "https://github.com/avifenesh/memra/blob/89b749cae9f32b286358b6ce09170408027f13ab/docs/TESTING.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "kipp",
+      "name": "Kipp",
+      "url": "https://github.com/Polished-Snow/Kipp",
+      "round": 1,
+      "found_from": "independent keyword search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Model-family reconstruction with explicit checkpoint rejection and native serving, beyond a teaching-only forward-pass example.",
+      "evidence_urls": [
+        "https://github.com/Polished-Snow/Kipp/blob/0b8c1246d756ae72031eb71e1b2b86309a969ed4/README.md",
+        "https://github.com/Polished-Snow/Kipp/blob/0b8c1246d756ae72031eb71e1b2b86309a969ed4/docs/ARCHITECTURE.md",
+        "https://github.com/Polished-Snow/Kipp/blob/0b8c1246d756ae72031eb71e1b2b86309a969ed4/docs/ROADMAP.md",
+        "https://github.com/Polished-Snow/Kipp/blob/0b8c1246d756ae72031eb71e1b2b86309a969ed4/src/kipp.c",
+        "https://github.com/Polished-Snow/Kipp/blob/0b8c1246d756ae72031eb71e1b2b86309a969ed4/src/cuda/kipp_cuda.cu"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "vllm-radiance",
+      "name": "vLLM Radiance",
+      "url": "https://github.com/magiccodingman/vllm-radiance",
+      "round": 1,
+      "found_from": "independent keyword search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Substantial specialized backend/distribution: preserves vLLM services while replacing device-critical execution and explicitly managing upstream patch dependencies.",
+      "evidence_urls": [
+        "https://github.com/magiccodingman/vllm-radiance/blob/d5c07c52d2121901654b203da3e44553172a1a46/README.md",
+        "https://github.com/magiccodingman/vllm-radiance/blob/d5c07c52d2121901654b203da3e44553172a1a46/radiance_r4d_attn.py",
+        "https://github.com/magiccodingman/vllm-radiance/blob/d5c07c52d2121901654b203da3e44553172a1a46/radiance_mxfp4.py",
+        "https://github.com/magiccodingman/vllm-radiance/blob/d5c07c52d2121901654b203da3e44553172a1a46/docs/maintenance/ARCHITECTURE.md",
+        "https://github.com/magiccodingman/vllm-radiance/blob/d5c07c52d2121901654b203da3e44553172a1a46/docs/NUMERICAL_CORRECTIONS.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "ninfer-3090",
+      "name": "NInfer-3090",
+      "url": "https://github.com/ashalliants/ninfer-3090",
+      "round": 2,
+      "found_from": "NInfer forward port search → Don-Chad/ninfer-3090 → ashalliants continuation",
+      "direction": "forward",
+      "decision": "core",
+      "reason": "Concrete retargeting case: kernel and memory-program changes beyond changing a CUDA architecture flag; one representative records the 3090 fork family.",
+      "evidence_urls": [
+        "https://github.com/ashalliants/ninfer-3090/blob/62545c49f8c7c81729cc20e01495c3e3cd917a9c/README.md",
+        "https://github.com/ashalliants/ninfer-3090/blob/62545c49f8c7c81729cc20e01495c3e3cd917a9c/src/ops/linear/ggml/ggml_mmq.cuh",
+        "https://github.com/ashalliants/ninfer-3090/blob/62545c49f8c7c81729cc20e01495c3e3cd917a9c/src/models/qwen3_5/program/transactions/replay.cpp",
+        "https://github.com/ashalliants/ninfer-3090/blob/62545c49f8c7c81729cc20e01495c3e3cd917a9c/RELEASE_NOTES_0.11.0.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "infernix",
+      "name": "Infernix",
+      "url": "https://github.com/wallawalla47/infernix",
+      "round": 2,
+      "found_from": "NInfer-3090 README upstream/adapted-source credit; also forward Strata comparison",
+      "direction": "backward",
+      "decision": "core",
+      "reason": "Substantial descendant reconstructing heterogeneous execution for a model too large for GPU memory, with direct AI-development disclosure.",
+      "evidence_urls": [
+        "https://github.com/wallawalla47/infernix/blob/bbc2771c4b79ba70b8f61f7002ba490c4e77e853/README.md",
+        "https://github.com/wallawalla47/infernix/blob/bbc2771c4b79ba70b8f61f7002ba490c4e77e853/src/ops/offloaded_sparse_moe/cpu/miss_service.cpp",
+        "https://github.com/wallawalla47/infernix/blob/bbc2771c4b79ba70b8f61f7002ba490c4e77e853/src/models/qwen4_exp/execution/expert_stream.cpp"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "ciru-runtime",
+      "name": "CIRU runtime",
+      "url": "https://github.com/ciru-ai/Qwen3.8-Flash-CIRU-STRIX-IU4",
+      "round": 2,
+      "found_from": "Gufo/hipEngine Strix ecosystem follow-up; Halogen/pwilkin reference integration",
+      "direction": "forward",
+      "decision": "core",
+      "reason": "Model/hardware-specific deep integration with traceable borrowed kernels, artifact compatibility work and release qualification.",
+      "evidence_urls": [
+        "https://github.com/ciru-ai/Qwen3.8-Flash-CIRU-STRIX-IU4/blob/bac7ad8c314bcc59505a3b76f0b18ad4618557ea/README.md",
+        "https://github.com/ciru-ai/Qwen3.8-Flash-CIRU-STRIX-IU4/blob/bac7ad8c314bcc59505a3b76f0b18ad4618557ea/docs/PROVENANCE.md",
+        "https://github.com/ciru-ai/Qwen3.8-Flash-CIRU-STRIX-IU4/blob/bac7ad8c314bcc59505a3b76f0b18ad4618557ea/ggml/src/ggml-cuda/qsa.cu",
+        "https://github.com/ciru-ai/Qwen3.8-Flash-CIRU-STRIX-IU4/blob/bac7ad8c314bcc59505a3b76f0b18ad4618557ea/docs/QSA_BACKPORT_STATUS.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "gufo-rdma",
+      "name": "Gufo RDMA",
+      "url": "https://github.com/neuhaus/gufo",
+      "round": 2,
+      "found_from": "gufo README named RDMA variant",
+      "direction": "forward",
+      "decision": "core",
+      "reason": "Substantive deployment reconstruction from one unified-memory machine to two synchronized hosts, not merely another binary package.",
+      "evidence_urls": [
+        "https://github.com/neuhaus/gufo/blob/2accddbb01bb6cc97df2938d7715d29fa5a13484/README.md",
+        "https://github.com/neuhaus/gufo/blob/2accddbb01bb6cc97df2938d7715d29fa5a13484/docs/models/qwen3.8-flash-next/TP2.md",
+        "https://github.com/neuhaus/gufo/blob/2accddbb01bb6cc97df2938d7715d29fa5a13484/src/models/qwen38_flash_next/distributed/tp_partition.cpp",
+        "https://github.com/neuhaus/gufo/blob/2accddbb01bb6cc97df2938d7715d29fa5a13484/src/cli/serve/tp_executor.cpp"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "llaminar",
+      "name": "Llaminar",
+      "url": "https://github.com/Llaminar/llaminar",
+      "round": 2,
+      "found_from": "independent SM86/ROCm native-engine search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Native mixed-hardware construction route: owns model graphs, execution plans and cross-vendor coordination rather than wrapping existing engines.",
+      "evidence_urls": [
+        "https://github.com/Llaminar/llaminar/blob/454741b1b2228bc6874e46ade75bbf523a8385d5/README.md",
+        "https://github.com/Llaminar/llaminar/blob/454741b1b2228bc6874e46ade75bbf523a8385d5/src/v2/execution/local_execution/engine/ForwardExecutionEngine.cpp",
+        "https://github.com/Llaminar/llaminar/blob/454741b1b2228bc6874e46ade75bbf523a8385d5/src/v2/collective/backends/HeterogeneousBackend.cpp",
+        "https://github.com/Llaminar/llaminar/blob/454741b1b2228bc6874e46ade75bbf523a8385d5/src/v2/planning/AutomaticOrchestrationPlanner.cpp"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "strix-llama-cpp",
+      "name": "strix-llama.cpp",
+      "url": "https://github.com/halo-box/strix-llama.cpp",
+      "round": 2,
+      "found_from": "Gufo credited Strix forks → community consolidation named in Lemonade discussion 3585",
+      "direction": "forward",
+      "decision": "core",
+      "reason": "Hardware-specialized fork with substantial kernel/state changes and a documented upstream/staging boundary; represents the overlapping Strix llama.cpp fork family.",
+      "evidence_urls": [
+        "https://github.com/halo-box/strix-llama.cpp/blob/6aa81b88e14aa753c1c7e1a9ff27c9d50fd3c673/README.md",
+        "https://github.com/halo-box/strix-llama.cpp/blob/6aa81b88e14aa753c1c7e1a9ff27c9d50fd3c673/ggml/src/ggml-cuda/gated_delta_net.cu",
+        "https://github.com/halo-box/strix-llama.cpp/blob/6aa81b88e14aa753c1c7e1a9ff27c9d50fd3c673/ggml/src/ggml-vulkan/ggml-vulkan.cpp",
+        "https://github.com/halo-box/strix-llama.cpp/blob/6aa81b88e14aa753c1c7e1a9ff27c9d50fd3c673/CONTRIBUTING.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "rocmfpx",
+      "name": "ROCmFPX",
+      "url": "https://github.com/ROCmFPX/ROCmFPX",
+      "round": 2,
+      "found_from": "hipEngine external survey → q38rocm; halo-box credited ROCmFPX",
+      "direction": "backward",
+      "decision": "adjacent",
+      "reason": "Adjacent format/backend construction route used by specialized Strix forks; separate from a new complete model execution stack.",
+      "evidence_urls": [
+        "https://github.com/ROCmFPX/ROCmFPX/blob/c4aa38b1987ee9cd390f56fb393ba93ac472769b/README.md",
+        "https://github.com/ROCmFPX/ROCmFPX/blob/c4aa38b1987ee9cd390f56fb393ba93ac472769b/docs/rocmfpx/README.md",
+        "https://github.com/ROCmFPX/ROCmFPX/blob/c4aa38b1987ee9cd390f56fb393ba93ac472769b/ggml/rocmfpx/rocmfpx_mmq_rdna3.cuh",
+        "https://github.com/ROCmFPX/ROCmFPX/blob/c4aa38b1987ee9cd390f56fb393ba93ac472769b/docs/rocmfpx/UPSTREAM-MAINTENANCE.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "hybrimoe",
+      "name": "HybriMoE",
+      "url": "https://github.com/PKU-SEC-Lab/HybriMoE",
+      "round": 2,
+      "found_from": "Colibri README references supplied by Apple survey; KTransformers lineage",
+      "direction": "backward",
+      "decision": "adjacent",
+      "reason": "Historical/adjacent heterogeneous MoE route directly referenced by newer native systems; establishes prior art for expert placement and movement.",
+      "evidence_urls": [
+        "https://github.com/PKU-SEC-Lab/HybriMoE/blob/508a85b9a43dff37124370d8816e411e74827803/README.md",
+        "https://github.com/PKU-SEC-Lab/HybriMoE/blob/508a85b9a43dff37124370d8816e411e74827803/ktransformers/operators/experts.py",
+        "https://github.com/PKU-SEC-Lab/HybriMoE/blob/508a85b9a43dff37124370d8816e411e74827803/ktransformers/ktransformers_ext/operators/llamafile/moe.cpp"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "gufo",
+      "name": "Gufo",
+      "url": "https://github.com/gufo-org/gufo",
+      "round": 1,
+      "found_from": "seed",
+      "direction": "seed",
+      "decision": "already-included",
+      "reason": "Existing core seed; followed named origins and Windows/RDMA descendants.",
+      "evidence_urls": [
+        "https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/README.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "ninfer",
+      "name": "NInfer",
+      "url": "https://github.com/Neroued/ninfer",
+      "round": 1,
+      "found_from": "seed",
+      "direction": "seed",
+      "decision": "already-included",
+      "reason": "Existing core seed; traced nontrivial retargeting and derivative systems.",
+      "evidence_urls": [
+        "https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/README.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "strata",
+      "name": "Strata",
+      "url": "https://github.com/Niko1221/Strata",
+      "round": 1,
+      "found_from": "seed",
+      "direction": "seed",
+      "decision": "already-included",
+      "reason": "Existing core seed; new Infernix comparison closes a forward relation.",
+      "evidence_urls": [
+        "https://github.com/Niko1221/Strata/blob/7695859aa13afb248bdb4d36f9b2e95707db079d/README.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "llamampere",
+      "name": "llamAmpere",
+      "url": "https://github.com/JakeATX/llamAmpere",
+      "round": 1,
+      "found_from": "seed",
+      "direction": "seed",
+      "decision": "already-included",
+      "reason": "Existing SM86 core seed; the older llama-cpp-qwen-ampere name is not another case.",
+      "evidence_urls": [
+        "https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/README.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "zynfer",
+      "name": "Zynfer",
+      "url": "https://github.com/SinAnima/zynfer",
+      "round": 1,
+      "found_from": "NInfer inspiration cited in README",
+      "direction": "forward",
+      "decision": "deferred",
+      "reason": "Intended RDNA4 target is waiting for hardware; current staged/educational implementation is mainly Metal. Defer until deployment and AMD execution boundary can be qualified.",
+      "evidence_urls": [
+        "https://github.com/SinAnima/zynfer/blob/77cc6067f4d1006a97a36d19c562a2d4132c733d/README.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "ninfer-studio",
+      "name": "NInfer Studio",
+      "url": "https://github.com/giveen/ninfer-studio",
+      "round": 1,
+      "found_from": "NInfer forward search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Desktop control plane; explicitly launches a separately supplied ninfer-serve engine.",
+      "evidence_urls": [
+        "https://github.com/giveen/ninfer-studio"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "qwen600-rocm",
+      "name": "qwen600 ROCm",
+      "url": "https://github.com/Ramshankar07/qwen600-ROCm-inference",
+      "round": 1,
+      "found_from": "AMD from-scratch keyword search",
+      "direction": "keyword",
+      "decision": "excluded",
+      "reason": "Explicit educational CUDA exercise with HIP performance still pending; teaching-only implementation is outside the collection boundary.",
+      "evidence_urls": [
+        "https://github.com/Ramshankar07/qwen600-ROCm-inference"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "inferd",
+      "name": "inferd",
+      "url": "https://github.com/likhith-v1/inferd",
+      "round": 1,
+      "found_from": "RTX5090 from-scratch keyword search",
+      "direction": "keyword",
+      "decision": "deferred",
+      "reason": "Paused pre-release stack; README identifies persistent paged KV in live decode and fused paged attention as unfinished. Revisit when execution ownership and integrated serving path are clearer.",
+      "evidence_urls": [
+        "https://github.com/likhith-v1/inferd/blob/929472b4598d225acc6149f10607dba9a6d450a6/README.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "inferspore",
+      "name": "InferSpore",
+      "url": "https://github.com/m0dulo/InferSpore",
+      "round": 1,
+      "found_from": "CUDA inference-engine topic search",
+      "direction": "keyword",
+      "decision": "deferred",
+      "reason": "Public code but minimal one-sentence documentation; intended specialization, construction motive and validation boundary cannot be established reliably.",
+      "evidence_urls": [
+        "https://github.com/m0dulo/InferSpore/blob/6f8b7e7979a3a130ef38ca3364afd973c37e1079/README.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "gufo-windows",
+      "name": "Gufo Windows port",
+      "url": "https://github.com/pixmaate/gufo",
+      "round": 2,
+      "found_from": "Gufo named variant",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Platform port in the same engine family; no separate execution mechanism established beyond the represented Gufo case.",
+      "evidence_urls": [
+        "https://github.com/pixmaate/gufo/blob/2eb0778ac15d9e1c18c5b2f9e5dbbecc19e20ec2/README.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "ninfer-3090-original",
+      "name": "NInfer-3090 original port",
+      "url": "https://github.com/Don-Chad/ninfer-3090",
+      "round": 2,
+      "found_from": "NInfer forward search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Retain lineage credit within one NInfer-3090 family record; the selected continuation includes later SM86 kernel and state work, so avoid duplicating the same port.",
+      "evidence_urls": [
+        "https://github.com/Don-Chad/ninfer-3090/blob/d7277e88cc3a56d2967d5d533f148bed36e97df5/README.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "q38rocm",
+      "name": "q38rocm",
+      "url": "https://github.com/julianmb/q38rocm",
+      "round": 2,
+      "found_from": "hipEngine external Strix survey",
+      "direction": "backward",
+      "decision": "excluded",
+      "reason": "Model-specific recipes, measurements and delivery over ROCmFPX; original execution family is recorded instead of treating every checkpoint bundle as another engine.",
+      "evidence_urls": [
+        "https://github.com/julianmb/q38rocm/blob/1d88ab50a5c00221a153f459f7af3eb15eb3af74/README.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "nathan-strix-toolbox",
+      "name": "Nathan Strix toolbox",
+      "url": "https://github.com/Nathanw1014/strix-halo-llamacpp",
+      "round": 2,
+      "found_from": "Gufo Reference Projects",
+      "direction": "backward",
+      "decision": "excluded",
+      "reason": "Substantive older kernel patches acknowledged, but record the consolidated halo-box fork as representative rather than duplicating overlapping Strix variants.",
+      "evidence_urls": [
+        "https://github.com/Nathanw1014/strix-halo-llamacpp/blob/84036cc8b7536eb67bb3f1f60f5a955dab322872/README.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "gaetan-strix-fork",
+      "name": "Gaetan Strix fork",
+      "url": "https://github.com/gaetan-puleo/llama-cpp-strix-halo",
+      "round": 2,
+      "found_from": "Gufo Reference Projects",
+      "direction": "backward",
+      "decision": "deferred",
+      "reason": "Fetched source retains generic upstream README; distinct current execution boundary and incremental contribution not clearly documented in reviewed entry points.",
+      "evidence_urls": [
+        "https://github.com/gaetan-puleo/llama-cpp-strix-halo/blob/860c828363988d3e4b3d5c2b701dcba3d7b9f26c/README.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "laurent-strix-fork",
+      "name": "Laurent Strix fork",
+      "url": "https://github.com/LaurentZuijdwijk/llama.cpp",
+      "round": 2,
+      "found_from": "Gufo Reference Projects / hipEngine comparison",
+      "direction": "backward",
+      "decision": "deferred",
+      "reason": "Referenced upstream returned 404 during API inspection; keep discovery provenance, do not infer deleted/private status or implementation.",
+      "evidence_urls": [
+        "https://github.com/LaurentZuijdwijk/llama.cpp"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "ciru-rocmfpx",
+      "name": "Ciru ROCmFPX",
+      "url": "https://github.com/ciru-ai/ROCmFPX",
+      "round": 2,
+      "found_from": "halo-box imported format attribution",
+      "direction": "backward",
+      "decision": "excluded",
+      "reason": "Related format/runtime research lineage recorded in ROCmFPX and the concrete CIRU runtime case; no extra family count for each release/format branch.",
+      "evidence_urls": [
+        "https://github.com/ciru-ai/ROCmFPX/blob/efd1ef5a17db576168d849831e1ef3346582881e/README.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "ninfer-jetson-orin",
+      "name": "NInfer Jetson Orin port",
+      "url": "https://forums.developer.nvidia.com/t/ninfer-jetson-orin-optimized-port-jp6-2-and-jp7-2/384440",
+      "round": 3,
+      "found_from": "NInfer-3090 forward hardware migration search",
+      "direction": "forward",
+      "decision": "deferred",
+      "reason": "Named SM87 migration discovered through NVIDIA forum; not independently source-audited in this pass and not counted as another variant.",
+      "evidence_urls": [
+        "https://forums.developer.nvidia.com/t/ninfer-jetson-orin-optimized-port-jp6-2-and-jp7-2/384440"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "zinc-x",
+      "name": "ZINC-X",
+      "url": "https://github.com/Maxritz/zinc-x",
+      "round": 3,
+      "found_from": "ZINC forward fork search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Fork retains upstream ZINC description and clone instructions; no independently evidenced execution increment was identified.",
+      "evidence_urls": [
+        "https://github.com/Maxritz/zinc-x"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "halofpx",
+      "name": "HaloFPX",
+      "url": "https://github.com/julianmb/halofpx",
+      "round": 3,
+      "found_from": "q38rocm named successor",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Model management, presets and server delivery around the already represented ROCmFPX/llama.cpp execution family; no separate native runtime established.",
+      "evidence_urls": [
+        "https://github.com/julianmb/halofpx/blob/d9ec975b059a5895224fdedfe451cdf270a598d9/README.md"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "rocmfpx-builder",
+      "name": "ROCmFPX Builder",
+      "url": "https://github.com/Heretek-AI/ROCmFPX-BUILDER",
+      "round": 3,
+      "found_from": "ROCmFPX downstream search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Build/distribution automation for several existing runtime variants, not another execution stack.",
+      "evidence_urls": [
+        "https://github.com/Heretek-AI/ROCmFPX-BUILDER"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "rocmfpx-windows-recipes",
+      "name": "ROCmFPX Windows recipes",
+      "url": "https://github.com/daimonionnn/amd-rocmfpx-for-win",
+      "round": 3,
+      "found_from": "ROCmFPX downstream search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Deployment, benchmark and LM Studio integration scripts; preserve engine attribution rather than counting packaging as a new system.",
+      "evidence_urls": [
+        "https://github.com/daimonionnn/amd-rocmfpx-for-win"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "darklanes",
+      "name": "darklanes",
+      "url": "https://github.com/avifenesh/darklanes",
+      "round": 3,
+      "found_from": "memra README cross-reference",
+      "direction": "backward",
+      "decision": "deferred",
+      "reason": "Official repository link returned 404 during inspection; no source-derived classification possible.",
+      "evidence_urls": [
+        "https://github.com/avifenesh/darklanes"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "aetheris",
+      "name": "Aetheris Blackbox VTE integration",
+      "url": "https://github.com/AMD-DEV-CONTEST/Radeon-hackathon-2026-07",
+      "round": 3,
+      "found_from": "VTE downstream adoption search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Agent application adopts VTE; useful adoption evidence, but it is not a second independent inference engine.",
+      "evidence_urls": [
+        "https://github.com/AMD-DEV-CONTEST/Radeon-hackathon-2026-07",
+        "https://github.com/AMD-DEV-CONTEST/Radeon-hackathon-2026-07/pull/42"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "lemonade-vte-adoption",
+      "name": "VTE Lemonade integration",
+      "url": "https://github.com/lemonade-sdk/lemonade",
+      "round": 3,
+      "found_from": "VTE forward integration search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Integration request is adoption evidence, not another specialized runtime.",
+      "evidence_urls": [
+        "https://github.com/lemonade-sdk/lemonade",
+        "https://github.com/lemonade-sdk/lemonade/issues/2679"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "radiance-upstream",
+      "name": "StillDeadcode Radiance",
+      "url": "https://codeberg.org/StillDeadcode/vllm-radiance",
+      "round": 3,
+      "found_from": "vLLM Radiance explicit upstream attribution",
+      "direction": "backward",
+      "decision": "deferred",
+      "reason": "Codeberg source access failed in this tool session; preserve authorship and dependency relation in the reviewed GitHub continuation, without claiming independent audit of all upstream code.",
+      "evidence_urls": [
+        "https://codeberg.org/StillDeadcode/vllm-radiance"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "libr4d",
+      "name": "libr4d",
+      "url": "https://codeberg.org/StillDeadcode/libr4d",
+      "round": 3,
+      "found_from": "vLLM Radiance explicit upstream attribution",
+      "direction": "backward",
+      "decision": "deferred",
+      "reason": "Codeberg source access failed in this tool session; preserve authorship and dependency relation in the reviewed GitHub continuation, without claiming independent audit of all upstream code.",
+      "evidence_urls": [
+        "https://codeberg.org/StillDeadcode/libr4d"
+      ]
+    },
+    {
+      "stream": "gpu",
+      "id": "radiance-mxfp4-upstream",
+      "name": "ggz14 Radiance MXFP4",
+      "url": "https://codeberg.org/ggz14/radiance-vllm-mxfp4",
+      "round": 3,
+      "found_from": "vLLM Radiance explicit upstream attribution",
+      "direction": "backward",
+      "decision": "deferred",
+      "reason": "Codeberg source access failed in this tool session; preserve authorship and dependency relation in the reviewed GitHub continuation, without claiming independent audit of all upstream code.",
+      "evidence_urls": [
+        "https://codeberg.org/ggz14/radiance-vllm-mxfp4"
+      ]
+    },
+    {
+      "stream": "root",
+      "id": "cactus",
+      "name": "Cactus",
+      "url": "https://github.com/cactus-compute/cactus",
+      "round": 1,
+      "found_from": "CPU/edge/NPU or native multimodal keyword search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Connects model graph capture and lowering to a native mobile execution stack with its own quantized state and kernels.",
+      "evidence_urls": [
+        "https://github.com/cactus-compute/cactus/blob/2cfcdb8568eb9192323b27fd0012a834517b4419/README.md",
+        "https://github.com/cactus-compute/cactus/blob/2cfcdb8568eb9192323b27fd0012a834517b4419/python/cactus/transpile/capture_pytorch.py",
+        "https://github.com/cactus-compute/cactus/blob/2cfcdb8568eb9192323b27fd0012a834517b4419/python/cactus/transpile/lower.py",
+        "https://github.com/cactus-compute/cactus/blob/2cfcdb8568eb9192323b27fd0012a834517b4419/cactus-engine/src/model.cpp"
+      ]
+    },
+    {
+      "stream": "root",
+      "id": "fastflowlm",
+      "name": "FastFlowLM",
+      "url": "https://github.com/ROCm/FastFlowLM",
+      "round": 1,
+      "found_from": "CPU/edge/NPU or native multimodal keyword search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Shows device-specific NPU execution built from model-family host runtimes and compiled kernel providers, with a visible source/binary boundary.",
+      "evidence_urls": [
+        "https://github.com/ROCm/FastFlowLM/blob/e5e33d9f64388f4e239eb6584493c76ef5a07231/README.md",
+        "https://github.com/ROCm/FastFlowLM/blob/e5e33d9f64388f4e239eb6584493c76ef5a07231/src/common/models/README.md",
+        "https://github.com/ROCm/FastFlowLM/blob/e5e33d9f64388f4e239eb6584493c76ef5a07231/src/common/AutoModel/model_backend.cpp",
+        "https://github.com/ROCm/FastFlowLM/blob/e5e33d9f64388f4e239eb6584493c76ef5a07231/flm_story.md"
+      ]
+    },
+    {
+      "stream": "root",
+      "id": "zllm",
+      "name": "zLLM",
+      "url": "https://github.com/zllm-lab/zllm",
+      "round": 1,
+      "found_from": "CPU/edge/NPU or native multimodal keyword search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "A growing collection of native model/device execution paths, including vision-language, image generation and video restoration, with explicit per-backend capability limits.",
+      "evidence_urls": [
+        "https://github.com/zllm-lab/zllm/blob/9a9d1ef0b55b09e1c41589ff83c407d3549f2b67/README.md",
+        "https://github.com/zllm-lab/zllm/blob/9a9d1ef0b55b09e1c41589ff83c407d3549f2b67/src/runtime/deepseek_v4/vision.rs",
+        "https://github.com/zllm-lab/zllm/blob/9a9d1ef0b55b09e1c41589ff83c407d3549f2b67/src/runtime/flux2_klein/rocm.rs",
+        "https://github.com/zllm-lab/zllm/blob/9a9d1ef0b55b09e1c41589ff83c407d3549f2b67/src/runtime/seedvr2/rocm_pipeline.rs",
+        "https://github.com/zllm-lab/zllm/blob/9a9d1ef0b55b09e1c41589ff83c407d3549f2b67/src/runtime/minicpm5/qnn.rs"
+      ]
+    },
+    {
+      "stream": "root",
+      "id": "needle",
+      "name": "Cactus Needle",
+      "url": "https://github.com/cactus-compute/needle",
+      "round": 2,
+      "found_from": "Cactus official README",
+      "direction": "backward",
+      "decision": "adjacent",
+      "reason": "A model/runtime co-design and deployment-packaging reference; public model/export code is more inspectable than the distributed native engine.",
+      "evidence_urls": [
+        "https://github.com/cactus-compute/needle/blob/3da4261073199444f2e070800854436fbc31fb6a/README.md",
+        "https://github.com/cactus-compute/needle/blob/3da4261073199444f2e070800854436fbc31fb6a/needle/model/run.py",
+        "https://github.com/cactus-compute/needle/blob/3da4261073199444f2e070800854436fbc31fb6a/needle/agent/fetch.py"
+      ]
+    },
+    {
+      "stream": "root",
+      "id": "tensorrt-edge-llm",
+      "name": "TensorRT Edge-LLM",
+      "url": "https://github.com/NVIDIA/TensorRT-Edge-LLM",
+      "round": 1,
+      "found_from": "CPU/edge/NPU or native multimodal keyword search",
+      "direction": "keyword",
+      "decision": "adjacent",
+      "reason": "A compiler-based edge deployment reference linking exported model graphs, hardware-specific engine plans and a native multimodal runtime.",
+      "evidence_urls": [
+        "https://github.com/NVIDIA/TensorRT-Edge-LLM/blob/0f52705723abfa8c6702654bfdcc082a728ed353/README.md",
+        "https://github.com/NVIDIA/TensorRT-Edge-LLM/blob/0f52705723abfa8c6702654bfdcc082a728ed353/docs/source/developer_guide/software-design/engine-builder.md",
+        "https://github.com/NVIDIA/TensorRT-Edge-LLM/blob/0f52705723abfa8c6702654bfdcc082a728ed353/docs/source/developer_guide/software-design/llm-inference-runtime.md"
+      ]
+    },
+    {
+      "stream": "root",
+      "id": "brain",
+      "name": "BRaiN",
+      "url": "https://github.com/swedishembedded/brain",
+      "round": 1,
+      "found_from": "CPU/edge/NPU or native multimodal keyword search",
+      "direction": "keyword",
+      "decision": "adjacent",
+      "reason": "A broader native training/inference framework provides a contrast to narrowly scoped stacks, including explicit limitations for individual multimodal ports.",
+      "evidence_urls": [
+        "https://github.com/swedishembedded/brain/blob/6626e37fc57d7b3a5a6d79944f008fac976e2681/README.md",
+        "https://github.com/swedishembedded/brain/blob/6626e37fc57d7b3a5a6d79944f008fac976e2681/docs/models/qwen3vl.md",
+        "https://github.com/swedishembedded/brain/blob/6626e37fc57d7b3a5a6d79944f008fac976e2681/crates/wan/src/pipeline.rs",
+        "https://github.com/swedishembedded/brain/blob/6626e37fc57d7b3a5a6d79944f008fac976e2681/docs/models/ltxv.md"
+      ]
+    },
+    {
+      "stream": "root",
+      "id": "hilum-engine",
+      "name": "Hilum LLM Engine",
+      "url": "https://github.com/hilum-labs/hilum-local-llm-engine",
+      "round": 1,
+      "found_from": "CPU/edge/NPU or native multimodal keyword search",
+      "direction": "keyword",
+      "decision": "adjacent",
+      "reason": "A mobile-focused llama.cpp fork illustrates continued subsystem porting and device adaptation while retaining the general engine.",
+      "evidence_urls": [
+        "https://github.com/hilum-labs/hilum-local-llm-engine/blob/dacf8c60173c05331970b16fcbaf15efbc755f73/README.md",
+        "https://github.com/hilum-labs/hilum-local-llm-engine/blob/dacf8c60173c05331970b16fcbaf15efbc755f73/ggml/src/ggml-vulkan/CMakeLists.txt"
+      ]
+    },
+    {
+      "stream": "root",
+      "id": "reame",
+      "name": "Reame / nucleo",
+      "url": "https://github.com/swellweb/reame",
+      "round": 1,
+      "found_from": "CPU engine keyword search",
+      "direction": "keyword",
+      "decision": "deferred",
+      "reason": "Server adapter references an external nucleo-dev build directory, but the reviewed tree does not contain that engine. The guessed public nucleo repository returned 404; native-core provenance needs resolution.",
+      "evidence_urls": [
+        "https://github.com/swellweb/reame/blob/32d558bb78f41f345bd79cb861cb1a7f7bde1b14/README.md",
+        "https://github.com/swellweb/reame/blob/32d558bb78f41f345bd79cb861cb1a7f7bde1b14/src/core/nucleo_backend.cpp",
+        "https://github.com/swellweb/reame/blob/32d558bb78f41f345bd79cb861cb1a7f7bde1b14/CMakeLists.txt"
+      ]
+    },
+    {
+      "stream": "root",
+      "id": "snapllm",
+      "name": "SnapLLM",
+      "url": "https://github.com/Zrald1/Snap-llm-phone",
+      "round": 1,
+      "found_from": "Snapdragon engine keyword search",
+      "direction": "keyword",
+      "decision": "deferred",
+      "reason": "Live inference delegates to llama_decode; advertised batching includes simulation/stub logic in the inspected scheduler. Need a source-qualified execution delta before adding as a specialized system.",
+      "evidence_urls": [
+        "https://github.com/Zrald1/Snap-llm-phone/blob/e43c7d5d25a52b71764f678007ba0079c021a37d/README.md",
+        "https://github.com/Zrald1/Snap-llm-phone/blob/e43c7d5d25a52b71764f678007ba0079c021a37d/src/engine.cpp",
+        "https://github.com/Zrald1/Snap-llm-phone/blob/e43c7d5d25a52b71764f678007ba0079c021a37d/src/batch_scheduler.cpp"
+      ]
+    },
+    {
+      "stream": "root",
+      "id": "lemonade",
+      "name": "Lemonade FastFlowLM integration",
+      "url": "https://developer.amd.com/playbooks/lemonade-getting-started/",
+      "round": 2,
+      "found_from": "FastFlowLM adoption search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Adoption evidence for FastFlowLM; this integration routes to an existing engine and is not counted again as the constructed NPU execution stack.",
+      "evidence_urls": [
+        "https://developer.amd.com/playbooks/lemonade-getting-started/"
+      ]
+    },
+    {
+      "stream": "root",
+      "id": "jetson-lab",
+      "name": "Jetson AI Lab Edge-LLM tutorial",
+      "url": "https://github.com/NVIDIA-AI-IOT/jetson-ai-lab/blob/main/src/content/tutorials/model-optimization/tensorrt-edge-llm.mdx",
+      "round": 2,
+      "found_from": "TensorRT Edge-LLM downstream deployment search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Worked VLM/LLM deployment confirms use of the same engine construction workflow; a tutorial is not a separate engine record.",
+      "evidence_urls": [
+        "https://github.com/NVIDIA-AI-IOT/jetson-ai-lab/blob/main/src/content/tutorials/model-optimization/tensorrt-edge-llm.mdx"
+      ]
+    },
+    {
+      "stream": "root",
+      "id": "needle-v1",
+      "name": "Original Needle model announcement",
+      "url": "https://cactuscompute.com/blog/needle",
+      "round": 2,
+      "found_from": "Cactus / Needle lineage search",
+      "direction": "backward",
+      "decision": "excluded",
+      "reason": "Earlier model generation remains history for one project. Current Needle 3 packaging was inspected separately; do not duplicate generations or copy old architecture claims.",
+      "evidence_urls": [
+        "https://cactuscompute.com/blog/needle"
+      ]
+    },
+    {
+      "stream": "root",
+      "id": "llama-cpp",
+      "name": "llama.cpp",
+      "url": "https://github.com/ggml-org/llama.cpp",
+      "round": 2,
+      "found_from": "Reviewed edge runtimes: retained dependencies",
+      "direction": "backward",
+      "decision": "already-included",
+      "reason": "Shared dependency is already cataloged; no duplicate engine record.",
+      "evidence_urls": [
+        "https://github.com/ggml-org/llama.cpp"
+      ]
+    },
+    {
+      "stream": "root",
+      "id": "tensorrt",
+      "name": "TensorRT",
+      "url": "https://github.com/NVIDIA/TensorRT",
+      "round": 2,
+      "found_from": "Reviewed edge runtimes: retained dependencies",
+      "direction": "backward",
+      "decision": "already-included",
+      "reason": "Shared dependency is already cataloged; no duplicate engine record.",
+      "evidence_urls": [
+        "https://github.com/NVIDIA/TensorRT"
+      ]
+    },
+    {
+      "stream": "root",
+      "id": "nobodywho",
+      "name": "NobodyWho",
+      "url": "https://github.com/nobodywho-ooo/nobodywho",
+      "round": 3,
+      "found_from": "Cactus comparison/adoption search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Reviewed official description identifies llama.cpp as the inference engine; SDK integrations are not counted as another reconstructed execution stack in this pass.",
+      "evidence_urls": [
+        "https://github.com/nobodywho-ooo/nobodywho"
+      ]
+    },
+    {
+      "stream": "root",
+      "id": "needle-compatibility",
+      "name": "Needle exporter/runtime compatibility reports",
+      "url": "https://github.com/cactus-compute/needle/issues/58",
+      "round": 3,
+      "found_from": "Needle deployment/forward search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Packaging compatibility and quantization reports qualify the existing Needle record; they are not new projects.",
+      "evidence_urls": [
+        "https://github.com/cactus-compute/needle/issues/58",
+        "https://github.com/cactus-compute/needle/issues/91"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "qwen-asr-c",
+      "name": "Qwen-ASR (C)",
+      "url": "https://github.com/antirez/qwen-asr",
+      "round": 1,
+      "found_from": "Iris / native-model keyword search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Reconstructs Qwen3-ASR from waveform preprocessing through autoregressive transcription in C, making streaming context policy and CPU/GPU execution responsibilities directly inspectable.",
+      "evidence_urls": [
+        "https://github.com/antirez/qwen-asr/blob/924694251d9e0f18e5d86bbd06aa3ab5f870002d/README.md",
+        "https://github.com/antirez/qwen-asr/blob/924694251d9e0f18e5d86bbd06aa3ab5f870002d/qwen_asr.c",
+        "https://github.com/antirez/qwen-asr/blob/924694251d9e0f18e5d86bbd06aa3ab5f870002d/qwen_asr_encoder.c",
+        "https://github.com/antirez/qwen-asr/blob/924694251d9e0f18e5d86bbd06aa3ab5f870002d/asr_regression.py",
+        "https://github.com/antirez/qwen-asr/blob/924694251d9e0f18e5d86bbd06aa3ab5f870002d/MODEL.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "qwen3-tts-c",
+      "name": "Qwen3-TTS (C)",
+      "url": "https://github.com/gabriele-mastrapasqua/qwen3-tts",
+      "round": 2,
+      "found_from": "Qwen-ASR references and Qwen3-TTS comparison search",
+      "direction": "backward",
+      "decision": "core",
+      "reason": "Rebuilds the Qwen3-TTS talker, code predictor and waveform decoder as one native path; published engineering records connect implementation choices to reference checks and measurement corrections.",
+      "evidence_urls": [
+        "https://github.com/gabriele-mastrapasqua/qwen3-tts/blob/ef339be58a778b062e1c14382347964552eae007/README.md",
+        "https://github.com/gabriele-mastrapasqua/qwen3-tts/blob/ef339be58a778b062e1c14382347964552eae007/qwen_tts_talker.c",
+        "https://github.com/gabriele-mastrapasqua/qwen3-tts/blob/ef339be58a778b062e1c14382347964552eae007/docs/pipeline.md",
+        "https://github.com/gabriele-mastrapasqua/qwen3-tts/blob/ef339be58a778b062e1c14382347964552eae007/docs/ENGINEERING-METHOD.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "qingming-qwen3-tts",
+      "name": "Qingming Qwen3-TTS",
+      "url": "https://github.com/uulong950/qingming-qwen3-tts",
+      "round": 1,
+      "found_from": "independent Qwen3-TTS C++/native-engine search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Tests the narrowest device-specialization boundary: separate native synthesis paths for two fixed 24GB GPUs, including their memory capacities and generation/decoder concurrency contracts.",
+      "evidence_urls": [
+        "https://github.com/uulong950/qingming-qwen3-tts/blob/66b85b1e3b1d2cf6f927c6c8c8b23e48ed66e2ac/README.md",
+        "https://github.com/uulong950/qingming-qwen3-tts/blob/66b85b1e3b1d2cf6f927c6c8c8b23e48ed66e2ac/CONTRACT.md",
+        "https://github.com/uulong950/qingming-qwen3-tts/blob/66b85b1e3b1d2cf6f927c6c8c8b23e48ed66e2ac/devices/rtx4090-24g/qwen3_tts_0_6b.cu",
+        "https://github.com/uulong950/qingming-qwen3-tts/blob/66b85b1e3b1d2cf6f927c6c8c8b23e48ed66e2ac/devices/rtx4090-24g/benchmark.cpp"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "voxgen",
+      "name": "VoxGen",
+      "url": "https://github.com/NullMagic2/VoxGen",
+      "round": 1,
+      "found_from": "independent speech native GPU search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Reconstructs VoxCPM2 speech synthesis in Rust while directly controlling Vulkan buffers, shaders and incremental PCM state, including a separately tuned RDNA3 device profile.",
+      "evidence_urls": [
+        "https://github.com/NullMagic2/VoxGen/blob/7b4f78b060f8a4c41e87f8e282c92e53893c53ce/README.md",
+        "https://github.com/NullMagic2/VoxGen/blob/7b4f78b060f8a4c41e87f8e282c92e53893c53ce/src/runtime.rs",
+        "https://github.com/NullMagic2/VoxGen/blob/7b4f78b060f8a4c41e87f8e282c92e53893c53ce/src/vulkan.rs",
+        "https://github.com/NullMagic2/VoxGen/blob/7b4f78b060f8a4c41e87f8e282c92e53893c53ce/build_linux/smoke_pipeline_f16.sh"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "parakeet-ggml",
+      "name": "parakeet.cpp (ggml)",
+      "url": "https://github.com/mudler/parakeet.cpp",
+      "round": 1,
+      "found_from": "independent Whisper/C++ inference-engine search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Ports NeMo speech graphs and cache-aware transcription semantics into C++/ggml, exposing the conversion, streaming-state and parity work needed to build a portable native ASR stack.",
+      "evidence_urls": [
+        "https://github.com/mudler/parakeet.cpp/blob/5c9b0fbbd8e611d88e47d7e1ebae9bca9b447e8f/README.md",
+        "https://github.com/mudler/parakeet.cpp/blob/5c9b0fbbd8e611d88e47d7e1ebae9bca9b447e8f/src/model.cpp",
+        "https://github.com/mudler/parakeet.cpp/blob/5c9b0fbbd8e611d88e47d7e1ebae9bca9b447e8f/docs/parity.md",
+        "https://github.com/mudler/parakeet.cpp/blob/5c9b0fbbd8e611d88e47d7e1ebae9bca9b447e8f/docs/batching.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "parakeet-axiom",
+      "name": "parakeet.cpp (axiom)",
+      "url": "https://github.com/Frikallo/parakeet.cpp",
+      "round": 2,
+      "found_from": "parakeet.cpp comparison search",
+      "direction": "forward",
+      "decision": "core",
+      "reason": "An independent Parakeet reconstruction uses axiom/MPSGraph instead of ggml; it exposes how model and streaming ownership can be retained while reusing a different tensor backend.",
+      "evidence_urls": [
+        "https://github.com/Frikallo/parakeet.cpp/blob/a212eea694ab2de39d4dd1dc601806fed9ce8b19/README.md",
+        "https://github.com/Frikallo/parakeet.cpp/blob/a212eea694ab2de39d4dd1dc601806fed9ce8b19/src/models/encoder.cpp",
+        "https://github.com/Frikallo/parakeet.cpp/blob/a212eea694ab2de39d4dd1dc601806fed9ce8b19/src/models/streaming_encoder.cpp",
+        "https://github.com/Frikallo/parakeet.cpp/blob/a212eea694ab2de39d4dd1dc601806fed9ce8b19/tests/test_all.cpp"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "aria",
+      "name": "Aria",
+      "url": "https://github.com/matteospanio/aria",
+      "round": 3,
+      "found_from": "independent diffusion native-runtime search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Links an explicit author disclosure of LLM-assisted development to a complete native Stable Audio 3 artifact and controlled reference tests, without assuming lower total construction cost.",
+      "evidence_urls": [
+        "https://github.com/matteospanio/aria/blob/8af80a7f900cff1d71aaecfa2929452dc46b520a/README.md",
+        "https://github.com/matteospanio/aria/blob/8af80a7f900cff1d71aaecfa2929452dc46b520a/src/aria_model_sa3.c",
+        "https://github.com/matteospanio/aria/blob/8af80a7f900cff1d71aaecfa2929452dc46b520a/src/aria_sampler.c",
+        "https://github.com/matteospanio/aria/blob/8af80a7f900cff1d71aaecfa2929452dc46b520a/tests/test_e2e.c",
+        "https://github.com/matteospanio/aria/blob/8af80a7f900cff1d71aaecfa2929452dc46b520a/BENCHMARKS.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "vla-simd",
+      "name": "vla.simd",
+      "url": "https://github.com/cair-vinuni/vla.simd",
+      "round": 2,
+      "found_from": "vla.cpp / parent VLA lead and vla.simd search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Rebuilds selected robot-policy model paths around CPU SIMD operators and model adapters, exposing action preprocessing and numerical-porting obligations beyond a language-model runtime.",
+      "evidence_urls": [
+        "https://github.com/cair-vinuni/vla.simd/blob/75791daf47ca5e62564ca797e83ea555b17b8940/README.md",
+        "https://github.com/cair-vinuni/vla.simd/blob/75791daf47ca5e62564ca797e83ea555b17b8940/src/hal/arch.h",
+        "https://github.com/cair-vinuni/vla.simd/blob/75791daf47ca5e62564ca797e83ea555b17b8940/src/nn/linear.cpp",
+        "https://github.com/cair-vinuni/vla.simd/blob/75791daf47ca5e62564ca797e83ea555b17b8940/docs/development.md",
+        "https://github.com/cair-vinuni/vla.simd/blob/75791daf47ca5e62564ca797e83ea555b17b8940/docs/benchmark/intel-core-ultra-9-285k.md",
+        "https://github.com/cair-vinuni/vla.simd/blob/75791daf47ca5e62564ca797e83ea555b17b8940/tools/check_model_parity.py"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "hearth",
+      "name": "Hearth",
+      "url": "https://github.com/jeff-hiner/hearth",
+      "round": 1,
+      "found_from": "Iris / independent Rust CUDA diffusion-engine search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Reconstructs SD-family model graphs, samplers and dependency-ordered execution in Rust over CubeCL/wgpu, illustrating native pipeline ownership without rebuilding the entire GPU layer.",
+      "evidence_urls": [
+        "https://github.com/jeff-hiner/hearth/blob/7e6170228626a7be533d4f931fc5a0d87b086371/README.md",
+        "https://github.com/jeff-hiner/hearth/blob/7e6170228626a7be533d4f931fc5a0d87b086371/src/unet/model.rs",
+        "https://github.com/jeff-hiner/hearth/blob/7e6170228626a7be533d4f931fc5a0d87b086371/src/node/executor.rs",
+        "https://github.com/jeff-hiner/hearth/blob/7e6170228626a7be533d4f931fc5a0d87b086371/Cargo.toml",
+        "https://github.com/jeff-hiner/hearth/blob/7e6170228626a7be533d4f931fc5a0d87b086371/tests/tensor_ops.rs"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "brodiffusion",
+      "name": "brodiffusion",
+      "url": "https://github.com/wlejon/brodiffusion",
+      "round": 1,
+      "found_from": "Iris / independent C++ diffusion-engine search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Owns C++ image-model pipelines and denoiser capture/replay policy over a reused tensor backend, making the boundary between model reconstruction and lower-level reuse explicit.",
+      "evidence_urls": [
+        "https://github.com/wlejon/brodiffusion/blob/2ac6f400314817f73df2857c2f7962684c43c403/README.md",
+        "https://github.com/wlejon/brodiffusion/blob/2ac6f400314817f73df2857c2f7962684c43c403/src/pipeline_step_graph.cpp",
+        "https://github.com/wlejon/brodiffusion/blob/2ac6f400314817f73df2857c2f7962684c43c403/src/pipeline_qwenimage21.cpp",
+        "https://github.com/wlejon/brodiffusion/blob/2ac6f400314817f73df2857c2f7962684c43c403/scripts/qwenimage21_pipeline_parity.sh",
+        "https://github.com/wlejon/brodiffusion/blob/2ac6f400314817f73df2857c2f7962684c43c403/tests/test_device_parity.cpp"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "stable-diffusion-rs",
+      "name": "stable-diffusion.rs",
+      "url": "https://github.com/andreinknv/stable-diffusion.rs",
+      "round": 1,
+      "found_from": "independent native Rust diffusion search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Documents a native Rust diffusion implementation and its Candle-to-MLX migration, exposing which model/backend boundaries can survive a device-stack change and which require new parity checks.",
+      "evidence_urls": [
+        "https://github.com/andreinknv/stable-diffusion.rs/blob/930c48e2e7c962e856a12bc01b98cc95f27c990c/README.md",
+        "https://github.com/andreinknv/stable-diffusion.rs/blob/930c48e2e7c962e856a12bc01b98cc95f27c990c/docs/backends.md",
+        "https://github.com/andreinknv/stable-diffusion.rs/blob/930c48e2e7c962e856a12bc01b98cc95f27c990c/docs/seam.md",
+        "https://github.com/andreinknv/stable-diffusion.rs/blob/930c48e2e7c962e856a12bc01b98cc95f27c990c/docs/agent-tasks/README.md",
+        "https://github.com/andreinknv/stable-diffusion.rs/blob/930c48e2e7c962e856a12bc01b98cc95f27c990c/xtask/golden/README.md",
+        "https://github.com/andreinknv/stable-diffusion.rs/blob/930c48e2e7c962e856a12bc01b98cc95f27c990c/crates/sd-models/src/mlx/flux.rs"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "minimax-h3-mlx",
+      "name": "MiniMax-H3 MLX",
+      "url": "https://github.com/PipeNetwork/minimax-h3-mlx",
+      "round": 1,
+      "found_from": "independent video native MLX search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Reconstructs a complete joint video/audio diffusion model on MLX, including packed modality geometry and invariant AdaLN precomputation; distinguishes making a model fit from making it fast.",
+      "evidence_urls": [
+        "https://github.com/PipeNetwork/minimax-h3-mlx/blob/b2f7e4d2b7861cefe68b75e4b59ab81cc4e7c318/README.md",
+        "https://github.com/PipeNetwork/minimax-h3-mlx/blob/b2f7e4d2b7861cefe68b75e4b59ab81cc4e7c318/minimax_h3_mlx/pipeline.py",
+        "https://github.com/PipeNetwork/minimax-h3-mlx/blob/b2f7e4d2b7861cefe68b75e4b59ab81cc4e7c318/minimax_h3_mlx/adaln.py",
+        "https://github.com/PipeNetwork/minimax-h3-mlx/blob/b2f7e4d2b7861cefe68b75e4b59ab81cc4e7c318/tests/test_dit_parity.py",
+        "https://github.com/PipeNetwork/minimax-h3-mlx/blob/b2f7e4d2b7861cefe68b75e4b59ab81cc4e7c318/tests/test_text_encoder_parity.py",
+        "https://github.com/PipeNetwork/minimax-h3-mlx/blob/b2f7e4d2b7861cefe68b75e4b59ab81cc4e7c318/reference/README.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "vidax",
+      "name": "Vidax",
+      "url": "https://github.com/FlyingGiraffe/vidax",
+      "round": 3,
+      "found_from": "independent video inference runtime TPU search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Ports video model graphs and checkpoint layouts onto TPU meshes with explicit JAX sharding and numerical-debugging records, making hardware migration a concrete construction case.",
+      "evidence_urls": [
+        "https://github.com/FlyingGiraffe/vidax/blob/3f03da2a41b03dad47064674b68cc2b2ede21912/README.md",
+        "https://github.com/FlyingGiraffe/vidax/blob/3f03da2a41b03dad47064674b68cc2b2ede21912/src/vidax/core/attention.py",
+        "https://github.com/FlyingGiraffe/vidax/blob/3f03da2a41b03dad47064674b68cc2b2ede21912/src/vidax/core/sharding.py",
+        "https://github.com/FlyingGiraffe/vidax/blob/3f03da2a41b03dad47064674b68cc2b2ede21912/src/vidax/models/wan/wan2_1/dit.py",
+        "https://github.com/FlyingGiraffe/vidax/blob/3f03da2a41b03dad47064674b68cc2b2ede21912/docs/lessons/wan2_1_debugging.md",
+        "https://github.com/FlyingGiraffe/vidax/blob/3f03da2a41b03dad47064674b68cc2b2ede21912/docs/benchmarking.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "telefuser",
+      "name": "TeleFuser",
+      "url": "https://github.com/Tele-AI/TeleFuser",
+      "round": 3,
+      "found_from": "independent video inference engine search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Builds model-specific generation stages together with bounded streaming dataflow, retained session state and execution leases, connecting model execution ownership to an interactive serving workload.",
+      "evidence_urls": [
+        "https://github.com/Tele-AI/TeleFuser/blob/f21457a92e92f4a7570f0cb6b445ee334f1072b0/README.md",
+        "https://github.com/Tele-AI/TeleFuser/blob/f21457a92e92f4a7570f0cb6b445ee334f1072b0/docs/en/stream_scheduler.md",
+        "https://github.com/Tele-AI/TeleFuser/blob/f21457a92e92f4a7570f0cb6b445ee334f1072b0/telefuser/pipelines/wan_video/single_dit_denoising.py",
+        "https://github.com/Tele-AI/TeleFuser/blob/f21457a92e92f4a7570f0cb6b445ee334f1072b0/telefuser/pipelines/wan_video/wan21_video.py",
+        "https://github.com/Tele-AI/TeleFuser/blob/f21457a92e92f4a7570f0cb6b445ee334f1072b0/benchmarks/telefuser_aiperf/README.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "streamdiffusion-v2",
+      "name": "StreamDiffusionV2",
+      "url": "https://github.com/chenfengxu714/StreamDiffusionV2",
+      "round": 3,
+      "found_from": "streaming video engine references / StreamDiffusionV2 search",
+      "direction": "backward",
+      "decision": "core",
+      "reason": "Reconstructs causal video execution around chunked denoising and distributed KV ownership; concrete source and adopter evidence connect a specialized schedule to an integrated streaming artifact.",
+      "evidence_urls": [
+        "https://github.com/chenfengxu714/StreamDiffusionV2/blob/6961a5cf2045d1dda05a04ef229698bdc04e873a/README.md",
+        "https://github.com/chenfengxu714/StreamDiffusionV2/blob/6961a5cf2045d1dda05a04ef229698bdc04e873a/streamdiffusionv2/pipeline.py",
+        "https://github.com/chenfengxu714/StreamDiffusionV2/blob/6961a5cf2045d1dda05a04ef229698bdc04e873a/streamv2v/inference_pipe.py",
+        "https://github.com/chenfengxu714/StreamDiffusionV2/blob/6961a5cf2045d1dda05a04ef229698bdc04e873a/streamv2v/communication/kv_cache_manager.py",
+        "https://github.com/chenfengxu714/StreamDiffusionV2/blob/6961a5cf2045d1dda05a04ef229698bdc04e873a/tools/eval_video_metrics.py"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "saient-quartz",
+      "name": "Quartz",
+      "url": "https://github.com/SaientAI/saient-quartz",
+      "round": 3,
+      "found_from": "independent Wan Rust native search",
+      "direction": "keyword",
+      "decision": "core",
+      "reason": "Exposes native Rust image generation and an evolving native Wan path, while a separate C++ video companion provides a concrete case for auditing claimed versus actual execution boundaries.",
+      "evidence_urls": [
+        "https://github.com/SaientAI/saient-quartz/blob/5a2a82387b9548c6c165eb50880a5f49c54ef1ff/README.md",
+        "https://github.com/SaientAI/saient-quartz/blob/5a2a82387b9548c6c165eb50880a5f49c54ef1ff/src/sdxl_pipeline.rs",
+        "https://github.com/SaientAI/saient-quartz/blob/5a2a82387b9548c6c165eb50880a5f49c54ef1ff/src/wan_pipeline.rs",
+        "https://github.com/SaientAI/saient-quartz/blob/5a2a82387b9548c6c165eb50880a5f49c54ef1ff/reference/README.md",
+        "https://github.com/SaientAI/saient-quartz/blob/5a2a82387b9548c6c165eb50880a5f49c54ef1ff/Cargo.toml"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "whisper-cpp",
+      "name": "whisper.cpp",
+      "url": "https://github.com/ggml-org/whisper.cpp",
+      "round": 1,
+      "found_from": "independent speech-engine search",
+      "direction": "keyword",
+      "decision": "adjacent",
+      "reason": "Established native speech-model route: a historical control for what purpose-built runtimes and cross-backend maintenance already required.",
+      "evidence_urls": [
+        "https://github.com/ggml-org/whisper.cpp/blob/0c7be696371069e0baa2515ed7aa08d5a5473aa6/README.md",
+        "https://github.com/ggml-org/whisper.cpp/blob/0c7be696371069e0baa2515ed7aa08d5a5473aa6/src/whisper.cpp",
+        "https://github.com/ggml-org/whisper.cpp/blob/0c7be696371069e0baa2515ed7aa08d5a5473aa6/CMakeLists.txt",
+        "https://github.com/ggml-org/whisper.cpp/blob/0c7be696371069e0baa2515ed7aa08d5a5473aa6/tests/CMakeLists.txt"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "whisperkit",
+      "name": "WhisperKit",
+      "url": "https://github.com/argmaxinc/argmax-oss-swift",
+      "round": 1,
+      "found_from": "independent WhisperKit Swift inference search",
+      "direction": "keyword",
+      "decision": "adjacent",
+      "reason": "Compiler-backed speech deployment provides a comparison for how much execution control remains in the runtime versus compiled platform artifacts.",
+      "evidence_urls": [
+        "https://github.com/argmaxinc/argmax-oss-swift/blob/9f99b5cb6a907730543823ad271b82532782a899/README.md",
+        "https://github.com/argmaxinc/argmax-oss-swift/blob/9f99b5cb6a907730543823ad271b82532782a899/Sources/WhisperKit/Core/WhisperKit.swift",
+        "https://github.com/argmaxinc/argmax-oss-swift/blob/9f99b5cb6a907730543823ad271b82532782a899/Sources/WhisperKit/Core/TextDecoder.swift",
+        "https://github.com/argmaxinc/argmax-oss-swift/blob/9f99b5cb6a907730543823ad271b82532782a899/Tests/WhisperKitTests/UnitTests.swift"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "diffusion-rs",
+      "name": "diffusion-rs",
+      "url": "https://github.com/EricLBuehler/diffusion-rs",
+      "round": 1,
+      "found_from": "independent diffusion Rust CUDA engine search",
+      "direction": "keyword",
+      "decision": "adjacent",
+      "reason": "A neighboring Rust model-port route provides a component-reuse and offload comparison; it is not evidence of agent-generated construction.",
+      "evidence_urls": [
+        "https://github.com/EricLBuehler/diffusion-rs/blob/d977e05ad19075f87bed8c0888ae42e63c456729/README.md",
+        "https://github.com/EricLBuehler/diffusion-rs/blob/d977e05ad19075f87bed8c0888ae42e63c456729/Cargo.toml",
+        "https://github.com/EricLBuehler/diffusion-rs/blob/d977e05ad19075f87bed8c0888ae42e63c456729/diffusion_rs_core/src/pipelines/flux/mod.rs",
+        "https://github.com/EricLBuehler/diffusion-rs/blob/d977e05ad19075f87bed8c0888ae42e63c456729/diffusion_rs_core/src/pipelines/flux/sampling.rs"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "streamdiffusion",
+      "name": "StreamDiffusion",
+      "url": "https://github.com/cumulo-autumn/StreamDiffusion",
+      "round": 3,
+      "found_from": "StreamDiffusionV2 predecessor",
+      "direction": "backward",
+      "decision": "adjacent",
+      "reason": "Earlier workload-specific pipeline reconstruction is a comparison for newer causal video engines; most model components remain supplied by Diffusers.",
+      "evidence_urls": [
+        "https://github.com/cumulo-autumn/StreamDiffusion/blob/b623251dc055e1fd858d53509aa43e09dfc5cdc0/README.md",
+        "https://github.com/cumulo-autumn/StreamDiffusion/blob/b623251dc055e1fd858d53509aa43e09dfc5cdc0/src/streamdiffusion/pipeline.py"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "edge-dit",
+      "name": "edge-dit.cpp",
+      "url": "https://github.com/THU-MIG/edge-dit.cpp",
+      "round": 3,
+      "found_from": "existing image/video catalog execution-boundary re-audit",
+      "direction": "backward",
+      "decision": "already-included",
+      "reason": "Recommend adjacent → core on inspected execution ownership; not a new repository. Core by execution ownership: native DiT graphs and model-component residency, graph segmentation and staged offload reconstruct the integrated constrained-memory path.",
+      "evidence_urls": [
+        "https://github.com/THU-MIG/edge-dit.cpp/blob/97cc585d9dbd9ac5e30b78ef2e2c4a0d8bfbe9f2/README.md",
+        "https://github.com/THU-MIG/edge-dit.cpp/blob/97cc585d9dbd9ac5e30b78ef2e2c4a0d8bfbe9f2/docs/optimization/memory-efficient-execution.md",
+        "https://github.com/THU-MIG/edge-dit.cpp/blob/97cc585d9dbd9ac5e30b78ef2e2c4a0d8bfbe9f2/src/core/backend/ggml/cuda/ed_async_offload.cu",
+        "https://github.com/THU-MIG/edge-dit.cpp/blob/97cc585d9dbd9ac5e30b78ef2e2c4a0d8bfbe9f2/benchmark/README.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "stable-diffusion-cpp",
+      "name": "stable-diffusion.cpp",
+      "url": "https://github.com/leejet/stable-diffusion.cpp",
+      "round": 3,
+      "found_from": "existing image/video catalog execution-boundary re-audit",
+      "direction": "backward",
+      "decision": "already-included",
+      "reason": "Recommend adjacent → core on inspected execution ownership; not a new repository. Core by construction boundary: the native image/video model implementation owns loading, conditioning, sampling and component placement over reusable ggml backends.",
+      "evidence_urls": [
+        "https://github.com/leejet/stable-diffusion.cpp/blob/2988060a4338a5dcd94721c964a8e87003c1ac8b/README.md",
+        "https://github.com/leejet/stable-diffusion.cpp/blob/2988060a4338a5dcd94721c964a8e87003c1ac8b/src/pipeline/diffusion_engine.cpp",
+        "https://github.com/leejet/stable-diffusion.cpp/blob/2988060a4338a5dcd94721c964a8e87003c1ac8b/src/pipeline/video.cpp",
+        "https://github.com/leejet/stable-diffusion.cpp/blob/2988060a4338a5dcd94721c964a8e87003c1ac8b/docs/caching.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "lightx2v",
+      "name": "LightX2V",
+      "url": "https://github.com/ModelTC/LightX2V",
+      "round": 3,
+      "found_from": "existing image/video catalog execution-boundary re-audit",
+      "direction": "backward",
+      "decision": "already-included",
+      "reason": "Recommend adjacent → core on inspected execution ownership; not a new repository. Core by substantive backend reconstruction: model inference, operator storage contracts and two-slot weight transfer expose owned execution and memory decisions within a shared framework.",
+      "evidence_urls": [
+        "https://github.com/ModelTC/LightX2V/blob/94f0f19459e66f61a723db7690f1707f308599ef/README.md",
+        "https://github.com/ModelTC/LightX2V/blob/94f0f19459e66f61a723db7690f1707f308599ef/lightx2v/common/offload/manager.py",
+        "https://github.com/ModelTC/LightX2V/blob/94f0f19459e66f61a723db7690f1707f308599ef/lightx2v/common/offload/block_loader.py",
+        "https://github.com/ModelTC/LightX2V/blob/94f0f19459e66f61a723db7690f1707f308599ef/docs/EN/source/getting_started/benchmark.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "fastvideo",
+      "name": "FastVideo",
+      "url": "https://github.com/hao-ai-lab/FastVideo",
+      "round": 3,
+      "found_from": "existing image/video catalog execution-boundary re-audit",
+      "direction": "backward",
+      "decision": "already-included",
+      "reason": "Recommend adjacent → core on inspected execution ownership; not a new repository. Core by integrated model execution: its own model implementations, registries, component loaders and denoising stages reconstruct inference, beyond the separately cataloged sparse/distillation methods.",
+      "evidence_urls": [
+        "https://github.com/hao-ai-lab/FastVideo/blob/d5253fd71055927f12aa6c4aa679b93a00238851/README.md",
+        "https://github.com/hao-ai-lab/FastVideo/blob/d5253fd71055927f12aa6c4aa679b93a00238851/docs/inference/architecture.md",
+        "https://github.com/hao-ai-lab/FastVideo/blob/d5253fd71055927f12aa6c4aa679b93a00238851/fastvideo/pipelines/stages/denoising.py",
+        "https://github.com/hao-ai-lab/FastVideo/blob/d5253fd71055927f12aa6c4aa679b93a00238851/docs/contributing/performance_benchmarks.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "vla-cpp",
+      "name": "vla.cpp",
+      "url": "https://fai-modelopt-tech.github.io/vla-cpp.github.io/",
+      "round": 2,
+      "found_from": "parent VLA lead",
+      "direction": "keyword",
+      "decision": "deferred",
+      "reason": "Official page describes a native VLA runtime but says code and paper links are coming soon; inspectable execution source was not established.",
+      "evidence_urls": [
+        "https://fai-modelopt-tech.github.io/vla-cpp.github.io/"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "aurora-rust-engine",
+      "name": "Aurora Rust Engine",
+      "url": "https://github.com/lecyberbill/aurora-rust-engine",
+      "round": 1,
+      "found_from": "native Rust diffusion search",
+      "direction": "keyword",
+      "decision": "deferred",
+      "reason": "Promising native FLUX/model paths inspected, but advertised multimodal breadth and construction/validation boundary require a complete follow-up audit; not rejected as a wrapper.",
+      "evidence_urls": [
+        "https://github.com/lecyberbill/aurora-rust-engine/blob/2a653e462f68cbd3fefe819217e8f7fa35bf4b26/README.md",
+        "https://github.com/lecyberbill/aurora-rust-engine/blob/2a653e462f68cbd3fefe819217e8f7fa35bf4b26/docs/KREA2_CANDLE_SPEC.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "diffsynth-studio",
+      "name": "DiffSynth-Studio",
+      "url": "https://github.com/modelscope/DiffSynth-Studio",
+      "round": 3,
+      "found_from": "independent image/video inference search",
+      "direction": "keyword",
+      "decision": "deferred",
+      "reason": "Official source tree and overview identify substantial model pipelines; execution ownership and inference-versus-training scope have not yet been audited sufficiently for this pass.",
+      "evidence_urls": [
+        "https://github.com/modelscope/DiffSynth-Studio/blob/acf2ad29c65f436633f57beec1caaa1296760331/README.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "ced-cpp",
+      "name": "ced.cpp",
+      "url": "https://github.com/localai-org/ced.cpp",
+      "round": 2,
+      "found_from": "parakeet/LocalAI speech ecosystem",
+      "direction": "backward",
+      "decision": "deferred",
+      "reason": "Native sound-event classification is a plausible adjacent route; only metadata/overview were checked, so do not assume end-to-end coverage or equivalence.",
+      "evidence_urls": [
+        "https://github.com/localai-org/ced.cpp/blob/736a4ee46a31d4ff38b41add65ce0f2cf1aaa05f/README.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "speech-cpp",
+      "name": "speech.cpp",
+      "url": "https://github.com/NairoDorian/speech.cpp",
+      "round": 2,
+      "found_from": "speech native-runtime expansion",
+      "direction": "keyword",
+      "decision": "deferred",
+      "reason": "Modular ggml speech runtime surfaced; model execution and build/validation source have not yet been audited.",
+      "evidence_urls": [
+        "https://github.com/NairoDorian/speech.cpp"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "qwen3-tts-ncnn",
+      "name": "Qwen3-TTS-ncnn",
+      "url": "https://github.com/Krystal579-max/Qwen3-TTS-ncnn",
+      "round": 2,
+      "found_from": "Qwen3-TTS native alternatives",
+      "direction": "forward",
+      "decision": "deferred",
+      "reason": "A converter/ncnn-backed synthesis route surfaced; further inspection must distinguish owned decoding from reused compiled artifacts.",
+      "evidence_urls": [
+        "https://github.com/Krystal579-max/Qwen3-TTS-ncnn"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "darkautism-qwen3-tts",
+      "name": "Qwen3-TTS (darkautism)",
+      "url": "https://github.com/darkautism/qwen3-tts",
+      "round": 2,
+      "found_from": "Qwen3-TTS native alternatives",
+      "direction": "forward",
+      "decision": "deferred",
+      "reason": "Advertised Rust/SBC execution path requires source and validation-boundary audit before inclusion.",
+      "evidence_urls": [
+        "https://github.com/darkautism/qwen3-tts"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "mlx-diffuser",
+      "name": "mlx_diffuser",
+      "url": "https://github.com/amirhossein-razlighi/mlx_diffuser",
+      "round": 3,
+      "found_from": "MLX image/video alternatives",
+      "direction": "keyword",
+      "decision": "deferred",
+      "reason": "Image and video model paths surfaced; source ownership and implemented streaming scope remain unverified.",
+      "evidence_urls": [
+        "https://github.com/amirhossein-razlighi/mlx_diffuser"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "lcm-dreamshaper-rs",
+      "name": "LCM-Dreamshaper-V7-rs",
+      "url": "https://github.com/darkautism/LCM-Dreamshaper-V7-rs",
+      "round": 4,
+      "found_from": "stable-diffusion.rs forward/neighbor search",
+      "direction": "forward",
+      "decision": "deferred",
+      "reason": "RK3588 NPU image-generation route surfaced in the final expansion; source audit was handed to the parent CPU/NPU strand.",
+      "evidence_urls": [
+        "https://github.com/darkautism/LCM-Dreamshaper-V7-rs"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "argusagent",
+      "name": "ArgusAgent",
+      "url": "https://github.com/microsoft/ArgusAgent",
+      "round": 2,
+      "found_from": "Sol-Engine forward search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "General research-agent workflow; reviewed results material proposes Sol-engine work but did not establish an additional concrete specialized engine artifact.",
+      "evidence_urls": [
+        "https://github.com/microsoft/ArgusAgent/blob/746f76b7a74a1217507c9ee348eecd3b782f7c92/ARGUS_IMPRESSIVE_RESULTS.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "scope",
+      "name": "Scope",
+      "url": "https://github.com/daydreamlive/scope",
+      "round": 4,
+      "found_from": "StreamDiffusionV2 adopter search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Confirms adoption/integration of StreamDiffusionV2; no separate newly audited execution-stack reconstruction was established for another engine record.",
+      "evidence_urls": [
+        "https://github.com/daydreamlive/scope/blob/main/src/scope/core/pipelines/streamdiffusionv2/docs/usage.md",
+        "https://github.com/daydreamlive/scope/blob/main/README.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "localai",
+      "name": "LocalAI",
+      "url": "https://github.com/mudler/LocalAI",
+      "round": 2,
+      "found_from": "parakeet.cpp adopter search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Adopter/integration evidence for parakeet.cpp rather than an additional model-specific reconstruction established by this audit.",
+      "evidence_urls": [
+        "https://pkg.go.dev/github.com/mudler/LocalAI@v1.40.1-0.20260928194146-84a2b209a052/core/gallery/importers"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "minimax-h3-mlx-quant",
+      "name": "MiniMax-H3 MLX quantized checkpoints",
+      "url": "https://huggingface.co/pipenetwork/MiniMax-H3-MLX-4bit",
+      "round": 4,
+      "found_from": "MiniMax-H3 MLX forward search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Same engine with converted precision variants; preserve provenance but do not count checkpoints as separate execution stacks.",
+      "evidence_urls": [
+        "https://huggingface.co/pipenetwork/MiniMax-H3-MLX-4bit",
+        "https://huggingface.co/pipenetwork/MiniMax-H3-MLX-8bit"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "stable-diffusion-flux-mirror",
+      "name": "stable-diffusion-flux.cpp",
+      "url": "https://github.com/robolamp/stable-diffusion-flux.cpp",
+      "round": 1,
+      "found_from": "native diffusion search",
+      "direction": "keyword",
+      "decision": "excluded",
+      "reason": "Search evidence pointed to stable-diffusion.cpp-derived material; no substantial independently audited execution change established for a distinct entry.",
+      "evidence_urls": [
+        "https://github.com/robolamp/stable-diffusion-flux.cpp"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "iris-contrib",
+      "name": "iris.c-contrib",
+      "url": "https://github.com/FHult/iris.c-contrib",
+      "round": 1,
+      "found_from": "Iris alternative search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "Derivative material without an established distinct construction boundary in this audit; retain Iris as the primary case.",
+      "evidence_urls": [
+        "https://github.com/FHult/iris.c-contrib"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "telefuser-mirror",
+      "name": "TeleFuser-p",
+      "url": "https://github.com/yJader/TeleFuser-p",
+      "round": 4,
+      "found_from": "TeleFuser forward search",
+      "direction": "forward",
+      "decision": "excluded",
+      "reason": "A derivative repository surfaced; no separately demonstrated execution reconstruction beyond TeleFuser established.",
+      "evidence_urls": [
+        "https://github.com/yJader/TeleFuser-p"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "vibeqwen",
+      "name": "VibeQwen",
+      "url": "https://www.baseten.co/blog/agentic-inference-optimization-faster-than-sota/",
+      "round": 2,
+      "found_from": "MetaInfer forward/generated-engine search",
+      "direction": "forward",
+      "decision": "already-included",
+      "reason": "Already represented by the MetaInfer → VibeQwen case; do not count generated-engine mention as a duplicate project.",
+      "evidence_urls": [
+        "https://www.baseten.co/blog/agentic-inference-optimization-faster-than-sota/"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "sol-engine",
+      "name": "Sol-Engine",
+      "url": "https://github.com/NVlabs/Sana/tree/sol-engine",
+      "round": 2,
+      "found_from": "seed construction workflow",
+      "direction": "backward",
+      "decision": "already-included",
+      "reason": "Concrete video optimization workflow already included; new image/video cases should link execution ownership, not add every reused kernel.",
+      "evidence_urls": [
+        "https://github.com/NVlabs/Sana/tree/sol-engine"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "metainfer",
+      "name": "MetaInfer",
+      "url": "https://github.com/MetaInfer/MetaInfer",
+      "round": 2,
+      "found_from": "seed construction workflow",
+      "direction": "forward",
+      "decision": "already-included",
+      "reason": "Already included with generated-engine linkage; no independent new qualified workflow established by expansion.",
+      "evidence_urls": [
+        "https://github.com/MetaInfer/MetaInfer"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "mirage",
+      "name": "Mirage",
+      "url": "https://github.com/mirage-project/mirage",
+      "round": 2,
+      "found_from": "seed compiler construction route",
+      "direction": "backward",
+      "decision": "already-included",
+      "reason": "Already included compiler-generated execution route; shared compiler/kernel dependencies are not automatically separate core cases.",
+      "evidence_urls": [
+        "https://github.com/mirage-project/mirage"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "xdit",
+      "name": "xDiT",
+      "url": "https://github.com/xdit-project/xDiT",
+      "round": 3,
+      "found_from": "existing video route re-audit",
+      "direction": "backward",
+      "decision": "already-included",
+      "reason": "Retain adjacent as the distributed diffusion-framework comparison in this pass; no new case-level construction audit justifies promotion here.",
+      "evidence_urls": [
+        "https://github.com/xdit-project/xDiT/blob/81dc33d5de7aab0b444af05882dbc55591f3059a/README.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "turbodiffusion",
+      "name": "TurboDiffusion",
+      "url": "https://github.com/thu-ml/TurboDiffusion",
+      "round": 3,
+      "found_from": "existing video route re-audit",
+      "direction": "backward",
+      "decision": "already-included",
+      "reason": "Retain adjacent model/optimization co-design route; distinguish sparse/quantized/distilled model effects from an independently reconstructed runtime.",
+      "evidence_urls": [
+        "https://github.com/thu-ml/TurboDiffusion/blob/e3d61360b0eeab60c5cd09ff7d6c1020cccc80b2/README.md"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "causvid-self-forcing",
+      "name": "CausVid / Self-Forcing model references",
+      "url": "https://github.com/guandeh17/Self-Forcing",
+      "round": 3,
+      "found_from": "StreamDiffusionV2 credited components",
+      "direction": "backward",
+      "decision": "excluded",
+      "reason": "Training/model-generation references support the causal checkpoint lineage; they are not separately audited execution stacks in this pass.",
+      "evidence_urls": [
+        "https://github.com/guandeh17/Self-Forcing"
+      ]
+    },
+    {
+      "stream": "construction",
+      "id": "shared-construction-deps",
+      "name": "Shared tensor/compiler/kernel dependencies",
+      "url": "https://github.com/ml-explore/mlx",
+      "round": 2,
+      "found_from": "native diffusion/audio/VLA README and build references",
+      "direction": "backward",
+      "decision": "excluded",
+      "reason": "MLX, ggml, CubeCL, JAX and device libraries explain reuse; this pass does not indiscriminately add generic dependencies as core inference systems.",
+      "evidence_urls": [
+        "https://github.com/ml-explore/mlx",
+        "https://github.com/ggml-org/ggml",
+        "https://github.com/tracel-ai/cubecl",
+        "https://github.com/jax-ml/jax"
+      ]
+    }
+  ],
+  "rounds": [
+    {
+      "stream": "apple",
+      "round": 1,
+      "queries": [
+        "github Apple Silicon inference engine uzu Lily Metal LLM",
+        "github splash incoai inference engine references",
+        "github Iris inference Apple Silicon engine antirez",
+        "Perplexity Lily inference engine github official",
+        "BaseRT inference github Apple Metal",
+        "NPUMoE github inference runtime",
+        "ANE inference engine ANEMLL github Apple Neural Engine"
+      ],
+      "expanded_ids": [
+        "splash",
+        "iris",
+        "llama-cpp"
+      ],
+      "notes": "Independent English keyword expansion and seed README/reference screening. Retrieved official repositories; indexed secondary reports were used only to find primary artifacts. The Perplexity blog could not be opened, so source and dated repository reports anchor Lily."
+    },
+    {
+      "stream": "apple",
+      "round": 2,
+      "queries": [
+        "\"lithos-metal\" \"fork\" inference",
+        "\"lily\" \"inference\" \"Apple\" github engine -site:reddit.com",
+        "\"uzu\" \"inference\" \"fork\" -site:reddit.com",
+        "\"saragossa\" inference \"fork\" github",
+        "\"TUFF\" \"turbo-fieldfare\" \"colibri\"",
+        "\"ane.cpp\" github inference engine fork",
+        "\"NPUMoE\" github",
+        "\"site:github.com\" \"colibri\" \"inference\"",
+        "\"turbo-fieldfare\" inference",
+        "\"site:github.com\" \"saragossa\" \"inference\"",
+        "\"site:github.com\" \"NPUMoE\"",
+        "site:github.com \"saragossa\" \"inference\"",
+        "site:github.com \"uzu\" \"inference\" engine -trymirai/uzu",
+        "site:github.com \"NPUMoE\"",
+        "site:github.com \"BaseRT\" \"inference\" -basecompute/baseRT"
+      ],
+      "expanded_ids": [
+        "lily",
+        "lithos-metal",
+        "uzu",
+        "saragossa",
+        "tuff",
+        "basert",
+        "anemll",
+        "ane-cpp",
+        "pmetal",
+        "metalchat"
+      ],
+      "notes": "Followed explicit upstreams, exporters, named adopters and comparisons. Some broad or quoted-site queries returned irrelevant material; corrected domain queries were run. GitHub anonymous API rate limit was reached, then read-only shallow source checkouts continued inspection. Found TurboFieldfare, Colibri, ANE-LM and CoreML LLM CLI."
+    },
+    {
+      "stream": "apple",
+      "round": 3,
+      "queries": [
+        "site:github.com \"turbo-fieldfare\" \"fork\" -Lookoff -drumih",
+        "site:github.com \"colibri\" \"inference\" \"fork\"",
+        "site:github.com \"ANE-LM\" \"fork\"",
+        "site:github.com \"anemll\" \"inference\" \"fork\""
+      ],
+      "expanded_ids": [
+        "turbo-fieldfare",
+        "colibri",
+        "ane-lm",
+        "coreml-llm-cli",
+        "lalamo",
+        "anemll-server"
+      ],
+      "notes": "Source-level backward expansion found Swiftlet through Colibri provenance and SwiftLM through TurboFieldfare references; official ANEMLL project listing exposed the substantial llama.cpp sidecar/slot-bank fork. Model-only forks and thin adopters were not counted separately."
+    },
+    {
+      "stream": "apple",
+      "round": 4,
+      "queries": [
+        "site:github.com \"Swiftlet\" \"inference\" -leonickson1/Swiftlet -JustVugg",
+        "site:github.com \"SwiftLM\" \"stream\" \"fork\" -SharpAI",
+        "site:github.com \"anemll-flash-llama.cpp\" -Anemll",
+        "site:github.com \"Lily\" \"lithos-metal\" \"inference\"",
+        "site:github.com Hypura inference engine",
+        "site:github.com Rapid-MLX disk-stream expert streaming",
+        "site:github.com \"ncdrone/rustane\" inference"
+      ],
+      "expanded_ids": [
+        "swiftlet",
+        "swiftlm",
+        "anemll-flash-llama",
+        "anemll-flash-moe"
+      ],
+      "notes": "Final observed frontier still produced unaudited candidates (Hypura, Rapid-MLX, Rustane and others). They are deferred with reasons. This branch has NOT met a zero-yield convergence criterion and makes no exhaustiveness claim; further same-family expansion was stopped for synthesis while preserving the open frontier."
+    },
+    {
+      "stream": "gpu",
+      "round": 1,
+      "queries": [
+        "github hipEngine inference",
+        "github vllm-radiance",
+        "github Gufo inference Strix",
+        "github NInfer llamAmpere",
+        "Strix Halo inference engine github -site:reddit.com",
+        "RTX 5090 inference engine github -site:reddit.com",
+        "inference engine from scratch AMD github Qwen",
+        "site:github.com inference engine RTX 5090 from scratch",
+        "site:github.com CIRU Runtime",
+        "site:github.com ZINC inference Vulkan",
+        "site:github.com Qwen native inference H100 engine"
+      ],
+      "expanded_ids": [
+        "gufo",
+        "ninfer",
+        "strata",
+        "llamampere",
+        "ktransformers"
+      ],
+      "notes": "Read seed README/source lists, extracted explicit credits and searched independent GPU/native-engine terms; identified seven immediately eligible native/backend candidates."
+    },
+    {
+      "stream": "gpu",
+      "round": 2,
+      "queries": [
+        "hipEngine vllm-radiance gufo inference",
+        "imp inference engine kekzl fork",
+        "memra inference fork",
+        "ZINC inference engine github -zolotukhin -site:reddit.com",
+        "CIRU Runtime github",
+        "vllm-radiance inference github -site:reddit.com",
+        "hipEngine inference github -site:reddit.com",
+        "Qwen inference engine SM86",
+        "ninfer-3090 github",
+        "llama-cpp-strix-halo ROCmFPX",
+        "Llaminar github inference",
+        "vllm-radiance libr4d",
+        "site:github.com ROCmFPX lmcoleman",
+        "site:github.com Llaminar inspired",
+        "site:github.com VTE kyuubyN inference engine fork",
+        "site:github.com Kipp inference engine fork"
+      ],
+      "expanded_ids": [
+        "hipengine",
+        "vte",
+        "zinc",
+        "imp",
+        "memra",
+        "kipp",
+        "vllm-radiance",
+        "gufo",
+        "ninfer"
+      ],
+      "notes": "Expanded admitted systems using README credits, architecture/maintenance references and named downstreams. Added six further core cases and two adjacent routes; inspected pinned source for all additions. NInfer-3090 and Strix forks represented by one distinct continuation each."
+    },
+    {
+      "stream": "gpu",
+      "round": 3,
+      "queries": [
+        "site:github.com ROCmFPX fork inference",
+        "site:github.com HybriMoE inference -PKU-SEC-Lab -awesome",
+        "site:github.com Llaminar inference -Llaminar/llaminar",
+        "site:github.com Gufo RDMA",
+        "Infernix inference github -wallawalla47 -site:reddit.com",
+        "Gufo RDMA github -neuhaus -site:reddit.com",
+        "strix-llama.cpp fork -site:reddit.com -site:github.locker",
+        "HybriMoE Colibri github"
+      ],
+      "expanded_ids": [
+        "ninfer-3090",
+        "infernix",
+        "ciru-runtime",
+        "gufo-rdma",
+        "llaminar",
+        "strix-llama-cpp",
+        "rocmfpx",
+        "hybrimoe"
+      ],
+      "notes": "Final observed frontier: newly screened downstreams were wrappers, duplicate fork families, inaccessible references or insufficiently qualified variants; zero further admitted entries. Infernix points back to existing NInfer/Strata and is already credited by the selected 3090 continuation. This is closure of reviewed references/search results, not enumeration of every GitHub fork."
+    },
+    {
+      "stream": "root",
+      "round": 1,
+      "queries": [
+        "Cactus inference engine CPU native github ARM",
+        "FastFlowLM github AMD NPU inference engine",
+        "NVIDIA TensorRT Edge LLM github Jetson runtime",
+        "specialized inference engine CPU from scratch model github 2026",
+        "CPU specialized inference runtime mobile engine ARM github",
+        "site:github.com zllm-lab/zllm vision inference",
+        "site:github.com swedishembedded/brain inference"
+      ],
+      "expanded_ids": [
+        "cactus",
+        "fastflowlm",
+        "tensorrt-edge-llm",
+        "zllm",
+        "brain",
+        "hilum-engine",
+        "reame",
+        "snapllm"
+      ],
+      "notes": "Cross-hardware and multimodal keyword expansion; official pinned README and implementation paths checked for admitted entries."
+    },
+    {
+      "stream": "root",
+      "round": 2,
+      "queries": [
+        "Cactus Needle inference engine runtime adoption",
+        "FastFlowLM Lemonade engine NPU",
+        "TensorRT-Edge-LLM Jetson tutorial",
+        "zllm inference fork",
+        "Cactus inference engine built on"
+      ],
+      "expanded_ids": [
+        "needle",
+        "lemonade",
+        "jetson-lab",
+        "needle-v1",
+        "llama-cpp",
+        "tensorrt"
+      ],
+      "notes": "Backward model/engine and dependency tracing plus forward integration searches. Needle is an additional adjacent record; wrappers/tutorials and repeated generations are not new stacks."
+    },
+    {
+      "stream": "root",
+      "round": 3,
+      "queries": [
+        "site:github.com cactus-compute/needle engine -cactus-compute -awesome",
+        "site:github.com zllm-lab/zllm -zllm-lab -awesome",
+        "site:github.com swedishembedded/brain fork -swedishembedded -awesome",
+        "site:github.com NobodyWho llama.cpp"
+      ],
+      "expanded_ids": [
+        "needle",
+        "zllm",
+        "brain",
+        "nobodywho"
+      ],
+      "notes": "Observed follow-up results returned existing projects, deployment issues and a llama.cpp-backed SDK. No further eligible entry was established on this frontier; this does not resolve deferred native-core provenance or enumerate all forks."
+    },
+    {
+      "stream": "construction",
+      "round": 1,
+      "queries": [
+        "github diffusion inference \"pure C\" FLUX runtime -llama",
+        "github specialized inference \"whisper\" C++ inference engine",
+        "github \"agent\" \"inference engine\" \"generated\" model 2026",
+        "github \"diffusion\" \"from scratch\" \"Metal\" inference",
+        "github \"MetaInfer\" \"engine\" -site:reddit.com",
+        "github \"Sol-Engine\" inference references",
+        "github diffusion inference \"Rust\" \"CUDA\" engine standalone",
+        "github \"WhisperKit\" \"Qwen3-TTS.cpp\"",
+        "site:github.com \"inference engine\" \"agent\" \"generated\" \"model\" -MetaInfer -llama -awesome -rag",
+        "site:github.com \"Qwen3-TTS\" \"C++\" \"inference\"",
+        "site:github.com \"video\" \"inference\" \"native\" \"MLX\" minimax",
+        "site:github.com \"WhisperKit\" \"Swift\" inference"
+      ],
+      "expanded_ids": [
+        "iris",
+        "metainfer",
+        "sol-engine",
+        "mirage",
+        "hearth",
+        "brodiffusion",
+        "voxgen",
+        "qwen-asr-c",
+        "qingming-qwen3-tts",
+        "parakeet-ggml",
+        "stable-diffusion-rs",
+        "minimax-h3-mlx"
+      ],
+      "notes": "Independent modality-specific keywords supplement the construction seeds; repository metadata, fixed commits, READMEs, source paths and selected design/validation artifacts were retrieved. Source reading only; no upstream code execution."
+    },
+    {
+      "stream": "construction",
+      "round": 2,
+      "queries": [
+        "\"vla.simd\" github",
+        "\"MetaInfer\" \"VibeQwen\" \"engine\" github generated",
+        "\"Sol-Engine\" \"ArgusAgent\" inference",
+        "site:github.com \"Hearth\" \"diffusion\" \"Vulkan\" \"inspired\"",
+        "site:github.com \"VoxGen\" \"VoxCPM\" \"credits\"",
+        "site:github.com \"brodiffusion\" \"validation\"",
+        "site:github.com \"vla.simd\" inference",
+        "\"parakeet.cpp\" inference engine -site:reddit.com -site:github.com/mudler/parakeet.cpp",
+        "\"VoxGen\" \"inference\" -site:reddit.com -site:github.com/NullMagic2/VoxGen",
+        "\"qingming-qwen3-tts\" -site:github.com/uulong950/qingming-qwen3-tts",
+        "\"hearth\" \"diffusion\" \"jeff-hiner\" -site:github.com/jeff-hiner/hearth"
+      ],
+      "expanded_ids": [
+        "qwen-asr-c",
+        "qwen3-tts-c",
+        "parakeet-ggml",
+        "parakeet-axiom",
+        "vla-simd",
+        "voxgen",
+        "hearth",
+        "brodiffusion",
+        "metainfer",
+        "sol-engine"
+      ],
+      "notes": "Backward inspection used official README/build/design references; forward queries found distinct axiom Parakeet, LocalAI adoption and model/checkpoint variants. Agent task files were not treated as evidence of AI authorship. Generic reused libraries were screened as dependencies, not automatically added."
+    },
+    {
+      "stream": "construction",
+      "round": 3,
+      "queries": [
+        "视频生成 推理 引擎 专用 github native CUDA engine",
+        "\"video\" \"inference engine\" github -awesome -vllm -tensorrt -rag -MetaInfer -llama -CUDA-Graphs",
+        "\"diffusion\" \"inference engine\" \"C++\" github -stable-diffusion.cpp -robolamp",
+        "\"Wan\" \"inference\" \"Rust\" github native",
+        "\"vidax\" \"github.com\"",
+        "\"TeleFuser\" \"LightX2V\" \"runtime\"",
+        "\"video generation\" \"inference runtime\" \"GitHub\" \"TPU\"",
+        "\"video generation\" \"inference engine\" -site:reddit.com -site:arxiv.org -site:github.locker -site:wikipedia.org -site:deepwiki.com",
+        "\"StreamDiffusionV2\" github",
+        "\"diffusion\" \"native runtime\" github -llama -gufo -quartz -awesome",
+        "\"图像生成\" \"推理引擎\" \"GitHub\" -ComfyUI -ollama -天数 -芯片"
+      ],
+      "expanded_ids": [
+        "vidax",
+        "telefuser",
+        "streamdiffusion-v2",
+        "streamdiffusion",
+        "aria",
+        "saient-quartz",
+        "edge-dit",
+        "stable-diffusion-cpp",
+        "lightx2v",
+        "fastvideo",
+        "turbodiffusion",
+        "xdit"
+      ],
+      "notes": "Expanded image/video beyond Apple and text-engine terminology. Native Rust image/video, TPU model ports and stateful GPU streaming runtimes were source-inspected. Four existing entries receive proposed core reclassification based on execution ownership, not new record counts."
+    },
+    {
+      "stream": "construction",
+      "round": 4,
+      "queries": [
+        "\"vidax\" \"inference\" \"comparison\" -site:pypi.org -site:arxiv.org -site:twstalker.com",
+        "\"TeleFuser\" \"github\" -site:github.com/Tele-AI -site:deepwiki.com -site:github.mosekj.com",
+        "\"brodiffusion\" \"Hearth\" \"engine\"",
+        "\"StreamDiffusionV2\" \"Scope\" github engine",
+        "\"matteospanio/aria\" \"audio\" -site:reddit.com -site:github.com/matteospanio/aria",
+        "\"SaientAI/saient-quartz\" \"inference\" -site:github.com/SaientAI",
+        "\"minimax-h3-mlx\" \"inference\" -site:github.com/PipeNetwork",
+        "\"stable-diffusion.rs\" \"andreinknv\" -site:github.com/andreinknv"
+      ],
+      "expanded_ids": [
+        "vidax",
+        "telefuser",
+        "streamdiffusion-v2",
+        "brodiffusion",
+        "aria",
+        "saient-quartz",
+        "minimax-h3-mlx",
+        "stable-diffusion-rs"
+      ],
+      "notes": "Forward checks identified Scope adoption, same-engine quantized weights, mirrors and another RK3588 image route. This frontier is INCOMPLETE: unresolved strong candidates remain and not every new engine has a complete adopter/citation trace. No convergence or exhaustive-coverage claim is made."
+    }
+  ],
+  "blindspots": {
+    "apple": [
+      "Project references and forward adopters are an informal software relation graph, not a complete citation graph. Search ranking and repository indexing omit obscure projects.",
+      "The final frontier was not exhausted: Hypura, Rapid-MLX, Rustane, rapidAI, LlamaOnDisk and some substantive forks need source/quality audits.",
+      "No upstream model, benchmark, installer or test suite was executed. Pinned code inspection is not build verification, numerical reproduction or a safety audit.",
+      "English keyword searches were used in this Apple branch; Chinese-only projects and unindexed author posts remain a coverage gap.",
+      "BaseRT has a proprietary runtime. Public converter/binding code cannot establish implementation details of the engine.",
+      "Individual field guides and author logs establish disclosed workflows, not total development cost or a causal benefit from AI coding."
+    ],
+    "gpu": [
+      "No upstream binaries or GPU code were executed; source and author reports are not independent reproduction.",
+      "Keyword indexing and named-fork references are incomplete; GitHub fork API was not exhaustively enumerated.",
+      "Codeberg upstreams were inaccessible; GitHub Radiance continuation source was inspected and original authorship retained.",
+      "Some public README links returned 404 (Laurent fork, darklanes); no inaccessible-source claims were inferred.",
+      "NInfer hardware ports and overlapping Strix/ROCmFPX branches were recorded without making every port, model recipe or package a new case.",
+      "Fields marked AI not-established do not assert absence of AI; agent files and contribution policies alone were not treated as authorship evidence."
+    ],
+    "root": [
+      "Project link graphs are incomplete and search may omit small or Chinese-language repositories.",
+      "Reame native-core source provenance and Snapdragon wrapper execution deltas remain unresolved.",
+      "The last pass is a bounded discovery update, not a certified exhaustive closure of every repository fork or model port."
+    ],
+    "construction": [
+      "This discovery strand has not reached the preregistered convergence threshold. Deferred strong candidates are unresolved, not exclusions or zero-growth evidence.",
+      "Aurora Rust Engine, DiffSynth-Studio, speech.cpp, ncnn/SBC TTS variants and mlx_diffuser require additional source/design/validation inspection. The final RK3588 image lead was handed to the parent NPU strand.",
+      "No upstream inference, build, GPU/TPU experiment or robot trial was executed. Fixed-commit source inspection and author reports do not establish reproducibility or performance superiority.",
+      "Newer low-visibility repositories, unindexed Chinese sources, closed implementations and unreleased code are under-observed. Search absence is not evidence that no related engine exists.",
+      "AI involvement is marked disclosed only for explicit author statements such as Aria. Agent-oriented instructions, source style and repository age are not authorship evidence.",
+      "Construction and maintenance economics remain mostly unknown. Code size, runtime speed and AI involvement do not measure total engineering cost.",
+      "Video quality, speech perception and robot closed-loop task success require task-specific evaluation beyond numerical fixture agreement; optional quantization, cache, sparse attention and distilled models need separate attribution.",
+      "VLM-only zllm/brain, CPU/NPU LCM-Dreamshaper and general Apple/text systems are covered or pending in other strands; this output does not duplicate their records."
+    ]
+  },
+  "convergence": "Not established across the full search. Apple and multimodal branches retain an open frontier."
+}

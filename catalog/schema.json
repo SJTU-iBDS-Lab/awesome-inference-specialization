@@ -279,38 +279,108 @@
   ],
   "case_groups": [
     {
-      "title": "From a construction workflow to an engine",
-      "title_cn": "构建流程实际产出了什么",
+      "title": "Construction workflows and generated execution",
+      "title_cn": "构建流程与生成的执行程序",
       "examples": [
         "vibeqwen",
-        "sol-engine"
+        "sol-engine",
+        "mirage",
+        "lithos-metal",
+        "magnitude"
       ]
     },
     {
-      "title": "Rebuilding execution around deployment constraints",
-      "title_cn": "围绕部署条件重建执行栈",
+      "title": "Native runtimes for qualified models and devices",
+      "title_cn": "围绕指定模型与设备重建原生运行时",
       "examples": [
-        "flash-moe",
-        "dwarfstar",
-        "strata",
-        "ninfer",
         "splash",
-        "llamampere",
         "gufo",
-        "iris",
+        "zllm",
+        "ninfer",
+        "lily",
+        "hipengine",
+        "imp",
+        "vte",
+        "zinc",
+        "memra",
+        "kipp",
+        "saragossa",
         "tensorfold",
         "halogen-flash",
-        "exllamav3"
+        "exllamav3",
+        "llaminar",
+        "ane-cpp",
+        "cactus",
+        "fastflowlm"
       ]
     },
     {
-      "title": "Specialized backends and generated programs",
-      "title_cn": "专用后端与编译生成的执行程序",
+      "title": "Rebuilding around memory and expert placement",
+      "title_cn": "围绕内存与专家驻留重建执行",
       "examples": [
-        "magnitude",
-        "ktransformers",
+        "flash-moe",
+        "strata",
+        "swiftlet",
+        "dwarfstar",
+        "turbo-fieldfare",
+        "tuff",
+        "swiftlm",
+        "colibri",
+        "ktransformers"
+      ]
+    },
+    {
+      "title": "Substantial forks and specialized backends",
+      "title_cn": "通过深度分叉与专用后端改变执行",
+      "examples": [
+        "llamampere",
+        "vllm-radiance",
+        "anemll-flash-llama",
+        "ninfer-3090",
+        "infernix",
+        "ciru-runtime",
+        "gufo-rdma",
+        "strix-llama-cpp"
+      ]
+    },
+    {
+      "title": "Reconstructing image-generation pipelines",
+      "title_cn": "重建图像生成流水线",
+      "examples": [
+        "iris",
+        "stable-diffusion-cpp",
         "nunchaku",
-        "mirage"
+        "edge-dit",
+        "hearth",
+        "brodiffusion",
+        "stable-diffusion-rs",
+        "saient-quartz"
+      ]
+    },
+    {
+      "title": "Video execution, device migration and streaming",
+      "title_cn": "视频执行、设备移植与连续生成",
+      "examples": [
+        "lightx2v",
+        "vidax",
+        "telefuser",
+        "fastvideo",
+        "minimax-h3-mlx",
+        "streamdiffusion-v2"
+      ]
+    },
+    {
+      "title": "Speech, audio diffusion and action-model runtimes",
+      "title_cn": "语音、音频扩散与动作模型运行时",
+      "examples": [
+        "aria",
+        "qwen-asr-c",
+        "vla-simd",
+        "qwen3-tts-c",
+        "qingming-qwen3-tts",
+        "voxgen",
+        "parakeet-ggml",
+        "parakeet-axiom"
       ]
     }
   ]
