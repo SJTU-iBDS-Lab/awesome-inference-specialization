@@ -8,7 +8,7 @@ Read **constraints → execution decisions → artifacts → validation → main
 
 按专用系统、构建流程和支撑基础设施浏览；点击项目进入机制说明、适用边界与直接证据。角色用于组织阅读，不能据此认定系统更快或更成熟。
 
-[Specialized inference systems](#system) · [Ways to construct specialized systems](#construction) · [Supporting infrastructure and references](#support)
+[Specialized inference systems](#system) · [Construction workflows](#construction) · [Supporting infrastructure and references](#support)
 
 <a id="system"></a>
 
@@ -57,7 +57,7 @@ Integrated runtimes and substantial execution backends organized around concrete
 
 <a id="construction"></a>
 
-## Ways to construct specialized systems / 专用系统的构建流程 (9)
+## Construction workflows / 专用系统的构建流程 (9)
 
 Concrete model- or deployment-oriented workflows that generate, compile or adapt executable programs.
 

@@ -24,7 +24,7 @@ Compilers and coding agents may reduce construction effort. Whether those saving
 
 <!-- CATALOG-START -->
 
-**98 entries: 34 Specialized inference systems · 9 Ways to construct specialized systems · 55 Supporting infrastructure and references**
+**98 entries: 34 Specialized inference systems · 9 Construction workflows · 55 Supporting infrastructure and references**
 
 Start with the constraints a system exploits, then follow its construction. Browse all entries by [reading role](docs/systems.md); the eight mechanism families remain a cross-cutting index.
 

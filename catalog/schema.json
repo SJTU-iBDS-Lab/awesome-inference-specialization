@@ -158,7 +158,7 @@
     },
     {
       "id": "construction",
-      "title": "Ways to construct specialized systems",
+      "title": "Construction workflows",
       "title_cn": "专用系统的构建流程",
       "description": "Concrete model- or deployment-oriented workflows that generate, compile or adapt executable programs.",
       "description_cn": "面向具体模型或部署，生成、编译或改造可执行程序的构建流程。"
