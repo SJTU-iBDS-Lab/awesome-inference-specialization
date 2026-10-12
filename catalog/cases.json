@@ -151,6 +151,94 @@
     "checked_on": "2026-10-12"
   },
   {
+    "id": "splash",
+    "title": "Splash: model-specific execution with agent-generated kernels",
+    "project_ids": [
+      "splash"
+    ],
+    "summary": "Integrates a matched draft, specialized kernels and memory policy into a local Apple-silicon serving stack.",
+    "summary_cn": "围绕选定模型和 Apple 芯片，把专用草稿、内核与内存策略整合为本地执行栈，并披露由智能体生成专用内核。",
+    "motivation": "The stated aim is efficient local model serving by specializing model dimensions, speculative execution and memory planning rather than maximizing model coverage.",
+    "boundary": "C++/Metal code owns target/draft execution, kernels, scheduling and state management; a Python frontend exposes compatible HTTP APIs and vision input.",
+    "reuse": "Uses existing checkpoints and tokenizers, Apple runtimes, and acknowledged llama.cpp-derived quantization tables and GGUF decoding material.",
+    "tradeoff": "Targets selected Qwen families and compatible Bonsai checkpoints on recent Apple silicon. Quantized weights, KV precision and optional Neural Engine prefill affect comparison conditions.",
+    "construction": "Public native modules expose integration; the official launch account describes internal agents creating and tuning kernels for model shapes, with precompiled variants shipped to users.",
+    "ai_role": "Directly disclosed for specialized kernels. The record does not establish agent authorship of the scheduler, frontend or entire engine.",
+    "cost": "No development-effort or total lifecycle-cost accounting was found; throughput measurements do not establish cheaper construction.",
+    "validation": "Upstream provides numerical oracles, Metal tests, real-model checks and author-reported HTTP benchmarks. This survey inspected sources without running them.",
+    "maintenance": "Architecture checks, pinned model revisions and documented release regressions support evolution; continuing model-porting effort and long-term maintenance cost remain unknown.",
+    "evidence_urls": [
+      "https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/README.md",
+      "https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/DEVELOPMENT.md",
+      "https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/runtime/model/Runtime.cpp",
+      "https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/runtime/engine/Engine.cpp",
+      "https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/THIRD_PARTY_NOTICES",
+      "https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/docs/performance.md",
+      "https://inco.ai/blog/splash/"
+    ],
+    "checked_on": "2026-10-12"
+  },
+  {
+    "id": "llamampere",
+    "title": "llamAmpere: specialize a shared runtime for Ampere and Qwen",
+    "project_ids": [
+      "llamampere"
+    ],
+    "summary": "A deep llama.cpp fork integrates MTP verification, compressed KV state and SM86 execution for local long-context Qwen inference.",
+    "summary_cn": "深度改造 llama.cpp，将 MTP 验证、压缩 KV 和 SM86 执行路径整合为面向本地长上下文 Qwen 推理的系统。",
+    "motivation": "Fit long-context Qwen3.8-27B inference on consumer Ampere GPUs while improving speculative verification and decode efficiency.",
+    "boundary": "A substantial llama.cpp/TurboQuant fork changes kernels, speculative execution and state management; it is not a runtime built from scratch.",
+    "reuse": "Retains GGML/GGUF, llama.cpp server and model infrastructure; extends TurboQuant/MTP paths and adapts KVarN-derived cache compression.",
+    "tradeoff": "Optimized coverage centers on SM86/Qwen paths. Quantized KV and the recommended post-trained Swift derivative are not equivalent to original BF16 Qwen.",
+    "construction": "Release articles trace profiling, candidate kernels, runtime fixes and rejected experiments; repeated upstream merges preserve shared capabilities and require integration repairs.",
+    "ai_role": "Coding-agent contribution is not established. Handover notes mention Claude/Hermes sessions but do not attribute implementation or quantify task division.",
+    "cost": "Development effort, agent expenditure and total maintenance cost are not disclosed in the reviewed sources.",
+    "validation": "Authors report matched-setting speed tests and numerical checks; separate engine changes from checkpoint, KV format and sampling effects. Not independently reproduced here.",
+    "maintenance": "Version 0.5.3 fixes cache-restoration and Blackwell build regressions; an unresolved parallel-8 failure limits extrapolation from single-stream results.",
+    "evidence_urls": [
+      "https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/QWEN_AMPERE.md",
+      "https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/docs/llamampere-v0.5/RELEASE_NOTES.md",
+      "https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/ggml/src/ggml-cuda/mmvq.cu",
+      "https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/docs/development/sjkvarn-cuda.md",
+      "https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/docs/llamampere-v0.5.3/RELEASE_NOTES.md",
+      "https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/docs/llamampere-v0.2/ARTICLE.md",
+      "https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/QWEN38_SM86_FRONTIER_HANDOVER.md",
+      "https://huggingface.co/jakeatx/ATX-Swift-1.5-Qwen3.8-27B-Uncensored-IQ4_XS-M-GGUF/blob/1f3a29191771b5dae54254fa590b0a0013c18ea1/README.md",
+      "https://huggingface.co/ukisai/Swift-1.5-Qwen3.8-27b/blob/b4c84d42903a8646b25857eb2827288d92ed85a4/README.md"
+    ],
+    "checked_on": "2026-10-12"
+  },
+  {
+    "id": "gufo",
+    "title": "Gufo: a vertical runtime for Strix Halo",
+    "project_ids": [
+      "gufo"
+    ],
+    "summary": "A native C++/HIP engine chooses a narrow hardware target and selected models, owning execution, state and serving while adapting existing components.",
+    "summary_cn": "围绕 Strix Halo 和选定模型重建原生 C++/HIP 执行、状态管理与服务，并复用已有组件。",
+    "motivation": "Focus on selected models that fit Strix Halo unified memory, concentrating optimization and testing instead of maximizing hardware and model coverage.",
+    "boundary": "Owns model execution, kernels, sessions and local serving. Text/vision, ASR/TTS, image generation and video paths have different qualification levels.",
+    "reuse": "Links ROCm/HIP and BLAS libraries; adapts llama.cpp/ggml quantized kernels, DS4 components and other attributed model code.",
+    "tradeoff": "Production is restricted to Linux x86-64 gfx1151; supported checkpoints, quantization and speculative modes impose model-specific compatibility and quality limits.",
+    "construction": "The documented development loop isolates each model’s C++/HIP library, kernels and reference checks. Historical implementation effort and human–AI task division are not disclosed.",
+    "ai_role": "Not established: reviewed sources do not directly disclose AI authorship or task division; agent instructions do not establish either.",
+    "cost": "Total development effort, human hours, agent tokens and long-term maintenance expenditure are not disclosed in the reviewed material.",
+    "validation": "Author reports numerical and serving checks. Flash-Next vision fails one threshold; image coverage is small and full-video perceptual quality remains unqualified.",
+    "maintenance": "Model-owned tests and quality records expose regression boundaries. Hosted CI covers CPU/repository checks; GPU qualification remains separate. No independent reproduction here.",
+    "evidence_urls": [
+      "https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/README.md",
+      "https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/CMakeLists.txt",
+      "https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/docs/DEVELOPMENT.md",
+      "https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/THIRD_PARTY_NOTICES.md",
+      "https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/src/models/qwen38_flash_next/engine.cpp",
+      "https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/docs/models/qwen3.8-flash-next/QUALITY.md",
+      "https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/docs/models/qwen-image-2.1/QUALITY.md",
+      "https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/docs/models/minimax-h3/QUALITY.md",
+      "https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/docs/TESTING.md"
+    ],
+    "checked_on": "2026-10-12"
+  },
+  {
     "id": "iris",
     "title": "Iris: own the image pipeline in C",
     "project_ids": [

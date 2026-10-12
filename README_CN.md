@@ -22,7 +22,7 @@
 
 <!-- CATALOG-START -->
 
-**[完整目录：99 个项目](docs/systems.md) · [精选分析：14 个案例](docs/cases.md)**
+**[完整目录：102 个项目](docs/systems.md) · [精选分析：17 个案例](docs/cases.md)**
 
 先看构建过程与产出系统，再比较复用边界和证据缺口。以下分组只是阅读顺序；AI 参与不代表效果更好，未披露也不代表纯人工实现。
 
@@ -41,6 +41,9 @@
 | [DwarfStar](docs/cases.md#dwarfstar) | 以少数模型和消费级硬件为边界，联合构建原生执行、状态管理与本地服务。 |
 | [Strata](docs/cases.md#strata) | 针对普通游戏电脑，将 GPU 热专家、CPU 冷专家和状态存储组合成模型专用运行时。 |
 | [NInfer](docs/cases.md#ninfer) | 围绕选定 Qwen 模型和 RTX 5090，自行组织模型计算、状态管理与请求服务。 |
+| [Splash](docs/cases.md#splash) | 围绕选定模型和 Apple 芯片，把专用草稿、内核与内存策略整合为本地执行栈，并披露由智能体生成专用内核。 |
+| [llamAmpere](docs/cases.md#llamampere) | 深度改造 llama.cpp，将 MTP 验证、压缩 KV 和 SM86 执行路径整合为面向本地长上下文 Qwen 推理的系统。 |
+| [Gufo](docs/cases.md#gufo) | 围绕 Strix Halo 和选定模型重建原生 C++/HIP 执行、状态管理与服务，并复用已有组件。 |
 | [Iris](docs/cases.md#iris) | 用 C 接管选定图像模型的完整推理流程，同时复用系统数学库和 GPU 能力。 |
 | [TensorFold](docs/cases.md#tensorfold) | 以模型、权重格式和平台的资格表限定支持范围，再提供原生 Zig 服务与专用执行。 |
 | [Halogen Flash](docs/cases.md#halogen-flash) | 以一个模型家族和一类芯片为边界发布专用二进制，公开部署与量化说明。 |

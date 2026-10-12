@@ -16,6 +16,8 @@ Each project has one `survey_role`, independently of what kind of software it de
 
 These roles describe relevance to the survey, **not quality, maturity, novelty or an ordering of merit**. Age does not decide the role: an older system can be a core case if it directly answers the construction question. AI involvement is neither necessary nor sufficient. A project can be central even when it builds on an existing runtime, compiler or kernel library; building everything from scratch is not required.
 
+A deeply modified fork can be a core case when identifiable model- or device-specific changes control a substantive execution path in the integrated engine. Record the inherited framework and the changed path separately. A renamed repository, build preset or thin wrapper alone does not establish that boundary.
+
 Every `core` project must be linked from at least one selected case. The selected-case layer in [`catalog/cases.json`](../catalog/cases.json), rendered as [case notes](cases.md), is distinct from the repository inventory. A workflow and one or more reported outputs can form a case without becoming duplicate project records. For example, a VibeQwen case should link the relevant MetaInfer workflow and Baseten-reported output evidence instead of inventing another repository row. Preserve the distinction between inspected source, reported output and inaccessible implementation.
 
 ## Catalog role: what the project delivers

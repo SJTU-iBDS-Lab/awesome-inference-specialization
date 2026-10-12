@@ -16,6 +16,9 @@ Start with what is rebuilt and what effort is disclosed. Read each case for reta
 | [DwarfStar](cases.md#dwarfstar) | Owns a narrow inference path plus CLI/server integration; it deliberately does not accept arbitrary GGUF models. | Total construction time, token usage and engineering expenditure are not disclosed in reviewed sources. |
 | [Strata](cases.md#strata) | Integrates inference, memory policy and local APIs around one model family and qualified quantized layouts. | Development time, token expenditure and controlled construction-cost comparisons are not disclosed. |
 | [NInfer](cases.md#ninfer) | Native operators, model programs, state/KV management, scheduling and CLI/HTTP serving form one execution stack. | Development effort and lifecycle costs are not disclosed; inference throughput does not establish construction economics. |
+| [Splash](cases.md#splash) | C++/Metal code owns target/draft execution, kernels, scheduling and state management; a Python frontend exposes compatible HTTP APIs and vision input. | No development-effort or total lifecycle-cost accounting was found; throughput measurements do not establish cheaper construction. |
+| [llamAmpere](cases.md#llamampere) | A substantial llama.cpp/TurboQuant fork changes kernels, speculative execution and state management; it is not a runtime built from scratch. | Development effort, agent expenditure and total maintenance cost are not disclosed in the reviewed sources. |
+| [Gufo](cases.md#gufo) | Owns model execution, kernels, sessions and local serving. Text/vision, ASR/TTS, image generation and video paths have different qualification levels. | Total development effort, human hours, agent tokens and long-term maintenance expenditure are not disclosed in the reviewed material. |
 | [Iris](cases.md#iris) | Implements text encoding, diffusion-transformer execution and image decoding for selected FLUX and Z-Image variants. | Construction time, AI-token spending and maintenance economics are not disclosed in reviewed sources. |
 | [TensorFold](cases.md#tensorfold) | Owns loading, tokenization, serving and execution for admitted combinations; experimental Living Weights is a separate model-changing feature. | Development time, token/GPU expenditure and long-term engineering costs are not disclosed. |
 | [Halogen Flash](cases.md#halogen-flash) | Public material exposes deployment and behavior; the core engine and complete tensor-level quantization choices are not publicly inspectable. | Development time, token usage and engineering costs are not disclosed in reviewed sources. |
@@ -97,6 +100,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [EAGLE](catalog.md#eagle) · foundation | support / optimizer / text | target-verified proposals |
 | [Fast-dLLM](catalog.md#fast-dllm) · foundation | support / research-prototype / text, multimodal | configuration-dependent, model / router training, earlier-state reuse |
 | [Inferix](catalog.md#inferix) · adjacent | system / runtime / video | layout / scheduling |
+| [llamAmpere](catalog.md#llamampere) · core | system / runtime / text | target-verified proposals, reduced precision, model / router training |
 | [Lookahead Decoding](catalog.md#lookahead) · foundation | support / optimizer / text | target-verified proposals |
 | [Medusa](catalog.md#medusa) · foundation | support / research-prototype / text | configuration-dependent, model / router training |
 
@@ -133,6 +137,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [FlashAttention](catalog.md#flash-attention) · foundation | support / kernel-library / text | layout / scheduling |
 | [FlashInfer](catalog.md#flashinfer) · foundation | support / kernel-library / text | layout / scheduling |
 | [FlashMLA](catalog.md#flashmla) · foundation | support / kernel-library / text | layout / scheduling, reduced precision |
+| [Gufo](catalog.md#gufo) · core | system / runtime / text, audio, image, video, multimodal | configuration-dependent, reduced precision, target-verified proposals |
 | [Halogen Flash](catalog.md#halogen-flash) · core · **closed core** | system / runtime / text | reduced precision |
 | [Hidet](catalog.md#hidet) · foundation | support / compiler / text, image, general | layout / scheduling |
 | [IREE](catalog.md#iree) · foundation | support / compiler / text, image, general | layout / scheduling |
@@ -148,6 +153,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [NVIDIA TensorRT](catalog.md#tensorrt) · foundation · **closed core** | support / compiler / text, image, general | layout / scheduling |
 | [OneDiff](catalog.md#onediff) · adjacent | construction / compiler / image, video | layout / scheduling |
 | [ONNX Runtime GenAI](catalog.md#onnxruntime-genai) · foundation | support / runtime / text, audio, multimodal | layout / scheduling |
+| [Splash](catalog.md#splash) · core | system / runtime / text, multimodal | configuration-dependent, reduced precision, target-verified proposals |
 | [Stable Fast](catalog.md#stable-fast) · adjacent | construction / compiler / image, video | layout / scheduling |
 | [stable-diffusion.cpp](catalog.md#stable-diffusion-cpp) · adjacent | system / runtime / image, video | configuration-dependent |
 | [SwiftTransformer](catalog.md#swifttransformer) · foundation | support / backend / text | layout / scheduling |

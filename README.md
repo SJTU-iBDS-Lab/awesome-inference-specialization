@@ -22,7 +22,7 @@ The cases help investigate an unproven causal chain:
 
 <!-- CATALOG-START -->
 
-**[Full directory: 99 projects](docs/systems.md) · [Selected analyses: 14 cases](docs/cases.md)**
+**[Full directory: 102 projects](docs/systems.md) · [Selected analyses: 17 cases](docs/cases.md)**
 
 Follow the construction process to its resulting system, then examine reuse boundaries and missing evidence. These groups guide reading; AI involvement does not imply better results, and missing disclosure does not imply human-only implementation.
 
@@ -41,6 +41,9 @@ Follow the construction process to its resulting system, then examine reuse boun
 | [DwarfStar](docs/cases.md#dwarfstar) | A native stack integrates selected model paths, state management and local serving around consumer-hardware constraints. |
 | [Strata](docs/cases.md#strata) | A Qwen-specific runtime combines GPU-resident work with CPU expert execution and explicit memory budgets. |
 | [NInfer](docs/cases.md#ninfer) | Owns model execution, state and serving within a deliberately narrow checkpoint and GPU contract. |
+| [Splash](docs/cases.md#splash) | Integrates a matched draft, specialized kernels and memory policy into a local Apple-silicon serving stack. |
+| [llamAmpere](docs/cases.md#llamampere) | A deep llama.cpp fork integrates MTP verification, compressed KV state and SM86 execution for local long-context Qwen inference. |
+| [Gufo](docs/cases.md#gufo) | A native C++/HIP engine chooses a narrow hardware target and selected models, owning execution, state and serving while adapting existing components. |
 | [Iris](docs/cases.md#iris) | A C image-generation pipeline replaces framework-level execution for selected architectures while retaining platform acceleration. |
 | [TensorFold](docs/cases.md#tensorfold) | A Zig server admits explicit model–format–platform combinations and executes their native Metal or CUDA paths. |
 | [Halogen Flash](docs/cases.md#halogen-flash) | A distributed binary targets one Qwen family and AMD Strix Halo, with public deployment and quantization descriptions. |

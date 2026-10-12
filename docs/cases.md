@@ -10,7 +10,7 @@ Read motivation → execution ownership → retained components and lost general
 
 No case performance was independently reproduced here. “Not disclosed” and “not established” describe the reviewed sources, not an assertion that an activity never occurred.
 
-[MetaInfer → VibeQwen: from construction workflow to serving stack](#vibeqwen) · [Sol-Engine: compose and qualify model-specific optimizations](#sol-engine) · [Flash-MoE: SSD-streamed experts in a native prototype](#flash-moe) · [DwarfStar: a deliberately narrow native execution stack](#dwarfstar) · [Strata: tier experts around a gaming PC](#strata) · [NInfer: a native Qwen stack for one GPU](#ninfer) · [Iris: own the image pipeline in C](#iris) · [TensorFold: qualify native paths by checkpoint and platform](#tensorfold) · [Halogen Flash: specialize a closed binary to one chip](#halogen-flash) · [Magnitude: specialize kernels inside MLX execution](#magnitude) · [KTransformers: integrate CPU expert execution with GPU serving](#ktransformers) · [Nunchaku: build execution around an SVDQuant artifact](#nunchaku) · [ExLlamaV3: couple low-bit artifacts to a dedicated library](#exllamav3) · [Mirage MPK: compile an explicit graph into persistent execution](#mirage)
+[MetaInfer → VibeQwen: from construction workflow to serving stack](#vibeqwen) · [Sol-Engine: compose and qualify model-specific optimizations](#sol-engine) · [Flash-MoE: SSD-streamed experts in a native prototype](#flash-moe) · [DwarfStar: a deliberately narrow native execution stack](#dwarfstar) · [Strata: tier experts around a gaming PC](#strata) · [NInfer: a native Qwen stack for one GPU](#ninfer) · [Splash: model-specific execution with agent-generated kernels](#splash) · [llamAmpere: specialize a shared runtime for Ampere and Qwen](#llamampere) · [Gufo: a vertical runtime for Strix Halo](#gufo) · [Iris: own the image pipeline in C](#iris) · [TensorFold: qualify native paths by checkpoint and platform](#tensorfold) · [Halogen Flash: specialize a closed binary to one chip](#halogen-flash) · [Magnitude: specialize kernels inside MLX execution](#magnitude) · [KTransformers: integrate CPU expert execution with GPU serving](#ktransformers) · [Nunchaku: build execution around an SVDQuant artifact](#nunchaku) · [ExLlamaV3: couple low-bit artifacts to a dedicated library](#exllamav3) · [Mirage MPK: compile an explicit graph into persistent execution](#mirage)
 
 <a id="vibeqwen"></a>
 
@@ -129,6 +129,66 @@ No case performance was independently reproduced here. “Not disclosed” and �
 - **Evolution evidence / 适配与维护:** Explicit architecture and contribution boundaries constrain changes; artifact-version migration is documented, but sustained adaptation cost is unknown.
 
 **Sources:** [Source 1](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/README.md) · [Source 2](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/docs/maintainer/engine-architecture.md) · [Source 3](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/src/models/qwen3_5/execution/text.cpp) · [Source 4](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/docs/maintainer/build-system.md) · [Source 5](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/tests/README.md) · [Source 6](https://github.com/Neroued/ninfer/blob/81c8ce093b2c1646a87566a8e59d807fcf0ec95c/CONTRIBUTING.md).
+
+**Reviewed:** 2026-10-12. See the linked project record for mechanism-specific caveats.
+
+<a id="splash"></a>
+
+## Splash: model-specific execution with agent-generated kernels
+
+**Related project records:** [Splash](catalog.md#splash).
+
+- **Why build it? / 为什么另建:** The stated aim is efficient local model serving by specializing model dimensions, speculative execution and memory planning rather than maximizing model coverage.
+- **Execution ownership / 重构边界:** C++/Metal code owns target/draft execution, kernels, scheduling and state management; a Python frontend exposes compatible HTTP APIs and vision input.
+- **Retained components / 复用什么:** Uses existing checkpoints and tokenizers, Apple runtimes, and acknowledged llama.cpp-derived quantization tables and GGUF decoding material.
+- **Scope given up / 取舍与兼容性:** Targets selected Qwen families and compatible Bonsai checkpoints on recent Apple silicon. Quantized weights, KV precision and optional Neural Engine prefill affect comparison conditions.
+- **Construction process / 怎样构建:** Public native modules expose integration; the official launch account describes internal agents creating and tuning kernels for model shapes, with precompiled variants shipped to users.
+- **AI participation / AI 参与的直接证据:** Directly disclosed for specialized kernels. The record does not establish agent authorship of the scheduler, frontend or entire engine.
+- **Disclosed effort / 构建投入:** No development-effort or total lifecycle-cost accounting was found; throughput measurements do not establish cheaper construction.
+- **Validation boundary / 验证覆盖:** Upstream provides numerical oracles, Metal tests, real-model checks and author-reported HTTP benchmarks. This survey inspected sources without running them.
+- **Evolution evidence / 适配与维护:** Architecture checks, pinned model revisions and documented release regressions support evolution; continuing model-porting effort and long-term maintenance cost remain unknown.
+
+**Sources:** [Source 1](https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/README.md) · [Source 2](https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/DEVELOPMENT.md) · [Source 3](https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/runtime/model/Runtime.cpp) · [Source 4](https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/runtime/engine/Engine.cpp) · [Source 5](https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/THIRD_PARTY_NOTICES) · [Source 6](https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/docs/performance.md) · [Source 7](https://inco.ai/blog/splash/).
+
+**Reviewed:** 2026-10-12. See the linked project record for mechanism-specific caveats.
+
+<a id="llamampere"></a>
+
+## llamAmpere: specialize a shared runtime for Ampere and Qwen
+
+**Related project records:** [llamAmpere](catalog.md#llamampere).
+
+- **Why build it? / 为什么另建:** Fit long-context Qwen3.8-27B inference on consumer Ampere GPUs while improving speculative verification and decode efficiency.
+- **Execution ownership / 重构边界:** A substantial llama.cpp/TurboQuant fork changes kernels, speculative execution and state management; it is not a runtime built from scratch.
+- **Retained components / 复用什么:** Retains GGML/GGUF, llama.cpp server and model infrastructure; extends TurboQuant/MTP paths and adapts KVarN-derived cache compression.
+- **Scope given up / 取舍与兼容性:** Optimized coverage centers on SM86/Qwen paths. Quantized KV and the recommended post-trained Swift derivative are not equivalent to original BF16 Qwen.
+- **Construction process / 怎样构建:** Release articles trace profiling, candidate kernels, runtime fixes and rejected experiments; repeated upstream merges preserve shared capabilities and require integration repairs.
+- **AI participation / AI 参与的直接证据:** Coding-agent contribution is not established. Handover notes mention Claude/Hermes sessions but do not attribute implementation or quantify task division.
+- **Disclosed effort / 构建投入:** Development effort, agent expenditure and total maintenance cost are not disclosed in the reviewed sources.
+- **Validation boundary / 验证覆盖:** Authors report matched-setting speed tests and numerical checks; separate engine changes from checkpoint, KV format and sampling effects. Not independently reproduced here.
+- **Evolution evidence / 适配与维护:** Version 0.5.3 fixes cache-restoration and Blackwell build regressions; an unresolved parallel-8 failure limits extrapolation from single-stream results.
+
+**Sources:** [Source 1](https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/QWEN_AMPERE.md) · [Source 2](https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/docs/llamampere-v0.5/RELEASE_NOTES.md) · [Source 3](https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/ggml/src/ggml-cuda/mmvq.cu) · [Source 4](https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/docs/development/sjkvarn-cuda.md) · [Source 5](https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/docs/llamampere-v0.5.3/RELEASE_NOTES.md) · [Source 6](https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/docs/llamampere-v0.2/ARTICLE.md) · [Source 7](https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/QWEN38_SM86_FRONTIER_HANDOVER.md) · [Source 8](https://huggingface.co/jakeatx/ATX-Swift-1.5-Qwen3.8-27B-Uncensored-IQ4_XS-M-GGUF/blob/1f3a29191771b5dae54254fa590b0a0013c18ea1/README.md) · [Source 9](https://huggingface.co/ukisai/Swift-1.5-Qwen3.8-27b/blob/b4c84d42903a8646b25857eb2827288d92ed85a4/README.md).
+
+**Reviewed:** 2026-10-12. See the linked project record for mechanism-specific caveats.
+
+<a id="gufo"></a>
+
+## Gufo: a vertical runtime for Strix Halo
+
+**Related project records:** [Gufo](catalog.md#gufo).
+
+- **Why build it? / 为什么另建:** Focus on selected models that fit Strix Halo unified memory, concentrating optimization and testing instead of maximizing hardware and model coverage.
+- **Execution ownership / 重构边界:** Owns model execution, kernels, sessions and local serving. Text/vision, ASR/TTS, image generation and video paths have different qualification levels.
+- **Retained components / 复用什么:** Links ROCm/HIP and BLAS libraries; adapts llama.cpp/ggml quantized kernels, DS4 components and other attributed model code.
+- **Scope given up / 取舍与兼容性:** Production is restricted to Linux x86-64 gfx1151; supported checkpoints, quantization and speculative modes impose model-specific compatibility and quality limits.
+- **Construction process / 怎样构建:** The documented development loop isolates each model’s C++/HIP library, kernels and reference checks. Historical implementation effort and human–AI task division are not disclosed.
+- **AI participation / AI 参与的直接证据:** Not established: reviewed sources do not directly disclose AI authorship or task division; agent instructions do not establish either.
+- **Disclosed effort / 构建投入:** Total development effort, human hours, agent tokens and long-term maintenance expenditure are not disclosed in the reviewed material.
+- **Validation boundary / 验证覆盖:** Author reports numerical and serving checks. Flash-Next vision fails one threshold; image coverage is small and full-video perceptual quality remains unqualified.
+- **Evolution evidence / 适配与维护:** Model-owned tests and quality records expose regression boundaries. Hosted CI covers CPU/repository checks; GPU qualification remains separate. No independent reproduction here.
+
+**Sources:** [Source 1](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/README.md) · [Source 2](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/CMakeLists.txt) · [Source 3](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/docs/DEVELOPMENT.md) · [Source 4](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/THIRD_PARTY_NOTICES.md) · [Source 5](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/src/models/qwen38_flash_next/engine.cpp) · [Source 6](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/docs/models/qwen3.8-flash-next/QUALITY.md) · [Source 7](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/docs/models/qwen-image-2.1/QUALITY.md) · [Source 8](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/docs/models/minimax-h3/QUALITY.md) · [Source 9](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/docs/TESTING.md).
 
 **Reviewed:** 2026-10-12. See the linked project record for mechanism-specific caveats.
 

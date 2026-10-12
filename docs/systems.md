@@ -18,7 +18,7 @@ Artifact roles retained as independent labels: `system` — Specialized inferenc
 
 <a id="core"></a>
 
-## Core cases / 核心案例 (14)
+## Core cases / 核心案例 (17)
 
 Purposeful reconstruction of execution paths, or a construction workflow linked to a concrete specialized artifact. These cases motivate investigation; they do not establish a new paradigm.
 
@@ -29,15 +29,18 @@ Purposeful reconstruction of execution paths, or a construction workflow linked 
 | [DwarfStar](catalog.md#dwarfstar) | A separately implemented runtime links disclosed AI assistance to model execution and expert-residency control. | system / runtime |
 | [ExLlamaV3](catalog.md#exllamav3) | An integrated quantized-model runtime illustrates rebuilding execution around a chosen representation and supported architectures. | system / runtime |
 | [Flash-MoE](catalog.md#flash-moe) | A model-specific implementation links disclosed AI-assisted construction to SSD expert streaming and explicit approximation choices. | system / research-prototype |
+| [Gufo](catalog.md#gufo) | Rebuilds a vertical native execution and serving stack around one integrated GPU platform, with deliberately selected models and model-owned kernels. | system / runtime |
 | [Halogen Flash](catalog.md#halogen-flash) | A model-and-device-specific runtime illustrates how narrow deployment contracts reshape implementation choices. | system / runtime |
 | [Iris](catalog.md#iris) | A native image-model runtime exposes which graph and execution responsibilities are taken out of a general framework. | system / runtime |
 | [KTransformers / kt-kernel](catalog.md#ktransformers) | A substantial heterogeneous backend provides a core case for rebuilding execution while retaining shared serving infrastructure. | system / backend |
+| [llamAmpere](catalog.md#llamampere) | A substantial llama.cpp fork couples model-specific speculative decoding, compressed state and Ampere kernels while retaining shared runtime services. | system / runtime |
 | [Magnitude](catalog.md#magnitude) | A dedicated inference stack exposes its kernel-composition and model-execution boundary for construction analysis. | system / runtime |
 | [MetaInfer](catalog.md#metainfer) | Connects a disclosed construction workflow to the VibeQwen engine case; the toolbox and generated engine are different artifacts. | construction / generator |
 | [Mirage Persistent Kernel](catalog.md#mirage) | A model-to-persistent-program construction path connects generated execution schedules to a concrete runtime artifact. | construction / compiler |
 | [NInfer](catalog.md#ninfer) | Rebuilds model execution and serving for selected Qwen checkpoints on one GPU; exposes the scope and ownership of a purpose-built stack. | system / runtime |
 | [Nunchaku](catalog.md#nunchaku) | A substantial low-bit diffusion backend connects representation-specific execution to reusable pipeline integration. | system / runtime |
 | [Sol-Engine](catalog.md#sol-engine) | Connects agent-guided optimization with inspectable model runtimes and their acceptance checks. | construction / optimizer |
+| [Splash](catalog.md#splash) | Builds model-specific execution and serving on Apple silicon, with disclosed agent-generated kernels inside a native runtime. | system / runtime |
 | [Strata](catalog.md#strata) | A narrow MoE runtime makes expert placement and execution choices inspectable; AI authorship is not established. | system / runtime |
 | [TensorFold](catalog.md#tensorfold) | A native Zig runtime exposes explicit model, format and platform contracts as a reconstruction boundary. | system / runtime |
 

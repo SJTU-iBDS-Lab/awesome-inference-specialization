@@ -4,7 +4,7 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Systems & construction](systems.md) · [Comparison](comparison.md) · [Taxonomy](taxonomy.md) · [Evidence policy](evidence-policy.md)
 
-99 entries. Source review: 2026-10-12. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
+102 entries. Source review: 2026-10-12. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
 
 Use the family links below, or search this page for a model, device, mechanism or project. Source visibility is not a license or correctness certification. Semantic labels identify evaluation obligations, not proven equivalence.
 
@@ -1138,7 +1138,7 @@ Accumulates a rescaled relative change in timestep-modulated inputs and reuses a
 
 <a id="decoding"></a>
 
-## Generation order / 生成顺序 (5)
+## Generation order / 生成顺序 (6)
 
 **Can more output be produced per step?** Draft and verify tokens, or reorganize block generation.
 
@@ -1226,6 +1226,35 @@ Manages persistent KV state for semi-autoregressive diffusion blocks while separ
 **Evidence:** [Source 1](https://github.com/alibaba-damo-academy/Inferix/blob/main/README.md) · [Source 2](https://github.com/alibaba-damo-academy/Inferix/blob/main/inferix/kvcache_manager/kvcache_manager.py) · [Source 3](https://github.com/alibaba-damo-academy/Inferix/blob/main/inferix/core/memory/manager.py).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `initial`.
+
+</details>
+
+<a id="llamampere"></a>
+
+### [llamAmpere](https://github.com/JakeATX/llamAmpere)
+
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** A substantial llama.cpp fork couples model-specific speculative decoding, compressed state and Ampere kernels while retaining shared runtime services.
+
+Extends the llama.cpp/TurboQuant lineage with SM86 verification kernels, a draft-only vocabulary shortlist, format-specific quantized execution, SJ-KVaRN compressed KV and RAM/disk prompt-state reuse.
+
+**Scope:** Qwen3.8-27B with an MTP head, primarily single-stream inference on Ampere RTX 3090/3090 Ti, where verification width and long-context state compete for compute and VRAM.
+
+**Boundary:** The optimized path is a deep fork, not a new runtime from scratch. Current examples use a post-trained Swift 1.5 derivative plus quantized weights/KV; those changes must be separated from engine-only gains. v0.5.3 documents an unresolved parallel-8 startup failure; other GPU generations are not equivalently tuned.
+
+**Semantic considerations:** target-verified proposals, reduced precision, model / router training.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `mtp-speculation`, `draft-vocabulary-shortlist`, `shape-specific-cuda`, `quantized-kv`, `prompt-cache-tiering`.
+
+**Constraints:** `model`, `hardware`, `memory`, `precision`, `context`, `workload`.
+
+**Evidence:** [Source 1](https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/QWEN_AMPERE.md) · [Source 2](https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/docs/llamampere-v0.5/RELEASE_NOTES.md) · [Source 3](https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/ggml/src/ggml-cuda/mmvq.cu) · [Source 4](https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/docs/development/sjkvarn-cuda.md) · [Source 5](https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/docs/llamampere-v0.5.3/RELEASE_NOTES.md) · [Source 6](https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/docs/llamampere-v0.2/ARTICLE.md) · [Source 7](https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/QWEN38_SM86_FRONTIER_HANDOVER.md) · [Source 8](https://huggingface.co/jakeatx/ATX-Swift-1.5-Qwen3.8-27B-Uncensored-IQ4_XS-M-GGUF/blob/1f3a29191771b5dae54254fa590b0a0013c18ea1/README.md) · [Source 9](https://huggingface.co/ukisai/Swift-1.5-Qwen3.8-27b/blob/b4c84d42903a8646b25857eb2827288d92ed85a4/README.md).
+
+**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 
 </details>
 
@@ -1643,7 +1672,7 @@ Combines Ulysses and Ring sequence parallelism with CFG/data parallelism and Pip
 
 <a id="execution"></a>
 
-## Compiled & native execution / 编译与原生执行 (33)
+## Compiled & native execution / 编译与原生执行 (35)
 
 **How does a graph become an executable?** Fuse, lower, specialize and dispatch graphs or native kernels.
 
@@ -1990,6 +2019,35 @@ Uses DeepSeek-specific latent/sparse-attention geometry, precomputed scheduler m
 **Constraints:** `model`, `hardware`, `precision`, `shape`.
 
 **Evidence:** [Source 1](https://github.com/deepseek-ai/FlashMLA/blob/2e5429fc5653bab6e081f09477126f731882a6a9/README.md) · [Source 2](https://github.com/deepseek-ai/FlashMLA/blob/2e5429fc5653bab6e081f09477126f731882a6a9/flash_mla/flash_mla_interface.py).
+
+**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
+
+</details>
+
+<a id="gufo"></a>
+
+### [Gufo](https://github.com/gufo-org/gufo)
+
+[core](systems.md#core) · `system` · `runtime` · `text / audio / image / video / multimodal` · **public code**
+
+**Survey relevance:** Rebuilds a vertical native execution and serving stack around one integrated GPU platform, with deliberately selected models and model-owned kernels.
+
+Owns per-model C++/HIP execution, kernels and state alongside serving, batching and continuation caching; Qwen paths integrate model-specific draft/verification cycles while reusing ROCm BLAS and adapted upstream code.
+
+**Scope:** Selected models on Linux x86-64 AMD Strix Halo (gfx1151), optimized for 128 GiB unified-memory systems; smaller memory configurations are conditional on model fit.
+
+**Boundary:** Quality is model-specific: Flash-Next retains a vision parity failure; Qwen-Image has only three complete qualification trajectories and H3 lacks full-video perceptual qualification. Published benchmarks are author-reported; AI authorship is not established.
+
+**Semantic considerations:** configuration-dependent, reduced precision, target-verified proposals.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `native-execution`, `model-specific-kernels`, `speculative-decoding`, `continuous-batching`, `conversation-cache`.
+
+**Constraints:** `model`, `hardware`, `memory`, `precision`, `workload`.
+
+**Evidence:** [Source 1](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/README.md) · [Source 2](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/CMakeLists.txt) · [Source 3](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/docs/DEVELOPMENT.md) · [Source 4](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/THIRD_PARTY_NOTICES.md) · [Source 5](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/src/models/qwen38_flash_next/engine.cpp) · [Source 6](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/docs/models/qwen3.8-flash-next/QUALITY.md) · [Source 7](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/docs/models/qwen-image-2.1/QUALITY.md) · [Source 8](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/docs/models/minimax-h3/QUALITY.md) · [Source 9](https://github.com/gufo-org/gufo/blob/956f3d62386a80d327aea9610310fef105c31b95/docs/TESTING.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 
@@ -2427,6 +2485,35 @@ Executes ONNX generative models through execution providers while selecting mode
 **Evidence:** [Source 1](https://github.com/microsoft/onnxruntime-genai/blob/HEAD/README.md) · [Source 2](https://github.com/microsoft/onnxruntime-genai/blob/HEAD/src/models/io/kv_cache.cpp) · [Source 3](https://github.com/microsoft/onnxruntime-genai/blob/HEAD/src/models/io/ep_managed_sliding_kv_cache.cpp).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
+
+</details>
+
+<a id="splash"></a>
+
+### [Splash](https://github.com/incoai/splash)
+
+[core](systems.md#core) · `system` · `runtime` · `text / multimodal` · **public code**
+
+**Survey relevance:** Builds model-specific execution and serving on Apple silicon, with disclosed agent-generated kernels inside a native runtime.
+
+A native runtime combines model-specific Metal kernels and matched DFlash2 drafts with its own batched execution, memory admission and KV/GDN prefix reuse; kernel agents generate specialized kernels.
+
+**Scope:** Selected Qwen3.8-27B and Qwen3.6-35B-A3B checkpoints, plus compatible Ternary Bonsai 2, on Apple M3 or newer and macOS 26.4+; text and vision.
+
+**Boundary:** AI assistance is disclosed for specialized kernel creation, not authorship of the whole engine. Quantization, INT8 KV and optional Neural Engine paths need configuration-specific checks; launch comparisons use recommended engine settings and do not isolate individual mechanisms.
+
+**Semantic considerations:** configuration-dependent, reduced precision, target-verified proposals.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `native-execution`, `shape-specialization`, `speculative-decoding`, `paged-kv`, `prefix-caching`, `agent-generated-kernels`.
+
+**Constraints:** `model`, `hardware`, `memory`, `precision`, `workload`.
+
+**Evidence:** [Source 1](https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/README.md) · [Source 2](https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/DEVELOPMENT.md) · [Source 3](https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/runtime/model/Runtime.cpp) · [Source 4](https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/runtime/engine/Engine.cpp) · [Source 5](https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/THIRD_PARTY_NOTICES) · [Source 6](https://github.com/incoai/splash/blob/8cd9fb0ea768042153f2490d4201296b483a45dd/docs/performance.md) · [Source 7](https://inco.ai/blog/splash/).
+
+**Reviewed:** 2026-10-12 · **AI involvement:** `disclosed` · **Discovery:** `keyword`.
 
 </details>
 
