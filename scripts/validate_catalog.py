@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 
 from update_readme import CSV_PATH, FAMILIES, SCHEMA, load_rows
 
-FIELDS = set('id project family domains artifact_type constraints mechanisms target mechanism semantic_effect source_visibility ai_involvement url evidence_urls caveat checked_on discovery'.split())
+FIELDS = set('id project catalog_role family domains artifact_type constraints mechanisms target mechanism semantic_effect source_visibility ai_involvement url evidence_urls caveat checked_on discovery'.split())
 TAG = re.compile(r'[a-z0-9][a-z0-9-]*\Z')
 
 
@@ -25,7 +25,7 @@ def validate(rows: list[dict[str, str]]) -> list[str]:
     ids: set[str] = set()
     urls: set[str] = set()
     family_ids = {f['id'] for f in FAMILIES}
-    enums = {'family': family_ids, 'artifact_type': set(SCHEMA['artifact_types']),
+    enums = {'catalog_role': {role['id'] for role in SCHEMA['roles']}, 'family': family_ids, 'artifact_type': set(SCHEMA['artifact_types']),
              'source_visibility': set(SCHEMA['source_visibility']),
              'ai_involvement': {'intrinsic', 'disclosed', 'not-established'},
              'discovery': {'initial', 'keyword', 'dependency'}}
@@ -75,6 +75,16 @@ def validate(rows: list[dict[str, str]]) -> list[str]:
         for example in f['examples']:
             if example not in members:
                 errors.append(f'Invalid featured example for {f["id"]}: {example}')
+    for group_name in ('system_showcases', 'build_routes', 'support_groups'):
+        for group in SCHEMA[group_name]:
+            for example in group['examples']:
+                record = next((r for r in rows if r.get('id') == example), None)
+                if record is None:
+                    errors.append(f'Missing showcase example: {example}')
+                elif group_name == 'system_showcases' and record.get('catalog_role') != 'system':
+                    errors.append(f'System showcase must point to a system: {example}')
+                elif group_name == 'support_groups' and record.get('catalog_role') != 'support':
+                    errors.append(f'Support list must point to a supporting entry: {example}')
     return errors
 
 

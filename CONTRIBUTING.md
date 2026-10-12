@@ -1,17 +1,17 @@
 # Contributing
 
-Add a concrete, inspectable mechanism and explain its boundary. Corrections and independent negative results are as useful as additions.
+Contribute a specialized system, a concrete construction workflow, or infrastructure that supports their implementation and comparison. Connect a known constraint to an inspectable execution decision and explain its boundary. Corrections and independent negative results are as useful as additions.
 
 ## Add or correct a project
 
 1. Read the [inclusion criteria](README.md#what-belongs-here), [taxonomy](docs/taxonomy.md) and [evidence policy](docs/evidence-policy.md).
 2. Edit **`catalog/projects.csv`**. Use the canonical upstream repository; do not count renamed repositories, integration wrappers or multiple methods in the same repository twice.
-3. Choose one primary `family` for browsing. Keep modality, artifact type, mechanism tags and semantic effects independent. This is an editorial grouping, not a quality ranking.
+3. Choose a `catalog_role` (`system`, `construction`, `support`) for the main reading order, then one primary `family` for secondary mechanism browsing. Keep modality, artifact type, mechanism tags and semantic effects independent. This is an editorial grouping, not a quality ranking.
 4. Supply at least two distinct official evidence pointers, ideally a design/README plus a relevant implementation file. For closed cores, identify the public interface or documentation boundary. Two links alone do not establish correctness.
 5. State a concrete scope and caveat. Note quantization, omitted work, stale state, changed models, unsupported configurations and incomplete verification where relevant.
 6. Mark AI involvement only from direct disclosure or the implemented construction method. An `AGENTS.md` or `CLAUDE.md` filename alone establishes neither.
 7. Set `checked_on` to the date you inspected the sources. Prefer commit-pinned evidence for version-sensitive claims. Summarize the inspection depth and discovery path in the PR.
-8. Regenerate and validate the four views:
+8. Regenerate and validate the five views:
 
 ```sh
 python scripts/update_readme.py
@@ -20,16 +20,17 @@ python scripts/update_readme.py --check
 python -m unittest discover -s tests
 ```
 
-Do not edit generated sections of either README, `docs/catalog.md`, or `docs/comparison.md` directly. The hand-written README introductions and guides can be edited normally. Use `catalog/schema.json` for controlled facets and featured examples. Update both homepages and the diagrams when changing the classification.
+Do not edit generated sections of either README, `docs/systems.md`, `docs/catalog.md`, or `docs/comparison.md` directly. The hand-written README introductions and guides can be edited normally. Use `catalog/schema.json` for controlled facets, system showcases, construction routes and supporting examples. The routes can overlap; distinguish generated kernels, composed model programs and complete servers. Update both homepages and the diagrams when changing the classification.
 
 ## Data dictionary
 
-Schema version: **2**. The former `category`, `tier`, `axes` and single `evidence_url` fields have been replaced; no high/low inclusion tier remains.
+Schema version: **3**. `catalog_role` separates systems, concrete construction workflows and supporting infrastructure. The former `category`, `tier`, `axes` and single `evidence_url` fields have been replaced; no high/low inclusion tier remains.
 
 | Field | Meaning |
 | --- | --- |
 | `id`, `project` | Stable identifier and display name; preserve identifiers when renaming |
-| `family` | One of eight primary browsing families in `schema.json` |
+| `catalog_role` | Main reading role: system, construction workflow or supporting infrastructure; not a quality tier |
+| `family` | One of eight secondary mechanism browsing families in `schema.json` |
 | `domains` | Semicolon-separated inspected modalities: text, image, video, audio, multimodal, general |
 | `artifact_type` | Runtime, backend, compiler, optimizer, kernel library, research prototype, generator or verification tool |
 | `constraints` | Semicolon-separated concise tags for the known deployment assumptions |

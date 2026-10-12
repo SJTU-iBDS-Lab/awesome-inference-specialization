@@ -1,8 +1,49 @@
 # Taxonomy: inference specialization
 
-The catalog groups projects by **what they change in inference execution**. Domain, constraints, artifact type, semantic effects, and source access are independent dimensions. A project has one editorial primary `family` for navigation and multiple `mechanisms` for its actual implementation. The primary family is neither a quality ranking nor a claim that the project implements only one mechanism.
+The catalog foregrounds **specialized inference systems and the ways they are built**. Start with concrete deployment constraints and follow them to changed execution decisions, an integrated or generated artifact, and its validation and maintenance obligations. General engines, reusable compilers, kernel languages, libraries, mechanism components and evaluators remain in the catalog as supporting context.
 
-## Eight navigation families
+## Reading order and catalog roles
+
+The [systems and construction guide](systems.md) is the main entry point. Each record has one editorial `catalog_role`:
+
+| Role | What belongs here | What to inspect first |
+| --- | --- | --- |
+| `system` | An integrated execution system or specialized backend whose decisions are shaped by identifiable model, device or workload constraints | The constraint, the changed state/layout/scheduling/execution decision, the integration boundary and the deployable artifact |
+| `construction` | A concrete workflow that builds model- or deployment-specific programs, through direct native implementation, backend integration, compilation/search, agents, or a combination | Its inputs, decisions made during construction, emitted artifact, validation gates and update process |
+| `support` | General reference engines, reusable compilers/DSLs/kernels, mechanism components and evaluation infrastructure | What it supplies to a system or construction workflow, its interface and its limits |
+
+These are **display roles, not quality levels**. A support project may be mature and indispensable; a system may be experimental or incompletely validated. A compiler may be `construction` when the record documents a specific model-to-deployment workflow, or `support` when the record concerns reusable compiler infrastructure. An agent framework does not qualify as a construction workflow merely because it can write code.
+
+The roles do not replace `artifact_type` or the eight `family` values. In particular, `catalog_role=construction` describes a concrete way to build specialized programs, whereas `family=construction` groups languages, agents and checking tools for secondary discovery. A DSL or benchmark can have the latter family and the `support` role. A directly implemented runtime can have the `system` role while illustrating a native construction path.
+
+Read in this order:
+
+1. **Systems:** which constraint justified which execution decision, and what can be deployed?
+2. **Construction paths:** how was that decision implemented, integrated, checked and updated?
+3. **Supporting infrastructure and mechanisms:** which pieces can be reused, compared or replaced?
+
+The full catalog retains all records. Navigation priority does not remove generic engines or mechanism components, and it does not rank their research value.
+
+## What counts as specialization here?
+
+Optimization alone is too broad a criterion: almost every inference project optimizes something. A useful specialization account connects four elements:
+
+| Element | Required explanation | Example of an insufficient account |
+| --- | --- | --- |
+| **Constraint** | An identifiable property of the model, target device, memory budget, shape range, workload or deployment | “Supports LLMs” or a short model list without an execution consequence |
+| **Changed execution decision** | What the constraint makes the implementation fix, remove, fuse, place, schedule or generate differently | A claimed speedup, a new wrapper, or enabling a generic flag without tracing its effect |
+| **Deployable artifact** | The integrated runtime, backend, executable graph, model library or generated program, including its interface and remaining dependencies | An isolated fast kernel presented as a complete inference engine |
+| **Validation and maintenance** | The tested contract and scope, invalidation conditions, fallback and response to model/device/workload changes | A passing demo treated as general correctness or a one-time build treated as sustainable deployment |
+
+This chain is an analysis requirement, not a demand that every cataloged project already satisfy every engineering obligation. Gaps belong in the record's caveat. A mechanism component with a precise constraint and implementation can remain useful `support` when integration into a deployable system is outside its scope. Conversely, a system built on general infrastructure can be specialized if it makes and validates concrete deployment-specific decisions.
+
+For example, a constrained-memory MoE account should identify where experts reside, when they move, how movement interacts with execution, and the integrated inference path. A fixed-device video account should identify the affected graph, shapes, state or iteration schedule and the complete generation boundary. “Uses CUDA” and “accelerates diffusion” alone do not supply those links.
+
+## Eight secondary navigation families
+
+![Mechanism landscape across execution and supporting tools](../assets/landscape.svg)
+
+Once the system or construction path is understood, the mechanism families help find related techniques. A record has one editorial primary `family` and multiple `mechanisms`. The family is neither a quality ranking nor a claim that the project implements only one mechanism.
 
 | ID | Organizing question | Typical mechanisms |
 | --- | --- | --- |
@@ -15,7 +56,7 @@ The catalog groups projects by **what they change in inference execution**. Doma
 | `execution` | How does a graph become an executable? | Compilation, graph/operator fusion, kernel specialization, persistent execution, graph replay and native backends |
 | `construction` | How are specialized programs built and checked? | Coding agents, kernel DSLs, configuration search, profiling, differential validation and benchmark infrastructure |
 
-The first seven families describe execution mechanisms. **`construction` contains supporting tools**: a language, agent, or benchmark does not itself establish an inference speedup. Inspect the program it produces or evaluates, its integration, and its validation path. Some projects legitimately span both roles.
+The first seven families describe execution mechanisms. **The eighth, `construction`, groups construction and validation tools rather than an execution mechanism.** A language, agent, or benchmark does not itself establish an inference speedup. Inspect the program it produces or evaluates, its integration, and its validation path. This family can contain both concrete construction workflows and reusable support tools; `catalog_role` distinguishes their presentation.
 
 The family definitions and navigation examples are stored in [the schema](../catalog/schema.json). The [catalog](catalog.md) exposes the individual records and their evidence.
 
@@ -23,6 +64,8 @@ The family definitions and navigation examples are stored in [the schema](../cat
 
 | Dimension | What it records | What it must not imply |
 | --- | --- | --- |
+| `catalog_role` | System, concrete construction workflow, or supporting infrastructure | A display role is not a quality or maturity level |
+| `family` | The primary mechanism or tool family used for secondary navigation | A family is not the project's full scope or its display role |
 | `domains` | Text, image, video, audio, multimodal, or general-purpose coverage | A domain is not an optimization mechanism; example coverage is not universal support |
 | `constraints` | Model structure, hardware, memory capacity, shapes, workload, or deployment assumptions | A narrow model list alone does not establish substantive specialization |
 | `mechanisms` | Multiple concrete actions, such as KV offload, fused dequantization, or persistent workers | Membership in the primary family does not exhaust the implementation |
@@ -66,6 +109,8 @@ Exact prefix reuse, under valid cache keys and compatible model state, is not th
 
 ## Cross-domain examples and classification boundaries
 
+![Data movement, state reuse and candidate verification have different contracts](../assets/mechanisms.svg)
+
 | Situation | Classification and boundary |
 | --- | --- |
 | MoE experts do not fit in VRAM | Residency and offload are `memory`. Skipping routed experts is `selection`; it introduces a different evaluation obligation. Ordinary model-defined routing is not automatically an additional approximation. |
@@ -74,16 +119,16 @@ Exact prefix reuse, under valid cache keys and compatible model state, is not th
 | A video generator reuses denoising features | Cross-step substitution belongs to `reuse`, often with `stale-state`. Changing block-generation order belongs to `decoding`; VAE chunking may instead concern `memory` and `execution`. |
 | A system uses persistent GPU workers and tensor parallelism | Persistent workers concern `execution`; distributing tensor work concerns `serving`. Neither mechanism should hide the other. Mirage exposes a concrete [persistent-kernel implementation](https://github.com/mirage-project/mirage/blob/mpk/include/mirage/persistent_kernel/persistent_kernel.cuh). |
 | A compiler lowers models while a DSL builds kernels | A model-to-executable path can use `execution` as its primary family; a reusable language can use `construction`. MLC-LLM's [compiler pipeline](https://github.com/mlc-ai/mlc-llm/blob/HEAD/python/mlc_llm/compiler_pass/pipeline.py) names concrete fusion, dequantization and dispatch passes. The word “compiler” alone does not specify their effects. |
-| An agent produces an inference engine | The generator is `construction`; the emitted engine has its own mechanisms and validation obligations. MetaInfer, KernelAgent and Sol-Engine expose different construction scopes. A generated kernel does not establish a complete serving system. |
+| An agent produces an inference engine | A concrete generator workflow can have the `construction` role; the emitted engine has its own mechanisms and validation obligations. MetaInfer, KernelAgent and Sol-Engine expose different construction scopes. A generated kernel does not establish a complete serving system. |
 
-Broad projects can reasonably fit several navigation groups. Sol-Engine, for example, exposes an agent workflow and concrete model runtimes; placing its record under `construction` emphasizes how it builds specialized engines, while its mechanism tags must retain the runtime's fusion, caching, attention and precision behavior. A future record focused only on one deployed runtime could have a different primary family without contradicting this classification.
+Broad projects can reasonably fit several navigation groups. Sol-Engine, for example, exposes an agent workflow and concrete model runtimes; using the `construction` role emphasizes how it builds specialized engines, while its mechanism tags must retain the runtime's fusion, caching, attention and precision behavior. A future record focused only on one deployed runtime could have the `system` role and a different primary family without contradicting this classification.
 
-## Assigning a primary family
+## Assigning a role and primary family
 
-1. Identify the cataloged component and its deployed or generated artifact.
-2. Read the implementation path for the mechanism, including dispatch and fallback conditions.
-3. Choose the family that best answers the component's central specialization question.
+1. Identify the cataloged component and trace constraint → execution decision → artifact → validation and maintenance.
+2. Choose its display role: integrated system, concrete construction workflow, or reusable support.
+3. Read the implementation path, including dispatch and fallback conditions, and choose the primary mechanism/tool family for secondary navigation.
 4. Preserve other substantive mechanisms, constraints and semantic effects as separate tags and prose.
-5. Explain ambiguous boundaries in the caveat; revise the assignment when the project's scope changes.
+5. Explain ambiguous boundaries and missing links in the caveat; revise the assignment when the project's scope changes.
 
-Counts by primary family describe this catalog's editorial organization. They do not measure research importance, prevalence, quality, or mutually exclusive technical populations. Follow the [evidence policy](evidence-policy.md) when converting source observations into claims.
+Counts by role or primary family describe this catalog's editorial organization. They do not measure research importance, prevalence, quality, or mutually exclusive technical populations. Follow the [evidence policy](evidence-policy.md) when converting source observations into claims.

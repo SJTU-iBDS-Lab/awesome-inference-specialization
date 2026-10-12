@@ -68,6 +68,20 @@ class CatalogTests(unittest.TestCase):
         for row in self.rows:
             self.assertIn(row['id'], ids)
 
+    def test_role_index_keeps_every_record_once(self):
+        text = render.render_systems(self.rows)
+        links = re.findall(r'\]\(catalog.md#([a-z0-9-]+)\)', text)
+        self.assertCountEqual(links, [r['id'] for r in self.rows])
+        self.assertEqual(len(links), len(set(links)))
+
+    def test_support_example_cannot_silently_become_a_system(self):
+        rows = copy.deepcopy(self.rows)
+        example = render.SCHEMA['support_groups'][0]['examples'][0]
+        next(r for r in rows if r['id'] == example)['catalog_role'] = 'system'
+        self.assertTrue(any('Support list must point to a supporting entry' in e for e in validate(rows)))
+        next(r for r in rows if r['id'] == example)['catalog_role'] = 'unknown'
+        self.assertTrue(any('unsupported catalog_role' in e for e in validate(rows)))
+
     def test_local_links_and_anchors(self):
         paths = [*ROOT.glob('*.md'), *ROOT.glob('docs/*.md')]
         for path in paths:

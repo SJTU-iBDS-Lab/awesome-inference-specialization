@@ -1,56 +1,88 @@
 # Awesome Inference Specialization
 
-**A map of how inference systems specialize computation, memory and execution.**
+**Specialized inference systems: what they exploit, how they are built, and what they cost to validate and maintain.**
 
-[中文](README_CN.md) · [All projects](docs/catalog.md) · [Compare](docs/comparison.md) · [Classification](docs/taxonomy.md) · [Survey notes](docs/survey-2026-10-12.md) · [Contribute](CONTRIBUTING.md)
+[中文](README_CN.md) · [Systems & construction](docs/systems.md) · [Mechanism index](docs/catalog.md) · [Compare](docs/comparison.md) · [Research questions](docs/research-agenda.md) · [Contribute](CONTRIBUTING.md)
 
-![Eight mechanism families, from data placement to program construction](assets/landscape.svg)
+## Why this repository?
 
-Start with the execution decision: **what is moved, represented, skipped, reused, generated, scheduled or compiled?** Text, image and video are cross-cutting tags. Each record identifies a concrete mechanism, its implementation role, direct sources and an important limitation.
+**When the model, hardware and workload are known, which parts of inference should become specialized—and how should the resulting system be built?**
 
-## Explore by mechanism
+Known constraints create opportunities: a fixed MoE structure, a limited memory budget, a chosen numerical format, or a recurring generation pattern can justify a different execution design. This collection connects those opportunities to inspectable systems and the workflows that construct them.
+
+Use it to:
+
+- **Find specialization opportunities:** connect a deployment constraint to a concrete change in execution, state or data movement.
+- **Choose an implementation boundary:** compare a native runtime, a backend within a shared engine, compiler-generated execution and agent-guided construction.
+- **Evaluate the full trade-off:** examine performance and quality alongside validation effort, integration, portability and maintenance.
+
+Compilers and coding agents may reduce construction effort. Whether those savings outweigh verification and maintenance costs remains an open research question; the catalog supplies examples and evidence for investigating it.
+
+![Known constraints lead to specialized systems through four construction routes, supported by shared infrastructure and checked through validation and maintenance](assets/specialization.svg)
+
+## Start with systems and their construction
 
 <!-- CATALOG-START -->
 
-**98 projects · 8 mechanism families · Last source review 2026-10-12**
+**98 entries: 34 Specialized inference systems · 9 Ways to construct specialized systems · 55 Supporting infrastructure and references**
 
-One primary home per project; modality, artifact type and mechanism tags remain independent. Construction tools support execution rather than being another runtime class.
+Start with the constraints a system exploits, then follow its construction. Browse all entries by [reading role](docs/systems.md); the eight mechanism families remain a cross-cutting index.
 
-| Mechanism family | What changes | Start with |
+### Specialized inference systems
+
+| Specialization opportunity | Representative systems | Execution decision |
 | --- | --- | --- |
-| [Data residency & movement (11)](docs/catalog.md#memory) | Place, page, prefetch or offload weights, experts and KV state. | [KTransformers / kt-kernel](docs/catalog.md#ktransformers), [vAttention](docs/catalog.md#vattention), [Mooncake](docs/catalog.md#mooncake) |
-| [Numerical representation (9)](docs/catalog.md#precision) | Co-design low-bit formats, layouts and execution kernels. | [ExLlamaV3](docs/catalog.md#exllamav3), [Nunchaku](docs/catalog.md#nunchaku), [T-MAC](docs/catalog.md#t-mac) |
-| [Selective computation (8)](docs/catalog.md#selection) | Select neurons, tokens or attention blocks; expose approximation. | [MInference](docs/catalog.md#minference), [SnapKV](docs/catalog.md#snapkv), [Sparse VideoGen](docs/catalog.md#sparse-videogen) |
-| [Computation reuse (10)](docs/catalog.md#reuse) | Reuse request prefixes, features or attention across steps. | [LMCache](docs/catalog.md#lmcache), [TeaCache](docs/catalog.md#teacache), [TaylorSeer](docs/catalog.md#taylorseer) |
-| [Generation order (5)](docs/catalog.md#decoding) | Draft and verify tokens, or reorganize block generation. | [EAGLE](docs/catalog.md#eagle), [Lookahead Decoding](docs/catalog.md#lookahead), [Inferix](docs/catalog.md#inferix) |
-| [Parallelism & scheduling (12)](docs/catalog.md#serving) | Partition stages, devices and requests around workload constraints. | [DistServe](docs/catalog.md#distserve), [Sarathi-Serve](docs/catalog.md#sarathi-serve), [xDiT](docs/catalog.md#xdit) |
-| [Compiled & native execution (32)](docs/catalog.md#execution) | Fuse, lower, specialize and dispatch graphs or native kernels. | [Mirage Persistent Kernel](docs/catalog.md#mirage), [FlashAttention](docs/catalog.md#flash-attention), [MLC LLM](docs/catalog.md#mlc-llm) |
-| [Construction & validation tools (11)](docs/catalog.md#construction) | Agents, kernel languages and evaluation infrastructure. | [MetaInfer](docs/catalog.md#metainfer), [Sol-Engine](docs/catalog.md#sol-engine), [KernelBench](docs/catalog.md#kernelbench) |
+| Known model structure | [DwarfStar](docs/catalog.md#dwarfstar), [Iris](docs/catalog.md#iris), [Inferix](docs/catalog.md#inferix) | Tailor model execution and generation state to selected architectures. |
+| Device and memory limits | [KTransformers / kt-kernel](docs/catalog.md#ktransformers), [Strata](docs/catalog.md#strata) | Choose which experts reside or execute on each device. |
+| Chosen numerical formats | [ExLlamaV3](docs/catalog.md#exllamav3), [Nunchaku](docs/catalog.md#nunchaku) | Co-design quantized representations and their execution paths. |
+| Known workload structure | [DistServe](docs/catalog.md#distserve), [xDiT](docs/catalog.md#xdit) | Organize prefill/decode stages or DiT work across devices. |
+
+### Four construction routes
+
+| Route | What is built and how | Cases |
+| --- | --- | --- |
+| Native implementation | Implement the selected model graph and runtime policy; reuse lower-level libraries where useful. | [DwarfStar](docs/catalog.md#dwarfstar), [Iris](docs/catalog.md#iris) |
+| Specialized backend | Keep shared framework services and replace a substantial execution subsystem. | [KTransformers / kt-kernel](docs/catalog.md#ktransformers), [Nunchaku](docs/catalog.md#nunchaku) |
+| Compiler-generated execution | Lower a model or task graph into target-specific programs and runtime schedules. | [Mirage Persistent Kernel](docs/catalog.md#mirage), [MLC LLM](docs/catalog.md#mlc-llm) |
+| Agent-guided construction | Generate or revise kernels and servers, then inspect the resulting validation and integration. | [MetaInfer](docs/catalog.md#metainfer), [Sol-Engine](docs/catalog.md#sol-engine), [KernelAgent](docs/catalog.md#kernelagent) |
+
+Routes can be combined. Agent involvement does not establish a faster artifact; passing tests establishes behavior only within their validation scope.
+
+### Supporting infrastructure and references
+
+These projects supply reusable components, comparison baselines and evaluation conditions for the systems above.
+
+- **General-engine baselines:** [vLLM](docs/catalog.md#vllm), [SGLang](docs/catalog.md#sglang), [TensorRT-LLM](docs/catalog.md#tensorrt-llm), [llama.cpp](docs/catalog.md#llama-cpp).
+- **Compilers and languages:** [Apache TVM](docs/catalog.md#tvm), [IREE](docs/catalog.md#iree), [Triton](docs/catalog.md#triton), [TileLang](docs/catalog.md#tilelang).
+- **Reusable kernels and components:** [FlashAttention](docs/catalog.md#flash-attention), [FlashInfer](docs/catalog.md#flashinfer), [LMCache](docs/catalog.md#lmcache).
+- **Evaluation and integration checks:** [KernelBench](docs/catalog.md#kernelbench), [FastKernels](docs/catalog.md#fastkernels), [Spec-Bench](docs/catalog.md#spec-bench).
+
+### Continue by mechanism
+
+[Data residency & movement (11)](docs/catalog.md#memory) · [Numerical representation (9)](docs/catalog.md#precision) · [Selective computation (8)](docs/catalog.md#selection) · [Computation reuse (10)](docs/catalog.md#reuse) · [Generation order (5)](docs/catalog.md#decoding) · [Parallelism & scheduling (12)](docs/catalog.md#serving) · [Compiled & native execution (32)](docs/catalog.md#execution) · [Construction & validation tools (11)](docs/catalog.md#construction)
+
+Source review: 2026-10-12. Featured cases are reading entry points, not a performance or maturity ranking.
 
 <!-- CATALOG-END -->
 
-## Three mechanisms, different contracts
+## Read each project as a design decision
 
-![Data movement, state reuse and candidate verification illustrated as distinct execution paths](assets/mechanisms.svg)
+**Constraint → execution change → deployed or generated artifact → validation → maintenance cost.**
 
-- **Place data and compute:** [KTransformers](docs/catalog.md#ktransformers) runs selected MoE work on CPU; [MoE-Infinity](docs/catalog.md#moe-infinity) transfers and caches expert weights. Both address memory limits through different execution decisions.
-- **Reuse state:** [LMCache](docs/catalog.md#lmcache) can reuse matching KV prefixes; [TeaCache](docs/catalog.md#teacache) reuses earlier denoising residuals. Their validity conditions differ.
-- **Propose and verify:** [EAGLE](docs/catalog.md#eagle) drafts candidate tokens and checks them with the target model. [Medusa](docs/catalog.md#medusa) also uses candidate trees, but training and acceptance modes need separate scrutiny.
+For example, limited GPU memory can motivate executing nonresident experts on the CPU, as in [KTransformers](docs/catalog.md#ktransformers), or transferring and caching expert weights, as in [MoE-Infinity](docs/catalog.md#moe-infinity). The same constraint leads to different data movement and execution choices. A useful comparison must fix the model, quality target, hardware and workload, then include integration and operating costs.
 
-See [taxonomy and semantic effects](docs/taxonomy.md) for all eight families and overlapping cases.
+The [mechanism guide](docs/taxonomy.md) explains the eight secondary families with a landscape map and execution-path diagrams. Modality, artifact type, semantic changes and source access remain separate labels. Quantization, caching or compilation belongs in the discussion when its deployment assumptions and execution consequences are explicit.
 
 ## What belongs here?
 
-Include a project when a known constraint changes **execution, data movement, numerical representation, scheduling or program construction**. Full runtimes, backends, kernel libraries, compilers and evaluation tools have distinct roles; none is automatically a higher tier. A focused kernel subsystem can be relevant without being a complete server.
+The main subjects are **specialized inference systems and concrete workflows that build them**. A system record should identify the constraint it exploits, the execution path it controls and the artifact it delivers. A construction record should identify its inputs, generated or adapted program, and validation boundary.
 
-API wrappers, deployment recipes and paper-only performance headlines do not establish a mechanism. Educational engines and [Diffusers](https://github.com/huggingface/diffusers) remain useful context. General engines such as [vLLM](docs/catalog.md#vllm), [SGLang](docs/catalog.md#sglang) and [TensorRT-LLM](docs/catalog.md#tensorrt-llm) are included where a concrete design is documented.
+General engines, compilers, kernel libraries, optimization components and benchmarks provide baselines and reusable foundations. Their supporting role explains how specialized systems are assembled and compared. The three reading roles do not rank quality or maturity; a specialized backend can be a central case without implementing an entire server.
 
-**Evidence boundary:** this is a source-reviewed directory, not a benchmark leaderboard. Publicly visible code does not imply open licensing, correctness or production readiness. Approximation, reduced precision and model changes are stated alongside implementation changes. [Evidence policy →](docs/evidence-policy.md)
+Every record retains direct sources and limitations. This is a source-reviewed collection; no cross-project performance ranking or independent benchmark reproduction is claimed. See the [evidence policy](docs/evidence-policy.md) and [survey record](docs/survey-2026-10-12.md).
 
 ## Research and maintenance
 
-Can cheaper construction make deployment-specific systems economical, or will shared runtimes absorb most useful specialization? This remains a research question. Explore the [research agenda](docs/research-agenda.md), [reading list](docs/reading-list.md) and [survey method and corrections](docs/survey-2026-10-12.md).
+The [research agenda](docs/research-agenda.md) asks where specialization pays, which construction route fits, and what survives a change of model, device or load. The [reading list](docs/reading-list.md) supplies further context. Corrections, missing systems and independently reproduced negative results are welcome.
 
-The [CSV catalog](catalog/projects.csv) is the source of truth for both homepages, the complete catalog and comparison view. Corrections, missing mechanisms and independent negative results are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md).
-
-Catalog metadata, original diagrams, commentary and scripts use the [MIT License](LICENSE). Linked projects, models and third-party material retain their own licenses.
+The [CSV catalog](catalog/projects.csv) supplies the role index, mechanism catalog, comparison view and both homepage selections. See [CONTRIBUTING.md](CONTRIBUTING.md) for maintenance. Metadata, original diagrams, commentary and scripts use the [MIT License](LICENSE); linked projects and models retain their own licenses.
