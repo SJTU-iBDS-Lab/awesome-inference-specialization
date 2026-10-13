@@ -1,292 +1,238 @@
 # Awesome Inference Specialization
 
-**Find specialized inference engines, understand how they are built, and choose the checks their outputs need.**
+**Purpose-built inference stacks—and the tools that construct, optimize and validate them.**
 
-[中文](README_CN.md) · [Find engines](#homepage-system) · [Build workflows](#homepage-construction) · [Validate](#homepage-validation) · [Benchmarks](#homepage-benchmark) · [Resources](#homepage-support) · [Quick comparison](docs/representative-comparison.md) · [Latest updates](docs/updates.md)
+This collection follows native runtimes, substantial forks and specialized backends built around known **models, hardware and workloads**. The focus is control over the execution stack, not every technique that makes inference faster or every small teaching implementation.
 
-Known models, devices and workloads allow different execution stacks. Browse every project, construction workflow, validation method, benchmark and supporting resource directly below, with upstream links, descriptions and model-domain tags. Language, multimodal, image, video and audio workloads are covered.
+A central question is whether **AI-assisted programming changes which specialized systems are worth building**. Cases connect construction methods to the resulting execution design, what it reuses or gives up, and how it is checked and maintained. A compiler, a coding agent and a complete engine are different objects of study.
 
-**Latest, 2026-10-12:** the homepages now list all 121 projects and expand four validation contracts with six method entries; the [case comparison](docs/representative-comparison.md) and [cross-case synthesis](docs/synthesis.md) are supplementary reading. [What changed and what was checked](docs/updates.md).
-
-## Complete Awesome list
+[中文](README_CN.md) · [Engines](#homepage-system) · [Build](#homepage-construction) · [Validate](#homepage-validation) · [Benchmarks](#homepage-benchmark) · [Resources](#homepage-support)
 
 <!-- CATALOG-START -->
 
-All **121 projects** are listed below, once each under their primary role. Model domains appear on every entry. Validation methods are expanded separately; embedded checks do not add repository counts.
+**121 projects** · 89 engines · 11 construction workflows · 3 benchmarks · 18 companion resources. All entries remain expanded and link directly upstream.
+
+**Browse engines:** [Language models](#homepage-system-text) · [Image generation and processing](#homepage-system-image) · [Video generation and streaming](#homepage-system-video) · [Speech and audio](#homepage-system-audio) · [Multimodal and cross-domain](#homepage-system-multimodal)
+
+<a id="featured-reading"></a>
+
+## Start here
+
+Six different ways to obtain control over inference execution. These are reading routes, not performance or maturity rankings.
+
+| Approach | Case | What to look for |
+| --- | --- | --- |
+| Agent-built engine | [MetaInfer → VibeQwen](docs/cases.md#vibeqwen) | Connect an agent workflow to a reported deployed engine |
+| Native runtime | [Splash](docs/cases.md#splash) | Inspect model-shaped kernels, draft execution and serving together |
+| Deep fork | [llamAmpere](docs/cases.md#llamampere) | See what a deep fork changes and what upstream still supplies |
+| Specialized backend | [Nunchaku](docs/cases.md#nunchaku) | Trace packed checkpoints into fused diffusion execution |
+| Compiled execution | [Mirage MPK](docs/cases.md#mirage) | Follow an explicit task graph into persistent GPU execution |
+| Video optimization workflow | [Sol-Engine](docs/cases.md#sol-engine) | See how optimization choices are accepted and composed |
+
+[Compare all 12 representative cases](docs/representative-comparison.md) · [Cross-case synthesis](docs/synthesis.md)
 
 ## Contents
 
-- [Specialized inference engines](#homepage-system) (89)
-  - [Data residency & movement](#homepage-system-memory)
-  - [Numerical representation](#homepage-system-precision)
-  - [Selective computation](#homepage-system-selection)
-  - [Computation reuse](#homepage-system-reuse)
-  - [Generation order](#homepage-system-decoding)
-  - [Parallelism & scheduling](#homepage-system-serving)
-  - [Compiled & native execution](#homepage-system-execution)
-- [Engine construction and optimization](#homepage-construction) (11)
-  - [Compiled & native execution](#homepage-construction-execution)
-  - [Construction & validation tools](#homepage-construction-construction)
-- [Correctness and quality validation](#homepage-validation) (4 contracts, 6 method entries)
-  - [Operator and subgraph numerics](#homepage-validation-numerical)
-  - [Composed model and persistent state](#homepage-validation-model-state)
-  - [Generated-output quality](#homepage-validation-quality)
-  - [Service and integration behavior](#homepage-validation-service)
-- [Benchmarks and task suites](#homepage-benchmark) (3)
-- [Companion resources](#homepage-support) (18)
-  - [Performance diagnosis](#homepage-support-diagnostics)
-  - [Construction knowledge and experience](#homepage-support-knowledge)
-  - [General-engine baselines](#homepage-support-engine-baselines)
-  - [Compilers and kernel languages](#homepage-support-compilers)
-  - [Reusable execution and model preparation](#homepage-support-components)
-- [Selected reading and comparison](#featured-reading)
+- [Inference engines](#homepage-system)
+- [Build and optimize](#homepage-construction)
+- [Validation: coverage and gaps](#homepage-validation)
+- [Benchmarks](#homepage-benchmark)
+- [Companion resources](#homepage-support)
+- [Further reading](#further-reading)
 
 <a id="homepage-system"></a>
 
-## Specialized inference engines
+## Inference engines
 
-Integrated model runtimes and substantial specialized backends, including native implementations and earlier execution-stack precedents.
+Browse by the main task; short tags preserve additional domains. Native runtimes, deep forks, specialized backends and relevant precedents are included. Mechanisms are secondary facets, not mutually exclusive engine classes.
 
-[Role and evidence index](docs/systems.md#system)
+[Relevance and execution boundaries](docs/systems.md#system) · [All overlapping domains](docs/domains.md)
 
-<a id="homepage-system-memory"></a>
+**By mechanism:** <a id="homepage-system-memory"></a>[Data residency & movement](docs/catalog.md#memory) · <a id="homepage-system-precision"></a>[Numerical representation](docs/catalog.md#precision) · <a id="homepage-system-selection"></a>[Selective computation](docs/catalog.md#selection) · <a id="homepage-system-reuse"></a>[Computation reuse](docs/catalog.md#reuse) · <a id="homepage-system-decoding"></a>[Generation order](docs/catalog.md#decoding) · <a id="homepage-system-serving"></a>[Parallelism & scheduling](docs/catalog.md#serving) · <a id="homepage-system-execution"></a>[Compiled & native execution](docs/catalog.md#execution)
 
-### Data residency & movement (15)
+<a id="homepage-system-text"></a>
 
-Place, page, prefetch or offload weights, experts and KV state.
+### Language models (49)
 
-- <a id="project-anemll-flash-llama"></a>**[ANEMLL Flash llama.cpp](https://github.com/Anemll/anemll-flash-llama.cpp)** — Adds expert sidecars, native expert-to-slot mapping and layer-major prefill to llama.cpp, reusing each staged expert across relevant prompt rows. **[Language models]** [Scope, sources and limits](docs/catalog.md#anemll-flash-llama)
-- <a id="project-colibri"></a>**[Colibri](https://github.com/JustVugg/colibri)** — Keeps dense state resident and streams routed experts through model-family-specific execution paths, with optional CPU/GPU tier placement and specialized containers. **[Language models / Image generation & processing / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#colibri)
-- <a id="project-zero-inference"></a>**[DeepSpeed ZeRO-Inference](https://github.com/deepspeedai/DeepSpeedExamples)** — Hosts weights in CPU or NVMe memory and streams them layer by layer to GPU, using prefetch and large token batches to amortize transfer costs while preserving GPU memory for activations. **[Language models]** [Scope, sources and limits](docs/catalog.md#zero-inference)
-- <a id="project-fiddler"></a>**[Fiddler](https://github.com/efeslab/fiddler)** — Executes uncached MoE experts on CPU by transferring small activations instead of moving their large weights to GPU, while keeping selected experts resident on GPU. **[Language models]** [Scope, sources and limits](docs/catalog.md#fiddler)
-- <a id="project-flash-moe"></a>**[Flash-MoE](https://github.com/danveloper/flash-moe)** — Streams selected quantized expert blobs with parallel pread and executes a fixed Qwen hybrid-attention pipeline using custom Metal dequantization and fused expert kernels. **[Language models]** [Scope, sources and limits](docs/catalog.md#flash-moe)
-- <a id="project-flexllmgen"></a>**[FlexLLMGen (FlexGen)](https://github.com/FMInference/FlexLLMGen)** — Uses a block generation schedule and GPU/CPU/disk tensor placement to reuse layer weights across microbatches while overlapping transfers and optionally compressing weights and KV state. **[Language models]** [Scope, sources and limits](docs/catalog.md#flexllmgen)
-- <a id="project-hybrimoe"></a>**[HybriMoE](https://github.com/PKU-SEC-Lab/HybriMoE)** — Extends a KTransformers-based execution path with hybrid CPU/GPU expert scheduling, impact-driven prefetching and score-based expert-cache management. **[Language models]** [Scope, sources and limits](docs/catalog.md#hybrimoe)
-- <a id="project-infernix"></a>**[Infernix](https://github.com/wallawalla47/infernix)** — Extends NInfer with a GPU hot-expert cache, pinned-host experts, CPU computation of selected misses, overlapped PCIe transfers and an NVMe-backed n-gram volume. **[Language models / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#infernix)
-- <a id="project-ktransformers"></a>**[KTransformers / kt-kernel](https://github.com/kvcache-ai/ktransformers)** — Runs memory-heavy MoE experts through ISA-specific CPU kernels and NUMA-aware placement while integrating with GPU serving runtimes for the remaining model computation. **[Language models]** [Scope, sources and limits](docs/catalog.md#ktransformers)
-- <a id="project-moe-infinity"></a>**[MoE-Infinity](https://github.com/EfficientMoE/MoE-Infinity)** — Offloads expert weights to host memory and SSD, retains hot experts in an activation-aware GPU cache and uses trace/prediction-driven prefetching through a native transfer engine. **[Language models]** [Scope, sources and limits](docs/catalog.md#moe-infinity)
-- <a id="project-strata"></a>**[Strata](https://github.com/Niko1221/Strata)** — Keeps attention and hot experts on GPU, computes nonresident experts on CPU concurrently, and budgets GPU/RAM/file tiers for experts and long-context KV state. **[Language models]** [Scope, sources and limits](docs/catalog.md#strata)
-- <a id="project-swiftlet"></a>**[Swiftlet](https://github.com/leonickson1/Swiftlet)** — Implements Swift/Metal forward paths with a small resident dense core, fixed-stride expert containers, pread slot caching and native KV/recurrent state. **[Language models]** [Scope, sources and limits](docs/catalog.md#swiftlet)
-- <a id="project-swiftlm"></a>**[SwiftLM](https://github.com/SharpAI/SwiftLM)** — Extends MLX Swift execution through maintained forks, explicit expert reads, asynchronous I/O workers and synchronization boundaries coordinated with model generation. **[Language models / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#swiftlm)
-- <a id="project-tuff"></a>**[TUFF](https://github.com/rexmhall09/TUFF)** — Extends a Swift/Metal runtime with model-specific forward paths, bounded expert streaming, resident state and a separate inference service. **[Language models / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#tuff)
-- <a id="project-turbo-fieldfare"></a>**[TurboFieldfare](https://github.com/drumih/turbo-fieldfare)** — Keeps common weights and FP16 KV resident, reads routed experts with bounded pread slot caches, and coordinates chunked prefill and Metal execution. **[Language models / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#turbo-fieldfare)
+- <a id="project-ane-lm"></a>**[ANE-LM](https://github.com/johnmai-dev/ANE-LM)** — A direct predecessor to ane.cpp, connecting Qwen ANE kernels and CPU operations through a compile cache; constrained by private interfaces and limited model coverage. `Language` [Details](docs/catalog.md#ane-lm)
+- <a id="project-ane-cpp"></a>**[ane.cpp](https://github.com/skyfallsin/ane.cpp)** — Compiles Qwen convolution programs for ANE while the CPU handles normalization, attention and KV state, informed by hardware probes and kept/discarded experiments. `Language` [Details](docs/catalog.md#ane-cpp)
+- <a id="project-anemll-flash-llama"></a>**[ANEMLL Flash llama.cpp](https://github.com/Anemll/anemll-flash-llama.cpp)** — A llama.cpp fork with expert sidecars, slot mapping and layer-major prefill. Optional reduced top-k and shared-expert-only modes change model computation. `Language` [Details](docs/catalog.md#anemll-flash-llama)
+- <a id="project-basert"></a>**[BaseRT](https://github.com/basecompute/baseRT)** — Public conversion tools, C APIs and bindings around a proprietary native engine. The closed execution core limits kernel and performance evidence to author documentation. `Language` `Multimodal` [Details](docs/catalog.md#basert)
+- <a id="project-bitnet-cpp"></a>**[bitnet.cpp](https://github.com/microsoft/BitNet)** — An engine for compatible ternary models using packed kernels, lookup tables and shape specialization. Losslessness concerns the existing ternary representation, not arbitrary floating-point models. `Language` [Details](docs/catalog.md#bitnet-cpp)
+- <a id="project-needle"></a>**[Cactus Needle](https://github.com/cactus-compute/needle)** — Pairs sliceable-attention models and quantized weights with platform-native engines. Model and packaging code is public, but the distributed C++ engine implementation is not. `Language` `Audio` [Details](docs/catalog.md#needle)
+- <a id="project-ciru-runtime"></a>**[CIRU runtime](https://github.com/ciru-ai/Qwen3.8-Flash-CIRU-STRIX-IU4)** — A llama.cpp-derived runtime coupling expert paging, specialized kernels, sparse attention and speculative-state fixes to specific model formats and release builds. `Language` `Multimodal` [Details](docs/catalog.md#ciru-runtime)
+- <a id="project-coreml-llm-cli"></a>**[CoreML LLM CLI](https://github.com/smpanaro/coreml-llm-cli)** — A Llama 2 host runtime orchestrating chunked Core ML execution, KV state and IOSurface buffers; a compiled-model integration precedent to ANEMLL. `Language` [Details](docs/catalog.md#coreml-llm-cli)
+- <a id="project-zero-inference"></a>**[DeepSpeed ZeRO-Inference](https://github.com/deepspeedai/DeepSpeedExamples)** — Streams CPU/NVMe weights to the GPU layer by layer, amortizing transfers with prefetch and large batches. A throughput-oriented offload precedent predating recent coding agents. `Language` [Details](docs/catalog.md#zero-inference)
+- <a id="project-dwarfstar"></a>**[DwarfStar](https://github.com/antirez/ds4)** — An explicitly AI-assisted native runtime for selected models, combining resident non-routed state with bounded SSD expert caching; model and backend support is deliberately limited. `Language` [Details](docs/catalog.md#dwarfstar)
+- <a id="project-exllamav3"></a>**[ExLlamaV3](https://github.com/turboderp-org/exllamav3)** — An EXL3-centered runtime coupling low-bit execution, quantized paged KV and shape-qualified decode paths; numerical behavior and coverage depend on configuration. `Language` [Details](docs/catalog.md#exllamav3)
+- <a id="project-fiddler"></a>**[Fiddler](https://github.com/efeslab/fiddler)** — A small-batch Mixtral prototype that computes nonresident experts on the CPU and transfers activations, illustrating the alternative to moving expert weights. `Language` [Details](docs/catalog.md#fiddler)
+- <a id="project-flash-moe"></a>**[Flash-MoE](https://github.com/danveloper/flash-moe)** — An AI-assisted Qwen/Metal implementation that streams quantized experts from SSD. It reduces active experts from 10 to 4, so its execution is approximate. `Language` [Details](docs/catalog.md#flash-moe)
+- <a id="project-flexllmgen"></a>**[FlexLLMGen (FlexGen)](https://github.com/FMInference/FlexLLMGen)** — An OPT throughput runtime using GPU/CPU/disk placement, cross-microbatch weight reuse and overlapped transfers; not a general low-latency serving result. `Language` [Details](docs/catalog.md#flexllmgen)
+- <a id="project-gufo-rdma"></a>**[Gufo RDMA](https://github.com/neuhaus/gufo)** — Extends Gufo across two Strix Halo hosts, using tensor partitioning, RDMA collectives and mirrored requests to synchronize execution and speculative state. `Language` `Multimodal` [Details](docs/catalog.md#gufo-rdma)
+- <a id="project-halogen-flash"></a>**[Halogen Flash](https://github.com/peonist-ai/halogen-flash-server)** — A model-and-chip-specific Qwen binary with mixed precision, paged n-gram lookup and dedicated expert execution. Its closed core limits implementation inspection. `Language` [Details](docs/catalog.md#halogen-flash)
+- <a id="project-hilum-engine"></a>**[Hilum LLM Engine](https://github.com/hilum-labs/hilum-local-llm-engine)** — A llama.cpp/GGML mobile integration for Adreno/Vulkan and Metal, adjusting shader dispatch, allocation and device parameters. `Language` `Multimodal` [Details](docs/catalog.md#hilum-engine)
+- <a id="project-hipengine"></a>**[hipEngine](https://github.com/shisa-ai/hipEngine)** — A selected-AMD execution stack with a Python host, HIP/C++ model kernels, shared KV and continuous batching, without PyTorch in the inference path. `Language` `Audio` `Multimodal` [Details](docs/catalog.md#hipengine)
+- <a id="project-hybrimoe"></a>**[HybriMoE](https://github.com/PKU-SEC-Lab/HybriMoE)** — A KTransformers-based combination of CPU/GPU expert scheduling, prefetch and caching; a precedent for placement and movement in models exceeding VRAM. `Language` [Details](docs/catalog.md#hybrimoe)
+- <a id="project-ik-llama"></a>**[ik_llama.cpp](https://github.com/ikawrakow/ik_llama.cpp)** — A deep llama.cpp fork extending packed formats, CPU IQK kernels and CUDA dispatch while retaining general-engine compatibility. `Language` [Details](docs/catalog.md#ik-llama)
+- <a id="project-imp"></a>**[imp](https://github.com/kekzl/imp)** — A C++/CUDA engine for RTX 5090-class devices, owning model execution, paged KV, graph scheduling and serving. The author explicitly discloses end-to-end coding-agent implementation. `Language` `Multimodal` [Details](docs/catalog.md#imp)
+- <a id="project-infernix"></a>**[Infernix](https://github.com/wallawalla47/infernix)** — An explicitly AI-assisted NInfer fork combining GPU hot-expert caching, CPU miss computation, overlapped PCIe transfers and NVMe storage. `Language` `Multimodal` [Details](docs/catalog.md#infernix)
+- <a id="project-kipp"></a>**[Kipp](https://github.com/Polished-Snow/Kipp)** — A C11 stack owning strict checkpoint loading, tokenization, model execution, paged KV and batched serving through isolated Metal/CUDA backends. `Language` [Details](docs/catalog.md#kipp)
+- <a id="project-ktransformers"></a>**[KTransformers / kt-kernel](https://github.com/kvcache-ai/ktransformers)** — A heterogeneous MoE backend that uses ISA-specific CPU kernels and NUMA placement for memory-heavy experts while retaining shared GPU serving infrastructure. `Language` [Details](docs/catalog.md#ktransformers)
+- <a id="project-lily"></a>**[Lily](https://github.com/perplexityai/pplx-garden/tree/main/lily)** — A Rust/Metal runtime for one quantized Qwen checkpoint, owning prefill/decode and prefix caching. Its text-only, greedy, nonstreaming interface makes the compatibility trade-off explicit. `Language` [Details](docs/catalog.md#lily)
+- <a id="project-lithos-metal"></a>**[Lithos Metal](https://github.com/lithos-ai/lithos-metal)** — Compiles typed model graphs into layer-fused and conventional kernels, using Metal indirect commands and GPU-resident draft state; backend coverage and fused numerics remain qualified. `Language` [Details](docs/catalog.md#lithos-metal)
+- <a id="project-llamampere"></a>**[llamAmpere](https://github.com/JakeATX/llamAmpere)** — A deep llama.cpp fork combining Ampere verification kernels, MTP drafts and compressed KV while retaining shared serving. Separate post-trained models and quantization from engine contributions. `Language` [Details](docs/catalog.md#llamampere)
+- <a id="project-llaminar"></a>**[Llaminar](https://github.com/Llaminar/llaminar)** — Builds native model graphs and device plans, placing stages and experts across CPU/NVIDIA/AMD devices with explicit heterogeneous communication. `Language` [Details](docs/catalog.md#llaminar)
+- <a id="project-magnitude"></a>**[Magnitude](https://github.com/magnitudedev/magnitude)** — The reviewed Metal/MLX path maps typed operations to compatible kernel plans and emits specialized fused entry points. This evidence does not cover other backends. `Language` [Details](docs/catalog.md#magnitude)
+- <a id="project-memra"></a>**[memra](https://github.com/avifenesh/memra)** — A Rust host connecting ahead-of-time CUDA kernels and model-specific programs, explicitly managing quantization, KV and multi-GPU placement with model/device-specific numerical checks. `Language` `Multimodal` [Details](docs/catalog.md#memra)
+- <a id="project-metalchat"></a>**[MetalChat](https://github.com/ybubnov/metalchat)** — A C++/Metal native generation path built from tensor, layer and model abstractions; an adjacent reusable-framework example whose generation tests do not establish full quality coverage. `Language` [Details](docs/catalog.md#metalchat)
+- <a id="project-moe-infinity"></a>**[MoE-Infinity](https://github.com/EfficientMoE/MoE-Infinity)** — Offloads experts across memory tiers with activation-aware caching and trace-based prefetch. A residency-policy precedent; the public implementation differs from the paper system. `Language` [Details](docs/catalog.md#moe-infinity)
+- <a id="project-ninfer"></a>**[NInfer](https://github.com/Neroued/ninfer)** — A native selected-Qwen runtime for one RTX 5090, owning execution, KV/CUDA graphs and request/cache management. Agent instruction files do not establish AI authorship. `Language` `Multimodal` [Details](docs/catalog.md#ninfer)
+- <a id="project-ninfer-3090"></a>**[NInfer-3090](https://github.com/ashalliants/ninfer-3090)** — An NInfer fork adapted to a 24 GB RTX 3090 through new SM86 quantized kernels, memory planning and replay state, beyond a compile-target change. `Language` `Multimodal` [Details](docs/catalog.md#ninfer-3090)
+- <a id="project-powerinfer"></a>**[PowerInfer](https://github.com/Tiiny-AI/PowerInfer)** — A CPU/GPU runtime placing frequently activated neurons on GPU and using predictors for sparse execution. Requires compatible sparse models, not arbitrary dense weights. `Language` [Details](docs/catalog.md#powerinfer)
+- <a id="project-rocmfpx"></a>**[ROCmFPX](https://github.com/ROCmFPX/ROCmFPX)** — A llama.cpp downstream co-designing AMD quantization blocks, conversion policies and matching kernels; accuracy must be qualified per recipe. `Language` [Details](docs/catalog.md#rocmfpx)
+- <a id="project-saragossa"></a>**[Saragossa](https://github.com/azerozero/saragossa)** — A single-user Apple Silicon runtime for selected text/speech models, with Rust/Metal execution, resident decode state, buffers and prefix snapshots backed by regression comparisons. `Language` `Audio` [Details](docs/catalog.md#saragossa)
+- <a id="project-splash"></a>**[Splash](https://github.com/incoai/splash)** — A native Apple Silicon serving stack with model-specific Metal kernels, draft verification and prefix reuse. Disclosed agent assistance concerns kernels, not authorship of the entire engine. `Language` `Multimodal` [Details](docs/catalog.md#splash)
+- <a id="project-strata"></a>**[Strata](https://github.com/Niko1221/Strata)** — A selected-Qwen CPU/GPU engine combining hot-expert residency with tiered KV management. Some paths use approximate expert skipping; AI authorship is not established. `Language` [Details](docs/catalog.md#strata)
+- <a id="project-strix-llama-cpp"></a>**[strix-llama.cpp](https://github.com/halo-box/strix-llama.cpp)** — A llama.cpp fork with Strix Halo fusion kernels and speculative-state management. Optional speculative prefill is approximate; accepting agent contributions does not establish AI authorship. `Language` `Multimodal` [Details](docs/catalog.md#strix-llama-cpp)
+- <a id="project-swiftlet"></a>**[Swiftlet](https://github.com/leonickson1/Swiftlet)** — An explicitly AI-assisted Swift/Metal reconstruction of selected Qwen hybrid-MoE paths, combining expert containers, caching and native state with documented reference checks. `Language` [Details](docs/catalog.md#swiftlet)
+- <a id="project-swiftlm"></a>**[SwiftLM](https://github.com/SharpAI/SwiftLM)** — Reworks expert reads, asynchronous I/O and generation synchronization in MLX Swift and maintained forks to explicitly stream oversized MoE models from SSD. `Language` `Multimodal` [Details](docs/catalog.md#swiftlm)
+- <a id="project-tensorfold"></a>**[TensorFold](https://github.com/ashhart/TensorFold)** — A native Zig runtime for qualified models and formats, using packed-layout contracts and Metal/CUDA paths; projection fusion requires compatible packing. `Language` [Details](docs/catalog.md#tensorfold)
+- <a id="project-tuff"></a>**[TUFF](https://github.com/rexmhall09/TUFF)** — A Swift/Metal streaming-runtime fork adding model-specific forward paths, bounded expert loading and a separate service, illustrating adaptation across MoE families. `Language` `Multimodal` [Details](docs/catalog.md#tuff)
+- <a id="project-turbo-fieldfare"></a>**[TurboFieldfare](https://github.com/drumih/turbo-fieldfare)** — A Gemma runtime for memory-limited Apple Silicon using bounded expert-read slots and chunked prefill, with documented accepted and discarded construction experiments. `Language` `Multimodal` [Details](docs/catalog.md#turbo-fieldfare)
+- <a id="project-uzu"></a>**[Uzu](https://github.com/trymirai/uzu)** — A reusable edge engine combining Rust model blocks, native Metal dispatch, model conversion and generated bindings. Source availability alone does not establish AI authorship. `Language` [Details](docs/catalog.md#uzu)
+- <a id="project-vllm-radiance"></a>**[vLLM Radiance](https://github.com/magiccodingman/vllm-radiance)** — Retains vLLM serving while rebuilding RDNA4 paths with pinned patches and HIP kernels; low-bit arithmetic and speculative execution require separate equivalence checks. `Language` `Multimodal` [Details](docs/catalog.md#vllm-radiance)
+- <a id="project-vte"></a>**[VTE](https://github.com/kyuubyN/VTE)** — A consumer-RDNA3 stack owning GGUF parsing, template-generated HIP kernels, VRAM management and decode-graph replay around memory and driver constraints. `Language` [Details](docs/catalog.md#vte)
+- <a id="project-zinc"></a>**[ZINC](https://github.com/zolotukhin/zinc)** — A Zig runtime owning model loading, forward graphs, KV and serving over native Vulkan/HIP and other backends; each device path needs separate qualification. `Language` [Details](docs/catalog.md#zinc)
 
-<a id="homepage-system-precision"></a>
+<a id="homepage-system-image"></a>
 
-### Numerical representation (5)
+### Image generation and processing (12)
 
-Co-design low-bit formats, layouts and execution kernels.
+- <a id="project-brodiffusion"></a>**[brodiffusion](https://github.com/wlejon/brodiffusion)** — A C++ image runtime owning loading, diffusion pipelines and samplers, with shape/state-qualified denoising-graph replay over a reused brotensor backend. `Image` [Details](docs/catalog.md#brodiffusion)
+- <a id="project-diffusion-rs"></a>**[diffusion-rs](https://github.com/EricLBuehler/diffusion-rs)** — FLUX loading, sampling, quantization and residency on a reusable Rust tensor layer; a reuse/offload reference without inferred coding-agent authorship. `Image` [Details](docs/catalog.md#diffusion-rs)
+- <a id="project-draw-things"></a>**[Draw Things Community](https://github.com/drawthingsai/draw-things-community)** — Public Swift model graphs, samplers and hardware execution components for local generation, including approximate TeaCache reuse. Their availability does not establish that the entire product is open source. `Image` `Video` [Details](docs/catalog.md#draw-things)
+- <a id="project-edge-dit"></a>**[edge-dit.cpp](https://github.com/THU-MIG/edge-dit.cpp)** — A ggml-based DiT runtime owning graphs, component residency and staged offload, with quantization and tiled VAE execution for constrained memory. Cache and backend support vary by model. `Image` `Video` [Details](docs/catalog.md#edge-dit)
+- <a id="project-hearth"></a>**[Hearth](https://github.com/jeff-hiner/hearth)** — A Rust SD pipeline owning model graphs, samplers and dependency-ordered execution while reusing CubeCL/wgpu kernels and device access. `Image` [Details](docs/catalog.md#hearth)
+- <a id="project-iris"></a>**[Iris](https://github.com/antirez/iris.c)** — A native image pipeline in C with Metal/CPU kernels, mapped weights and text-encoder release after conditioning, illustrating ownership of the graph and its execution. `Image` [Details](docs/catalog.md#iris)
+- <a id="project-mflux"></a>**[MFLUX](https://github.com/mflux-community/mflux)** — Native selected-image-model implementations on MLX, with load-time quantization and adapter merging; a useful contrast between framework-level ports and deeper execution redesign. `Image` [Details](docs/catalog.md#mflux)
+- <a id="project-nunchaku"></a>**[Nunchaku](https://github.com/nunchux-ai/nunchaku)** — A diffusion backend that fuses SVDQuant low-bit matrix multiplication with low-rank branches. Quantization, offload and cache gains require separate attribution. `Image` [Details](docs/catalog.md#nunchaku)
+- <a id="project-saient-quartz"></a>**[Quartz](https://github.com/SaientAI/saient-quartz)** — Image generation on a custom Rust tensor backend with native Wan work in progress. Demonstrated mobile Wan uses a separate C++ companion, not the native Rust path. `Language` `Image` `Video` [Details](docs/catalog.md#saient-quartz)
+- <a id="project-stable-diffusion-cpp"></a>**[stable-diffusion.cpp](https://github.com/leejet/stable-diffusion.cpp)** — Native ggml-based image/video loading, conditioning, sampling and component placement, with quantization and VAE tiling. Optional approximate caching is separate from the native rewrite. `Image` `Video` [Details](docs/catalog.md#stable-diffusion-cpp)
+- <a id="project-stable-diffusion-rs"></a>**[stable-diffusion.rs](https://github.com/andreinknv/stable-diffusion.rs)** — Rust diffusion models and samplers with documented Candle-to-MLX migration and reference checks; agent task instructions do not establish AI authorship. `Image` [Details](docs/catalog.md#stable-diffusion-rs)
+- <a id="project-streamdiffusion"></a>**[StreamDiffusion](https://github.com/cumulo-autumn/StreamDiffusion)** — Reorganizes Diffusers into StreamBatch with residual guidance, input filtering and optional compilation; approximate guidance and skipped frames change outputs or workload. `Image` `Video` [Details](docs/catalog.md#streamdiffusion)
 
-- <a id="project-bitnet-cpp"></a>**[bitnet.cpp](https://github.com/microsoft/BitNet)** — Executes compatible ternary LLMs with packed low-bit kernels and architecture-specific LUT paths, choosing pre-tuned or generated kernel headers for model shapes. **[Language models]** [Scope, sources and limits](docs/catalog.md#bitnet-cpp)
-- <a id="project-exllamav3"></a>**[ExLlamaV3](https://github.com/turboderp-org/exllamav3)** — Pairs EXL3 weight quantization with dedicated low-bit execution, 2–8-bit paged KV storage and shape-qualified decode paths, plus CPU expert offload and parallel inference. **[Language models]** [Scope, sources and limits](docs/catalog.md#exllamav3)
-- <a id="project-ik-llama"></a>**[ik_llama.cpp](https://github.com/ikawrakow/ik_llama.cpp)** — Extends a llama.cpp fork with additional packed quantization formats, CPU IQK matrix kernels and quantization-specific CUDA dispatch paths. **[Language models]** [Scope, sources and limits](docs/catalog.md#ik-llama)
-- <a id="project-nunchaku"></a>**[Nunchaku](https://github.com/nunchux-ai/nunchaku)** — Executes SVDQuant W4A4 layers by fusing activation quantization with the low-rank down projection and low-bit GEMM with the low-rank output path. **[Image generation & processing]** [Scope, sources and limits](docs/catalog.md#nunchaku)
-- <a id="project-rocmfpx"></a>**[ROCmFPX](https://github.com/ROCmFPX/ROCmFPX)** — A llama.cpp downstream defines ROCmFPX quantization blocks, conversion policies and backend kernels, including RDNA3-specific MMQ layouts and an optional Vulkan plugin. **[Language models]** [Scope, sources and limits](docs/catalog.md#rocmfpx)
+<a id="homepage-system-video"></a>
 
-<a id="homepage-system-selection"></a>
+### Video generation and streaming (10)
 
-### Selective computation (2)
+- <a id="project-fastvideo"></a>**[FastVideo](https://github.com/hao-ai-lab/FastVideo)** — An integrated video runtime owning model implementations, loading and staged denoising, with optional sparsity, parallelism and offload. Sparse or distilled paths may change the model. `Video` `Audio` [Details](docs/catalog.md#fastvideo)
+- <a id="project-inferix"></a>**[Inferix](https://github.com/alibaba-damo-academy/Inferix)** — A semi-autoregressive world-model runtime separating persistent generation KV, VAE chunking and streamed video output. This execution redesign does not establish AI-assisted construction. `Video` [Details](docs/catalog.md#inferix)
+- <a id="project-lightx2v"></a>**[LightX2V](https://github.com/ModelTC/LightX2V)** — A video execution stack combining model-specific paths, storage contracts and double-buffered weight loading. Attribute quantization, distilled weights and lightweight VAE changes separately. `Image` `Video` `Audio` [Details](docs/catalog.md#lightx2v)
+- <a id="project-minimax-h3-mlx"></a>**[MiniMax-H3 MLX](https://github.com/PipeNetwork/minimax-h3-mlx)** — An MLX reconstruction of joint MiniMax-H3 audio/video diffusion, precomputing timestep conditioning and staging component residency; quantization mainly affects capacity. `Video` `Audio` [Details](docs/catalog.md#minimax-h3-mlx)
+- <a id="project-streamdiffusion-v2"></a>**[StreamDiffusionV2](https://github.com/chenfengxu714/StreamDiffusionV2)** — Reorganizes causal Wan chunked denoising, stage scheduling and distributed KV ownership. Causal/distilled checkpoints and optional lightweight decoding change the comparison target. `Video` [Details](docs/catalog.md#streamdiffusion-v2)
+- <a id="project-telefuser"></a>**[TeleFuser](https://github.com/Tele-AI/TeleFuser)** — Co-designs generation stages and streaming scheduling, separating resident session state from GPU execution leases with backpressure. Optional cache, sparsity and precision modes change semantics. `Image` `Video` `Audio` `Multimodal` [Details](docs/catalog.md#telefuser)
+- <a id="project-turbodiffusion"></a>**[TurboDiffusion](https://github.com/thu-ml/TurboDiffusion)** — A video stack combining low-precision/sparse attention, timestep-distilled weights and optional quantized layers. Separate model and step-count changes from implementation gains. `Video` [Details](docs/catalog.md#turbodiffusion)
+- <a id="project-vidax"></a>**[Vidax](https://github.com/FlyingGiraffe/vidax)** — Ports video graphs and checkpoint layouts to JAX/Flax TPU meshes, explicitly composing tensor/sequence sharding, attention kernels and component placement. `Video` [Details](docs/catalog.md#vidax)
+- <a id="project-videosys"></a>**[VideoSys](https://github.com/NUS-HPC-AI-Lab/VideoSys)** — An integrated video execution reference combining type-specific attention reuse with dynamic sequence parallelism. Attention broadcast is approximate and model support is bounded. `Video` [Details](docs/catalog.md#videosys)
+- <a id="project-xdit"></a>**[xDiT](https://github.com/xdit-project/xDiT)** — A distributed DiT framework combining sequence-parallel schemes and patch pipelines. Earlier-step feature reuse differs from exact synchronous execution; supported combinations are constrained. `Image` `Video` [Details](docs/catalog.md#xdit)
 
-Select neurons, tokens or attention blocks; expose approximation.
+<a id="homepage-system-audio"></a>
 
-- <a id="project-powerinfer"></a>**[PowerInfer](https://github.com/Tiiny-AI/PowerInfer)** — Uses profiled neuron activation frequencies and a capacity-constrained split to place hot neurons on GPU, execute cold activated neurons on CPU and dispatch predictor-guided sparse operators. **[Language models]** [Scope, sources and limits](docs/catalog.md#powerinfer)
-- <a id="project-turbodiffusion"></a>**[TurboDiffusion](https://github.com/thu-ml/TurboDiffusion)** — Integrates SageAttention and sparse-linear attention with timestep-distilled video checkpoints and optional quantized linear layers in an executable generation stack. **[Video generation & processing]** [Scope, sources and limits](docs/catalog.md#turbodiffusion)
+### Speech and audio (9)
 
-<a id="homepage-system-reuse"></a>
+- <a id="project-aria"></a>**[Aria](https://github.com/matteospanio/aria)** — A C Stable Audio 3 pipeline owning conditioning, diffusion, sampling and audio decoding, with disclosed LLM assistance and controlled reference tests; construction cost remains unknown. `Audio` [Details](docs/catalog.md#aria)
+- <a id="project-parakeet-axiom"></a>**[parakeet.cpp (axiom)](https://github.com/Frikallo/parakeet.cpp)** — A C++ Parakeet reconstruction on axiom, owning encoder/decoder and streaming caches while reusing CPU/MPSGraph tensor backends; local checks are not end-to-end results. `Audio` [Details](docs/catalog.md#parakeet-axiom)
+- <a id="project-parakeet-ggml"></a>**[parakeet.cpp (ggml)](https://github.com/mudler/parakeet.cpp)** — Ports NeMo speech features, encoder/decoder graphs and cache-aware streaming sessions to C++/ggml, with GGUF conversion and reference-parity fixtures. `Audio` [Details](docs/catalog.md#parakeet-ggml)
+- <a id="project-qingming-qwen3-tts"></a>**[Qingming Qwen3-TTS](https://github.com/uulong950/qingming-qwen3-tts)** — Separate native Qwen3-TTS paths for 24 GB RX 7900 XTX and RTX 4090 devices, explicitly partitioning resident generation and streaming-decoder resources. `Audio` [Details](docs/catalog.md#qingming-qwen3-tts)
+- <a id="project-qwen-asr-c"></a>**[Qwen-ASR (C)](https://github.com/antirez/qwen-asr)** — A C reconstruction of Qwen3-ASR preprocessing, encoder, autoregressive decoding and chunked streaming state, with explicit CPU and optional GPU responsibilities. `Audio` [Details](docs/catalog.md#qwen-asr-c)
+- <a id="project-qwen3-tts-c"></a>**[Qwen3-TTS (C)](https://github.com/gabriele-mastrapasqua/qwen3-tts)** — Rebuilds the Qwen3-TTS talker, code predictor and waveform decoder in C, with reference checks and measurement corrections; engineering task files do not establish AI authorship. `Audio` [Details](docs/catalog.md#qwen3-tts-c)
+- <a id="project-voxgen"></a>**[VoxGen](https://github.com/NullMagic2/VoxGen)** — A Rust VoxCPM2 reconstruction with direct Vulkan buffer/shader management and incremental PCM state; RDNA3 configurations have separate tuning and qualification scopes. `Audio` [Details](docs/catalog.md#voxgen)
+- <a id="project-whisper-cpp"></a>**[whisper.cpp](https://github.com/ggml-org/whisper.cpp)** — An established native Whisper/ggml speech runtime with converted weights and multiple backends; a historical reference, not evidence of recent AI-driven construction savings. `Audio` [Details](docs/catalog.md#whisper-cpp)
+- <a id="project-whisperkit"></a>**[WhisperKit](https://github.com/argmaxinc/argmax-oss-swift)** — Swift orchestration of Core ML speech preprocessing, encoder/decoder, caches and segmentation, illustrating the execution boundary between compiled models and their host runtime. `Audio` [Details](docs/catalog.md#whisperkit)
 
-### Computation reuse (1)
+<a id="homepage-system-multimodal"></a>
 
-Reuse request prefixes, features or attention across steps.
+### Multimodal and cross-domain (9)
 
-- <a id="project-videosys"></a>**[VideoSys](https://github.com/NUS-HPC-AI-Lab/VideoSys)** — Combines Pyramid Attention Broadcast with dynamic sequence parallelism, reusing attention outputs at type-specific intervals and changing sequence partitions across attention axes. **[Video generation & processing]** [Scope, sources and limits](docs/catalog.md#videosys)
-
-<a id="homepage-system-decoding"></a>
-
-### Generation order (2)
-
-Draft and verify tokens, or reorganize block generation.
-
-- <a id="project-inferix"></a>**[Inferix](https://github.com/alibaba-damo-academy/Inferix)** — Manages persistent KV state for semi-autoregressive diffusion blocks while separately chunking VAE decoding and streaming generated video. **[Video generation & processing]** [Scope, sources and limits](docs/catalog.md#inferix)
-- <a id="project-llamampere"></a>**[llamAmpere](https://github.com/JakeATX/llamAmpere)** — Extends the llama.cpp/TurboQuant lineage with SM86 verification kernels, a draft-only vocabulary shortlist, format-specific quantized execution, SJ-KVaRN compressed KV and RAM/disk prompt-state reuse. **[Language models]** [Scope, sources and limits](docs/catalog.md#llamampere)
-
-<a id="homepage-system-serving"></a>
-
-### Parallelism & scheduling (6)
-
-Partition stages, devices and requests around workload constraints.
-
-- <a id="project-gufo-rdma"></a>**[Gufo RDMA](https://github.com/neuhaus/gufo)** — Adds model-specific tensor partitioning, RDMA collectives and mirrored request execution to Gufo, using libibverbs over InfiniBand, RoCE or qualified USB4 networking. **[Language models / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#gufo-rdma)
-- <a id="project-llaminar"></a>**[Llaminar](https://github.com/Llaminar/llaminar)** — Builds model-specific compute graphs and rank plans, placing tensor/pipeline stages and MoE experts across devices; retained native graphs coordinate through NCCL, RCCL, MPI or heterogeneous host bridges. **[Language models]** [Scope, sources and limits](docs/catalog.md#llaminar)
-- <a id="project-streamdiffusion"></a>**[StreamDiffusion](https://github.com/cumulo-autumn/StreamDiffusion)** — Reorganizes Diffusers components into StreamBatch execution with residual guidance, input filtering and optional compiled UNet/VAE paths. **[Image generation & processing / Video generation & processing]** [Scope, sources and limits](docs/catalog.md#streamdiffusion)
-- <a id="project-streamdiffusion-v2"></a>**[StreamDiffusionV2](https://github.com/chenfengxu714/StreamDiffusionV2)** — Reorganizes denoising across streamed chunks and stages, with model-aware KV state and distributed cache ownership rather than an offline wrapper alone. **[Video generation & processing]** [Scope, sources and limits](docs/catalog.md#streamdiffusion-v2)
-- <a id="project-telefuser"></a>**[TeleFuser](https://github.com/Tele-AI/TeleFuser)** — Owns model pipelines and staged denoising, plus an actor-based streaming scheduler that separates retained session state from execution leases and applies backpressure. **[Video generation & processing / Image generation & processing / Speech & audio / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#telefuser)
-- <a id="project-xdit"></a>**[xDiT](https://github.com/xdit-project/xDiT)** — Combines Ulysses and Ring sequence parallelism with CFG/data parallelism and PipeFusion patch pipelines that reuse earlier-step features to overlap communication. **[Image generation & processing / Video generation & processing]** [Scope, sources and limits](docs/catalog.md#xdit)
-
-<a id="homepage-system-execution"></a>
-
-### Compiled & native execution (58)
-
-Fuse, lower, specialize and dispatch graphs or native kernels.
-
-- <a id="project-ane-lm"></a>**[ANE-LM](https://github.com/johnmai-dev/ANE-LM)** — Implements Qwen forward paths combining compiled ANE kernels with CPU operations and a persistent compile cache. **[Language models]** [Scope, sources and limits](docs/catalog.md#ane-lm)
-- <a id="project-ane-cpp"></a>**[ane.cpp](https://github.com/skyfallsin/ane.cpp)** — Compiles weight-bearing MIL convolution programs for ANE while retaining CPU normalization, attention and KV operations, then caches compiled variants and batches lanes. **[Language models]** [Scope, sources and limits](docs/catalog.md#ane-cpp)
-- <a id="project-aria"></a>**[Aria](https://github.com/matteospanio/aria)** — Implements T5Gemma conditioning, diffusion transformer, sampler and audio decoder in C with mmap weights, optional quantization and intermediate-state steering. **[Speech & audio]** [Scope, sources and limits](docs/catalog.md#aria)
-- <a id="project-basert"></a>**[BaseRT](https://github.com/basecompute/baseRT)** — A proprietary native engine executes models packaged by an open converter and exposed through public C APIs and language bindings. **[Language models / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#basert)
-- <a id="project-brain"></a>**[BRaiN](https://github.com/swedishembedded/brain)** — Rust model implementations use a shared WGSL compute engine. Inspected Qwen3-VL integrates vision features with language decoding; Wan stages text encoding, denoising and VAE decoding to bound residency. **[Language models / Image generation & processing / Video generation & processing / Speech & audio / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#brain)
-- <a id="project-brodiffusion"></a>**[brodiffusion](https://github.com/wlejon/brodiffusion)** — Implements model loaders, diffusion pipelines and samplers in C++; replays captured denoiser-step graphs when shape and runtime-state contracts permit. **[Image generation & processing]** [Scope, sources and limits](docs/catalog.md#brodiffusion)
-- <a id="project-cactus"></a>**[Cactus](https://github.com/cactus-compute/cactus)** — Captures supported model components into an intermediate graph, lowers to Cactus graph operations and runs a native engine with ARM/Metal kernels and quantized state. Vision/audio components and language decoding share bundle-managed execution. **[Language models / Image generation & processing / Speech & audio / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#cactus)
-- <a id="project-needle"></a>**[Cactus Needle](https://github.com/cactus-compute/needle)** — Needle 3 pairs a sliceable attention architecture and quantized weights with platform-specific native engines. Python tools train/export models and fetch an engine plus weight files for deployment. **[Language models / Speech & audio]** [Scope, sources and limits](docs/catalog.md#needle)
-- <a id="project-ciru-runtime"></a>**[CIRU runtime](https://github.com/ciru-ai/Qwen3.8-Flash-CIRU-STRIX-IU4)** — A llama.cpp-derived runtime integrates CIRUPLE1 paging, typed expert kernels, QSA sparse-attention paths and MTP state corrections for pinned CIRU model releases. **[Language models / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#ciru-runtime)
-- <a id="project-coreml-llm-cli"></a>**[CoreML LLM CLI](https://github.com/smpanaro/coreml-llm-cli)** — Orchestrates chunked CoreML model execution and KV state, with reshaped convolution layouts and copy-avoiding model buffers. **[Language models]** [Scope, sources and limits](docs/catalog.md#coreml-llm-cli)
-- <a id="project-diffusion-rs"></a>**[diffusion-rs](https://github.com/EricLBuehler/diffusion-rs)** — Implements FLUX component loading, sampling and residency policy on a reusable Rust tensor layer, including quantized model support. **[Image generation & processing]** [Scope, sources and limits](docs/catalog.md#diffusion-rs)
-- <a id="project-draw-things"></a>**[Draw Things Community](https://github.com/drawthingsai/draw-things-community)** — Provides independent Swift model graphs and samplers with hardware-backed execution and a TeaCache implementation that switches between full and reduced model execution. **[Image generation & processing / Video generation & processing]** [Scope, sources and limits](docs/catalog.md#draw-things)
-- <a id="project-dwarfstar"></a>**[DwarfStar](https://github.com/antirez/ds4)** — Executes selected DeepSeek, GLM and Qwen families through native model-specific paths, retaining non-routed state while fetching missing routed experts into a bounded SSD-streaming cache. **[Language models]** [Scope, sources and limits](docs/catalog.md#dwarfstar)
-- <a id="project-edge-dit"></a>**[edge-dit.cpp](https://github.com/THU-MIG/edge-dit.cpp)** — Runs DiTs on ggml graphs with automatic quantization and placement, per-component or double-buffered block offload, VAE tiling and model-aware cache policies. **[Image generation & processing / Video generation & processing]** [Scope, sources and limits](docs/catalog.md#edge-dit)
-- <a id="project-fastflowlm"></a>**[FastFlowLM](https://github.com/ROCm/FastFlowLM)** — Selects a model-family backend, packs or loads compatible weights, owns NPU tensors and decoding streams, and dispatches shape-qualified kernels. The rai path exposes model integration over ryzenai-corelib; original flm engines ship as prebuilt libraries. **[Language models / Speech & audio / Image generation & processing / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#fastflowlm)
-- <a id="project-fastvideo"></a>**[FastVideo](https://github.com/hao-ai-lab/FastVideo)** — Owns model and pipeline registries, component loading and staged denoising over shared tensor backends. Dense model paths coexist with optional Video Sparse Attention, sequence parallelism, offload and sparse or timestep-distilled checkpoints. **[Video generation & processing / Speech & audio]** [Scope, sources and limits](docs/catalog.md#fastvideo)
-- <a id="project-gufo"></a>**[Gufo](https://github.com/gufo-org/gufo)** — Owns per-model C++/HIP execution, kernels and state alongside serving, batching and continuation caching; Qwen paths integrate model-specific draft/verification cycles while reusing ROCm BLAS and adapted upstream code. **[Language models / Speech & audio / Image generation & processing / Video generation & processing / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#gufo)
-- <a id="project-halogen-flash"></a>**[Halogen Flash](https://github.com/peonist-ai/halogen-flash-server)** — Ships a model-and-chip-specific inference binary with mixed-precision weight layouts, a paged n-gram lookup table and dedicated attention/expert execution for Qwen3.8-Flash-Next. **[Language models]** [Scope, sources and limits](docs/catalog.md#halogen-flash)
-- <a id="project-hearth"></a>**[Hearth](https://github.com/jeff-hiner/hearth)** — Rebuilds CLIP, UNet, VAE, sampler and node execution in Rust, reusing CubeCL/wgpu for tensor kernels and device access. **[Image generation & processing]** [Scope, sources and limits](docs/catalog.md#hearth)
-- <a id="project-hilum-engine"></a>**[Hilum LLM Engine](https://github.com/hilum-labs/hilum-local-llm-engine)** — Retains llama.cpp/GGML execution and adds mobile backend integration, Adreno shader build/dispatch paths, allocation support and per-device parameter tuning. **[Language models / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#hilum-engine)
-- <a id="project-hipengine"></a>**[hipEngine](https://github.com/shisa-ai/hipEngine)** — A Python host drives HIP/C++ model runners, hardware-specific kernels, shared KV/prefix state and continuous batching without PyTorch in the inference runtime. **[Language models / Multimodal understanding & interaction / Speech & audio]** [Scope, sources and limits](docs/catalog.md#hipengine)
-- <a id="project-imp"></a>**[imp](https://github.com/kekzl/imp)** — A C++/CUDA engine owns model loading, attention/MoE/recurrent execution, paged KV, CUDA Graph scheduling and OpenAI/Anthropic-compatible serving, with chip-specific kernels. **[Language models / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#imp)
-- <a id="project-iris"></a>**[Iris](https://github.com/antirez/iris.c)** — Implements selected FLUX and Z-Image pipelines in C with Metal or CPU kernels, memory-mapped weights and release of text encoders after conditioning. **[Image generation & processing]** [Scope, sources and limits](docs/catalog.md#iris)
-- <a id="project-kipp"></a>**[Kipp](https://github.com/Polished-Snow/Kipp)** — A C11 engine implements strict loading, tokenization, model execution, paged KV/prefix sharing, batching and serving behind isolated Metal and CUDA backends. **[Language models]** [Scope, sources and limits](docs/catalog.md#kipp)
-- <a id="project-lightx2v"></a>**[LightX2V](https://github.com/ModelTC/LightX2V)** — Combines model-specific inference paths with quantized operators, cache policies, parallel execution and a two-slot block-loading system for overlapping offload. **[Image generation & processing / Video generation & processing / Speech & audio]** [Scope, sources and limits](docs/catalog.md#lightx2v)
-- <a id="project-lily"></a>**[Lily](https://github.com/perplexityai/pplx-garden/tree/main/lily)** — A Rust runtime owns the prefill/decode graph, dispatches model-specific Metal kernels and maintains a strict token-prefix session cache. **[Language models]** [Scope, sources and limits](docs/catalog.md#lily)
-- <a id="project-lithos-metal"></a>**[Lithos Metal](https://github.com/lithos-ai/lithos-metal)** — Compiles typed model graphs into layer-mixer megakernels plus conventional kernels, replayed with Metal indirect command buffers and GPU-resident speculative state. **[Language models]** [Scope, sources and limits](docs/catalog.md#lithos-metal)
-- <a id="project-magnitude"></a>**[Magnitude](https://github.com/magnitudedev/magnitude)** — Its inspected Metal/MLX path captures typed operations, selects compatible kernel plans and emits specialized fused Metal entry points inside MLX native compilation. **[Language models]** [Scope, sources and limits](docs/catalog.md#magnitude)
-- <a id="project-memra"></a>**[memra](https://github.com/avifenesh/memra)** — A Rust host drives embedded ahead-of-time CUDA kernels and model-specific programs, with quantized execution, KV/prefix management, speculation and multi-device placement. **[Language models / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#memra)
-- <a id="project-metalchat"></a>**[MetalChat](https://github.com/ybubnov/metalchat)** — Builds native tensor, layer and model abstractions with Metal kernels and a command-line generation path. **[Language models]** [Scope, sources and limits](docs/catalog.md#metalchat)
-- <a id="project-mflux"></a>**[MFLUX](https://github.com/mflux-community/mflux)** — Implements selected image model components natively in MLX, with on-load low-bit weight quantization and optional adapter baking into inference weights. **[Image generation & processing]** [Scope, sources and limits](docs/catalog.md#mflux)
-- <a id="project-minimax-h3-mlx"></a>**[MiniMax-H3 MLX](https://github.com/PipeNetwork/minimax-h3-mlx)** — Reimplements the joint pipeline in MLX, precomputes timestep-only AdaLN values and stages conditioning/DiT/VAE components while preserving packed multimodal geometry. **[Video generation & processing / Speech & audio]** [Scope, sources and limits](docs/catalog.md#minimax-h3-mlx)
-- <a id="project-ninfer"></a>**[NInfer](https://github.com/Neroued/ninfer)** — Native model code composes operators; Program owns state, KV, workspace and CUDA Graph execution, while runtime manages request scheduling, cache retention and pause/resume. **[Language models / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#ninfer)
-- <a id="project-ninfer-3090"></a>**[NInfer-3090](https://github.com/ashalliants/ninfer-3090)** — A continuation of the NInfer/Don-Chad fork supplies SM86 quantized tensor-core paths, memory and replay-state planning, low-bit KV and model-specific speculative execution. **[Language models / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#ninfer-3090)
-- <a id="project-parakeet-axiom"></a>**[parakeet.cpp (axiom)](https://github.com/Frikallo/parakeet.cpp)** — Implements FastConformer and decoder paths plus cached streaming convolution/attention in native C++ on axiom. **[Speech & audio]** [Scope, sources and limits](docs/catalog.md#parakeet-axiom)
-- <a id="project-parakeet-ggml"></a>**[parakeet.cpp (ggml)](https://github.com/mudler/parakeet.cpp)** — Ports speech feature extraction, encoder/decoder graphs and streaming sessions to C++/ggml with GGUF conversion and reference parity fixtures. **[Speech & audio]** [Scope, sources and limits](docs/catalog.md#parakeet-ggml)
-- <a id="project-pmetal"></a>**[PMetal](https://github.com/Epistates/pmetal)** — Combines model architecture implementations with native inference bridges and custom device operations within a broader ML SDK. **[Cross-domain infrastructure]** [Scope, sources and limits](docs/catalog.md#pmetal)
-- <a id="project-qingming-qwen3-tts"></a>**[Qingming Qwen3-TTS](https://github.com/uulong950/qingming-qwen3-tts)** — Builds separate HIP/CUDA device paths with fixed hardware contracts, native operators and resident streaming generation/decoder resource partitioning. **[Speech & audio]** [Scope, sources and limits](docs/catalog.md#qingming-qwen3-tts)
-- <a id="project-saient-quartz"></a>**[Quartz](https://github.com/SaientAI/saient-quartz)** — Implements its own tensor backend and image model stages, with reference-driven native Wan orchestration under development. **[Language models / Image generation & processing / Video generation & processing]** [Scope, sources and limits](docs/catalog.md#saient-quartz)
-- <a id="project-qwen-asr-c"></a>**[Qwen-ASR (C)](https://github.com/antirez/qwen-asr)** — Owns audio preprocessing, encoder, prompt/decode state and chunked streaming in C; CPU mmap weights and optional GPU-specific loading avoid a Python model runtime. **[Speech & audio]** [Scope, sources and limits](docs/catalog.md#qwen-asr-c)
-- <a id="project-qwen3-tts-c"></a>**[Qwen3-TTS (C)](https://github.com/gabriele-mastrapasqua/qwen3-tts)** — Implements talker, code predictor and speech decoder in C, with model-specific dispatch, streaming and reference-driven qualification. **[Speech & audio]** [Scope, sources and limits](docs/catalog.md#qwen3-tts-c)
-- <a id="project-saragossa"></a>**[Saragossa](https://github.com/azerozero/saragossa)** — Implements Rust/Metal model paths with resident decode state, leased scratch buffers, kernel dispatch and block-prefix snapshots. **[Language models / Speech & audio]** [Scope, sources and limits](docs/catalog.md#saragossa)
-- <a id="project-splash"></a>**[Splash](https://github.com/incoai/splash)** — A native runtime combines model-specific Metal kernels and matched DFlash2 drafts with its own batched execution, memory admission and KV/GDN prefix reuse; kernel agents generate specialized kernels. **[Language models / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#splash)
-- <a id="project-stable-diffusion-cpp"></a>**[stable-diffusion.cpp](https://github.com/leejet/stable-diffusion.cpp)** — Implements image and video diffusion in ggml-backed C/C++ with quantized weights, tiled VAE execution and architecture-gated sample-cache policies. **[Image generation & processing / Video generation & processing]** [Scope, sources and limits](docs/catalog.md#stable-diffusion-cpp)
-- <a id="project-stable-diffusion-rs"></a>**[stable-diffusion.rs](https://github.com/andreinknv/stable-diffusion.rs)** — Implements model and sampler logic in Rust and documents a Candle-to-MLX backend migration, preserving a narrow tensor-layer interface and golden-reference workflow. **[Image generation & processing]** [Scope, sources and limits](docs/catalog.md#stable-diffusion-rs)
-- <a id="project-strix-llama-cpp"></a>**[strix-llama.cpp](https://github.com/halo-box/strix-llama.cpp)** — A community llama.cpp fork adds guarded gfx1151 matmul, MoE and Gated DeltaNet fusions, on-device speculative checkpoints, adaptive drafting and selected ROCmFPX formats. **[Language models / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#strix-llama-cpp)
-- <a id="project-tensorfold"></a>**[TensorFold](https://github.com/ashhart/TensorFold)** — Executes a qualified set of model families from a native Zig binary using format-specific packed-weight readers and Metal/CUDA paths, fusing projections only when their packing contracts match. **[Language models]** [Scope, sources and limits](docs/catalog.md#tensorfold)
-- <a id="project-tensorrt-edge-llm"></a>**[TensorRT Edge-LLM](https://github.com/NVIDIA/TensorRT-Edge-LLM)** — Exports models to ONNX, builds target-specific TensorRT engines, then runs them through C++ executors managing decoder strategies, linear KV state, sampling and vision/audio embeddings. **[Language models / Image generation & processing / Speech & audio / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#tensorrt-edge-llm)
-- <a id="project-uzu"></a>**[Uzu](https://github.com/trymirai/uzu)** — Rust encodable model blocks manage decoder state and dispatch native kernels; generated bindings encode Metal function-constant specializations. **[Language models]** [Scope, sources and limits](docs/catalog.md#uzu)
-- <a id="project-vidax"></a>**[Vidax](https://github.com/FlyingGiraffe/vidax)** — Ports model graphs and checkpoint layouts to JAX, explicitly composes tensor/sequence sharding, attention kernels, component placement and native video samplers. **[Video generation & processing]** [Scope, sources and limits](docs/catalog.md#vidax)
-- <a id="project-vla-simd"></a>**[vla.simd](https://github.com/cair-vinuni/vla.simd)** — Rebuilds model operators, GGUF loading and action inference in C++ with architecture-specific SIMD dispatch and a separate robot-client interface. **[Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#vla-simd)
-- <a id="project-vllm-radiance"></a>**[vLLM Radiance](https://github.com/magiccodingman/vllm-radiance)** — A pinned vLLM stack integrates Radiance/libr4d HIP kernels and guarded patches for attention, GDN, MXFP4 W4A8, collectives and speculative execution. **[Language models / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#vllm-radiance)
-- <a id="project-voxgen"></a>**[VoxGen](https://github.com/NullMagic2/VoxGen)** — Reconstructs the VoxCPM2 pipeline in Rust with direct Vulkan command/memory control, selected fused shaders, reference-state caching and incremental PCM production. **[Speech & audio]** [Scope, sources and limits](docs/catalog.md#voxgen)
-- <a id="project-vte"></a>**[VTE](https://github.com/kyuubyN/VTE)** — Parses GGUF, generates HIP kernels from templates, manages a VRAM slab and replays decode graphs through a ctypes HIP bridge; batched prefill and decode are explicit runtime paths. **[Language models]** [Scope, sources and limits](docs/catalog.md#vte)
-- <a id="project-whisper-cpp"></a>**[whisper.cpp](https://github.com/ggml-org/whisper.cpp)** — Provides an established native Whisper/ggml runtime, with converted weights, optional quantization and platform-specific encoder acceleration. **[Speech & audio]** [Scope, sources and limits](docs/catalog.md#whisper-cpp)
-- <a id="project-whisperkit"></a>**[WhisperKit](https://github.com/argmaxinc/argmax-oss-swift)** — Owns speech preprocessing, encoder/decoder orchestration, caches and segmentation around Core ML artifacts within the Argmax Swift repository. **[Speech & audio]** [Scope, sources and limits](docs/catalog.md#whisperkit)
-- <a id="project-zinc"></a>**[ZINC](https://github.com/zolotukhin/zinc)** — A Zig runtime owns loading, model forward/decode graphs, KV state and serving; Vulkan and HIP/ROCm paths use native dispatch, with separate Metal and experimental CUDA backends. **[Language models]** [Scope, sources and limits](docs/catalog.md#zinc)
-- <a id="project-zllm"></a>**[zLLM](https://github.com/zllm-lab/zllm)** — Rust runtimes own model loading, graph execution and state. Inspected paths implement DeepSeek vision processing, ROCm FLUX text-conditioning/denoising/VAE stages and multi-GPU SeedVR2 sequence partitioning; MiniCPM QNN uses a separately validated native runner. **[Language models / Image generation & processing / Video generation & processing / Speech & audio / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#zllm)
+- <a id="project-brain"></a>**[BRaiN](https://github.com/swedishembedded/brain)** — Rust model implementations sharing a WGSL backend, including vision-language/video component-residency decisions; a model list does not establish full validation of every path. `Language` `Image` `Video` `Audio` `Multimodal` [Details](docs/catalog.md#brain)
+- <a id="project-cactus"></a>**[Cactus](https://github.com/cactus-compute/cactus)** — A mobile runtime lowering supported model components into its own graph operations, ARM/Metal kernels and quantized state; general conversion coverage remains limited. `Language` `Image` `Audio` `Multimodal` [Details](docs/catalog.md#cactus)
+- <a id="project-colibri"></a>**[Colibri](https://github.com/JustVugg/colibri)** — Architecture-specific C engines sharing selected components, with resident dense state and streamed experts. Backend, quantization and approximation choices need per-engine qualification. `Language` `Image` `Multimodal` [Details](docs/catalog.md#colibri)
+- <a id="project-fastflowlm"></a>**[FastFlowLM](https://github.com/ROCm/FastFlowLM)** — Model-family host runtimes managing AMD NPU tensors, weights and decode streams with shape-matched kernels; original flm engines ship as prebuilt libraries. `Language` `Image` `Audio` `Multimodal` [Details](docs/catalog.md#fastflowlm)
+- <a id="project-gufo"></a>**[Gufo](https://github.com/gufo-org/gufo)** — A selected-model C++/HIP stack for AMD Strix Halo, owning kernels, batching and continuation caching while reusing upstream components; quality qualification is model-specific. `Language` `Image` `Video` `Audio` `Multimodal` [Details](docs/catalog.md#gufo)
+- <a id="project-pmetal"></a>**[PMetal](https://github.com/Epistates/pmetal)** — An Apple Silicon training/inference SDK combining model implementations, native inference bridges and device operators, illustrating specialized execution within a broader ecosystem. `General` [Details](docs/catalog.md#pmetal)
+- <a id="project-tensorrt-edge-llm"></a>**[TensorRT Edge-LLM](https://github.com/NVIDIA/TensorRT-Edge-LLM)** — An edge-deployment reference combining ONNX export and TensorRT compilation with C++ decoding, KV and multimodal embedding management. `Language` `Image` `Audio` `Multimodal` [Details](docs/catalog.md#tensorrt-edge-llm)
+- <a id="project-vla-simd"></a>**[vla.simd](https://github.com/cair-vinuni/vla.simd)** — Native C++/CPU-SIMD operators, GGUF loading and action inference for selected vision-language-action policies. Throughput and numerical tests do not establish closed-loop safety. `Multimodal` [Details](docs/catalog.md#vla-simd)
+- <a id="project-zllm"></a>**[zLLM](https://github.com/zllm-lab/zllm)** — Rust model/backend-specific loading, execution and state management covering vision-language, image generation and video restoration; each combination has its own support boundary. `Language` `Image` `Video` `Audio` `Multimodal` [Details](docs/catalog.md#zllm)
 
 <a id="homepage-construction"></a>
 
-## Engine construction and optimization
+## Build and optimize
 
-Agent harnesses, compiler workflows and model-specific optimization procedures. State whether the output is a kernel, model program or serving stack.
+Group workflows by what they produce. Compiler and agent involvement describe the method; they do not turn a generated kernel into a complete engine.
 
-[Role and evidence index](docs/systems.md#construction)
+[Construction boundaries and sources](docs/systems.md#construction)
 
 <a id="homepage-construction-execution"></a>
-
-### Compiled & native execution (5)
-
-Fuse, lower, specialize and dispatch graphs or native kernels.
-
-- <a id="project-anemll"></a>**[ANEMLL](https://github.com/Anemll/Anemll)** — Splits and converts model components into ANE-oriented stateful packages, with prefill variants, LUT quantization and Swift/Python orchestration. **[Language models]** [Scope, sources and limits](docs/catalog.md#anemll)
-- <a id="project-mirage"></a>**[Mirage Persistent Kernel](https://github.com/mirage-project/mirage)** — Compiles an explicitly assembled LLM task graph into a persistent CUDA megakernel whose GPU workers and schedulers execute computation and communication across decoding steps. **[Language models]** [Scope, sources and limits](docs/catalog.md#mirage)
-- <a id="project-mlc-llm"></a>**[MLC LLM](https://github.com/mlc-ai/mlc-llm)** — Uses a TVM LLM-specific compilation pipeline to fuse dequantization and normalization, specialize low-batch GEMV, dispatch target-specific KV kernels and execute compiled models through MLCEngine. **[Language models]** [Scope, sources and limits](docs/catalog.md#mlc-llm)
-- <a id="project-onediff"></a>**[OneDiff](https://github.com/siliconflow/onediff)** — Converts diffusion-model modules into deployable compiled modules through OneFlow or Nexfort and reuses compiled graphs to reduce recurring inference overhead. **[Image generation & processing / Video generation & processing]** [Scope, sources and limits](docs/catalog.md#onediff)
-- <a id="project-stable-fast"></a>**[Stable Fast](https://github.com/chengzeyi/stable-fast)** — Traces Diffusers components into TorchScript, replaces common convolution/GEMM/GEGLU/normalization patterns with fused operators, and optionally captures CUDA graphs. **[Image generation & processing / Video generation & processing]** [Scope, sources and limits](docs/catalog.md#stable-fast)
-
 <a id="homepage-construction-construction"></a>
 
-### Construction & validation tools (6)
+<a id="homepage-construction-kernels"></a>
 
-Agents, kernel languages and evaluation infrastructure.
+### Operator kernels (2)
 
-- <a id="project-agentcompile"></a>**[AgentCompile](https://github.com/veneno1213822/AgentCompile)** — Combines LLM-guided ranking of bounded CUDA template candidates with contract-oriented fusion-kernel generation and an inference runtime. **[Language models / Image generation & processing]** [Scope, sources and limits](docs/catalog.md#agentcompile)
-- <a id="project-akg-agents"></a>**[AKG Agents](https://github.com/mindspore-ai/akg)** — Generates and migrates accelerator kernels through multi-agent workflows, using UCB-based asynchronous candidate search and backend-specific verification and profiling workers. **[Cross-domain infrastructure]** [Scope, sources and limits](docs/catalog.md#akg-agents)
-- <a id="project-atrex-kernel-agent"></a>**[Atrex Kernel Agent (AKA)](https://github.com/alibaba/atrex-kernel-agent)** — Runs coding episodes in isolated worktrees, evaluates numerical and performance results before promotion, and uses profiler feedback plus scoped GPU Wiki retrieval to guide further revisions. **[Cross-domain infrastructure]** [Scope, sources and limits](docs/catalog.md#atrex-kernel-agent)
-- <a id="project-kernelagent"></a>**[KernelAgent](https://github.com/meta-pytorch/KernelAgent)** — Decomposes PyTorch programs into fusable subgraphs, synthesizes Triton kernels, composes them back into a forward pass and iterates using correctness and hardware-profile feedback. **[Cross-domain infrastructure]** [Scope, sources and limits](docs/catalog.md#kernelagent)
-- <a id="project-metainfer"></a>**[MetaInfer](https://github.com/MetaInfer/MetaInfer)** — Orchestrates coding agents to iteratively build deployment-specific inference servers, then launches fixed server contracts through correctness and performance oracle phases. **[Language models]** [Scope, sources and limits](docs/catalog.md#metainfer)
-- <a id="project-sol-engine"></a>**[Sol-Engine](https://github.com/NVlabs/Sana/tree/sol-engine)** — Composes model-specific video inference patches for fusion, invariant/cross-KV reuse, approximate denoising cache and sparse attention, with agent-guided configuration and visual-quality checks. **[Image generation & processing / Video generation & processing]** [Scope, sources and limits](docs/catalog.md#sol-engine)
+Emits or migrates individual accelerator kernels.
+
+- <a id="project-akg-agents"></a>**[AKG Agents](https://github.com/mindspore-ai/akg)** — Builds and migrates accelerator operators through multi-agent search, code generation, backend validation and profiling; a kernel-construction workflow, not a complete inference engine. `General` [Details](docs/catalog.md#akg-agents)
+- <a id="project-atrex-kernel-agent"></a>**[Atrex Kernel Agent (AKA)](https://github.com/alibaba/atrex-kernel-agent)** — Runs coding agents in isolated worktrees to generate operator kernels, applying numerical/performance gates and revising with profiler feedback and retrieved knowledge; not a complete engine. `General` [Details](docs/catalog.md#atrex-kernel-agent)
+
+<a id="homepage-construction-programs"></a>
+
+### Model programs and compiled artifacts (6)
+
+Emits composed forward programs, compiled model packages or executable graphs; hosting responsibilities differ.
+
+- <a id="project-anemll"></a>**[ANEMLL](https://github.com/Anemll/Anemll)** — Splits, quantizes and converts models into stateful Core ML packages with Swift/Python orchestration; actual ANE placement remains a Core ML decision. `Language` [Details](docs/catalog.md#anemll)
+- <a id="project-kernelagent"></a>**[KernelAgent](https://github.com/meta-pytorch/KernelAgent)** — Partitions PyTorch programs into fusible subgraphs, generates Triton kernels and composes forward execution using correctness and hardware feedback. Finite tests do not prove general correctness. `General` [Details](docs/catalog.md#kernelagent)
+- <a id="project-mirage"></a>**[Mirage Persistent Kernel](https://github.com/mirage-project/mirage)** — Compiles an explicitly assembled LLM task graph into persistent CUDA execution with GPU workers scheduling computation and communication across decode steps; coverage depends on implemented graphs and tasks. `Language` [Details](docs/catalog.md#mirage)
+- <a id="project-mlc-llm"></a>**[MLC LLM](https://github.com/mlc-ai/mlc-llm)** — A TVM-based model compiler and MLCEngine runtime, fusing operations and specializing small-batch computation and KV kernels; illustrates portability trade-offs in compiled deployment. `Language` [Details](docs/catalog.md#mlc-llm)
+- <a id="project-onediff"></a>**[OneDiff](https://github.com/siliconflow/onediff)** — Adapts diffusion components to OneFlow/Nexfort compilation and graph reuse. Public adapter code does not establish visibility of every compiler core. `Image` `Video` [Details](docs/catalog.md#onediff)
+- <a id="project-stable-fast"></a>**[Stable Fast](https://github.com/chengzeyi/stable-fast)** — Incrementally specializes Diffusers through TorchScript tracing, fused operators and optional CUDA graphs; numerical behavior and graph compatibility require workload-specific checks. `Image` `Video` [Details](docs/catalog.md#stable-fast)
+
+<a id="homepage-construction-stacks"></a>
+
+### Runtime construction and integrated optimization (3)
+
+Builds a server or integrates changes into a model runtime. Kernel generation, configuration search and whole-engine construction are distinct scopes.
+
+- <a id="project-agentcompile"></a>**[AgentCompile](https://github.com/veneno1213822/AgentCompile)** — Uses an LLM to select bounded CUDA templates and generate fused kernels for a runtime. Reviewed generic verification/timing paths contain skipped checks and placeholders. `Language` `Image` [Details](docs/catalog.md#agentcompile)
+- <a id="project-metainfer"></a>**[MetaInfer](https://github.com/MetaInfer/MetaInfer)** — Orchestrates coding agents to construct deployment-specific servers and checks fixed correctness/performance contracts, connecting to VibeQwen. Finite prompt checks do not establish numerical equivalence. `Language` [Details](docs/catalog.md#metainfer)
+- <a id="project-sol-engine"></a>**[Sol-Engine](https://github.com/NVlabs/Sana/tree/sol-engine)** — An agent-guided video optimization workflow integrating model-specific fusion, state reuse, approximate caches and sparse attention with visual checks; each change needs separate validation and attribution. `Image` `Video` [Details](docs/catalog.md#sol-engine)
 
 <a id="homepage-validation"></a>
 
-## Correctness and quality validation
+## Validation: coverage and gaps
 
-Methods that check numerical behavior, model state, generation quality or service contracts. Embedded validators are indexed as methods without duplicating their parent project.
+Four contracts, with six source-inspected method entries. Checks embedded in a project are linked below without counting another repository. These methods were not executed here.
 
-These methods were source-inspected, not executed here. Match checks to the change: numerical behavior, composed state, output quality and service behavior do not substitute for one another.
+| Object | Available methods and observed coverage | Remaining gap |
+| --- | --- | --- |
+| <a id="homepage-validation-numerical"></a>[Operator / subgraph numerics](docs/validation.md#numerical) | Compare reference outputs under explicit shapes, dtypes and tolerances.<br>[KernelBench](#project-kernelbench): Reference and evaluator-integrity checks.<br>[FastKernels](#project-fastkernels): Kernel-to-pipeline replacement checks; coverage depends on the task.<br>[Atrex-Bench](#project-atrex-bench): Output structure, numerical errors and mutation checks. | Finite tested inputs; not automatic coverage of every model, device or persistent state. |
+| <a id="homepage-validation-model-state"></a>[Composed model and state](docs/validation.md#model-state) | Check the assembled forward program separately from persistent engine state.<br>[KernelAgent composition](#project-kernelagent): Optional --verify reference self-test of the composed forward program. | The listed composition check does not cover KV isolation, resets, batching or long trajectories; these need separate tests. |
+| <a id="homepage-validation-quality"></a>[Generated-output quality](docs/validation.md#quality) | Compare admitted approximations against a specified reference and quality threshold.<br>[Sol-Engine LPIPS and visual review](#project-sol-engine): Sampled-frame perceptual comparisons and visual checks. | Sampled frames do not fully assess temporal consistency; unequal lengths may compare only a common prefix. Unavailable scoring is not a pass. |
+| <a id="homepage-validation-service"></a>[Service and integration](docs/validation.md#service) | Exercise startup, requests, responses and the intended candidate.<br>[MetaInfer inference-framework oracle](#project-metainfer): Runs serve.sh and judges configured prompts using an LLM or heuristic fallback. | Plausible responses do not prove tensor parity or concurrency safety; prompt judging is not numerical equivalence. |
 
-<a id="homepage-validation-numerical"></a>
+Validation cost includes reference execution, candidate compilation, device/judge calls and human review. Compare costs under the same acceptance contract; a weaker check is not an equivalent efficiency improvement.
 
-### Operator and subgraph numerics
-
-Compare explicit shapes, layouts, dtypes and tolerances with a reference; inspect mutation and evaluator integrity. Passing local tests does not validate a whole model.
-
-- **[KernelBench](#project-kernelbench)** — Reference evaluation plus adversarial checks for cached answers, input mutation and alternate CUDA streams; defenses are evolving.
-- **[FastKernels](#project-fastkernels)** — Checks replacement at kernel, fused-operation, layer/block and full-pipeline levels; report which integration level actually ran.
-- **[Atrex-Bench](#project-atrex-bench)** — Checks output structure, numerical differences, declared mutation and side effects; coverage depends on generated inputs, shapes and tolerances.
-
-[Implementation evidence and coverage](docs/validation.md#numerical)
-
-<a id="homepage-validation-model-state"></a>
-
-### Composed model and persistent state
-
-Recheck the assembled forward path, then separately cover prefill/decode, cache ownership, resets, batching and repeated state transitions.
-
-- **[KernelAgent composition](#project-kernelagent)** — Requests a reference self-test and can execute the candidate with --verify; verification is optional, and finite forward tests do not establish stateful service correctness.
-
-[Implementation evidence and coverage](docs/validation.md#model-state)
-
-<a id="homepage-validation-quality"></a>
-
-### Generated-output quality
-
-Evaluate the admitted approximation under a stated reference and threshold. Perceptual similarity, text accuracy and task success are different contracts.
-
-- **[Sol-Engine LPIPS and visual review](#project-sol-engine)** — Compares sampled baseline/candidate frames and records aggregate/per-frame distances. Unequal video lengths may compare only the common prefix; unavailable scoring is not a pass, and temporal consistency is not fully covered.
-
-[Implementation evidence and coverage](docs/validation.md#quality)
-
-<a id="homepage-validation-service"></a>
-
-### Service and integration behavior
-
-Check loading, readiness, requests, responses, failures and whether the intended candidate executed. A working API does not establish reference parity or concurrency safety.
-
-- **[MetaInfer inference-framework oracle](#project-metainfer)** — Starts serve.sh, waits for readiness and judges configured prompts through an LLM or heuristic fallback; hard checks determine acceptance. This is functional feedback, not internal-tensor equivalence.
-
-[Implementation evidence and coverage](docs/validation.md#service)
-
-Checking cost includes compilation, reference runs, device time, judge calls, human review and failures. Automation alone does not establish efficiency; fewer samples or looser tolerances change the acceptance contract.
-
+[Implementation evidence and validation design](docs/validation.md)
 
 <a id="homepage-benchmark"></a>
 
-## Benchmarks and task suites
+## Benchmarks
 
-Executable workloads and comparison protocols for generated kernels and integrated inference paths.
+Tasks and comparison protocols complement the checks above. Match model, device, precision, workload, state and quality before comparing results.
 
-- <a id="project-atrex-bench"></a>**[Atrex-Bench](https://github.com/alibaba/atrex-bench)** — Packages reference programs and input/shape generators, separates agent-visible tasks from evaluator metadata, and checks compilation, numerical outputs/input mutations and forward timing against a roofline estimate. **[Cross-domain infrastructure]** [Scope, sources and limits](docs/catalog.md#atrex-bench)
-  - **Comparison question:** Does a generated operator compile, meet numerical checks and use the target hardware effectively?
-- <a id="project-fastkernels"></a>**[FastKernels](https://github.com/Snowflake-AI-Research/fastkernels)** — Replaces candidate operators in production-shaped model pipelines and evaluates both kernel-level numerics/timing and end-to-end token outputs, throughput and latency. **[Language models / Image generation & processing / Video generation & processing / Speech & audio / Multimodal understanding & interaction / Cross-domain infrastructure]** [Scope, sources and limits](docs/catalog.md#fastkernels)
-  - **Comparison question:** Do candidate-kernel gains survive model integration?
-- <a id="project-kernelbench"></a>**[KernelBench](https://github.com/ScalingIntelligence/KernelBench)** — Compiles generated kernel implementations, compares them against PyTorch reference programs on randomized inputs and times only candidates that pass correctness checks. **[Cross-domain infrastructure]** [Scope, sources and limits](docs/catalog.md#kernelbench)
-  - **Comparison question:** How do generated implementations compare with executable references under a stated evaluation protocol?
-
-Match model/checkpoint, device, precision, input distribution, state, concurrency and quality criteria. Passing operator tasks does not validate a complete engine.
+- <a id="project-atrex-bench"></a>**[Atrex-Bench](https://github.com/alibaba/atrex-bench)** — Production-sourced operator tasks, reference programs and shape generators with separate agent-visible inputs and evaluator metadata; checks compilation/numerics/timing, not whole-stack acceleration. `General` [Details](docs/catalog.md#atrex-bench)
+- <a id="project-fastkernels"></a>**[FastKernels](https://github.com/Snowflake-AI-Research/fastkernels)** — Integrates candidate operators into deployment-shaped pipelines, checking kernel numerics/timing and end-to-end outputs/latency; separates local tolerance tests from model behavior. `Language` `Image` `Video` `Audio` `Multimodal` `General` [Details](docs/catalog.md#fastkernels)
+- <a id="project-kernelbench"></a>**[KernelBench](https://github.com/ScalingIntelligence/KernelBench)** — Compiles generated kernels, compares randomized inputs against PyTorch references and times passing candidates; evaluates construction tasks, not deployed-engine gains. `General` [Details](docs/catalog.md#kernelbench)
 
 [Benchmark scope and comparison protocols](docs/benchmarks.md)
 
@@ -294,117 +240,91 @@ Match model/checkpoint, device, precision, input distribution, state, concurrenc
 
 ## Companion resources
 
-Performance diagnosis, construction knowledge, and selected infrastructure with a named connection to an included engine or construction workflow.
+Selected resources with a concrete construction, reuse or comparison relationship to an included system—not a general GPU-tool directory.
 
 <a id="homepage-support-diagnostics"></a>
 
 ### Performance diagnosis
 
-Turn measured hardware behavior into actionable optimization feedback; not a correctness certificate.
+- <a id="project-ncu-report-skill"></a>**[ncu-report-skill](https://github.com/mit-han-lab/ncu-report-skill)** — Extracts Nsight Compute metrics and source-level stalls to connect measured bottlenecks with candidate optimizations; a diagnosis workflow, not an inference engine. `General` [Details](docs/catalog.md#ncu-report-skill)
 
-- <a id="project-ncu-report-skill"></a>**[ncu-report-skill](https://github.com/mit-han-lab/ncu-report-skill)** — Provides a profiling harness, extracts and compares NCU metrics and source-level stall evidence, and maps observed signals to candidate optimization directions. **[Cross-domain infrastructure]** [Scope, sources and limits](docs/catalog.md#ncu-report-skill)
-
-[Sources and use](docs/resources.md#diagnostics)
+[Relationships and sources](docs/resources.md#diagnostics)
 
 <a id="homepage-support-knowledge"></a>
 
 ### Construction knowledge and experience
 
-Traceable optimization knowledge and hardware experiments that can inform another construction attempt.
+- <a id="project-kernelwiki"></a>**[KernelWiki](https://github.com/mit-han-lab/KernelWiki)** — Indexes kernel optimization experience, documents and upstream changes by hardware and symptom, retaining artifact provenance; a searchable knowledge resource, not a runtime. `General` [Details](docs/catalog.md#kernelwiki)
+- <a id="project-ane-field-guide"></a>**[Apple Neural Engine Field Guide](https://github.com/skyfallsin/apple-neural-engine-field-guide)** — MIL/ANE probes and CPU-reference checks recording kept/discarded M3 Max experiments whose findings inform ane.cpp; a knowledge resource, not another engine. `Language` [Details](docs/catalog.md#ane-field-guide)
 
-- <a id="project-kernelwiki"></a>**[KernelWiki](https://github.com/mit-han-lab/KernelWiki)** — Indexes upstream PRs, hardware documents and optimization notes with architecture/symptom filters, and links synthesized pages to captured kernel artifacts and provenance. **[Cross-domain infrastructure]** [Scope, sources and limits](docs/catalog.md#kernelwiki)
-- <a id="project-ane-field-guide"></a>**[Apple Neural Engine Field Guide](https://github.com/skyfallsin/apple-neural-engine-field-guide)** — Uses small MIL/ANE probes and CPU-reference checks to investigate execution limits, records kept and discarded experiments, and transfers supported findings into ane.cpp. **[Language models]** [Scope, sources and limits](docs/catalog.md#ane-field-guide)
-
-[Sources and use](docs/resources.md#knowledge)
+[Relationships and sources](docs/resources.md#knowledge)
 
 <a id="homepage-support-engine-baselines"></a>
 
 ### General-engine baselines
 
-Shared services, fork origins and comparison points for included specialized stacks.
+- <a id="project-vllm"></a>**[vLLM](https://github.com/vllm-project/vllm)** — A general-engine comparison for VibeQwen and a serving foundation reused by Radiance, with paged KV, prefix sharing and continuous batching. `Language` [Details](docs/catalog.md#vllm)
+- <a id="project-sglang"></a>**[SGLang](https://github.com/sgl-project/sglang)** — A shared serving foundation for systems such as KTransformers, with radix-prefix KV reuse and cache-aware scheduling. Reuse depends on compatible prefixes and configuration. `Language` [Details](docs/catalog.md#sglang)
+- <a id="project-tensorrt-llm"></a>**[TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM)** — A general-engine reference for VibeQwen combining NVIDIA kernels, chunked-context scheduling, dynamic batching and paged KV; comparisons must match precision and workload. `Language` `Multimodal` [Details](docs/catalog.md#tensorrt-llm)
+- <a id="project-llama-cpp"></a>**[llama.cpp](https://github.com/ggml-org/llama.cpp)** — A shared native foundation for specialized forks, with GGUF loading, GGML graphs and backend quantized kernels; useful for distinguishing inherited infrastructure from execution changes. `Language` [Details](docs/catalog.md#llama-cpp)
 
-- <a id="project-vllm"></a>**[vLLM](https://github.com/vllm-project/vllm)** — Manages attention state as pooled KV blocks with reference-counted prefix sharing and schedules token-budgeted work across requests, allocating cache slots as execution advances. **[Language models]** [Scope, sources and limits](docs/catalog.md#vllm)
-- <a id="project-sglang"></a>**[SGLang](https://github.com/sgl-project/sglang)** — Indexes reusable prefix KV state in a radix tree, protects active nodes with references and offers cache-aware queue policies that prioritize requests using matched-prefix information. **[Language models]** [Scope, sources and limits](docs/catalog.md#sglang)
-- <a id="project-tensorrt-llm"></a>**[TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM)** — Combines NVIDIA-specific LLM kernels with chunked-context scheduling, generation-aware batching and reusable paged KV-cache management. **[Language models / Multimodal understanding & interaction]** [Scope, sources and limits](docs/catalog.md#tensorrt-llm)
-- <a id="project-llama-cpp"></a>**[llama.cpp](https://github.com/ggml-org/llama.cpp)** — Loads GGUF model tensors and executes a native GGML graph through backend-specific quantized kernels, dispatching by tensor type and geometry with optional CPU/GPU layer placement. **[Language models]** [Scope, sources and limits](docs/catalog.md#llama-cpp)
-
-[Sources and use](docs/resources.md#engine-baselines)
+[Relationships and sources](docs/resources.md#engine-baselines)
 
 <a id="homepage-support-compilers"></a>
 
 ### Compilers and kernel languages
 
-Compilation dependencies and output languages of included construction workflows.
+- <a id="project-tvm"></a>**[Apache TVM](https://github.com/apache/tvm)** — The compiler foundation beneath MLC LLM, providing graph transformations, tensor scheduling and target code generation. Model and serving policies remain higher-level responsibilities. `Language` `General` [Details](docs/catalog.md#tvm)
+- <a id="project-tensorrt"></a>**[NVIDIA TensorRT](https://github.com/NVIDIA/TensorRT)** — Builds NVIDIA engines around shape profiles and kernel tactics and underlies Edge-LLM. The public repository exposes plugins/examples, not the complete optimizer and runtime core. `Language` `Image` `General` [Details](docs/catalog.md#tensorrt)
+- <a id="project-triton"></a>**[Triton](https://github.com/triton-lang/triton)** — A code-generation foundation for KernelAgent and others, specializing tiled kernels and launch configurations by target/signature/constants; it does not own model loading or service validation. `Language` `Image` `Video` `General` [Details](docs/catalog.md#triton)
+- <a id="project-tilelang"></a>**[TileLang](https://github.com/tile-ai/tilelang)** — A kernel language used by Atrex, compiling tiled programs through target layouts and software pipelining. Its generated kernels are distinct from a complete model runtime. `Language` `Image` `Video` `General` [Details](docs/catalog.md#tilelang)
 
-- <a id="project-tvm"></a>**[Apache TVM](https://github.com/apache/tvm)** — Coordinates Relax graph transformations and tensor-level scheduling to fuse operators, dispatch libraries and lower target-specific tensor programs into deployable modules. **[Language models / Cross-domain infrastructure]** [Scope, sources and limits](docs/catalog.md#tvm)
-- <a id="project-tensorrt"></a>**[NVIDIA TensorRT](https://github.com/NVIDIA/TensorRT)** — Builds NVIDIA inference engines specialized to optimization-profile shapes and selected kernel tactics, recording profiled decisions in a reusable editable timing cache. **[Language models / Image generation & processing / Cross-domain infrastructure]** [Scope, sources and limits](docs/catalog.md#tensorrt)
-- <a id="project-triton"></a>**[Triton](https://github.com/triton-lang/triton)** — Compiles block-structured kernel programs for a selected GPU target and specializes cached binaries and autotuned launch configurations to argument signatures and compile-time constants. **[Language models / Image generation & processing / Video generation & processing / Cross-domain infrastructure]** [Scope, sources and limits](docs/catalog.md#triton)
-- <a id="project-tilelang"></a>**[TileLang](https://github.com/tile-ai/tilelang)** — Lowers tile-level kernel programs through target-specific layout and software-pipeline passes, generating GPU/accelerator code for tiled memory movement and matrix operations. **[Language models / Image generation & processing / Video generation & processing / Cross-domain infrastructure]** [Scope, sources and limits](docs/catalog.md#tilelang)
-
-[Sources and use](docs/resources.md#compilers)
+[Relationships and sources](docs/resources.md#compilers)
 
 <a id="homepage-support-components"></a>
 
 ### Reusable execution and model preparation
 
-Selected dependencies used in the engine cases; model preparation remains distinct from runtime execution.
+- <a id="project-deepcompressor"></a>**[DeepCompressor](https://github.com/nunchux-ai/deepcompressor)** — Calibrates low-bit quantization and SVDQuant decompositions and exports weights for backends such as Nunchaku. Model preparation and simulated evaluation are distinct from runtime acceleration. `Language` `Image` [Details](docs/catalog.md#deepcompressor)
+- <a id="project-qtip"></a>**[QTIP](https://github.com/Cornell-RelaxML/qtip)** — Trellis-coded weights with matching matrix-vector kernels, referenced by ExLlamaV3. The public interactive path lacks fusion used for the main reported timings. `Language` [Details](docs/catalog.md#qtip)
+- <a id="project-marlin"></a>**[Marlin](https://github.com/IST-DASLab/marlin)** — An INT4 execution component referenced by ExLlamaV3, combining offline repacking with load/dequantization/matmul pipelining; not a complete inference service. `Language` [Details](docs/catalog.md#marlin)
+- <a id="project-flash-linear-attention"></a>**[Flash Linear Attention](https://github.com/fla-org/flash-linear-attention)** — Linear-attention and recurrent-state kernels reused by ExLlamaV3, with chunked prefill and state updates for compatible architectures; not equivalent replacements for arbitrary softmax attention. `Language` [Details](docs/catalog.md#flash-linear-attention)
+- <a id="project-flash-attention"></a>**[FlashAttention](https://github.com/Dao-AILab/flash-attention)** — Reusable IO-aware attention kernels with fused reductions and KV-update interfaces. Exact mathematical attention does not imply bitwise identity or whole-system speedup. `Language` [Details](docs/catalog.md#flash-attention)
+- <a id="project-sageattention"></a>**[SageAttention](https://github.com/thu-ml/SageAttention)** — Reusable attention kernels combining outlier smoothing with hardware-specific INT8/FP8 paths. Operator speed and quality checks do not substitute for full video-pipeline validation. `Language` `Image` `Video` [Details](docs/catalog.md#sageattention)
+- <a id="project-flashinfer"></a>**[FlashInfer](https://github.com/flashinfer-ai/flashinfer)** — Selects or generates kernels by precision, head geometry and cache layout, including paths reused by MoE-Infinity; not a standalone inference server. `Language` [Details](docs/catalog.md#flashinfer)
 
-- <a id="project-deepcompressor"></a>**[DeepCompressor](https://github.com/nunchux-ai/deepcompressor)** — Calibrates quantization and SVDQuant low-rank outlier decomposition, evaluates compressed models and exports checkpoints into runtime-specific deployment layouts. **[Language models / Image generation & processing]** [Scope, sources and limits](docs/catalog.md#deepcompressor)
-- <a id="project-qtip"></a>**[QTIP](https://github.com/Cornell-RelaxML/qtip)** — Quantizes incoherence-transformed weights with bitshift trellis codes and executes supported low-bit encodings through matching BitshiftLinear matrix-vector kernels. **[Language models]** [Scope, sources and limits](docs/catalog.md#qtip)
-- <a id="project-marlin"></a>**[Marlin](https://github.com/IST-DASLab/marlin)** — Repacks INT4 weights/scales offline and overlaps asynchronous loads, dequantization and tensor-core MMA in a shape-specialized FP16×INT4 CUDA kernel. **[Language models]** [Scope, sources and limits](docs/catalog.md#marlin)
-- <a id="project-flash-linear-attention"></a>**[Flash Linear Attention](https://github.com/fla-org/flash-linear-attention)** — Implements architecture-specific linear-attention and recurrent mixers with chunk-parallel prefill and state-update kernels, including fused gated-delta-rule intra-chunk computation. **[Language models]** [Scope, sources and limits](docs/catalog.md#flash-linear-attention)
-- <a id="project-flash-attention"></a>**[FlashAttention](https://github.com/Dao-AILab/flash-attention)** — Implements attention with IO-aware tiled kernels and fused reductions, selecting hardware/shape-specific variants and providing KV-cache update-and-attend inference interfaces. **[Language models]** [Scope, sources and limits](docs/catalog.md#flash-attention)
-- <a id="project-sageattention"></a>**[SageAttention](https://github.com/thu-ml/SageAttention)** — Applies outlier smoothing and hardware-specific low-precision QK and PV attention kernels, dispatching among INT8/FP8 or newer architecture-specific variants. **[Language models / Image generation & processing / Video generation & processing]** [Scope, sources and limits](docs/catalog.md#sageattention)
-- <a id="project-flashinfer"></a>**[FlashInfer](https://github.com/flashinfer-ai/flashinfer)** — Builds or selects attention/GEMM/MoE kernels from dtype, head geometry, cache layout and workload metadata, with planned paged/ragged KV execution and specialized prefill/decode paths. **[Language models]** [Scope, sources and limits](docs/catalog.md#flashinfer)
+[Relationships and sources](docs/resources.md#components)
 
-[Sources and use](docs/resources.md#components)
+**Embedded knowledge:** Atrex GPU Wiki connects optimization traces and retrieved experience to later construction attempts; it remains part of Atrex. [How it is used](docs/resources.md#embedded-knowledge).
 
-**Embedded construction knowledge:** Atrex GPU Wiki turns optimization traces and agent sessions into candidate knowledge, checks provenance/scope and retrieves it in later attempts. It remains part of Atrex, not a second project; the workflow alone does not establish reduced total development cost. [Process details](docs/resources.md#embedded-knowledge).
+<a id="further-reading"></a>
 
-<a id="featured-reading"></a>
+## Further reading
 
-## Selected reading and comparison
+Additional cases extend the six starting routes into hardware constraints, memory movement, audio, model porting and action inference.
 
-These reading choices supplement the complete list above. They contrast execution control, reuse, construction and validation; they are not a star, speed or maturity ranking.
-
-| Case | Read it to understand |
+| Case | Reading benefit |
 | --- | --- |
-| [MetaInfer → VibeQwen](docs/cases.md#vibeqwen) | Connect an agent workflow to a reported deployed engine |
-| [Sol-Engine](docs/cases.md#sol-engine) | See how optimization choices are accepted and composed |
-| [Mirage MPK](docs/cases.md#mirage) | Follow an explicit task graph into persistent GPU execution |
-| [Splash](docs/cases.md#splash) | Inspect model-shaped kernels, draft execution and serving together |
 | [Gufo](docs/cases.md#gufo) | Study a device-focused stack with explicit per-model quality limits |
 | [Flash-MoE](docs/cases.md#flash-moe) | Separate SSD streaming from changes to the model computation |
-| [llamAmpere](docs/cases.md#llamampere) | See what a deep fork changes and what upstream still supplies |
-| [Nunchaku](docs/cases.md#nunchaku) | Trace packed checkpoints into fused diffusion execution |
 | [LightX2V](docs/cases.md#lightx2v) | Inspect explicit asynchronous weight-storage contracts |
 | [Vidax](docs/cases.md#vidax) | Follow model conversion and numerical debugging across devices |
 | [Aria](docs/cases.md#aria) | Read an AI disclosure beside an inspectable parity harness |
 | [vla.simd](docs/cases.md#vla-simd) | Distinguish native action inference from robot task success |
 
-[12-case matrix: model/device, artifact, reuse and checks](docs/representative-comparison.md) · [Full comparison](docs/comparison.md) · [All cases](docs/cases.md) · [Cross-case synthesis](docs/synthesis.md)
-
-Model domains are visible on every project above. Supplementary cross-category domain indices:
-
-[Multimodal understanding & interaction](docs/domains.md#multimodal) · [Image generation & processing](docs/domains.md#image) · [Video generation & processing](docs/domains.md#video) · [Speech & audio](docs/domains.md#audio) · [Language models](docs/domains.md#text) · [Cross-domain infrastructure](docs/domains.md#general)
+[All cases](docs/cases.md) · [Full comparison](docs/comparison.md) · [Mechanism index](docs/catalog.md) · [Research questions](docs/research-agenda.md) · [Latest updates](docs/updates.md)
 
 <!-- CATALOG-END -->
 
-## What belongs here?
+<a id="what-belongs-here"></a>
+<a id="read-the-evidence"></a>
 
-A record needs a direct, documented relationship to **building or validating a specialized execution stack**: substantive engines/backends, construction workflows, validation, benchmarks or concrete supporting resources. General engines and libraries need a reuse or comparison relationship; a thin wrapper, generic optimization or teaching-only nano reproduction is insufficient. [Inclusion rules and taxonomy](docs/taxonomy.md).
+## Scope and evidence
 
-## Read the evidence
+A record needs a documented relationship to **building or validating a specialized execution stack**. General frameworks, libraries and historical systems provide concrete reuse relationships and comparison points; a thin wrapper or a generic optimization alone is insufficient. [Inclusion rules](docs/taxonomy.md).
 
-Ask **why another execution path → what it controls → what it reuses or gives up → how it was built → how it is validated and maintained**. A kernel, model forward program and complete service are different artifacts. [Full case notes](docs/cases.md) retain construction, AI participation, cost, validation and maintenance evidence.
+Descriptions summarize reviewed public sources, not independently reproduced benchmarks. Keep runtime improvements separate from quantization, omitted computation and changed models. AI participation requires direct disclosure or an inspectable workflow; it does not by itself establish lower lifecycle cost. [Evidence policy](docs/evidence-policy.md).
 
-This collection reviews public sources; it has not independently reproduced project performance. AI participation requires direct disclosure or an inspectable workflow. Reported speedups and agent use alone do not establish lower lifecycle cost. Keep runtime changes separate from quantization, approximations and changed models. [Evidence policy](docs/evidence-policy.md) · [Research questions](docs/research-agenda.md) · [Resource audit](docs/resources-audit-2026-10-12.md).
+[Contribute or correct a record](CONTRIBUTING.md) · [Maintain the bilingual homepage](docs/homepage-maintenance.md) · [Visual map](assets/specialization.svg)
 
-<details>
-<summary>Visual map of the collection</summary>
-
-![Engines, construction workflows and validation methods; benchmarks and companion resources support their comparison](assets/specialization.svg)
-
-</details>
-
-[Contribute or correct a record](CONTRIBUTING.md). Directories are generated from [projects](catalog/projects.csv), [cases](catalog/cases.json), [Chinese entry descriptions](catalog/homepage_cn.json) and [reading selections](catalog/showcase.json). Metadata, original diagrams, commentary and scripts use [MIT](LICENSE); linked projects and models retain their own licenses.
+Project identities and domain coverage come from the [catalog](catalog/projects.csv); concise descriptions are maintained in matching [English](catalog/homepage_en.json) and [Chinese](catalog/homepage_cn.json) records. Original metadata, diagrams, commentary and scripts use [MIT](LICENSE); linked projects and models retain their own licenses.

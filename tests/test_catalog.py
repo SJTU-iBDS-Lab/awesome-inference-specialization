@@ -158,7 +158,7 @@ class CatalogTests(unittest.TestCase):
 
     def test_homepages_share_exact_reasoned_selection(self):
         choices = render.load_showcase()
-        expected = [entry['case_id'] for entry in choices]
+        expected = list(render.STARTER_CASE_IDS) + [entry['case_id'] for entry in choices if entry['case_id'] not in render.STARTER_CASE_IDS]
         self.assertTrue(10 <= len(expected) <= 15)
         for chinese in (False, True):
             text = render.render_overview(self.rows, chinese)
@@ -187,18 +187,17 @@ class CatalogTests(unittest.TestCase):
     def test_homepages_list_every_project_once_with_direct_upstream_links(self):
         for chinese in (False, True):
             text = render.render_overview(self.rows, chinese)
+            notes = render.load_homepage_cn() if chinese else render.load_homepage_en()
             ids = re.findall(r'<a id="project-([a-z0-9-]+)"></a>', text)
             self.assertCountEqual(ids, [r['id'] for r in self.rows])
             self.assertEqual(len(ids), len(set(ids)))
             external = re.findall(r'\]\((https://[^)]+)\)', text)
             for row in self.rows:
                 self.assertEqual(external.count(row['url']), 1, row['id'])
-                if not chinese:
-                    self.assertIn(render.md_cell(row['mechanism']), text)
+                self.assertIn(render.md_cell(notes[row['id']]), text)
                 self.assertIn(f"(docs/catalog.md#{row['id']})", text)
-            # Complete entries are ordinary expanded Markdown, never hidden panels.
             self.assertNotIn('<details>', text)
-            self.assertLess(text.index('project-'), text.index('id="featured-reading"'))
+            self.assertLess(text.index('id="featured-reading"'), text.index('id="project-'))
 
     def test_homepage_expands_every_functional_section_and_validation_contract(self):
         for chinese in (False, True):
@@ -224,6 +223,50 @@ class CatalogTests(unittest.TestCase):
         text = render.render_overview(self.rows, True)
         for note in notes.values():
             self.assertIn(render.md_cell(note), text)
+
+    def test_bilingual_notes_are_complete_and_reject_silent_fallback(self):
+        en, cn = render.load_homepage_en(), render.load_homepage_cn()
+        render.validate_notes(self.rows, en, cn)
+        with self.assertRaises(ValueError):
+            render.validate_notes(self.rows, {}, cn)
+        broken = dict(en)
+        broken[self.rows[0]['id']] = ''
+        with self.assertRaises(ValueError):
+            render.validate_notes(self.rows, broken, cn)
+        self.assertTrue(all(len(note.split()) <= 60 for note in en.values()))
+
+    def test_critical_caveats_are_visible_in_both_languages(self):
+        en, cn = render.load_homepage_en(), render.load_homepage_cn()
+        for token in ('10', '4', 'approximate'):
+            self.assertIn(token, en['flash-moe'])
+        self.assertIn('十个激活专家缩减为四个', cn['flash-moe'])
+        self.assertIn('expert skipping', en['strata'])
+        self.assertIn('专家跳过', cn['strata'])
+        self.assertIn('closed', en['halogen-flash'])
+        self.assertIn('闭源', cn['halogen-flash'])
+        self.assertIn('placeholders', en['agentcompile'])
+        self.assertIn('占位', cn['agentcompile'])
+        self.assertIn('not the native Rust', en['saient-quartz'])
+        self.assertIn('不能归为原生 Rust', cn['saient-quartz'])
+
+    def test_engine_navigation_uses_domains_without_losing_mechanism_links(self):
+        for chinese in (False, True):
+            text = render.render_overview(self.rows, chinese)
+            start = text.index('<a id="homepage-system"></a>')
+            end = text.index('<a id="homepage-construction"></a>')
+            engine_text = text[start:end]
+            groups = [id for id, _, _ in render.ENGINE_DOMAINS]
+            self.assertEqual(len(re.findall(r'^### ', engine_text, flags=re.M)), len(groups))
+            for domain in groups:
+                self.assertIn(f'id="homepage-system-{domain}"', text)
+            for family in render.FAMILIES:
+                if family['id'] != 'construction':
+                    self.assertIn(f'id="homepage-system-{family["id"]}"', text)
+            for row in self.rows:
+                if row['catalog_role'] == 'system':
+                    self.assertIn(render.primary_domain(row), groups)
+            ids = re.findall(r'<a id="([^"]+)"></a>', text)
+            self.assertEqual(len(ids), len(set(ids)))
 
     def test_local_links_and_anchors(self):
         paths = [*ROOT.glob('*.md'), *ROOT.glob('docs/*.md')]
