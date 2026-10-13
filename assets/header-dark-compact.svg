@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="150" viewBox="0 0 420 150" role="img" aria-labelledby="title desc">
+<title id="title">Inference specialization</title>
+<desc id="desc">Known models, hardware and workloads guide construction, optimization and validation of a purpose-built execution stack. A conceptual map, not a measured performance claim.</desc>
+<rect width="420" height="150" rx="16" fill="#121c25"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<rect x="16" y="15" width="114" height="30" rx="8" fill="#192936" stroke="#425b6a"/>
+<text x="73" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#b1c4cf" letter-spacing="0.6">MODEL</text>
+<rect x="153" y="15" width="114" height="30" rx="8" fill="#192936" stroke="#425b6a"/>
+<text x="210" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#b1c4cf" letter-spacing="0.6">HARDWARE</text>
+<rect x="290" y="15" width="114" height="30" rx="8" fill="#192936" stroke="#425b6a"/>
+<text x="347" y="35" text-anchor="middle" font-size="12" font-weight="700" fill="#b1c4cf" letter-spacing="0.6">WORKLOAD</text>
+<rect x="61" y="88" width="298" height="45" rx="10" fill="#1c393e" stroke="#65d5c5"/>
+<text x="210" y="117" text-anchor="middle" font-size="20" font-weight="700" fill="#edf4f7">Specialized execution</text>
+<text x="210" y="77" text-anchor="middle" font-size="11" font-weight="400" fill="#b1c4cf">build · optimize · verify</text>
+<path d="M73 45 V56 H347 V45 M210 45 V56 M210 79 V88" fill="none" stroke="#65d5c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

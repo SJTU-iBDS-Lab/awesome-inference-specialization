@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="168" viewBox="0 0 1120 168" role="img" aria-labelledby="title desc">
+<title id="title">Inference specialization</title>
+<desc id="desc">Known models, hardware and workloads guide construction, optimization and validation of a purpose-built execution stack. A conceptual map, not a measured performance claim.</desc>
+<rect width="1120" height="168" rx="16" fill="#121c25"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<rect x="34" y="19" width="192" height="30" rx="8" fill="#192936" stroke="#425b6a"/>
+<text x="138" y="39" text-anchor="middle" font-size="12" font-weight="700" fill="#b1c4cf" letter-spacing="1">MODEL</text>
+<path d="M51 39 L57 28 L66 39 M51 39 H66" fill="none" stroke="#65d5c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="51" cy="39" r="2.2" fill="#65d5c5"/>
+<circle cx="57" cy="28" r="2.2" fill="#65d5c5"/>
+<circle cx="66" cy="39" r="2.2" fill="#65d5c5"/>
+<rect x="34" y="69" width="192" height="30" rx="8" fill="#192936" stroke="#425b6a"/>
+<text x="138" y="89" text-anchor="middle" font-size="12" font-weight="700" fill="#b1c4cf" letter-spacing="1">HARDWARE</text>
+<rect x="51" y="77" width="14" height="14" rx="2" fill="#1c393e" stroke="#65d5c5"/>
+<path d="M54 74 V77 M61 74 V77 M54 91 V94 M61 91 V94" fill="none" stroke="#65d5c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="34" y="119" width="192" height="30" rx="8" fill="#192936" stroke="#425b6a"/>
+<text x="138" y="139" text-anchor="middle" font-size="12" font-weight="700" fill="#b1c4cf" letter-spacing="1">WORKLOAD</text>
+<path d="M51 139 V131 M58 139 V126 M65 139 V134" fill="none" stroke="#65d5c5" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M226 34 H264 Q286 34 286 57 V62 Q286 84 310 84 H367" fill="none" stroke="#65d5c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M226 84 H367" fill="none" stroke="#65d5c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M226 134 H264 Q286 134 286 111 V106 Q286 84 310 84" fill="none" stroke="#65d5c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M360 78 L367 84 L360 90" fill="none" stroke="#65d5c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="382" y="36" width="286" height="96" rx="12" fill="#192936" stroke="#425b6a"/>
+<rect x="382" y="58" width="3" height="52" rx="1.5" fill="#65d5c5"/>
+<text x="525" y="81" text-anchor="middle" font-size="31" font-weight="700" fill="#edf4f7">Specialize</text>
+<text x="525" y="107" text-anchor="middle" font-size="11" font-weight="600" fill="#b1c4cf" letter-spacing="1.15">BUILD · OPTIMIZE · VERIFY</text>
+<path d="M668 84 H730 M730 43 V125 M730 43 H786 M730 84 H786 M730 125 H786" fill="none" stroke="#65d5c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="799" y="29" width="281" height="29" rx="7" fill="#1c393e" stroke="#65d5c5"/>
+<text x="939" y="48" text-anchor="middle" font-size="12" font-weight="600" fill="#edf4f7" letter-spacing="0.6">MODEL EXECUTION</text>
+<rect x="799" y="70" width="281" height="29" rx="7" fill="#192936" stroke="#425b6a"/>
+<text x="939" y="89" text-anchor="middle" font-size="12" font-weight="600" fill="#edf4f7" letter-spacing="0.6">STATE + SCHEDULING</text>
+<rect x="799" y="111" width="281" height="29" rx="7" fill="#192936" stroke="#425b6a"/>
+<text x="939" y="130" text-anchor="middle" font-size="12" font-weight="600" fill="#edf4f7" letter-spacing="0.6">TARGET KERNELS</text>
+<text x="939" y="18" text-anchor="middle" font-size="10" font-weight="600" fill="#b1c4cf" letter-spacing="1.5">PURPOSE-BUILT STACK</text>
+<path d="M780 39 L785 43 L780 47" fill="none" stroke="#65d5c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M780 80 L785 84 L780 88" fill="none" stroke="#65d5c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M780 121 L785 125 L780 129" fill="none" stroke="#65d5c5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

@@ -38,6 +38,14 @@ STARTER_ROUTES = {
     'mirage': ('Compiled execution', '编译生成执行'),
     'sol-engine': ('Video optimization workflow', '视频优化流程'),
 }
+STARTER_BLURBS = {
+    'vibeqwen': ('Workflow to model server.', '从工作流到模型服务。'),
+    'splash': ('Metal kernels, state and serving.', 'Metal 内核、状态与服务。'),
+    'llamampere': ('Reuse the server. Rebuild execution.', '复用服务，重构执行。'),
+    'nunchaku': ('Low-bit weights meet fused execution.', '低比特权重与融合执行。'),
+    'mirage': ('Task graph to persistent GPU program.', '任务图到常驻 GPU 程序。'),
+    'sol-engine': ('Search, check and compose.', '搜索、验证与集成。'),
+}
 CONSTRUCTION_GROUPS = [
     ('kernels', 'Operator kernels', '算子内核',
      'Emits or migrates individual accelerator kernels.', '生成或迁移单个加速器算子内核。',
@@ -139,47 +147,62 @@ def render_homepage(rows: list[dict[str, str]], schema: dict, notes_en: dict[str
 
     def entry(row: dict[str, str]) -> str:
         domains = set(row['domains'].split(';'))
-        tags = ' '.join(f'`{select(en, cn)}`' for id, en, cn in SHORT_DOMAINS if id in domains)
+        # The heading already supplies the main domain. Retain all other facets.
+        if row['catalog_role'] == 'system':
+            domains.discard(primary_domain(row))
+        metadata = [select(en, cn) for id, en, cn in SHORT_DOMAINS if id in domains]
+        metadata.append(f'[{select("Details", "详情")}](docs/catalog.md#{row["id"]})')
         return (f'- <a id="project-{row["id"]}"></a>**[{cell(row["project"])}]({row["url"]})** — '
-                f'{cell(notes[row["id"]])} {tags} '
-                f'[{select("Details", "详情")}](docs/catalog.md#{row["id"]})')
+                f'{cell(notes[row["id"]])} <sub>{" · ".join(metadata)}</sub>')
 
     counts = {role: sum(r['catalog_role'] == role for r in rows) for role in allowed_roles}
-    lines = [select(
-        f'**{len(rows)} projects** · {counts["system"]} engines · {counts["construction"]} construction workflows · {counts["benchmark"]} benchmarks · {counts["support"]} companion resources. All entries remain expanded and link directly upstream.',
-        f'**{len(rows)} 个项目** · {counts["system"]} 个引擎 · {counts["construction"]} 个构建流程 · {counts["benchmark"]} 个基准 · {counts["support"]} 项配套资源。全部条目直接展开，项目名直达上游。'), '',
-        '**' + select('Browse engines:', '按领域找引擎：') + '** ' + ' · '.join(
-            f'[{select(en, cn)}](#homepage-system-{id})' for id, en, cn in ENGINE_DOMAINS), '',
-        '<a id="featured-reading"></a>', '', select('## Start here', '## 从这里开始'), '',
-        select('Six different ways to obtain control over inference execution. These are reading routes, not performance or maturity rankings.',
-               '六种获得推理执行控制权的方式；这是阅读入口，不是性能或成熟度排名。'), '',
-        select('| Approach | Case | What to look for |', '| 构建形态 | 案例 | 阅读重点 |'), '| --- | --- | --- |']
-    for id in STARTER_CASE_IDS:
+    role_titles = [('system', 'Engines', '引擎'), ('construction', 'Build', '构建'),
+                   ('validation', 'Validate', '验证'), ('benchmark', 'Benchmarks', '基准'),
+                   ('support', 'Resources', '资源')]
+    navigation = ' · '.join(f'[{select(en, cn)}](#homepage-{id})' for id, en, cn in role_titles)
+    navigation += select(' · [Reading](#further-reading) · [中文](README_CN.md)',
+                         ' · [深入阅读](#further-reading) · [English](README.md)')
+    short_domains = {id: select(en, cn) for id, en, cn in SHORT_DOMAINS}
+    domain_navigation = ' · '.join(f'[{short_domains[id]}](#homepage-system-{id})'
+                                   for id, _, _ in ENGINE_DOMAINS)
+    lines = ['<p align="center">', '<sub>' + select(
+        f'{len(rows)} projects · {counts["system"]} engines · {counts["construction"]} build workflows · {counts["benchmark"]} benchmarks · {counts["support"]} resources',
+        f'{len(rows)} 个项目 · {counts["system"]} 个引擎 · {counts["construction"]} 个构建流程 · {counts["benchmark"]} 个基准 · {counts["support"]} 项资源') + '</sub>', '</p>', '',
+        '<div align="center">', '', navigation, '',
+        '<sub>' + select('By domain: ', '模型领域：') + domain_navigation + '</sub>', '', '</div>', '',
+        '<a id="featured-reading"></a>', '<a id="start-here"></a>', '<a id="从这里开始"></a>', '', select('## Six ways to specialize', '## 六种专用化路径'), '',
+        '<!-- STARTER-GRID-START -->', '<table align="center">', '<tr>']
+    for index, id in enumerate(STARTER_CASE_IDS):
+        if index == 3:
+            lines += ['</tr>', '<tr>']
         item, case = choices[id], by_case[id]
         name = cell(case['title'].split(':', 1)[0])
-        lines.append(f'| {select(*STARTER_ROUTES[id])} | [{name}](docs/cases.md#{id}) | {cell(item["why_cn" if chinese else "why"])} |')
-    lines += ['', select(f'[Compare all {len(showcase)} representative cases](docs/representative-comparison.md) · [Cross-case synthesis](docs/synthesis.md)',
-                         f'[{len(showcase)} 个代表案例速查](docs/representative-comparison.md#chinese) · [跨案例综合](docs/synthesis.md)'), '',
-              select('## Contents', '## 目录'), '']
-    role_titles = [('system', 'Inference engines', '推理引擎'), ('construction', 'Build and optimize', '构建与优化'),
-                   ('validation', 'Validation: coverage and gaps', '验证：覆盖与缺口'), ('benchmark', 'Benchmarks', '评测基准'),
-                   ('support', 'Companion resources', '配套资源')]
-    for id, en, cn in role_titles:
-        lines.append(f'- [{select(en, cn)}](#homepage-{id})')
-    lines += [select('- [Further reading](#further-reading)', '- [深入阅读](#further-reading)'), '',
+        # Shorten the visible link only; the case retains the workflow/artifact relationship.
+        if id == 'vibeqwen':
+            name = 'Vibe<wbr>Qwen'
+        elif id == 'llamampere':
+            name = 'llam<wbr>Ampere'
+        elif id == 'nunchaku':
+            name = 'Nun<wbr>chaku'
+        route = select(*STARTER_ROUTES[id])
+        if id == 'sol-engine':
+            route = select('Video workflow', '视频优化流程')
+        tooltip = html.escape(item['why_cn' if chinese else 'why'], quote=True)
+        lines += ['<td width="33%" valign="top">',
+                  f'<sub>{index + 1:02d} / {cell(route)}</sub>', '',
+                  f'**[{name}](docs/cases.md#{id})**<br>',
+                  f'<sub title="{tooltip}">{cell(select(*STARTER_BLURBS[id]))}</sub>', '', '</td>']
+    lines += ['</tr>', '</table>', '<!-- STARTER-GRID-END -->', '',
+              '<sub>' + select(f'[Compare {len(showcase)} cases](docs/representative-comparison.md) · [Cross-case synthesis](docs/synthesis.md) · Reading examples, not a ranking.',
+                               f'[{len(showcase)} 案例对照](docs/representative-comparison.md#chinese) · [跨案例综合](docs/synthesis.md) · 阅读选例，不是排名。') + '</sub>', '',
               '<a id="homepage-system"></a>', '', select('## Inference engines', '## 推理引擎'), '',
-              select('Browse by the main task; short tags preserve additional domains. Native runtimes, deep forks, specialized backends and relevant precedents are included. Mechanisms are secondary facets, not mutually exclusive engine classes.',
-                     '按主要任务查找，短标签保留其他模型领域。覆盖原生运行时、深度分叉、专用后端与相关先行系统；机制是辅助标签，不再作为互斥的引擎分类。'), '',
-              select('[Relevance and execution boundaries](docs/systems.md#system) · [All overlapping domains](docs/domains.md)',
-                     '[相关性与执行边界](docs/systems.md#system) · [跨领域完整索引](docs/domains.md)'), '',
-              select('**By mechanism:** ', '**按机制检索：** ') + ' · '.join(
-                  f'<a id="homepage-system-{f["id"]}"></a>[{f["title_cn" if chinese else "title"]}](docs/catalog.md#{f["id"]})'
-                  for f in schema['families'] if f['id'] != 'construction'), '']
+              '<sub>' + select('All projects expanded; names link upstream. [Execution boundaries](docs/systems.md#system) · [Overlapping domains](docs/domains.md)',
+                                '全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md)') + '</sub>', '']
     for domain, en, cn in ENGINE_DOMAINS:
         members = group_members[domain]
-        lines += [f'<a id="homepage-system-{domain}"></a>', '', f'### {select(en, cn)} ({len(members)})', '']
+        lines += [f'<a id="homepage-system-{domain}"></a>', '', f'### {select(en, cn)} <sub>· {len(members)}</sub>', '']
         lines.extend(entry(row) for row in members)
-        lines.append('')
+        lines += ['', '<sub>' + select('[↑ Engines](#homepage-system)', '[↑ 引擎目录](#homepage-system)') + '</sub>', '']
     lines += ['<a id="homepage-construction"></a>', '', select('## Build and optimize', '## 构建与优化'), '',
               select('Group workflows by what they produce. Compiler and agent involvement describe the method; they do not turn a generated kernel into a complete engine.',
                      '按产物区分构建流程。编译器或 Agent 描述构建方法；生成内核不等于构建了完整引擎。'), '',
@@ -228,6 +251,9 @@ def render_homepage(rows: list[dict[str, str]], schema: dict, notes_en: dict[str
             continue
         name = cell(by_case[id]['title'].split(':', 1)[0])
         lines.append(f'| [{name}](docs/cases.md#{id}) | {cell(item["why_cn" if chinese else "why"])} |')
+    lines += ['', select('**Mechanism index:** ', '**机制索引：** ') + ' · '.join(
+        f'<a id="homepage-system-{f["id"]}"></a>[{f["title_cn" if chinese else "title"]}](docs/catalog.md#{f["id"]})'
+        for f in schema['families'] if f['id'] != 'construction')]
     lines += ['', select('[All cases](docs/cases.md) · [Full comparison](docs/comparison.md) · [Mechanism index](docs/catalog.md) · [Research questions](docs/research-agenda.md) · [Latest updates](docs/updates.md)',
                          '[全部案例](docs/cases.md) · [完整对照](docs/comparison.md) · [机制索引](docs/catalog.md) · [研究问题](docs/research-agenda.md) · [最近更新](docs/updates.md)')]
     return '\n'.join(lines)
