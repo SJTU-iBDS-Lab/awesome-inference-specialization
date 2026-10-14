@@ -1,0 +1,64 @@
+name: Review homepage metadata
+on:
+  push:
+    branches: [maintenance/homepage-metadata-20261014]
+permissions:
+  contents: write
+concurrency:
+  group: homepage-metadata-review-20261014
+  cancel-in-progress: false
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      BASE_SHA: 6ce2f0bf2f358a85939bac57c40c9a82f761997e
+      CANDIDATE: maintenance/homepage-metadata-verified-20261014
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: helper
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: 6ce2f0bf2f358a85939bac57c40c9a82f761997e
+          path: snapshot
+          persist-credentials: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Apply reviewed patch when present
+        working-directory: snapshot
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          test "$(git ls-remote origin refs/heads/main | cut -f1)" = "$BASE_SHA"
+          if test -f ../helper/staging/apply_homepage_metadata.py; then
+            python ../helper/staging/apply_homepage_metadata.py
+            python scripts/refresh_github_stats.py --refresh --max-repositories 160
+            python scripts/update_readme.py
+            python scripts/generate_banner.py --check
+            python scripts/validate_catalog.py
+            python scripts/update_readme.py --check
+            python -m unittest discover -s tests
+            git diff --check
+            python ../helper/staging/apply_homepage_metadata.py --verify
+            test "$(git ls-remote origin refs/heads/main | cut -f1)" = "$BASE_SHA"
+            test -z "$(git ls-remote origin refs/heads/$CANDIDATE)"
+            git add -- README.md README_CN.md catalog/homepage_metadata.json catalog/github_stats.json scripts/homepage_metadata.py scripts/refresh_github_stats.py scripts/homepage_layout.py tests/test_homepage_metadata.py docs/homepage-metadata.md docs/homepage-maintenance.md docs/homepage-visual-design.md docs/updates.md
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m 'docs: add repository stars and direct research links to bilingual homepages'
+            git push origin "HEAD:refs/heads/$CANDIDATE"
+            echo "Validated candidate: $(git rev-parse HEAD)" >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Package reviewed repository without Git credentials
+        working-directory: snapshot
+        run: |
+          git archive --format=zip --output=/tmp/homepage-metadata-workspace.zip HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: homepage-metadata-workspace
+          path: /tmp/homepage-metadata-workspace.zip
+          retention-days: 1
