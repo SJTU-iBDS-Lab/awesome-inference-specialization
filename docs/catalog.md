@@ -4,7 +4,7 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Systems & construction](systems.md) · [Comparison](comparison.md) · [Taxonomy](taxonomy.md) · [Evidence policy](evidence-policy.md)
 
-122 entries. Source review: 2026-10-14. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
+126 entries. Source review: 2026-10-14. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
 
 Use the family links below, or search this page for a model, device, mechanism or project. Source visibility is not a license or correctness certification. Semantic labels identify evaluation obligations, not proven equivalence.
 
@@ -1150,7 +1150,7 @@ Combines Ulysses and Ring sequence parallelism with CFG/data parallelism and Pip
 
 <a id="execution"></a>
 
-## Compiled & native execution / 编译与原生执行 (69)
+## Compiled & native execution / 编译与原生执行 (72)
 
 **How does a graph become an executable?** Fuse, lower, specialize and dispatch graphs or native kernels.
 
@@ -1296,6 +1296,35 @@ Implements T5Gemma conditioning, diffusion transformer, sampler and audio decode
 **Evidence:** [Source 1](https://github.com/matteospanio/aria/blob/8af80a7f900cff1d71aaecfa2929452dc46b520a/README.md) · [Source 2](https://github.com/matteospanio/aria/blob/8af80a7f900cff1d71aaecfa2929452dc46b520a/src/aria_model_sa3.c) · [Source 3](https://github.com/matteospanio/aria/blob/8af80a7f900cff1d71aaecfa2929452dc46b520a/src/aria_sampler.c) · [Source 4](https://github.com/matteospanio/aria/blob/8af80a7f900cff1d71aaecfa2929452dc46b520a/tests/test_e2e.c) · [Source 5](https://github.com/matteospanio/aria/blob/8af80a7f900cff1d71aaecfa2929452dc46b520a/BENCHMARKS.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `disclosed` · **Discovery:** `keyword`.
+
+</details>
+
+<a id="automegakernel"></a>
+
+### [AutoMegaKernel](https://github.com/RightNow-AI/AutoMegaKernel)
+
+[core](systems.md#core) · `construction` · `compiler` · `text` · **public code**
+
+**Survey relevance:** A model-program construction case combining a restricted agent edit surface, deterministic lowering and schedule checks; contrasts with unconstrained whole-runtime generation.
+
+Lowers model graphs through a typed task/counter IR to one cooperative CUDA launch per forward pass. Agent-facing loops tune instruction implementations or structured schedules, with static IR checks and reference evaluation.
+
+**Scope:** Supported HuggingFace Llama-family graphs on CUDA, principally batch-one decode. Paper speed sweeps at position zero use synthetic weights at real model shapes; real-checkpoint quality tests have a separate scope.
+
+**Boundary:** Static graph checks rely on a trusted VM and supported IR, not a mechanized whole-stack proof; inspected data-hazard checks have a task-count cap. Reported W8A16 wins compare against bf16 and cannot establish equal-precision superiority. The host still drives token steps; this is not a complete concurrent serving engine.
+
+**Semantic considerations:** generated-artifact dependent, reduced precision.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `model-lowering`, `persistent-kernel`, `schedule-search`, `static-dependency-checks`, `instruction-tuning`.
+
+**Constraints:** `model-family`, `hardware`, `single-stream`, `precision`, `schedule-ir`.
+
+**Evidence:** [Source 1](https://arxiv.org/html/2606.09682v1) · [Source 2](https://github.com/RightNow-AI/AutoMegaKernel/blob/884534c4d2dbed4381576f81a79ae97feca53c34/HARNESS.md) · [Source 3](https://github.com/RightNow-AI/AutoMegaKernel/blob/884534c4d2dbed4381576f81a79ae97feca53c34/schedule/ir.py).
+
+**Reviewed:** 2026-10-14 · **AI involvement:** `intrinsic` · **Discovery:** `keyword`.
 
 </details>
 
@@ -1470,6 +1499,35 @@ A llama.cpp-derived runtime integrates CIRUPLE1 paging, typed expert kernels, QS
 **Evidence:** [Source 1](https://github.com/ciru-ai/Qwen3.8-Flash-CIRU-STRIX-IU4/blob/bac7ad8c314bcc59505a3b76f0b18ad4618557ea/README.md) · [Source 2](https://github.com/ciru-ai/Qwen3.8-Flash-CIRU-STRIX-IU4/blob/bac7ad8c314bcc59505a3b76f0b18ad4618557ea/docs/PROVENANCE.md) · [Source 3](https://github.com/ciru-ai/Qwen3.8-Flash-CIRU-STRIX-IU4/blob/bac7ad8c314bcc59505a3b76f0b18ad4618557ea/ggml/src/ggml-cuda/qsa.cu) · [Source 4](https://github.com/ciru-ai/Qwen3.8-Flash-CIRU-STRIX-IU4/blob/bac7ad8c314bcc59505a3b76f0b18ad4618557ea/docs/QSA_BACKPORT_STATUS.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
+
+</details>
+
+<a id="infire"></a>
+
+### [Cloudflare Infire](https://blog.cloudflare.com/cloudflares-most-efficient-ai-inference-engine/)
+
+[core](systems.md#core) · `system` · `runtime` · `text` · **closed core**
+
+**Survey relevance:** An industrial platform-specialization case documenting why a provider rebuilt execution instead of only configuring a general framework; useful without an AI-development attribution.
+
+Rebuilds the Rust HTTP, batching and execution path; overlaps model loading and model-specific kernel compilation, manages paged state and cached execution graphs, and later adds pipeline/tensor/expert parallelism.
+
+**Scope:** Cloudflare distributed inference nodes with constrained host CPU, startup and isolation requirements. The initial Hopper-focused report and later large-model/multi-GPU update describe different deployment stages.
+
+**Boundary:** The engine is proprietary; evidence is official engineering disclosure rather than source inspection or independent reproduction. Initial CPU/performance comparisons mix bare-metal and sandboxed deployment conditions. Later multi-GPU support must not be treated as present in the initial release.
+
+**Semantic considerations:** configuration-dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `native-rust-runtime`, `model-specific-jit`, `continuous-batching`, `chunked-prefill`, `paged-kv`, `multi-gpu-execution`.
+
+**Constraints:** `hardware`, `deployment`, `cpu-budget`, `security`, `startup-latency`.
+
+**Evidence:** [Source 1](https://blog.cloudflare.com/cloudflares-most-efficient-ai-inference-engine/) · [Source 2](https://blog.cloudflare.com/high-performance-llms/).
+
+**Reviewed:** 2026-10-14 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 
 </details>
 
@@ -1992,6 +2050,35 @@ A C11 engine implements strict loading, tokenization, model execution, paged KV/
 **Evidence:** [Source 1](https://github.com/Polished-Snow/Kipp/blob/0b8c1246d756ae72031eb71e1b2b86309a969ed4/README.md) · [Source 2](https://github.com/Polished-Snow/Kipp/blob/0b8c1246d756ae72031eb71e1b2b86309a969ed4/docs/ARCHITECTURE.md) · [Source 3](https://github.com/Polished-Snow/Kipp/blob/0b8c1246d756ae72031eb71e1b2b86309a969ed4/docs/ROADMAP.md) · [Source 4](https://github.com/Polished-Snow/Kipp/blob/0b8c1246d756ae72031eb71e1b2b86309a969ed4/src/kipp.c) · [Source 5](https://github.com/Polished-Snow/Kipp/blob/0b8c1246d756ae72031eb71e1b2b86309a969ed4/src/cuda/kipp_cuda.cu).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
+
+</details>
+
+<a id="kie"></a>
+
+### [Kog Inference Engine (KIE)](https://blog.kog.ai/building-a-single-kernel-latency-optimized-llm-inference-engine-on-amd-mi300x-gpus/)
+
+[core](systems.md#core) · `system` · `runtime` · `text` · **documentation only**
+
+**Survey relevance:** An industrial model/runtime/hardware co-design case with an explicitly narrow low-latency operating point; distinguishes a purpose-built execution architecture from a generic serving configuration.
+
+Co-designs a persistent device-side generation loop with weight streaming, sampling, topology-aware handoffs and Laneformer delayed tensor-parallel communication, according to the vendor engineering report.
+
+**Scope:** The reviewed low-latency preview uses an FP16 approximately 2B Laneformer model, batch one and eight AMD MI300X GPUs; the companion announcement also reports an eight-H200 configuration.
+
+**Boundary:** The review covers vendor documents, not public engine source or reproduced results. The headline preview combines Laneformer/DTP with an eight-GPU FP16 setup; it is not evidence of the same gain on an unchanged arbitrary model, and third-party model roadmap statements are not implemented support.
+
+**Semantic considerations:** layout / scheduling, model / router training.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `persistent-monokernel`, `weight-streaming`, `device-side-sampling`, `topology-aware-synchronization`, `delayed-tensor-parallelism`.
+
+**Constraints:** `model`, `hardware`, `single-request`, `multi-gpu`, `latency`.
+
+**Evidence:** [Source 1](https://blog.kog.ai/building-a-single-kernel-latency-optimized-llm-inference-engine-on-amd-mi300x-gpus/) · [Source 2](https://blog.kog.ai/real-time-llm-inference-on-standard-gpus-3-000-tokens-s-per-request/).
+
+**Reviewed:** 2026-10-14 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 
 </details>
 
@@ -3157,7 +3244,7 @@ Rust runtimes own model loading, graph execution and state. Inspected paths impl
 
 <a id="construction"></a>
 
-## Construction & validation tools / 构建与验证工具 (15)
+## Construction & validation tools / 构建与验证工具 (16)
 
 **How are specialized programs built and checked?** Agents, kernel languages and evaluation infrastructure.
 
@@ -3593,6 +3680,35 @@ Compiles block-structured kernel programs for a selected GPU target and speciali
 **Evidence:** [Source 1](https://github.com/triton-lang/triton/blob/HEAD/README.md) · [Source 2](https://github.com/triton-lang/triton/blob/HEAD/python/triton/compiler/compiler.py) · [Source 3](https://github.com/triton-lang/triton/blob/HEAD/python/triton/runtime/autotuner.py) · [Source 4](https://github.com/meta-pytorch/KernelAgent/blob/HEAD/README.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
+
+</details>
+
+<a id="vibesys"></a>
+
+### [VibeServe / VibeSys](https://github.com/uw-syfi/vibesys)
+
+[core](systems.md#core) · `construction` · `generator` · `text / audio / multimodal` · **public code**
+
+**Survey relevance:** Connects generation-time model/hardware/workload specialization to a concrete serving-system initiative; the broader generator and its scenario-specific outputs are distinct artifacts.
+
+Separates design search from implementation and target-specific measurement; durable history carries hypotheses while framework-owned evaluation identities and candidate isolation connect code changes to reviewed results.
+
+**Scope:** The VibeServe initiative studies target-specific language serving, streaming ASR, constrained output, multimodal workloads and Apple Silicon. The current VibeSys repository also serves non-inference domains, which are outside this record.
+
+**Boundary:** The May 2026 VibeServe paper and the October-reviewed VibeSys implementation are not identical revisions. Results concern selected scenarios and declared contracts, not arbitrary serving workloads or proven lifecycle savings. Evaluation wiring was source-inspected; no agent campaign or generated engine was executed.
+
+**Semantic considerations:** generated-artifact dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `agent-generation`, `design-search`, `profile-feedback`, `evaluator-isolation`, `artifact-provenance`.
+
+**Constraints:** `model`, `hardware`, `workload`, `validation-contract`.
+
+**Evidence:** [Source 1](https://arxiv.org/html/2605.06068v1) · [Source 2](https://syfi.cs.washington.edu/blog/2026-05-12-introducing-vibeserve/) · [Source 3](https://github.com/uw-syfi/vibesys/blob/140baf9df1d16238c13143f84bb67526525b9baf/README.md) · [Source 4](https://github.com/uw-syfi/vibesys/blob/140baf9df1d16238c13143f84bb67526525b9baf/src/vibesys/core_wiring.py).
+
+**Reviewed:** 2026-10-14 · **AI involvement:** `intrinsic` · **Discovery:** `keyword`.
 
 </details>
 

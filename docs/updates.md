@@ -2,6 +2,15 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Quick comparison](representative-comparison.md) · [Contributing](../CONTRIBUTING.md)
 
+## 2026-10-14 — Literature and industrial follow-up / 论文与工业案例补查
+
+- Added four records and associated construction cases: [VibeServe/VibeSys](catalog.md#vibesys), [AutoMegaKernel](catalog.md#automegakernel), [Infire](catalog.md#infire), and [KIE](catalog.md#kie). The catalog now contains **126 project records and 68 cases**.
+- Added ForgeMegakernel as paper evidence and Hazy Research's perspective to the [reading list](reading-list.md), without inflating repository counts or claiming unavailable code is open.
+- Recorded distinct construction boundaries, precision/deployment caveats, code visibility and pinned implementation evidence. Extended the detailed validation guide and corrected stale contributor instructions to match the existing bilingual/domain-first homepage.
+- Preserved the six starter cards, banner assets, layout policy, existing records and their review dates. The [source-review note](source-review-2026-10-14.md) records decisions and unresolved artifact checks.
+
+本轮落实六项补审：四项进入目录与案例，两项进入阅读材料。检索了论文、官方代码与工程博客；没有运行上游 GPU/Agent 实验，不把厂商报告或静态检查包装成独立复现或整栈证明。
+
 ## 2026-10-14 — SEIS construction case / 纳入 SEIS 构建案例
 
 - Added [SEIS](catalog.md#seis) as a core construction workflow and linked its [whole-engine evolution case](cases.md#seis), paper and pinned public implementation evidence.

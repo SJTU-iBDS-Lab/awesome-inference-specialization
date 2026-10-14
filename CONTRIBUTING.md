@@ -68,11 +68,11 @@ Use `catalog/schema.json` for controlled facets and navigation configuration, `c
 
 ## Keep the full Awesome listing on the homepages
 
-Both homepages must list **every project exactly once**, always expanded, with its canonical upstream link and an evidence-detail link. Do not replace the complete list with featured selections or links to separate directory pages. Group by primary role and mechanism; supporting resources use their existing purpose groups. Display model-domain labels on each entry.
+Both homepages must list **every project exactly once**, always expanded, with its canonical upstream link and an evidence-detail link. Do not replace the complete list with featured selections or links to separate directory pages. Group engines by primary model domain and construction workflows by output boundary; supporting resources retain their purpose groups. Avoid repeating the section domain; keep additional domains as secondary text.
 
-English descriptions come from `projects.csv` (`mechanism`); `catalog/homepage_cn.json` supplies a source-grounded Chinese description for every project ID. Update both when a record changes. Translations may explain the inspected mechanism or scope, but must not strengthen evidence, imply AI authorship, or invent support or performance claims.
+Concise homepage descriptions come from `catalog/homepage_en.json` and `catalog/homepage_cn.json`; maintain equivalent facts for every project ID in both languages. Project identities, scope and detailed mechanisms remain in `projects.csv`. Update the source records and both summaries when facts change. Translations may explain the inspected mechanism or scope, but must not strengthen evidence, imply AI authorship, or invent support or performance claims.
 
-The homepage also expands validation contracts and named methods from `docs/validation.md`, construction output boundaries, benchmark comparison questions, and the purpose of each support category. Keep the method summaries in `HOMEPAGE_VALIDATION` in `scripts/update_readme.py` aligned with the source-backed validation guide. Embedded methods link to their containing project without adding duplicate repository entries. Featured reading and deeper documents are supplements to this full homepage content.
+The homepage also expands validation contracts and named methods from `docs/validation.md`, construction output boundaries, benchmark comparison questions, and the purpose of each support category. Keep the method summaries in `HOMEPAGE_VALIDATION` in `scripts/homepage_layout.py` aligned with the source-backed validation guide. Embedded methods link to their containing project without adding duplicate repository entries. Featured reading and deeper documents are supplements to this full homepage content.
 
 ## Maintain the reading selections and updates
 

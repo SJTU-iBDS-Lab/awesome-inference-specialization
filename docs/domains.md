@@ -14,7 +14,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Multimodal understanding & interaction / 多模态理解与交互
 
-25 core/adjacent entries; 2 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+26 core/adjacent entries; 2 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
@@ -36,6 +36,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [TeleFuser](catalog.md#telefuser) | core | Streaming generative/world-model workloads with per-session state, bounded queues and GPU resource groups. |
 | [TUFF](catalog.md#tuff) | core | Selected MoE families on Apple Silicon Macs with limited unified memory and SSD capacity. |
 | [TurboFieldfare](catalog.md#turbo-fieldfare) | core | Gemma 4 26B-A4B on memory-constrained Apple Silicon, with separate optional vision support. |
+| [VibeServe / VibeSys](catalog.md#vibesys) | core | The VibeServe initiative studies target-specific language serving, streaming ASR, constrained output, multimodal workloads and Apple Silicon. The current VibeSys repository also serves non-inference domains, which are outside this record. |
 | [vla.simd](catalog.md#vla-simd) | core | Selected vision-language-action policies on x86 AVX2 and ARM NEON/Apple CPU paths. |
 | [vLLM Radiance](catalog.md#vllm-radiance) | core | Dual Radeon AI PRO R9700 gfx1201 serving exposes missing efficient RDNA4 attention, recurrent, low-bit and collective paths in a general framework. |
 | [zLLM](catalog.md#zllm) | core | Selected model/backend pairs across Metal, CUDA, ROCm and CPU; experimental Snapdragon HTP paths. |
@@ -134,7 +135,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Speech & audio / 语音与音频
 
-22 core/adjacent entries; 1 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+23 core/adjacent entries; 1 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
@@ -153,6 +154,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [Qwen3-TTS (C)](catalog.md#qwen3-tts-c) | core | Qwen3-TTS 0.6B/1.7B speech synthesis on CPU and supported CUDA/Metal paths. |
 | [Saragossa](catalog.md#saragossa) | core | Single-user local latency on Apple Silicon for selected text and speech architectures with MLX affine integer weights. |
 | [TeleFuser](catalog.md#telefuser) | core | Streaming generative/world-model workloads with per-session state, bounded queues and GPU resource groups. |
+| [VibeServe / VibeSys](catalog.md#vibesys) | core | The VibeServe initiative studies target-specific language serving, streaming ASR, constrained output, multimodal workloads and Apple Silicon. The current VibeSys repository also serves non-inference domains, which are outside this record. |
 | [VoxGen](catalog.md#voxgen) | core | VoxCPM2 speech synthesis with Vulkan, including a tuned AMD RDNA3 profile. |
 | [zLLM](catalog.md#zllm) | core | Selected model/backend pairs across Metal, CUDA, ROCm and CPU; experimental Snapdragon HTP paths. |
 | [BRaiN](catalog.md#brain) | adjacent | Multiple native model ports across CPU and GPU/WebGPU; support is architecture- and action-specific. |
@@ -172,14 +174,16 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Language models / 语言模型
 
-63 core/adjacent entries; 17 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+67 core/adjacent entries; 17 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
 | [ane.cpp](catalog.md#ane-cpp) | core | Dense Qwen3/Qwen3.5 text inference through private ANE APIs, with M3 Max-specific empirical constraints. |
 | [ANEMLL Flash llama.cpp](catalog.md#anemll-flash-llama) | core | Selected GGUF MoE architectures on Apple Silicon with sidecar expert storage and bounded slot-bank memory. |
+| [AutoMegaKernel](catalog.md#automegakernel) | core | Supported HuggingFace Llama-family graphs on CUDA, principally batch-one decode. Paper speed sweeps at position zero use synthetic weights at real model shapes; real-checkpoint quality tests have a separate scope. |
 | [Cactus](catalog.md#cactus) | core | Mobile and wearable deployments; model bundles tested on selected Liquid, Gemma, Qwen and speech families. |
 | [CIRU runtime](catalog.md#ciru-runtime) | core | Qwen3.8 Flash model artifacts, paged embeddings and Strix Halo unified memory require coordinated quantization, sparse attention and speculative-state paths. |
+| [Cloudflare Infire](catalog.md#infire) | core | Cloudflare distributed inference nodes with constrained host CPU, startup and isolation requirements. The initial Hopper-focused report and later large-model/multi-GPU update describe different deployment stages. |
 | [Colibri](catalog.md#colibri) | core | Models much larger than RAM, with architecture-specific C engines and optional device-specific backends. |
 | [DwarfStar](catalog.md#dwarfstar) | core | Supported model-specific GGUF layouts, backend capabilities and the memory remaining after non-routed weights, graph buffers and KV state determine which experts stay resident. |
 | [ExLlamaV3](catalog.md#exllamav3) | core | EXL3/codebook formats, supported model architectures, CUDA GPU capabilities and small decode shapes determine the available optimized path. |
@@ -192,6 +196,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [imp](catalog.md#imp) | core | A single RTX 5090-class sm_120a target and local agent workloads motivate native FP4 arithmetic, memory planning and low-overhead concurrent serving. |
 | [Infernix](catalog.md#infernix) | core | Qwen Flash-Next experts and n-gram embeddings exceed a single RTX 5090’s memory, while local agent sessions demand prefix reuse and bounded concurrency. |
 | [Kipp](catalog.md#kipp) | core | A pinned Qwen3 checkpoint registry and small native runtime motivate explicit model contracts and hardware-checked CPU/Metal/CUDA paths. |
+| [Kog Inference Engine (KIE)](catalog.md#kie) | core | The reviewed low-latency preview uses an FP16 approximately 2B Laneformer model, batch one and eight AMD MI300X GPUs; the companion announcement also reports an eight-H200 configuration. |
 | [KTransformers / kt-kernel](catalog.md#ktransformers) | core | CPU AMX/AVX capabilities, NUMA topology, GPU memory and expert precision constrain the heterogeneous placement and execution backend. |
 | [Lily](catalog.md#lily) | core | One exact Qwen3.6-35B-A3B MLX-affine Q4 checkpoint, group size 64, on Apple GPU family 10+ and macOS 26+. |
 | [Lithos Metal](catalog.md#lithos-metal) | core | Registered Apple chip backends and selected Qwen target/draft checkpoints, with explicit recipe, format and context constraints. |
@@ -214,6 +219,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [TensorFold](catalog.md#tensorfold) | core | Explicit model–checkpoint-format–platform qualification, quantization group/bit metadata and memory admission restrict which execution paths are accepted. |
 | [TUFF](catalog.md#tuff) | core | Selected MoE families on Apple Silicon Macs with limited unified memory and SSD capacity. |
 | [TurboFieldfare](catalog.md#turbo-fieldfare) | core | Gemma 4 26B-A4B on memory-constrained Apple Silicon, with separate optional vision support. |
+| [VibeServe / VibeSys](catalog.md#vibesys) | core | The VibeServe initiative studies target-specific language serving, streaming ASR, constrained output, multimodal workloads and Apple Silicon. The current VibeSys repository also serves non-inference domains, which are outside this record. |
 | [vLLM Radiance](catalog.md#vllm-radiance) | core | Dual Radeon AI PRO R9700 gfx1201 serving exposes missing efficient RDNA4 attention, recurrent, low-bit and collective paths in a general framework. |
 | [VTE](catalog.md#vte) | core | Consumer RDNA3 GPUs, especially RX 7600 with 8 GB VRAM and Windows driver constraints, motivate direct control of memory and dispatch. |
 | [ZINC](catalog.md#zinc) | core | Local consumer GPUs motivate explicit memory ownership and native per-backend execution for a selected GGUF model catalog. |

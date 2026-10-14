@@ -74,6 +74,10 @@ Start with what is rebuilt and what effort is disclosed. Read each case for reta
 | [LightX2V](cases.md#lightx2v) | Owns model-specific inference and operator storage contracts, plus planned weight layouts, prefetch streams and two-slot device buffers. | Total development and maintenance costs are undisclosed; maximum reported speedups do not quantify construction effort. |
 | [FastVideo](cases.md#fastvideo) | Owns model implementations, registries, component loaders and staged denoising; training and distillation workflows are distinct from this inference boundary. | Total construction and maintenance effort is unknown; training and inference performance metrics cannot substitute for those measurements. |
 | [SEIS](cases.md#seis) | Starts from mini-sglang, not an empty implementation. The inspected trial-10 engine installs quantized weights and uses graph-captured greedy selection; the paper additionally describes prompt-lookup verification and coordinated KV/runtime changes. | The public demo reports approximately USD 100 of Claude usage for ten trials. The inspected driver sets a USD 20 per-trial cap, not measured spend. These values do not account for the paper experiment, human work, GPU costs or lifetime maintenance. |
+| [VibeServe / VibeSys](cases.md#vibeserve) | The artifact is a construction framework whose VibeServe initiative produces target-specific serving stacks. It is not itself one universal inference runtime. | This review does not establish a comparable lifecycle cost. Any reported campaign budget must be attached to its paper scenario and separated from validation, integration and subsequent maintenance. |
+| [AutoMegaKernel](cases.md#automegakernel) | One persistent cooperative launch executes one forward pass; counters reset between launches, KV persists and the host advances decoding. Instruction tuning and ScheduleConfig search are different edit surfaces. | Unattended self-tuning demonstrations compare against their own starting point. This inspection establishes neither full construction cost nor maintenance savings over a shared serving framework. |
+| [Cloudflare Infire](cases.md#infire) | The disclosed stack includes the HTTP server, batcher and model executor, with model-specific kernels and execution graphs. Later work extends parallel model execution. | The initial report measures CPU usage and throughput in selected deployment configurations; those operational observations are not a measurement of development or lifecycle cost. |
+| [Kog Inference Engine](cases.md#kie) | The vendor describes a monokernel managing sequence generation, sampling, state and cross-device communication, not only an isolated matrix multiplication. | Reported latency and tokens per second do not quantify GPU cost per request, utilization under mixed load, construction effort or lifetime maintenance. |
 
 ## Library facets / 资料库的独立标签
 
@@ -159,12 +163,14 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [ANEMLL](catalog.md#anemll) · adjacent | construction / compiler / text | configuration-dependent |
 | [Apache TVM](catalog.md#tvm) · foundation | support / compiler / text, general | layout / scheduling |
 | [Aria](catalog.md#aria) · core | system / runtime / audio | configuration-dependent |
+| [AutoMegaKernel](catalog.md#automegakernel) · core | construction / compiler / text | generated-artifact dependent, reduced precision |
 | [BaseRT](catalog.md#basert) · adjacent · **closed core** | system / runtime / text, multimodal | configuration-dependent |
 | [BRaiN](catalog.md#brain) · adjacent | system / runtime / text, image, video, audio, multimodal | configuration-dependent |
 | [brodiffusion](catalog.md#brodiffusion) · core | system / runtime / image | configuration-dependent |
 | [Cactus](catalog.md#cactus) · core | system / runtime / text, image, audio, multimodal | layout / scheduling, reduced precision, configuration-dependent |
 | [Cactus Needle](catalog.md#needle) · adjacent · **closed core** | system / runtime / text, audio | model / router training, reduced precision |
 | [CIRU runtime](catalog.md#ciru-runtime) · core | system / backend / text, multimodal | configuration-dependent |
+| [Cloudflare Infire](catalog.md#infire) · core · **closed core** | system / runtime / text | configuration-dependent |
 | [CoreML LLM CLI](catalog.md#coreml-llm-cli) · adjacent | system / research-prototype / text | configuration-dependent |
 | [diffusion-rs](catalog.md#diffusion-rs) · adjacent | system / runtime / image | configuration-dependent |
 | [Draw Things Community](catalog.md#draw-things) · adjacent | system / runtime / image, video | configuration-dependent |
@@ -183,6 +189,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [imp](catalog.md#imp) · core | system / runtime / text, multimodal | configuration-dependent |
 | [Iris](catalog.md#iris) · core | system / runtime / image | layout / scheduling |
 | [Kipp](catalog.md#kipp) · core | system / runtime / text | configuration-dependent |
+| [Kog Inference Engine (KIE)](catalog.md#kie) · core · **documentation only** | system / runtime / text | layout / scheduling, model / router training |
 | [LightX2V](catalog.md#lightx2v) · core | system / runtime / image, video, audio | configuration-dependent |
 | [Lily](catalog.md#lily) · core | system / runtime / text | configuration-dependent |
 | [Lithos Metal](catalog.md#lithos-metal) · core | system / runtime / text | configuration-dependent, target-verified proposals |
@@ -243,6 +250,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [Sol-Engine](catalog.md#sol-engine) · core | construction / optimizer / image, video | generated-artifact dependent, configuration-dependent |
 | [TileLang](catalog.md#tilelang) · foundation | support / compiler / text, image, video, general | generated-artifact dependent |
 | [Triton](catalog.md#triton) · foundation | support / compiler / text, image, video, general | generated-artifact dependent |
+| [VibeServe / VibeSys](catalog.md#vibesys) · core | construction / generator / text, audio, multimodal | generated-artifact dependent |
 
 </details>
 

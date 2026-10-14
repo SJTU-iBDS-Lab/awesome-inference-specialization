@@ -320,7 +320,9 @@
         "mirage",
         "lithos-metal",
         "magnitude",
-        "seis"
+        "seis",
+        "vibeserve",
+        "automegakernel"
       ]
     },
     {
@@ -345,7 +347,9 @@
         "llaminar",
         "ane-cpp",
         "cactus",
-        "fastflowlm"
+        "fastflowlm",
+        "infire",
+        "kie"
       ],
       "featured": [
         "splash",
@@ -453,6 +457,16 @@
       "id": "seis",
       "output": "Sustained reconstruction of an existing engine; distinguish paper and public demo",
       "output_cn": "持续重构已有引擎；区分论文与公开示例产物"
+    },
+    {
+      "id": "vibesys",
+      "output": "Scenario-specific serving stacks; separate VibeServe and VibeSys revisions",
+      "output_cn": "场景专用服务栈；区分 VibeServe 与 VibeSys 版本"
+    },
+    {
+      "id": "automegakernel",
+      "output": "Checked model-forward program; not a complete serving engine",
+      "output_cn": "带检查的模型前向程序；不是完整服务引擎"
     }
   ],
   "benchmark_entries": [

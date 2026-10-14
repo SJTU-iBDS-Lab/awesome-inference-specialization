@@ -32,7 +32,7 @@ Integrated model runtimes and substantial specialized backends, including native
 
 集成模型运行时和实质专用后端，涵盖原生实现与有直接参照意义的既有执行栈。
 
-89 projects / 项目
+91 projects / 项目
 
 | Project and evidence | Why it belongs | Relevance / artifact |
 | --- | --- | --- |
@@ -42,6 +42,7 @@ Integrated model runtimes and substantial specialized backends, including native
 | [brodiffusion](catalog.md#brodiffusion) | Owns C++ image-model pipelines and denoiser capture/replay policy over a reused tensor backend, making the boundary between model reconstruction and lower-level reuse explicit. | core / runtime |
 | [Cactus](catalog.md#cactus) | Connects model graph capture and lowering to a native mobile execution stack with its own quantized state and kernels. | core / runtime |
 | [CIRU runtime](catalog.md#ciru-runtime) | Model/hardware-specific deep integration with traceable borrowed kernels, artifact compatibility work and release qualification. | core / backend |
+| [Cloudflare Infire](catalog.md#infire) | An industrial platform-specialization case documenting why a provider rebuilt execution instead of only configuring a general framework; useful without an AI-development attribution. | core / runtime |
 | [Colibri](catalog.md#colibri) | Exposes the alternative of several small architecture-specific execution programs sharing selected components. | core / runtime |
 | [DwarfStar](catalog.md#dwarfstar) | A separately implemented runtime links disclosed AI assistance to model execution and expert-residency control. | core / runtime |
 | [edge-dit.cpp](catalog.md#edge-dit) | Core by execution ownership: native DiT graphs and model-component residency, graph segmentation and staged offload reconstruct the integrated constrained-memory path. | core / runtime |
@@ -58,6 +59,7 @@ Integrated model runtimes and substantial specialized backends, including native
 | [Infernix](catalog.md#infernix) | Substantial descendant reconstructing heterogeneous execution for a model too large for GPU memory, with direct AI-development disclosure. | core / runtime |
 | [Iris](catalog.md#iris) | A native image-model runtime exposes which graph and execution responsibilities are taken out of a general framework. | core / runtime |
 | [Kipp](catalog.md#kipp) | Model-family reconstruction with explicit checkpoint rejection and native serving, beyond a teaching-only forward-pass example. | core / runtime |
+| [Kog Inference Engine (KIE)](catalog.md#kie) | An industrial model/runtime/hardware co-design case with an explicitly narrow low-latency operating point; distinguishes a purpose-built execution architecture from a generic serving configuration. | core / runtime |
 | [KTransformers / kt-kernel](catalog.md#ktransformers) | A substantial heterogeneous backend provides a core case for rebuilding execution while retaining shared serving infrastructure. | core / backend |
 | [LightX2V](catalog.md#lightx2v) | Core by substantive backend reconstruction: model inference, operator storage contracts and two-slot weight transfer expose owned execution and memory decisions within a shared framework. | core / runtime |
 | [Lily](catalog.md#lily) | A deliberately single-checkpoint execution stack makes the compatibility cost of reconstruction explicit. | core / runtime |
@@ -134,14 +136,16 @@ Agent harnesses, compiler workflows and model-specific optimization procedures. 
 
 Agent harness、编译流程与模型专用优化；区分内核、模型程序与服务执行栈的产出边界。
 
-12 projects / 项目
+14 projects / 项目
 
 | Project and evidence | Why it belongs | Relevance / artifact |
 | --- | --- | --- |
+| [AutoMegaKernel](catalog.md#automegakernel) | A model-program construction case combining a restricted agent edit surface, deterministic lowering and schedule checks; contrasts with unconstrained whole-runtime generation. | core / compiler |
 | [MetaInfer](catalog.md#metainfer) | Connects a disclosed construction workflow to the VibeQwen engine case; the toolbox and generated engine are different artifacts. | core / generator |
 | [Mirage Persistent Kernel](catalog.md#mirage) | A model-to-persistent-program construction path connects generated execution schedules to a concrete runtime artifact. | core / compiler |
 | [SEIS: Self-Evolving Inference Systems](catalog.md#seis) | Sustained agent-driven reconstruction of an existing inference engine connects inherited code and reports to kernel, runtime and decoding changes; the study also exposes gaps in its evolving validation gates. | core / generator |
 | [Sol-Engine](catalog.md#sol-engine) | Connects agent-guided optimization with inspectable model runtimes and their acceptance checks. | core / optimizer |
+| [VibeServe / VibeSys](catalog.md#vibesys) | Connects generation-time model/hardware/workload specialization to a concrete serving-system initiative; the broader generator and its scenario-specific outputs are distinct artifacts. | core / generator |
 | [AgentCompile](catalog.md#agentcompile) | Agent-guided fusion route: a narrower construction comparison with explicit verification and timing caveats. | adjacent / research-prototype |
 | [AKG Agents](catalog.md#akg-agents) | Agent-generated operator route: compares local code synthesis with integrated engine construction. | adjacent / generator |
 | [ANEMLL](catalog.md#anemll) | An existing converter-plus-runtime route helps distinguish compiler-mediated specialization from direct native reconstruction. | adjacent / compiler |

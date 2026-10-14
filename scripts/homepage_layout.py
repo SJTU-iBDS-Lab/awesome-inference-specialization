@@ -53,11 +53,11 @@ CONSTRUCTION_GROUPS = [
     ('programs', 'Model programs and compiled artifacts', '模型程序与编译产物',
      'Emits composed forward programs, compiled model packages or executable graphs; hosting responsibilities differ.',
      '生成组合前向程序、编译模型包或执行图；模型宿主和服务职责各不相同。',
-     ('anemll', 'kernelagent', 'mirage', 'mlc-llm', 'onediff', 'stable-fast')),
+     ('anemll', 'automegakernel', 'kernelagent', 'mirage', 'mlc-llm', 'onediff', 'stable-fast')),
     ('stacks', 'Runtime construction and integrated optimization', '运行时构建与集成优化',
      'Builds a server or integrates changes into a model runtime. Kernel generation, configuration search and whole-engine construction are distinct scopes.',
      '构建服务或将优化集成到模型运行时；需区分内核生成、配置搜索与完整引擎构建。',
-     ('agentcompile', 'metainfer', 'seis', 'sol-engine')),
+     ('agentcompile', 'metainfer', 'seis', 'sol-engine', 'vibesys')),
 ]
 HOMEPAGE_VALIDATION = [
     ('numerical', 'Operator / subgraph numerics', '算子／子图数值',

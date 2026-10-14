@@ -20,7 +20,7 @@
 <!-- CATALOG-START -->
 
 <p align="center">
-<sub>122 个项目 · 89 个引擎 · 12 个构建流程 · 3 个基准 · 18 项资源</sub>
+<sub>126 个项目 · 91 个引擎 · 14 个构建流程 · 3 个基准 · 18 项资源</sub>
 </p>
 
 <div align="center">
@@ -98,7 +98,7 @@
 
 <a id="homepage-system-text"></a>
 
-### 语言模型 <sub>· 49</sub>
+### 语言模型 <sub>· 51</sub>
 
 - <a id="project-ane-lm"></a>**[ANE-LM](https://github.com/johnmai-dev/ANE-LM)** — 作为 ane.cpp 的直接前身，以编译缓存连接 Qwen 的 ANE 内核与 CPU 运算，保留私有接口和有限模型范围的约束。 <sub>[详情](docs/catalog.md#ane-lm)</sub>
 - <a id="project-ane-cpp"></a>**[ane.cpp](https://github.com/skyfallsin/ane.cpp)** — 通过硬件探针和保留／舍弃实验，将 Qwen 卷积编译到 ANE，并由 CPU 处理归一化、注意力与 KV 状态。 <sub>[详情](docs/catalog.md#ane-cpp)</sub>
@@ -107,6 +107,7 @@
 - <a id="project-bitnet-cpp"></a>**[bitnet.cpp](https://github.com/microsoft/BitNet)** — 围绕兼容的三值模型，以压缩低比特内核、查找表及形状专化执行；其无损表述针对已有三值表示，不适用于任意浮点模型。 <sub>[详情](docs/catalog.md#bitnet-cpp)</sub>
 - <a id="project-needle"></a>**[Cactus Needle](https://github.com/cactus-compute/needle)** — 将可切分注意力模型、量化权重与平台原生引擎配套分发；仓库公开模型和打包代码，未公开所分发 C++ 引擎实现。 <sub>音频 · [详情](docs/catalog.md#needle)</sub>
 - <a id="project-ciru-runtime"></a>**[CIRU runtime](https://github.com/ciru-ai/Qwen3.8-Flash-CIRU-STRIX-IU4)** — 在 llama.cpp 衍生运行时中整合专家分页、专用内核、稀疏注意力和推测状态修正，模型格式与特定发布构建紧密耦合。 <sub>多模态 · [详情](docs/catalog.md#ciru-runtime)</sub>
+- <a id="project-infire"></a>**[Cloudflare Infire](https://blog.cloudflare.com/cloudflares-most-efficient-ai-inference-engine/)** — 围绕 Cloudflare 节点重建的专有 Rust 服务栈，结合模型专用内核编译、批处理、分页状态及后续多 GPU 支持。依据官方工程报告；不同对照的部署条件有别，未确认 AI 辅助构建。 <sub>[详情](docs/catalog.md#infire)</sub>
 - <a id="project-coreml-llm-cli"></a>**[CoreML LLM CLI](https://github.com/smpanaro/coreml-llm-cli)** — 以分块 Core ML 执行、KV 状态和 IOSurface 缓冲区编排 Llama 2，呈现 ANEMLL 之前的编译模型与宿主运行时适配。 <sub>[详情](docs/catalog.md#coreml-llm-cli)</sub>
 - <a id="project-zero-inference"></a>**[DeepSpeed ZeRO-Inference](https://github.com/deepspeedai/DeepSpeedExamples)** — 将 CPU 或 NVMe 中的权重逐层送入 GPU，以预取和大批量摊薄传输开销，展示早于近期编程智能体的吞吐型卸载路线。 <sub>[详情](docs/catalog.md#zero-inference)</sub>
 - <a id="project-dwarfstar"></a>**[DwarfStar](https://github.com/antirez/ds4)** — 披露 AI 辅助构建的原生运行时，为选定模型保留非路由状态，并用有界 SSD 缓存读取专家；其模型与后端支持具有明确边界。 <sub>[详情](docs/catalog.md#dwarfstar)</sub>
@@ -123,6 +124,7 @@
 - <a id="project-imp"></a>**[imp](https://github.com/kekzl/imp)** — 面向 RTX 5090 级设备重建 C++/CUDA 模型执行、分页 KV、图调度与服务，作者明确披露由编程代理端到端实现。 <sub>多模态 · [详情](docs/catalog.md#imp)</sub>
 - <a id="project-infernix"></a>**[Infernix](https://github.com/wallawalla47/infernix)** — 在 NInfer 分支中组合 GPU 热专家缓存、CPU 缺失专家计算、PCIe 重叠传输及 NVMe 存储，作者披露 AI 辅助开发。 <sub>多模态 · [详情](docs/catalog.md#infernix)</sub>
 - <a id="project-kipp"></a>**[Kipp](https://github.com/Polished-Snow/Kipp)** — 以 C11 重建严格检查点加载、分词、模型执行、分页 KV 与批处理服务，通过隔离的 Metal/CUDA 后端维持模型契约。 <sub>[详情](docs/catalog.md#kipp)</sub>
+- <a id="project-kie"></a>**[Kog Inference Engine (KIE)](https://blog.kog.ai/building-a-single-kernel-latency-optimized-llm-inference-engine-on-amd-mi300x-gpus/)** — 厂商披露的低延迟持久单内核，联动设计执行、权重流式读取、采样与多卡通信。已审阅的 FP16 预览使用 Laneformer/DTP 和八张 MI300X；未确认引擎源码公开，不能视为不改模型的加速结果。 <sub>[详情](docs/catalog.md#kie)</sub>
 - <a id="project-ktransformers"></a>**[KTransformers / kt-kernel](https://github.com/kvcache-ai/ktransformers)** — 以 CPU 指令集专用内核和 NUMA 布局执行内存密集型 MoE 专家，并复用 GPU 服务设施，展示异构后端的重构边界。 <sub>[详情](docs/catalog.md#ktransformers)</sub>
 - <a id="project-lily"></a>**[Lily](https://github.com/perplexityai/pplx-garden/tree/main/lily)** — 以 Rust／Metal 自建单一 Qwen 量化检查点的预填充、解码与前缀缓存，明确展示重构的兼容性代价，接口限纯文本贪心非流式输出。 <sub>[详情](docs/catalog.md#lily)</sub>
 - <a id="project-lithos-metal"></a>**[Lithos Metal](https://github.com/lithos-ai/lithos-metal)** — 将类型化模型图编译为层融合巨型内核及常规内核，以 Metal 间接命令和 GPU 驻留草稿状态执行，部分后端与融合数值仍有限定。 <sub>[详情](docs/catalog.md#lithos-metal)</sub>
@@ -242,11 +244,12 @@
 
 <a id="homepage-construction-programs"></a>
 
-### 模型程序与编译产物 (6)
+### 模型程序与编译产物 (7)
 
 生成组合前向程序、编译模型包或执行图；模型宿主和服务职责各不相同。
 
 - <a id="project-anemll"></a>**[ANEMLL](https://github.com/Anemll/Anemll)** — 将模型拆分、量化并转换为有状态 Core ML 包，由 Swift/Python 编排执行；实际 ANE 放置仍由 Core ML 决定。 <sub>语言 · [详情](docs/catalog.md#anemll)</sub>
+- <a id="project-automegakernel"></a>**[AutoMegaKernel](https://github.com/RightNow-AI/AutoMegaKernel)** — 通过带检查的调度 IR，为 Llama 类模型生成每次前向执行的 CUDA 巨型内核，并提供 Agent 优化接口；宿主仍驱动解码。静态检查不是整栈证明，报告的 W8A16 优势采用非同精度基线。 <sub>语言 · [详情](docs/catalog.md#automegakernel)</sub>
 - <a id="project-kernelagent"></a>**[KernelAgent](https://github.com/meta-pytorch/KernelAgent)** — 将 PyTorch 程序拆成可融合子图，生成 Triton 内核并重组前向计算，以正确性和硬件反馈迭代，有限测试不构成通用正确性证明。 <sub>通用 · [详情](docs/catalog.md#kernelagent)</sub>
 - <a id="project-mirage"></a>**[Mirage Persistent Kernel](https://github.com/mirage-project/mirage)** — 将显式构建的 LLM 任务图编译为常驻 CUDA 巨型内核，由 GPU 工作线程与调度器跨解码步执行计算通信，适用范围受图与任务实现限制。 <sub>语言 · [详情](docs/catalog.md#mirage)</sub>
 - <a id="project-mlc-llm"></a>**[MLC LLM](https://github.com/mlc-ai/mlc-llm)** — 通过 TVM 的模型专用编译流水线融合运算、专化小批量计算和 KV 内核，再由 MLCEngine 执行，展示编译式部署的可移植性取舍。 <sub>语言 · [详情](docs/catalog.md#mlc-llm)</sub>
@@ -255,7 +258,7 @@
 
 <a id="homepage-construction-stacks"></a>
 
-### 运行时构建与集成优化 (4)
+### 运行时构建与集成优化 (5)
 
 构建服务或将优化集成到模型运行时；需区分内核生成、配置搜索与完整引擎构建。
 
@@ -263,6 +266,7 @@
 - <a id="project-metainfer"></a>**[MetaInfer](https://github.com/MetaInfer/MetaInfer)** — 编排编程智能体迭代构建部署专用推理服务，并以固定契约检查正确性和性能，连接 VibeQwen 案例；有限提示验证不等于数值等价。 <sub>语言 · [详情](docs/catalog.md#metainfer)</sub>
 - <a id="project-seis"></a>**[SEIS: Self-Evolving Inference Systems](https://github.com/smth-fun/self-evolving-inference-system)** — 固定编程 Agent，通过继承代码与报告持续改造 mini-sglang，联动优化内核、运行时与解码。量化改变数值；H100 论文结果与公开十轮 Blackwell 示例是不同实验产物。 <sub>语言 · [详情](docs/catalog.md#seis)</sub>
 - <a id="project-sol-engine"></a>**[Sol-Engine](https://github.com/NVlabs/Sana/tree/sol-engine)** — 以智能体引导配置与视觉检查整合模型专用视频执行补丁，包含融合、状态复用及近似缓存和稀疏注意力，各类改变需分别验证归因。 <sub>图像 · 视频 · [详情](docs/catalog.md#sol-engine)</sub>
+- <a id="project-vibesys"></a>**[VibeServe / VibeSys](https://github.com/uw-syfi/vibesys)** — 通过设计搜索、实现与框架侧评测，按模型、硬件和负载构建专用服务栈。VibeServe 论文与现行 VibeSys 代码版本不同；产物的支持范围由具体场景和验收契约限定。 <sub>语言 · 音频 · 多模态 · [详情](docs/catalog.md#vibesys)</sub>
 
 <a id="homepage-validation"></a>
 

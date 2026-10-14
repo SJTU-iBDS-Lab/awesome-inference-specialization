@@ -59,6 +59,16 @@ This supplies functional and integration feedback to the construction loop. It d
 
 SEIS 补充的是持续改写引擎时验证规则如何暴露缺口的案例。论文中的失败候选与最佳引擎应分开；研究者修订验证规则，不等于 Agent 已自主解决验证。公开十轮示例与论文实验的范围分别见[案例记录](cases.md#seis)。
 
+## Construction-time checks: additional evidence
+
+[AutoMegaKernel](cases.md#automegakernel) checks a typed schedule and its dependency/counter structure before device execution. The [inspected validator](https://github.com/RightNow-AI/AutoMegaKernel/blob/884534c4d2dbed4381576f81a79ae97feca53c34/schedule/ir.py) assumes a trusted VM and supported IR, and some data-hazard checks have a task-count cap. Static checking and empirical reference agreement do not establish a mechanized whole-stack proof.
+
+The [ForgeMegakernel paper](https://arxiv.org/html/2609.12379v1) adds intermediate KV/logit comparisons, poisoned future-KV probes and per-lane-position checks. This is paper evidence rather than source-inspected validation tooling: an official implementation was not established in this review. A finite oracle and source scan should not be described as an unconditional correctness guarantee.
+
+[VibeServe / VibeSys](cases.md#vibeserve) separates candidate construction from target-specific measurement. The [current host wiring](https://github.com/uw-syfi/vibesys/blob/140baf9df1d16238c13143f84bb67526525b9baf/src/vibesys/core_wiring.py) records evaluator/workload/environment identities and configured measurement gates; identities help trace evidence but do not prove the adequacy of those gates.
+
+本节补充三种不同边界：受限 IR 的静态检查、论文提出的中间状态检验、构建框架对验收流程和结果来源的管理。未运行这些上游验证，也不把缺少源码的论文方案称为已检查的实现；首页原有四类验证入口保持不变。
+
 ## Efficient validation: an open research question
 
 Automation alone does not establish efficiency. A useful report accounts for candidate compilation, reference runs, device time, judge calls, human review and failed attempts. It must also state what coverage was reduced to save that cost.

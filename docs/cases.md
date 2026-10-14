@@ -14,11 +14,11 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 
 ### Construction workflows and generated execution / 构建流程与生成的执行程序
 
-[MetaInfer → VibeQwen](#vibeqwen) · [Sol-Engine](#sol-engine) · [Mirage MPK](#mirage) · [Lithos Metal](#lithos-metal) · [Magnitude](#magnitude) · [SEIS](#seis)
+[MetaInfer → VibeQwen](#vibeqwen) · [Sol-Engine](#sol-engine) · [Mirage MPK](#mirage) · [Lithos Metal](#lithos-metal) · [Magnitude](#magnitude) · [SEIS](#seis) · [VibeServe / VibeSys](#vibeserve) · [AutoMegaKernel](#automegakernel)
 
 ### Native runtimes for qualified models and devices / 围绕指定模型与设备重建原生运行时
 
-[Splash](#splash) · [Gufo](#gufo) · [zLLM](#zllm) · [NInfer](#ninfer) · [Lily](#lily) · [hipEngine](#hipengine) · [imp](#imp) · [VTE](#vte) · [ZINC](#zinc) · [memra](#memra) · [Kipp](#kipp) · [Saragossa](#saragossa) · [TensorFold](#tensorfold) · [Halogen Flash](#halogen-flash) · [ExLlamaV3](#exllamav3) · [Llaminar](#llaminar) · [ane.cpp](#ane-cpp) · [Cactus](#cactus) · [FastFlowLM](#fastflowlm)
+[Splash](#splash) · [Gufo](#gufo) · [zLLM](#zllm) · [NInfer](#ninfer) · [Lily](#lily) · [hipEngine](#hipengine) · [imp](#imp) · [VTE](#vte) · [ZINC](#zinc) · [memra](#memra) · [Kipp](#kipp) · [Saragossa](#saragossa) · [TensorFold](#tensorfold) · [Halogen Flash](#halogen-flash) · [ExLlamaV3](#exllamav3) · [Llaminar](#llaminar) · [ane.cpp](#ane-cpp) · [Cactus](#cactus) · [FastFlowLM](#fastflowlm) · [Cloudflare Infire](#infire) · [Kog Inference Engine](#kie)
 
 ### Rebuilding around memory and expert placement / 围绕内存与专家驻留重建执行
 
@@ -157,6 +157,46 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 - **Evolution evidence / 适配与维护:** Code and reports are inherited, and working ideas may transfer between chains. Misleading reports and integration repairs remain part of the process; long-term production adaptation costs are not established.
 
 **Sources:** [Source 1](https://arxiv.org/html/2610.04646v1) · [Source 2](https://github.com/smth-fun/self-evolving-inference-system/blob/bf2ddc5c5882a2573756b744c0e88c1b154739fa/README.md) · [Source 3](https://github.com/smth-fun/self-evolving-inference-system/blob/bf2ddc5c5882a2573756b744c0e88c1b154739fa/run_trial.sh) · [Source 4](https://github.com/smth-fun/mini-sglang/blob/2c1f6c307c96aa165873ad785cb0fa71fb71f9d3/python/minisgl/engine/engine.py) · [Source 5](https://github.com/nehzux/SEIS) · [Source 6](https://github.com/smth-fun/self-evolving-inference-system/blob/bf2ddc5c5882a2573756b744c0e88c1b154739fa/posts/post-2-evolve.md).
+
+**Reviewed:** 2026-10-14. See the linked project record for mechanism-specific caveats.
+
+<a id="vibeserve"></a>
+
+## VibeServe / VibeSys: generation-time serving specialization
+
+**Related project records:** [VibeServe / VibeSys](catalog.md#vibesys).
+
+- **Why build it? / 为什么另建:** Explore whether per-target serving implementations can exploit opportunities outside a shared runtime, rather than only replacing individual operators.
+- **Execution ownership / 重构边界:** The artifact is a construction framework whose VibeServe initiative produces target-specific serving stacks. It is not itself one universal inference runtime.
+- **Retained components / 复用什么:** The documented workflow reuses serving knowledge, profiling tools, coding agents and existing model/kernel facilities where appropriate; generated outputs must disclose their own dependencies.
+- **Scope given up / 取舍与兼容性:** Each candidate is qualified against its scenario and evaluation contract. The broad current framework also includes non-inference tasks; that breadth is not inferred coverage of generated serving systems.
+- **Construction process / 怎样构建:** The paper separates outer design search and inner implementation/evaluation. The inspected current code stores evaluator, workload and environment identities with an evaluation recipe, and rejects parallel candidate modes without suitable isolation.
+- **AI participation / AI 参与的直接证据:** Coding agents participate explicitly. Humans supply objectives, domain knowledge and evaluation definitions; current framework-side measurement is distinct from an agent claiming a pass.
+- **Disclosed effort / 构建投入:** This review does not establish a comparable lifecycle cost. Any reported campaign budget must be attached to its paper scenario and separated from validation, integration and subsequent maintenance.
+- **Validation boundary / 验证覆盖:** Inspected the README and host evaluation wiring, alongside the paper and lab report. Contract-specific tests and a read-only reviewer are not universal numerical or service-correctness proofs. No campaign was reproduced.
+- **Evolution evidence / 适配与维护:** The project now uses the VibeSys name and a broader task framework. Pin current code separately from the VibeServe paper rather than transferring historical results to all later versions.
+
+**Sources:** [Source 1](https://arxiv.org/html/2605.06068v1) · [Source 2](https://syfi.cs.washington.edu/blog/2026-05-12-introducing-vibeserve/) · [Source 3](https://github.com/uw-syfi/vibesys/blob/140baf9df1d16238c13143f84bb67526525b9baf/README.md) · [Source 4](https://github.com/uw-syfi/vibesys/blob/140baf9df1d16238c13143f84bb67526525b9baf/src/vibesys/core_wiring.py).
+
+**Reviewed:** 2026-10-14. See the linked project record for mechanism-specific caveats.
+
+<a id="automegakernel"></a>
+
+## AutoMegaKernel: checked generation of model-level execution
+
+**Related project records:** [AutoMegaKernel](catalog.md#automegakernel).
+
+- **Why build it? / 为什么另建:** Reduce per-operator execution boundaries while making generated whole-model schedules inspectable before device launch.
+- **Execution ownership / 重构边界:** One persistent cooperative launch executes one forward pass; counters reset between launches, KV persists and the host advances decoding. Instruction tuning and ScheduleConfig search are different edit surfaces.
+- **Retained components / 复用什么:** A handwritten trusted VM, instruction ABI, model importer, CUDA runtime and reference implementations remain shared. No per-model handwritten CUDA does not mean the trusted base is automatically generated.
+- **Scope given up / 取舍与兼容性:** Current inference scope is restricted to supported model graphs and hardware. Paper shape-level performance and real-checkpoint quality results are separate; low-bit comparisons are not equal-precision controls.
+- **Construction process / 怎样构建:** The documented first loop tunes an ABI micro-kernel; the second proposes structured schedules lowered by the fixed VM. The inspected IR checks counters, dependencies, placement and buffer ordering.
+- **AI participation / AI 参与的直接证据:** The compiler exposes an explicit coding-agent harness. Structured schedule search must not be described as unrestricted synthesis of a new runtime.
+- **Disclosed effort / 构建投入:** Unattended self-tuning demonstrations compare against their own starting point. This inspection establishes neither full construction cost nor maintenance savings over a shared serving framework.
+- **Validation boundary / 验证覆盖:** Inspected schedule/ir.py, including static dependency and hazard checks. Some hazard checks are task-count-capped; references and supported VM semantics remain trusted. This is not a mechanized proof and no CUDA tests were run here.
+- **Evolution evidence / 适配与维护:** New operators, model features or device targets require compatible importer, ABI, validator and VM support; broad self-retargeting claims do not remove these obligations.
+
+**Sources:** [Source 1](https://arxiv.org/html/2606.09682v1) · [Source 2](https://github.com/RightNow-AI/AutoMegaKernel/blob/884534c4d2dbed4381576f81a79ae97feca53c34/HARNESS.md) · [Source 3](https://github.com/RightNow-AI/AutoMegaKernel/blob/884534c4d2dbed4381576f81a79ae97feca53c34/schedule/ir.py).
 
 **Reviewed:** 2026-10-14. See the linked project record for mechanism-specific caveats.
 
@@ -539,6 +579,46 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 **Sources:** [Source 1](https://github.com/ROCm/FastFlowLM/blob/e5e33d9f64388f4e239eb6584493c76ef5a07231/README.md) · [Source 2](https://github.com/ROCm/FastFlowLM/blob/e5e33d9f64388f4e239eb6584493c76ef5a07231/src/common/models/README.md) · [Source 3](https://github.com/ROCm/FastFlowLM/blob/e5e33d9f64388f4e239eb6584493c76ef5a07231/src/common/AutoModel/model_backend.cpp) · [Source 4](https://github.com/ROCm/FastFlowLM/blob/e5e33d9f64388f4e239eb6584493c76ef5a07231/flm_story.md).
 
 **Reviewed:** 2026-10-12. See the linked project record for mechanism-specific caveats.
+
+<a id="infire"></a>
+
+## Cloudflare Infire: platform-specific serving reconstruction
+
+**Related project records:** [Cloudflare Infire](catalog.md#infire).
+
+- **Why build it? / 为什么另建:** Cloudflare describes a mismatch between its geographically distributed resource-constrained nodes and the deployment assumptions of its earlier vLLM setup.
+- **Execution ownership / 重构边界:** The disclosed stack includes the HTTP server, batcher and model executor, with model-specific kernels and execution graphs. Later work extends parallel model execution.
+- **Retained components / 复用什么:** The report names Hyper, HuggingFace tokenizers, CUDA and cuBLASLt for suitable operations. A native replacement still retains shared libraries and established batching/cache mechanisms.
+- **Scope given up / 取舍与兼容性:** Specialization is to a provider platform and its deployment envelope, not one checkpoint. Proprietary implementation prevents independent source-level checking in this review.
+- **Construction process / 怎样构建:** The original report describes a Rust rewrite with asynchronous loading, JIT compilation and hardware-focused kernels. The later report describes added multi-GPU and memory/startup work.
+- **AI participation / AI 参与的直接证据:** No direct AI-construction attribution was established from the reviewed engineering reports. Do not infer it from the project being a newly built engine.
+- **Disclosed effort / 构建投入:** The initial report measures CPU usage and throughput in selected deployment configurations; those operational observations are not a measurement of development or lifecycle cost.
+- **Validation boundary / 验证覆盖:** Two official engineering reports were reviewed. The initial comparison distinguishes bare-metal vLLM, sandboxed vLLM and CPU-constrained operation; keep those conditions separate. No engine execution or source audit was possible from these materials.
+- **Evolution evidence / 适配与维护:** The later multi-GPU report supplies concrete evolution evidence. Record new scope as a later stage rather than rewriting the original report or assuming all future model support.
+
+**Sources:** [Source 1](https://blog.cloudflare.com/cloudflares-most-efficient-ai-inference-engine/) · [Source 2](https://blog.cloudflare.com/high-performance-llms/).
+
+**Reviewed:** 2026-10-14. See the linked project record for mechanism-specific caveats.
+
+<a id="kie"></a>
+
+## Kog Inference Engine: model and device co-designed execution
+
+**Related project records:** [Kog Inference Engine (KIE)](catalog.md#kie).
+
+- **Why build it? / 为什么另建:** Target the low-latency single-request regime rather than maximizing aggregate throughput through large batches.
+- **Execution ownership / 重构边界:** The vendor describes a monokernel managing sequence generation, sampling, state and cross-device communication, not only an isolated matrix multiplication.
+- **Retained components / 复用什么:** Pretrained model assets, AMD/NVIDIA devices and their programming/runtime interfaces remain prerequisites. The vendor claims its own execution implementation; public engine source was not established.
+- **Scope given up / 取舍与兼容性:** The reviewed preview combines a roughly 2B FP16 Laneformer model with eight GPUs and batch one. Delayed tensor parallelism changes the model architecture, so runtime and model contributions must be separated.
+- **Construction process / 怎样构建:** The engineering report describes compile-time work assignment, device-side synchronization, continuous weight streaming and delayed cross-device reductions. These are documentation-backed design claims, not inspected implementation paths.
+- **AI participation / AI 参与的直接证据:** No direct coding-agent construction evidence was established in the reviewed materials; relevance comes from execution co-design.
+- **Disclosed effort / 构建投入:** Reported latency and tokens per second do not quantify GPU cost per request, utilization under mixed load, construction effort or lifetime maintenance.
+- **Validation boundary / 验证覆盖:** Reviewed the technical monokernel article and matching preview conditions. Neither is an independent replication or a complete quality-equivalence protocol; announced future model support remains a roadmap.
+- **Evolution evidence / 适配与维护:** Model and device co-design creates adaptation obligations. The release of model weights, where applicable, must not be confused with publication of the inference engine implementation.
+
+**Sources:** [Source 1](https://blog.kog.ai/building-a-single-kernel-latency-optimized-llm-inference-engine-on-amd-mi300x-gpus/) · [Source 2](https://blog.kog.ai/real-time-llm-inference-on-standard-gpus-3-000-tokens-s-per-request/).
+
+**Reviewed:** 2026-10-14. See the linked project record for mechanism-specific caveats.
 
 <a id="flash-moe"></a>
 

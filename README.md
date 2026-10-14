@@ -20,7 +20,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 <!-- CATALOG-START -->
 
 <p align="center">
-<sub>122 projects · 89 engines · 12 build workflows · 3 benchmarks · 18 resources</sub>
+<sub>126 projects · 91 engines · 14 build workflows · 3 benchmarks · 18 resources</sub>
 </p>
 
 <div align="center">
@@ -98,7 +98,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 
 <a id="homepage-system-text"></a>
 
-### Language models <sub>· 49</sub>
+### Language models <sub>· 51</sub>
 
 - <a id="project-ane-lm"></a>**[ANE-LM](https://github.com/johnmai-dev/ANE-LM)** — A direct predecessor to ane.cpp, connecting Qwen ANE kernels and CPU operations through a compile cache; constrained by private interfaces and limited model coverage. <sub>[Details](docs/catalog.md#ane-lm)</sub>
 - <a id="project-ane-cpp"></a>**[ane.cpp](https://github.com/skyfallsin/ane.cpp)** — Compiles Qwen convolution programs for ANE while the CPU handles normalization, attention and KV state, informed by hardware probes and kept/discarded experiments. <sub>[Details](docs/catalog.md#ane-cpp)</sub>
@@ -107,6 +107,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 - <a id="project-bitnet-cpp"></a>**[bitnet.cpp](https://github.com/microsoft/BitNet)** — An engine for compatible ternary models using packed kernels, lookup tables and shape specialization. Losslessness concerns the existing ternary representation, not arbitrary floating-point models. <sub>[Details](docs/catalog.md#bitnet-cpp)</sub>
 - <a id="project-needle"></a>**[Cactus Needle](https://github.com/cactus-compute/needle)** — Pairs sliceable-attention models and quantized weights with platform-native engines. Model and packaging code is public, but the distributed C++ engine implementation is not. <sub>Audio · [Details](docs/catalog.md#needle)</sub>
 - <a id="project-ciru-runtime"></a>**[CIRU runtime](https://github.com/ciru-ai/Qwen3.8-Flash-CIRU-STRIX-IU4)** — A llama.cpp-derived runtime coupling expert paging, specialized kernels, sparse attention and speculative-state fixes to specific model formats and release builds. <sub>Multimodal · [Details](docs/catalog.md#ciru-runtime)</sub>
+- <a id="project-infire"></a>**[Cloudflare Infire](https://blog.cloudflare.com/cloudflares-most-efficient-ai-inference-engine/)** — A proprietary Rust serving stack built for Cloudflare nodes, combining model-specific kernel compilation, batching and paged state with later multi-GPU support. Official engineering reports describe the design; deployment conditions differ across comparisons, and AI-assisted construction is not established. <sub>[Details](docs/catalog.md#infire)</sub>
 - <a id="project-coreml-llm-cli"></a>**[CoreML LLM CLI](https://github.com/smpanaro/coreml-llm-cli)** — A Llama 2 host runtime orchestrating chunked Core ML execution, KV state and IOSurface buffers; a compiled-model integration precedent to ANEMLL. <sub>[Details](docs/catalog.md#coreml-llm-cli)</sub>
 - <a id="project-zero-inference"></a>**[DeepSpeed ZeRO-Inference](https://github.com/deepspeedai/DeepSpeedExamples)** — Streams CPU/NVMe weights to the GPU layer by layer, amortizing transfers with prefetch and large batches. A throughput-oriented offload precedent predating recent coding agents. <sub>[Details](docs/catalog.md#zero-inference)</sub>
 - <a id="project-dwarfstar"></a>**[DwarfStar](https://github.com/antirez/ds4)** — An explicitly AI-assisted native runtime for selected models, combining resident non-routed state with bounded SSD expert caching; model and backend support is deliberately limited. <sub>[Details](docs/catalog.md#dwarfstar)</sub>
@@ -123,6 +124,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 - <a id="project-imp"></a>**[imp](https://github.com/kekzl/imp)** — A C++/CUDA engine for RTX 5090-class devices, owning model execution, paged KV, graph scheduling and serving. The author explicitly discloses end-to-end coding-agent implementation. <sub>Multimodal · [Details](docs/catalog.md#imp)</sub>
 - <a id="project-infernix"></a>**[Infernix](https://github.com/wallawalla47/infernix)** — An explicitly AI-assisted NInfer fork combining GPU hot-expert caching, CPU miss computation, overlapped PCIe transfers and NVMe storage. <sub>Multimodal · [Details](docs/catalog.md#infernix)</sub>
 - <a id="project-kipp"></a>**[Kipp](https://github.com/Polished-Snow/Kipp)** — A C11 stack owning strict checkpoint loading, tokenization, model execution, paged KV and batched serving through isolated Metal/CUDA backends. <sub>[Details](docs/catalog.md#kipp)</sub>
+- <a id="project-kie"></a>**[Kog Inference Engine (KIE)](https://blog.kog.ai/building-a-single-kernel-latency-optimized-llm-inference-engine-on-amd-mi300x-gpus/)** — A vendor-described low-latency monokernel co-designing execution, weight streaming, sampling and multi-GPU communication. The reviewed FP16 preview uses Laneformer/DTP and eight MI300X GPUs; public engine source is not established, and these are not unchanged-model speedup results. <sub>[Details](docs/catalog.md#kie)</sub>
 - <a id="project-ktransformers"></a>**[KTransformers / kt-kernel](https://github.com/kvcache-ai/ktransformers)** — A heterogeneous MoE backend that uses ISA-specific CPU kernels and NUMA placement for memory-heavy experts while retaining shared GPU serving infrastructure. <sub>[Details](docs/catalog.md#ktransformers)</sub>
 - <a id="project-lily"></a>**[Lily](https://github.com/perplexityai/pplx-garden/tree/main/lily)** — A Rust/Metal runtime for one quantized Qwen checkpoint, owning prefill/decode and prefix caching. Its text-only, greedy, nonstreaming interface makes the compatibility trade-off explicit. <sub>[Details](docs/catalog.md#lily)</sub>
 - <a id="project-lithos-metal"></a>**[Lithos Metal](https://github.com/lithos-ai/lithos-metal)** — Compiles typed model graphs into layer-fused and conventional kernels, using Metal indirect commands and GPU-resident draft state; backend coverage and fused numerics remain qualified. <sub>[Details](docs/catalog.md#lithos-metal)</sub>
@@ -242,11 +244,12 @@ Emits or migrates individual accelerator kernels.
 
 <a id="homepage-construction-programs"></a>
 
-### Model programs and compiled artifacts (6)
+### Model programs and compiled artifacts (7)
 
 Emits composed forward programs, compiled model packages or executable graphs; hosting responsibilities differ.
 
 - <a id="project-anemll"></a>**[ANEMLL](https://github.com/Anemll/Anemll)** — Splits, quantizes and converts models into stateful Core ML packages with Swift/Python orchestration; actual ANE placement remains a Core ML decision. <sub>Language · [Details](docs/catalog.md#anemll)</sub>
+- <a id="project-automegakernel"></a>**[AutoMegaKernel](https://github.com/RightNow-AI/AutoMegaKernel)** — A Llama-family compiler and agent harness that emits one CUDA megakernel per forward pass through a checked schedule IR. The host still drives decoding. Static checks are not a whole-stack proof, and reported W8A16 wins use precision-asymmetric baselines. <sub>Language · [Details](docs/catalog.md#automegakernel)</sub>
 - <a id="project-kernelagent"></a>**[KernelAgent](https://github.com/meta-pytorch/KernelAgent)** — Partitions PyTorch programs into fusible subgraphs, generates Triton kernels and composes forward execution using correctness and hardware feedback. Finite tests do not prove general correctness. <sub>General · [Details](docs/catalog.md#kernelagent)</sub>
 - <a id="project-mirage"></a>**[Mirage Persistent Kernel](https://github.com/mirage-project/mirage)** — Compiles an explicitly assembled LLM task graph into persistent CUDA execution with GPU workers scheduling computation and communication across decode steps; coverage depends on implemented graphs and tasks. <sub>Language · [Details](docs/catalog.md#mirage)</sub>
 - <a id="project-mlc-llm"></a>**[MLC LLM](https://github.com/mlc-ai/mlc-llm)** — A TVM-based model compiler and MLCEngine runtime, fusing operations and specializing small-batch computation and KV kernels; illustrates portability trade-offs in compiled deployment. <sub>Language · [Details](docs/catalog.md#mlc-llm)</sub>
@@ -255,7 +258,7 @@ Emits composed forward programs, compiled model packages or executable graphs; h
 
 <a id="homepage-construction-stacks"></a>
 
-### Runtime construction and integrated optimization (4)
+### Runtime construction and integrated optimization (5)
 
 Builds a server or integrates changes into a model runtime. Kernel generation, configuration search and whole-engine construction are distinct scopes.
 
@@ -263,6 +266,7 @@ Builds a server or integrates changes into a model runtime. Kernel generation, c
 - <a id="project-metainfer"></a>**[MetaInfer](https://github.com/MetaInfer/MetaInfer)** — Orchestrates coding agents to construct deployment-specific servers and checks fixed correctness/performance contracts, connecting to VibeQwen. Finite prompt checks do not establish numerical equivalence. <sub>Language · [Details](docs/catalog.md#metainfer)</sub>
 - <a id="project-seis"></a>**[SEIS: Self-Evolving Inference Systems](https://github.com/smth-fun/self-evolving-inference-system)** — A fixed coding agent repeatedly refactors mini-sglang through inherited code and reports, coordinating kernels, runtime and decoding. Quantization changes numerics; the H100 paper results and the public ten-trial Blackwell example are distinct artifacts. <sub>Language · [Details](docs/catalog.md#seis)</sub>
 - <a id="project-sol-engine"></a>**[Sol-Engine](https://github.com/NVlabs/Sana/tree/sol-engine)** — An agent-guided video optimization workflow integrating model-specific fusion, state reuse, approximate caches and sparse attention with visual checks; each change needs separate validation and attribution. <sub>Image · Video · [Details](docs/catalog.md#sol-engine)</sub>
+- <a id="project-vibesys"></a>**[VibeServe / VibeSys](https://github.com/uw-syfi/vibesys)** — An agent framework for model-, hardware- and workload-specific serving stacks, with design search, implementation and framework-owned evaluation. The VibeServe paper and current VibeSys code are different revisions; generated systems remain scenario- and contract-specific. <sub>Language · Audio · Multimodal · [Details](docs/catalog.md#vibesys)</sub>
 
 <a id="homepage-validation"></a>
 
