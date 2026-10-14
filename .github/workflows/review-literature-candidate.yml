@@ -1,0 +1,108 @@
+name: Validate reviewed literature additions
+on:
+  push:
+    branches: [maintenance/literature-review-20261014]
+permissions:
+  contents: write
+jobs:
+  validate-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BASE_SHA: 7dd83ffb4b08c0ecb6fb3ee3718463b1713af524
+      CANDIDATE_BRANCH: maintenance/literature-verified-20261014
+    steps:
+      - name: Read the pinned review helper
+        uses: actions/checkout@v4
+        with:
+          ref: d8a13ac248863b733913b900e94ac2b8f70a682a
+          path: control
+          persist-credentials: false
+      - name: Check out the unmodified catalog base
+        uses: actions/checkout@v4
+        with:
+          ref: 7dd83ffb4b08c0ecb6fb3ee3718463b1713af524
+          path: project
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Refuse concurrent or duplicate publication
+        working-directory: project
+        run: |
+          set -euo pipefail
+          test "$(git ls-remote origin refs/heads/main | cut -f1)" = "$BASE_SHA"
+          test -z "$(git ls-remote origin refs/heads/$CANDIDATE_BRANCH)"
+      - name: Apply reviewed records and documentation
+        working-directory: project
+        run: python ../control/maintenance/reviewed-additions-20261014.py
+      - name: Regenerate and run existing checks
+        working-directory: project
+        run: |
+          set -euo pipefail
+          python scripts/update_readme.py
+          python scripts/generate_banner.py --check
+          python scripts/validate_catalog.py
+          python scripts/update_readme.py --check
+          python -m unittest discover -s tests
+      - name: Verify scope and preserve previous source records
+        working-directory: project
+        run: |
+          python - <<'PY'
+          import csv
+          import io
+          import json
+          import os
+          from pathlib import Path
+          import subprocess
+          base = os.environ['BASE_SHA']
+          def old(path):
+              return subprocess.check_output(['git', 'show', base + ':' + path], text=True)
+          def now(path):
+              return Path(path).read_text(encoding='utf-8')
+          rows_before = list(csv.DictReader(io.StringIO(old('catalog/projects.csv'))))
+          rows_after = list(csv.DictReader(io.StringIO(now('catalog/projects.csv'))))
+          assert len(rows_before) == 122 and len(rows_after) == 126
+          assert rows_after[:-4] == rows_before
+          assert {r['id'] for r in rows_after[-4:]} == {'vibesys', 'automegakernel', 'infire', 'kie'}
+          cases_before = json.loads(old('catalog/cases.json'))
+          cases_after = json.loads(now('catalog/cases.json'))
+          assert len(cases_after) == 68 and cases_after[:-4] == cases_before
+          for lang in ('en', 'cn'):
+              path = f'catalog/homepage_{lang}.json'
+              before, after = json.loads(old(path)), json.loads(now(path))
+              assert all(after[key] == value for key, value in before.items())
+          assert now('catalog/showcase.json') == old('catalog/showcase.json')
+          for path in ('README.md', 'README_CN.md'):
+              before, after = old(path), now(path)
+              assert before.split('<!-- CATALOG-START -->')[0] == after.split('<!-- CATALOG-START -->')[0]
+              assert before.split('<!-- CATALOG-END -->')[1] == after.split('<!-- CATALOG-END -->')[1]
+          allowed = {
+              'CONTRIBUTING.md', 'README.md', 'README_CN.md',
+              'catalog/projects.csv', 'catalog/cases.json', 'catalog/schema.json',
+              'catalog/homepage_en.json', 'catalog/homepage_cn.json',
+              'scripts/homepage_layout.py', 'docs/reading-list.md',
+              'docs/validation.md', 'docs/updates.md', 'docs/source-review-2026-10-14.md',
+              'docs/cases.md', 'docs/systems.md', 'docs/catalog.md',
+              'docs/comparison.md', 'docs/domains.md', 'docs/benchmarks.md',
+              'docs/resources.md', 'docs/representative-comparison.md'
+          }
+          changed = set(subprocess.check_output(['git', 'diff', '--name-only'], text=True).splitlines())
+          untracked = set(subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard'], text=True).splitlines())
+          assert changed and (changed | untracked) <= allowed
+          assert untracked == {'docs/source-review-2026-10-14.md'}
+          subprocess.run(['git', 'add', '--', *sorted(changed | untracked)], check=True)
+          print('Scope checked: four additions; prior records, dates, banners, showcase and workflow files preserved.')
+          PY
+      - name: Publish validated candidate without changing main
+        working-directory: project
+        run: |
+          set -euo pipefail
+          test "$(git ls-remote origin refs/heads/main | cut -f1)" = "$BASE_SHA"
+          test -z "$(git ls-remote origin refs/heads/$CANDIDATE_BRANCH)"
+          git diff --cached --check
+          git diff --cached --stat
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'catalog: add source-reviewed construction and industrial cases'
+          git push origin HEAD:refs/heads/$CANDIDATE_BRANCH
+          echo "Validated candidate commit: $(git rev-parse HEAD)"
