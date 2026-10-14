@@ -20,7 +20,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 <!-- CATALOG-START -->
 
 <p align="center">
-<sub>121 projects · 89 engines · 11 build workflows · 3 benchmarks · 18 resources</sub>
+<sub>122 projects · 89 engines · 12 build workflows · 3 benchmarks · 18 resources</sub>
 </p>
 
 <div align="center">
@@ -255,12 +255,13 @@ Emits composed forward programs, compiled model packages or executable graphs; h
 
 <a id="homepage-construction-stacks"></a>
 
-### Runtime construction and integrated optimization (3)
+### Runtime construction and integrated optimization (4)
 
 Builds a server or integrates changes into a model runtime. Kernel generation, configuration search and whole-engine construction are distinct scopes.
 
 - <a id="project-agentcompile"></a>**[AgentCompile](https://github.com/veneno1213822/AgentCompile)** — Uses an LLM to select bounded CUDA templates and generate fused kernels for a runtime. Reviewed generic verification/timing paths contain skipped checks and placeholders. <sub>Language · Image · [Details](docs/catalog.md#agentcompile)</sub>
 - <a id="project-metainfer"></a>**[MetaInfer](https://github.com/MetaInfer/MetaInfer)** — Orchestrates coding agents to construct deployment-specific servers and checks fixed correctness/performance contracts, connecting to VibeQwen. Finite prompt checks do not establish numerical equivalence. <sub>Language · [Details](docs/catalog.md#metainfer)</sub>
+- <a id="project-seis"></a>**[SEIS: Self-Evolving Inference Systems](https://github.com/smth-fun/self-evolving-inference-system)** — A fixed coding agent repeatedly refactors mini-sglang through inherited code and reports, coordinating kernels, runtime and decoding. Quantization changes numerics; the H100 paper results and the public ten-trial Blackwell example are distinct artifacts. <sub>Language · [Details](docs/catalog.md#seis)</sub>
 - <a id="project-sol-engine"></a>**[Sol-Engine](https://github.com/NVlabs/Sana/tree/sol-engine)** — An agent-guided video optimization workflow integrating model-specific fusion, state reuse, approximate caches and sparse attention with visual checks; each change needs separate validation and attribution. <sub>Image · Video · [Details](docs/catalog.md#sol-engine)</sub>
 
 <a id="homepage-validation"></a>

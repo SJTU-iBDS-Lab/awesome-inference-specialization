@@ -14,7 +14,7 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 
 ### Construction workflows and generated execution / 构建流程与生成的执行程序
 
-[MetaInfer → VibeQwen](#vibeqwen) · [Sol-Engine](#sol-engine) · [Mirage MPK](#mirage) · [Lithos Metal](#lithos-metal) · [Magnitude](#magnitude)
+[MetaInfer → VibeQwen](#vibeqwen) · [Sol-Engine](#sol-engine) · [Mirage MPK](#mirage) · [Lithos Metal](#lithos-metal) · [Magnitude](#magnitude) · [SEIS](#seis)
 
 ### Native runtimes for qualified models and devices / 围绕指定模型与设备重建原生运行时
 
@@ -139,6 +139,26 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 **Sources:** [Source 1](https://github.com/magnitudedev/magnitude/blob/HEAD/README.md) · [Source 2](https://github.com/magnitudedev/magnitude/blob/HEAD/inference-v2/design/kernels.md) · [Source 3](https://github.com/magnitudedev/magnitude/blob/HEAD/inference-v2/src/magnitude_engine/kernels/core/compiler.py).
 
 **Reviewed:** 2026-10-12. See the linked project record for mechanism-specific caveats.
+
+<a id="seis"></a>
+
+## SEIS: sustained evolution of an existing inference engine
+
+**Related project records:** [SEIS: Self-Evolving Inference Systems](catalog.md#seis).
+
+- **Why build it? / 为什么另建:** Study whether accumulated agent work can improve an entire inference system rather than isolated kernels or independent one-shot attempts.
+- **Execution ownership / 重构边界:** Starts from mini-sglang, not an empty implementation. The inspected trial-10 engine installs quantized weights and uses graph-captured greedy selection; the paper additionally describes prompt-lookup verification and coordinated KV/runtime changes.
+- **Retained components / 复用什么:** Retains mini-sglang infrastructure, pretrained checkpoints, PyTorch/CUDA and existing attention facilities where used. The coding agent itself is not trained or evolved.
+- **Scope given up / 取舍与兼容性:** The principal paper setting is a small model, one H100 and single-request greedy inference. Low-bit execution is not the original numerical computation; results are not a general multi-model or concurrent-serving comparison.
+- **Construction process / 怎样构建:** Paper: independent sessions, sequential inheritance and synchronized chains. Public scaffold: a shell loop launches ten fresh coding sessions and keeps their logs; written instructions and learning notes guide subsequent work. These are related but distinct levels of disclosed implementation.
+- **AI participation / AI 参与的直接证据:** Agent participation is explicit in the paper and executable session driver. Initial goals and evaluation rules are human-provided; researchers revise evaluation after discovering untested failure modes.
+- **Disclosed effort / 构建投入:** The public demo reports approximately USD 100 of Claude usage for ten trials. The inspected driver sets a USD 20 per-trial cap, not measured spend. These values do not account for the paper experiment, human work, GPU costs or lifetime maintenance.
+- **Validation boundary / 验证覆盖:** The paper checks numerical drift and downstream math/retrieval performance, and reports previously accepted candidates with vocabulary, termination or state-handling failures. Its best-engine audit is distinct from those failed candidates. The public driver and inspected evolved code do not by themselves reproduce the full paper evaluation.
+- **Evolution evidence / 适配与维护:** Code and reports are inherited, and working ideas may transfer between chains. Misleading reports and integration repairs remain part of the process; long-term production adaptation costs are not established.
+
+**Sources:** [Source 1](https://arxiv.org/html/2610.04646v1) · [Source 2](https://github.com/smth-fun/self-evolving-inference-system/blob/bf2ddc5c5882a2573756b744c0e88c1b154739fa/README.md) · [Source 3](https://github.com/smth-fun/self-evolving-inference-system/blob/bf2ddc5c5882a2573756b744c0e88c1b154739fa/run_trial.sh) · [Source 4](https://github.com/smth-fun/mini-sglang/blob/2c1f6c307c96aa165873ad785cb0fa71fb71f9d3/python/minisgl/engine/engine.py) · [Source 5](https://github.com/nehzux/SEIS) · [Source 6](https://github.com/smth-fun/self-evolving-inference-system/blob/bf2ddc5c5882a2573756b744c0e88c1b154739fa/posts/post-2-evolve.md).
+
+**Reviewed:** 2026-10-14. See the linked project record for mechanism-specific caveats.
 
 <a id="splash"></a>
 

@@ -57,7 +57,7 @@ CONSTRUCTION_GROUPS = [
     ('stacks', 'Runtime construction and integrated optimization', '运行时构建与集成优化',
      'Builds a server or integrates changes into a model runtime. Kernel generation, configuration search and whole-engine construction are distinct scopes.',
      '构建服务或将优化集成到模型运行时；需区分内核生成、配置搜索与完整引擎构建。',
-     ('agentcompile', 'metainfer', 'sol-engine')),
+     ('agentcompile', 'metainfer', 'seis', 'sol-engine')),
 ]
 HOMEPAGE_VALIDATION = [
     ('numerical', 'Operator / subgraph numerics', '算子／子图数值',

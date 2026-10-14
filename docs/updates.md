@@ -2,6 +2,15 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Quick comparison](representative-comparison.md) · [Contributing](../CONTRIBUTING.md)
 
+## 2026-10-14 — SEIS construction case / 纳入 SEIS 构建案例
+
+- Added [SEIS](catalog.md#seis) as a core construction workflow and linked its [whole-engine evolution case](cases.md#seis), paper and pinned public implementation evidence.
+- Distinguished the paper's H100 experiment from the public ten-trial Blackwell demonstration; did not merge their speed, cost or validation claims.
+- Added equivalent English/Chinese homepage summaries, the existing runtime-construction group, reading-list and validation cross-links. Counts become **122 project records and 64 construction cases**; the six starter cards, visual design and existing project records remain unchanged.
+- This update is a focused source review, not an independent engine benchmark or a fresh review of all existing projects.
+
+本次新增 SEIS 项目记录与构建案例，并同步双语首页、阅读入口和验证说明。区分 H100 论文实验与公开十轮 Blackwell 示例，保留量化与验证边界，不重复计数关联介绍页、脚手架和引擎分支。未复现上游性能。
+
 ## 2026-10-12 — Complete listings on both homepages / 中英文首页完整展开
 
 - Both homepages now contain all **121 projects**, always expanded with direct upstream links, concise explanations and model-domain labels. The full list is grouped into engines, construction, benchmarks and support, with mechanism-oriented subcategories.

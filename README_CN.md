@@ -20,7 +20,7 @@
 <!-- CATALOG-START -->
 
 <p align="center">
-<sub>121 个项目 · 89 个引擎 · 11 个构建流程 · 3 个基准 · 18 项资源</sub>
+<sub>122 个项目 · 89 个引擎 · 12 个构建流程 · 3 个基准 · 18 项资源</sub>
 </p>
 
 <div align="center">
@@ -255,12 +255,13 @@
 
 <a id="homepage-construction-stacks"></a>
 
-### 运行时构建与集成优化 (3)
+### 运行时构建与集成优化 (4)
 
 构建服务或将优化集成到模型运行时；需区分内核生成、配置搜索与完整引擎构建。
 
 - <a id="project-agentcompile"></a>**[AgentCompile](https://github.com/veneno1213822/AgentCompile)** — 用 LLM 筛选有界 CUDA 模板候选并生成融合内核，连接到推理运行时；已审查通用验证与计时代码含跳过检查及占位项。 <sub>语言 · 图像 · [详情](docs/catalog.md#agentcompile)</sub>
 - <a id="project-metainfer"></a>**[MetaInfer](https://github.com/MetaInfer/MetaInfer)** — 编排编程智能体迭代构建部署专用推理服务，并以固定契约检查正确性和性能，连接 VibeQwen 案例；有限提示验证不等于数值等价。 <sub>语言 · [详情](docs/catalog.md#metainfer)</sub>
+- <a id="project-seis"></a>**[SEIS: Self-Evolving Inference Systems](https://github.com/smth-fun/self-evolving-inference-system)** — 固定编程 Agent，通过继承代码与报告持续改造 mini-sglang，联动优化内核、运行时与解码。量化改变数值；H100 论文结果与公开十轮 Blackwell 示例是不同实验产物。 <sub>语言 · [详情](docs/catalog.md#seis)</sub>
 - <a id="project-sol-engine"></a>**[Sol-Engine](https://github.com/NVlabs/Sana/tree/sol-engine)** — 以智能体引导配置与视觉检查整合模型专用视频执行补丁，包含融合、状态复用及近似缓存和稀疏注意力，各类改变需分别验证归因。 <sub>图像 · 视频 · [详情](docs/catalog.md#sol-engine)</sub>
 
 <a id="homepage-validation"></a>

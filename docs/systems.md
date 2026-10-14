@@ -134,12 +134,13 @@ Agent harnesses, compiler workflows and model-specific optimization procedures. 
 
 Agent harness、编译流程与模型专用优化；区分内核、模型程序与服务执行栈的产出边界。
 
-11 projects / 项目
+12 projects / 项目
 
 | Project and evidence | Why it belongs | Relevance / artifact |
 | --- | --- | --- |
 | [MetaInfer](catalog.md#metainfer) | Connects a disclosed construction workflow to the VibeQwen engine case; the toolbox and generated engine are different artifacts. | core / generator |
 | [Mirage Persistent Kernel](catalog.md#mirage) | A model-to-persistent-program construction path connects generated execution schedules to a concrete runtime artifact. | core / compiler |
+| [SEIS: Self-Evolving Inference Systems](catalog.md#seis) | Sustained agent-driven reconstruction of an existing inference engine connects inherited code and reports to kernel, runtime and decoding changes; the study also exposes gaps in its evolving validation gates. | core / generator |
 | [Sol-Engine](catalog.md#sol-engine) | Connects agent-guided optimization with inspectable model runtimes and their acceptance checks. | core / optimizer |
 | [AgentCompile](catalog.md#agentcompile) | Agent-guided fusion route: a narrower construction comparison with explicit verification and timing caveats. | adjacent / research-prototype |
 | [AKG Agents](catalog.md#akg-agents) | Agent-generated operator route: compares local code synthesis with integrated engine construction. | adjacent / generator |

@@ -319,7 +319,8 @@
         "sol-engine",
         "mirage",
         "lithos-metal",
-        "magnitude"
+        "magnitude",
+        "seis"
       ]
     },
     {
@@ -447,6 +448,11 @@
       "id": "atrex-kernel-agent",
       "output": "Profile-guided kernel construction with acceptance gates",
       "output_cn": "性能反馈驱动的内核构建与验收流程"
+    },
+    {
+      "id": "seis",
+      "output": "Sustained reconstruction of an existing engine; distinguish paper and public demo",
+      "output_cn": "持续重构已有引擎；区分论文与公开示例产物"
     }
   ],
   "benchmark_entries": [

@@ -73,6 +73,7 @@ Start with what is rebuilt and what effort is disclosed. Read each case for reta
 | [stable-diffusion.cpp](cases.md#stable-diffusion-cpp) | Owns conditioning, diffusion, VAE and video orchestration, plus model-specific loading and execution decisions; this is an integrated runtime boundary. | Total engineering and maintenance effort is unknown; historical continuity makes this a useful within-core comparison rather than a cost-reduction claim. |
 | [LightX2V](cases.md#lightx2v) | Owns model-specific inference and operator storage contracts, plus planned weight layouts, prefetch streams and two-slot device buffers. | Total development and maintenance costs are undisclosed; maximum reported speedups do not quantify construction effort. |
 | [FastVideo](cases.md#fastvideo) | Owns model implementations, registries, component loaders and staged denoising; training and distillation workflows are distinct from this inference boundary. | Total construction and maintenance effort is unknown; training and inference performance metrics cannot substitute for those measurements. |
+| [SEIS](cases.md#seis) | Starts from mini-sglang, not an empty implementation. The inspected trial-10 engine installs quantized weights and uses graph-captured greedy selection; the paper additionally describes prompt-lookup verification and coordinated KV/runtime changes. | The public demo reports approximately USD 100 of Claude usage for ten trials. The inspected driver sets a USD 20 per-trial cap, not measured spend. These values do not account for the paper experiment, human work, GPU costs or lifetime maintenance. |
 
 ## Library facets / 资料库的独立标签
 
@@ -238,6 +239,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [KernelWiki](catalog.md#kernelwiki) · foundation | support / knowledge-base / general | generated-artifact dependent |
 | [MetaInfer](catalog.md#metainfer) · core | construction / generator / text | generated-artifact dependent |
 | [ncu-report-skill](catalog.md#ncu-report-skill) · foundation | support / diagnostic / general | generated-artifact dependent |
+| [SEIS: Self-Evolving Inference Systems](catalog.md#seis) · core | construction / generator / text | generated-artifact dependent, reduced precision |
 | [Sol-Engine](catalog.md#sol-engine) · core | construction / optimizer / image, video | generated-artifact dependent, configuration-dependent |
 | [TileLang](catalog.md#tilelang) · foundation | support / compiler / text, image, video, general | generated-artifact dependent |
 | [Triton](catalog.md#triton) · foundation | support / compiler / text, image, video, general | generated-artifact dependent |

@@ -53,6 +53,12 @@ The inspected [MetaInfer inference-framework oracle](https://github.com/MetaInfe
 
 This supplies functional and integration feedback to the construction loop. It does **not** compare internal tensors or establish numerical equivalence with a reference engine. This description concerns the pinned `gen_infer_framework` path, not every MetaInfer task or its earlier paper snapshot. See [the workflow/output case](cases.md#vibeqwen) for the separate evidence about VibeQwen.
 
+## Validation during sustained engine evolution
+
+[SEIS](cases.md#seis) is an additional case, not another name for the checkers above. The [paper](https://arxiv.org/html/2610.04646v1) describes how researchers revised evaluation after some candidates passed existing gates while restricting vocabulary, mishandling termination or misusing state. Those failed candidates must not be confused with the reported best engine. Numerical and task checks cover different contracts; the public ten-trial driver is not proof that every paper gate and synchronized-chain experiment is reproduced by that artifact.
+
+SEIS 补充的是持续改写引擎时验证规则如何暴露缺口的案例。论文中的失败候选与最佳引擎应分开；研究者修订验证规则，不等于 Agent 已自主解决验证。公开十轮示例与论文实验的范围分别见[案例记录](cases.md#seis)。
+
 ## Efficient validation: an open research question
 
 Automation alone does not establish efficiency. A useful report accounts for candidate compilation, reference runs, device time, judge calls, human review and failed attempts. It must also state what coverage was reduced to save that cost.

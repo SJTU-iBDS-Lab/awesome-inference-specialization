@@ -8,6 +8,7 @@ This list is intentionally selective and **not** an exhaustive survey. Entries a
 
 ## Engine generation, testing, and evidence
 
+- [SEIS: Self-Evolving Inference Systems](https://arxiv.org/abs/2610.04646) — sustained whole-engine optimization through inherited code and reports; [case and artifact boundaries](cases.md#seis), [public scaffold](https://github.com/smth-fun/self-evolving-inference-system).
 - [MetaInfer paper](https://arxiv.org/abs/2607.12875) and [implementation](https://github.com/MetaInfer/MetaInfer) — explicit inference engine generation objective.
 - [Baseten's VibeQwen case study](https://www.baseten.co/blog/agentic-inference-optimization-faster-than-sota/) — reported agent-built targeted runtime; treat reported speedups as author claims.
 - [Sol-Engine agent workflow](https://nvlabs.github.io/Sana/Sol-Engine/docs/agent-workflow/) — agent-guided video inference optimization and quality gates.

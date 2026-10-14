@@ -4,7 +4,7 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Systems & construction](systems.md) · [Comparison](comparison.md) · [Taxonomy](taxonomy.md) · [Evidence policy](evidence-policy.md)
 
-121 entries. Source review: 2026-10-12. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
+122 entries. Source review: 2026-10-14. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
 
 Use the family links below, or search this page for a model, device, mechanism or project. Source visibility is not a license or correctness certification. Semantic labels identify evaluation obligations, not proven equivalence.
 
@@ -3157,7 +3157,7 @@ Rust runtimes own model loading, graph execution and state. Inspected paths impl
 
 <a id="construction"></a>
 
-## Construction & validation tools / 构建与验证工具 (14)
+## Construction & validation tools / 构建与验证工具 (15)
 
 **How are specialized programs built and checked?** Agents, kernel languages and evaluation infrastructure.
 
@@ -3477,6 +3477,35 @@ Provides a profiling harness, extracts and compares NCU metrics and source-level
 **Evidence:** [Source 1](https://github.com/mit-han-lab/ncu-report-skill/blob/74a12918e9f64d78036f14da5f8765e435b949a4/README.md) · [Source 2](https://github.com/mit-han-lab/ncu-report-skill/blob/74a12918e9f64d78036f14da5f8765e435b949a4/helpers/analyze_reports.py) · [Source 3](https://github.com/mit-han-lab/ncu-report-skill/blob/74a12918e9f64d78036f14da5f8765e435b949a4/reference/06-diagnosis-playbook.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `intrinsic` · **Discovery:** `dependency`.
+
+</details>
+
+<a id="seis"></a>
+
+### [SEIS: Self-Evolving Inference Systems](https://github.com/smth-fun/self-evolving-inference-system)
+
+[core](systems.md#core) · `construction` · `generator` · `text` · **public code**
+
+**Survey relevance:** Sustained agent-driven reconstruction of an existing inference engine connects inherited code and reports to kernel, runtime and decoding changes; the study also exposes gaps in its evolving validation gates.
+
+Keeps the coding agent fixed while successive sessions inherit and revise engine code and reports; the paper also exchanges discoveries across chains. Changes span quantized kernels, fusion, CUDA Graph execution, scheduler/state handling and prompt-lookup decoding.
+
+**Scope:** The paper centers on Qwen3-0.6B on one H100 with single-request greedy decoding, with supplementary Llama-3.2-1B experiments. The linked public ten-trial example uses RTX PRO 6000 Blackwell and is a separate configuration.
+
+**Boundary:** The paper reports 3.27x natural-request throughput on H100; the linked public demo reports 512 to 1016 tokens/s on RTX PRO 6000 Blackwell. Do not conflate these artifacts or budgets. Quantization changes numerics, finite gates do not prove equivalence, and the public ten-trial driver does not establish availability of every paper experiment or synchronization protocol. No independent execution was performed here.
+
+**Semantic considerations:** generated-artifact dependent, reduced precision.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `agent-generation`, `code-inheritance`, `cross-session-optimization`, `kernel-runtime-cooptimization`, `quality-validation`.
+
+**Constraints:** `model`, `hardware`, `workload`, `precision`.
+
+**Evidence:** [Source 1](https://arxiv.org/html/2610.04646v1) · [Source 2](https://github.com/smth-fun/self-evolving-inference-system/blob/bf2ddc5c5882a2573756b744c0e88c1b154739fa/README.md) · [Source 3](https://github.com/smth-fun/self-evolving-inference-system/blob/bf2ddc5c5882a2573756b744c0e88c1b154739fa/run_trial.sh) · [Source 4](https://github.com/smth-fun/mini-sglang/blob/2c1f6c307c96aa165873ad785cb0fa71fb71f9d3/python/minisgl/engine/engine.py).
+
+**Reviewed:** 2026-10-14 · **AI involvement:** `intrinsic` · **Discovery:** `keyword`.
 
 </details>
 

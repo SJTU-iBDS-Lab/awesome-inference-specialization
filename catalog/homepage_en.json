@@ -119,5 +119,6 @@
   "atrex-kernel-agent": "Runs coding agents in isolated worktrees to generate operator kernels, applying numerical/performance gates and revising with profiler feedback and retrieved knowledge; not a complete engine.",
   "atrex-bench": "Production-sourced operator tasks, reference programs and shape generators with separate agent-visible inputs and evaluator metadata; checks compilation/numerics/timing, not whole-stack acceleration.",
   "kernelwiki": "Indexes kernel optimization experience, documents and upstream changes by hardware and symptom, retaining artifact provenance; a searchable knowledge resource, not a runtime.",
-  "ane-field-guide": "MIL/ANE probes and CPU-reference checks recording kept/discarded M3 Max experiments whose findings inform ane.cpp; a knowledge resource, not another engine."
+  "ane-field-guide": "MIL/ANE probes and CPU-reference checks recording kept/discarded M3 Max experiments whose findings inform ane.cpp; a knowledge resource, not another engine.",
+  "seis": "A fixed coding agent repeatedly refactors mini-sglang through inherited code and reports, coordinating kernels, runtime and decoding. Quantization changes numerics; the H100 paper results and the public ten-trial Blackwell example are distinct artifacts."
 }

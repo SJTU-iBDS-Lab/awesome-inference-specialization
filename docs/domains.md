@@ -172,7 +172,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Language models / 语言模型
 
-62 core/adjacent entries; 17 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+63 core/adjacent entries; 17 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
@@ -205,6 +205,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [NInfer-3090](catalog.md#ninfer-3090) | core | Qwen dense/MoE serving on a 24 GB RTX 3090 requires SM86-compatible kernels and a smaller memory budget than upstream consumer Blackwell. |
 | [Quartz](catalog.md#saient-quartz) | core | Native Rust local inference with SD1.5/SDXL and an evolving Wan path on CPU/CUDA/Vulkan. |
 | [Saragossa](catalog.md#saragossa) | core | Single-user local latency on Apple Silicon for selected text and speech architectures with MLX affine integer weights. |
+| [SEIS: Self-Evolving Inference Systems](catalog.md#seis) | core | The paper centers on Qwen3-0.6B on one H100 with single-request greedy decoding, with supplementary Llama-3.2-1B experiments. The linked public ten-trial example uses RTX PRO 6000 Blackwell and is a separate configuration. |
 | [Splash](catalog.md#splash) | core | Selected Qwen3.8-27B and Qwen3.6-35B-A3B checkpoints, plus compatible Ternary Bonsai 2, on Apple M3 or newer and macOS 26.4+; text and vision. |
 | [Strata](catalog.md#strata) | core | The Qwen3.8-Flash-Next model family, supported quantized layouts, consumer GPU VRAM and CPU memory/bandwidth define expert residency and transfer-versus-compute choices. |
 | [strix-llama.cpp](catalog.md#strix-llama-cpp) | core | Strix Halo gfx1151 shares limited bandwidth between CPU and GPU and exhibits device/driver-specific Vulkan and HIP behavior. |
