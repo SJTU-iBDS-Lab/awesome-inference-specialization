@@ -1,0 +1,190 @@
+name: Apply reviewed SEIS catalog addition
+on:
+  push:
+    branches: [maintenance/seis-catalog-20261014]
+    paths: [.github/workflows/add-reviewed-seis.yml]
+permissions:
+  contents: write
+concurrency:
+  group: reviewed-seis-catalog-addition
+  cancel-in-progress: false
+jobs:
+  apply-reviewed-addition:
+    if: github.actor == 'ljandshp'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      BASE_SHA: 557c4ebef17d5884fe2d1914cd70eda20bed912d
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 557c4ebef17d5884fe2d1914cd70eda20bed912d
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Refuse concurrent main changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git ls-remote origin refs/heads/main | cut -f1)" = "$BASE_SHA"
+      - name: Apply reviewed metadata and documentation
+        shell: bash
+        run: |
+          python - <<'PY'
+          import csv
+          import io
+          import json
+          from pathlib import Path
+
+          root = Path('.')
+          reviewed = '2026-10-14'
+          scaffold_sha = 'bf2ddc5c5882a2573756b744c0e88c1b154739fa'
+          engine_sha = '2c1f6c307c96aa165873ad785cb0fa71fb71f9d3'
+          scaffold = f'https://github.com/smth-fun/self-evolving-inference-system/blob/{scaffold_sha}'
+          engine = f'https://github.com/smth-fun/mini-sglang/blob/{engine_sha}'
+          paper = 'https://arxiv.org/html/2610.04646v1'
+          evidence = [paper, f'{scaffold}/README.md', f'{scaffold}/run_trial.sh', f'{engine}/python/minisgl/engine/engine.py']
+          row = {
+              'id': 'seis',
+              'project': 'SEIS: Self-Evolving Inference Systems',
+              'survey_role': 'core',
+              'relevance_note': 'Sustained agent-driven reconstruction of an existing inference engine connects inherited code and reports to kernel, runtime and decoding changes; the study also exposes gaps in its evolving validation gates.',
+              'catalog_role': 'construction',
+              'family': 'construction',
+              'domains': 'text',
+              'artifact_type': 'generator',
+              'constraints': 'model;hardware;workload;precision',
+              'mechanisms': 'agent-generation;code-inheritance;cross-session-optimization;kernel-runtime-cooptimization;quality-validation',
+              'target': 'The paper centers on Qwen3-0.6B on one H100 with single-request greedy decoding, with supplementary Llama-3.2-1B experiments. The linked public ten-trial example uses RTX PRO 6000 Blackwell and is a separate configuration.',
+              'mechanism': 'Keeps the coding agent fixed while successive sessions inherit and revise engine code and reports; the paper also exchanges discoveries across chains. Changes span quantized kernels, fusion, CUDA Graph execution, scheduler/state handling and prompt-lookup decoding.',
+              'semantic_effect': 'tool-dependent;reduced-precision',
+              'source_visibility': 'public-code',
+              'ai_involvement': 'intrinsic',
+              'url': 'https://github.com/smth-fun/self-evolving-inference-system',
+              'evidence_urls': ';'.join(evidence),
+              'caveat': 'The paper reports 3.27x natural-request throughput on H100; the linked public demo reports 512 to 1016 tokens/s on RTX PRO 6000 Blackwell. Do not conflate these artifacts or budgets. Quantization changes numerics, finite gates do not prove equivalence, and the public ten-trial driver does not establish availability of every paper experiment or synchronization protocol. No independent execution was performed here.',
+              'checked_on': reviewed,
+              'discovery': 'keyword',
+          }
+          case = {
+              'id': 'seis',
+              'title': 'SEIS: sustained evolution of an existing inference engine',
+              'project_ids': ['seis'],
+              'summary': 'A fixed coding agent repeatedly changes a working engine, carrying implementation and reports between sessions. This is a whole-stack construction and validation case, not inclusion of a teaching engine merely because it is small.',
+              'summary_cn': '固定编程 Agent，通过继承代码与报告持续重构已有引擎，涉及内核、运行时和解码；收录的是构建与验证过程，不是因为 mini-sglang 代码少。论文实验与公开十轮示例分开记录。',
+              'motivation': 'Study whether accumulated agent work can improve an entire inference system rather than isolated kernels or independent one-shot attempts.',
+              'boundary': 'Starts from mini-sglang, not an empty implementation. The inspected trial-10 engine installs quantized weights and uses graph-captured greedy selection; the paper additionally describes prompt-lookup verification and coordinated KV/runtime changes.',
+              'reuse': 'Retains mini-sglang infrastructure, pretrained checkpoints, PyTorch/CUDA and existing attention facilities where used. The coding agent itself is not trained or evolved.',
+              'tradeoff': 'The principal paper setting is a small model, one H100 and single-request greedy inference. Low-bit execution is not the original numerical computation; results are not a general multi-model or concurrent-serving comparison.',
+              'construction': 'Paper: independent sessions, sequential inheritance and synchronized chains. Public scaffold: a shell loop launches ten fresh coding sessions and keeps their logs; written instructions and learning notes guide subsequent work. These are related but distinct levels of disclosed implementation.',
+              'ai_role': 'Agent participation is explicit in the paper and executable session driver. Initial goals and evaluation rules are human-provided; researchers revise evaluation after discovering untested failure modes.',
+              'cost': 'The public demo reports approximately USD 100 of Claude usage for ten trials. The inspected driver sets a USD 20 per-trial cap, not measured spend. These values do not account for the paper experiment, human work, GPU costs or lifetime maintenance.',
+              'validation': 'The paper checks numerical drift and downstream math/retrieval performance, and reports previously accepted candidates with vocabulary, termination or state-handling failures. Its best-engine audit is distinct from those failed candidates. The public driver and inspected evolved code do not by themselves reproduce the full paper evaluation.',
+              'maintenance': 'Code and reports are inherited, and working ideas may transfer between chains. Misleading reports and integration repairs remain part of the process; long-term production adaptation costs are not established.',
+              'evidence_urls': evidence + ['https://github.com/nehzux/SEIS', f'{scaffold}/posts/post-2-evolve.md'],
+              'checked_on': reviewed,
+          }
+          notes = {
+              'en': 'A fixed coding agent repeatedly refactors mini-sglang through inherited code and reports, coordinating kernels, runtime and decoding. Quantization changes numerics; the H100 paper results and the public ten-trial Blackwell example are distinct artifacts.',
+              'cn': '固定编程 Agent，通过继承代码与报告持续改造 mini-sglang，联动优化内核、运行时与解码。量化改变数值；H100 论文结果与公开十轮 Blackwell 示例是不同实验产物。',
+          }
+          def read_json(path):
+              return json.loads((root / path).read_text(encoding='utf-8'))
+          def write_json(path, data):
+              (root / path).write_text(json.dumps(data, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          csv_path = root / 'catalog/projects.csv'
+          original_csv = csv_path.read_text(encoding='utf-8')
+          reader = csv.DictReader(io.StringIO(original_csv))
+          original_rows = list(reader)
+          assert reader.fieldnames is not None and set(reader.fieldnames) == set(row)
+          assert len(original_rows) == 121, 'Unexpected starting catalog; do not overwrite concurrent work'
+          assert all(r['id'] != row['id'] and r['url'].rstrip('/') != row['url'] for r in original_rows)
+          buffer = io.StringIO(newline='')
+          csv.DictWriter(buffer, fieldnames=reader.fieldnames, lineterminator='\n').writerow(row)
+          csv_path.write_text(original_csv + ('' if original_csv.endswith('\n') else '\n') + buffer.getvalue(), encoding='utf-8')
+          assert list(csv.DictReader(io.StringIO(csv_path.read_text(encoding='utf-8'))))[:-1] == original_rows
+
+          cases = read_json('catalog/cases.json')
+          assert len(cases) == 63 and all(c['id'] != case['id'] for c in cases)
+          cases.append(case)
+          write_json('catalog/cases.json', cases)
+          for language in ('en', 'cn'):
+              path = f'catalog/homepage_{language}.json'
+              data = read_json(path)
+              assert set(data) == {r['id'] for r in original_rows}
+              data['seis'] = notes[language]
+              write_json(path, data)
+
+          schema = read_json('catalog/schema.json')
+          groups = [g for g in schema['case_groups'] if 'vibeqwen' in g['examples']]
+          assert len(groups) == 1
+          groups[0]['examples'].append('seis')
+          assert all(item['id'] != 'seis' for item in schema['homepage_construction'])
+          schema['homepage_construction'].append({'id': 'seis', 'output': 'Sustained reconstruction of an existing engine; distinguish paper and public demo', 'output_cn': '持续重构已有引擎；区分论文与公开示例产物'})
+          write_json('catalog/schema.json', schema)
+
+          layout_path = root / 'scripts/homepage_layout.py'
+          layout = layout_path.read_text(encoding='utf-8')
+          old = "('agentcompile', 'metainfer', 'sol-engine')"
+          assert layout.count(old) == 1
+          layout_path.write_text(layout.replace(old, "('agentcompile', 'metainfer', 'seis', 'sol-engine')"), encoding='utf-8')
+
+          reading_path = root / 'docs/reading-list.md'
+          reading = reading_path.read_text(encoding='utf-8')
+          heading = '## Engine generation, testing, and evidence\n\n'
+          assert reading.count(heading) == 1
+          addition = '- [SEIS: Self-Evolving Inference Systems](https://arxiv.org/abs/2610.04646) — sustained whole-engine optimization through inherited code and reports; [case and artifact boundaries](cases.md#seis), [public scaffold](https://github.com/smth-fun/self-evolving-inference-system).\n'
+          reading_path.write_text(reading.replace(heading, heading + addition), encoding='utf-8')
+
+          validation_path = root / 'docs/validation.md'
+          validation = validation_path.read_text(encoding='utf-8')
+          heading = '## Efficient validation: an open research question\n'
+          assert validation.count(heading) == 1
+          addition = '## Validation during sustained engine evolution\n\n[SEIS](cases.md#seis) is an additional case, not another name for the checkers above. The [paper](https://arxiv.org/html/2610.04646v1) describes how researchers revised evaluation after some candidates passed existing gates while restricting vocabulary, mishandling termination or misusing state. Those failed candidates must not be confused with the reported best engine. Numerical and task checks cover different contracts; the public ten-trial driver is not proof that every paper gate and synchronized-chain experiment is reproduced by that artifact.\n\nSEIS 补充的是持续改写引擎时验证规则如何暴露缺口的案例。论文中的失败候选与最佳引擎应分开；研究者修订验证规则，不等于 Agent 已自主解决验证。公开十轮示例与论文实验的范围分别见[案例记录](cases.md#seis)。\n\n'
+          validation_path.write_text(validation.replace(heading, addition + heading), encoding='utf-8')
+
+          updates_path = root / 'docs/updates.md'
+          updates = updates_path.read_text(encoding='utf-8')
+          heading = '## 2026-10-12 — Complete listings on both homepages / 中英文首页完整展开'
+          assert updates.count(heading) == 1
+          addition = '## 2026-10-14 — SEIS construction case / 纳入 SEIS 构建案例\n\n- Added [SEIS](catalog.md#seis) as a core construction workflow and linked its [whole-engine evolution case](cases.md#seis), paper and pinned public implementation evidence.\n- Distinguished the paper\'s H100 experiment from the public ten-trial Blackwell demonstration; did not merge their speed, cost or validation claims.\n- Added equivalent English/Chinese homepage summaries, the existing runtime-construction group, reading-list and validation cross-links. Counts become **122 project records and 64 construction cases**; the six starter cards, visual design and existing project records remain unchanged.\n- This update is a focused source review, not an independent engine benchmark or a fresh review of all existing projects.\n\n本次新增 SEIS 项目记录与构建案例，并同步双语首页、阅读入口和验证说明。区分 H100 论文实验与公开十轮 Blackwell 示例，保留量化与验证边界，不重复计数关联介绍页、脚手架和引擎分支。未复现上游性能。\n\n'
+          updates_path.write_text(updates.replace(heading, addition + heading), encoding='utf-8')
+          print('Added exactly one project and one case; retained all prior records and source-review dates.')
+          PY
+      - name: Regenerate and run all existing checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/update_readme.py
+          python scripts/generate_banner.py --check
+          python scripts/validate_catalog.py
+          python scripts/update_readme.py --check
+          python -m unittest discover -s tests
+      - name: Check scope and publish a non-forced main commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import subprocess
+          allowed = {
+              'README.md', 'README_CN.md', 'catalog/projects.csv', 'catalog/cases.json',
+              'catalog/schema.json', 'catalog/homepage_en.json', 'catalog/homepage_cn.json',
+              'scripts/homepage_layout.py', 'docs/reading-list.md', 'docs/validation.md',
+              'docs/updates.md', 'docs/cases.md', 'docs/systems.md', 'docs/catalog.md',
+              'docs/comparison.md', 'docs/domains.md', 'docs/benchmarks.md',
+              'docs/resources.md', 'docs/representative-comparison.md'
+          }
+          changed = set(subprocess.check_output(['git', 'diff', '--name-only'], text=True).splitlines())
+          assert changed and changed <= allowed, f'Unexpected changed paths: {changed - allowed}'
+          assert not subprocess.check_output(['git', 'ls-files', '--others', '--exclude-standard'], text=True).strip()
+          subprocess.run(['git', 'add', '--', *sorted(changed)], check=True)
+          PY
+          test "$(git ls-remote origin refs/heads/main | cut -f1)" = "$BASE_SHA"
+          git diff --cached --check
+          git diff --cached --stat
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'catalog: add SEIS whole-engine evolution case and bilingual entries'
+          git push origin HEAD:refs/heads/main
+          echo "Published commit: $(git rev-parse HEAD)"
