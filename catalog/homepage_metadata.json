@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "parent_repository_ids": ["zero-inference", "akg-agents"],
+  "links": {
+    "xdit": [{"kind": "paper", "url": "https://arxiv.org/abs/2411.01738", "provenance": "reading-list"}],
+    "metainfer": [
+      {"kind": "paper", "url": "https://arxiv.org/abs/2607.12875", "provenance": "reading-list"},
+      {"kind": "case", "url": "https://www.baseten.co/blog/agentic-inference-optimization-faster-than-sota/", "provenance": "catalog"}
+    ],
+    "fastkernels": [{"kind": "paper", "url": "https://arxiv.org/abs/2605.23215", "provenance": "reading-list"}],
+    "inferix": [{"kind": "paper", "url": "https://arxiv.org/abs/2511.20714", "provenance": "reading-list"}],
+    "seis": [
+      {"kind": "paper", "url": "https://arxiv.org/html/2610.04646v1", "provenance": "catalog"},
+      {"kind": "blog", "url": "https://github.com/smth-fun/self-evolving-inference-system/blob/bf2ddc5c5882a2573756b744c0e88c1b154739fa/posts/post-2-evolve.md", "provenance": "catalog"}
+    ],
+    "vibesys": [
+      {"kind": "paper", "url": "https://arxiv.org/html/2605.06068v1", "provenance": "catalog"},
+      {"kind": "blog", "url": "https://syfi.cs.washington.edu/blog/2026-05-12-introducing-vibeserve/", "provenance": "catalog"}
+    ],
+    "automegakernel": [{"kind": "paper", "url": "https://arxiv.org/html/2606.09682v1", "provenance": "catalog"}],
+    "zero-inference": [{"kind": "blog", "url": "https://www.deepspeed.ai/2022/09/09/zero-inference.html", "provenance": "catalog"}],
+    "splash": [{"kind": "blog", "url": "https://inco.ai/blog/splash/", "provenance": "catalog"}],
+    "infire": [{"kind": "blog", "url": "https://blog.cloudflare.com/high-performance-llms/", "provenance": "catalog"}],
+    "kie": [{"kind": "blog", "url": "https://blog.kog.ai/real-time-llm-inference-on-standard-gpus-3-000-tokens-s-per-request/", "provenance": "catalog"}]
+  },
+  "recent": [
+    {"id": "vibesys", "added_on": "2026-10-14", "label": "VibeServe / VibeSys"},
+    {"id": "automegakernel", "added_on": "2026-10-14", "label": "AutoMegaKernel"},
+    {"id": "infire", "added_on": "2026-10-14", "label": "Infire"},
+    {"id": "kie", "added_on": "2026-10-14", "label": "KIE"},
+    {"id": "seis", "added_on": "2026-10-14", "label": "SEIS"}
+  ]
+}

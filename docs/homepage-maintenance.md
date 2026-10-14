@@ -36,3 +36,9 @@ python -m unittest discover -s tests
 The generator verifies complete bilingual coverage. Regression tests check unique project/upstream links, primary-domain navigation, all showcase reasons, validation coverage and gaps, critical bilingual caveats, local anchors and generated-view consistency.
 
 These checks validate repository data and presentation. They do not run model engines, reproduce upstream speedups or certify the correctness of the indexed implementations. Keep source-review dates unchanged when only editing presentation.
+
+## Weekly popularity snapshots and source shortcuts
+
+Run `python scripts/refresh_github_stats.py --refresh` during the existing weekly maintenance task, before regenerating the README. Review partial-fetch results; never replace failed counts with zero or modify technical `checked_on` dates. Keep direct source links and actual catalog-addition dates in `catalog/homepage_metadata.json`. See [metadata rules](homepage-metadata.md) for parent repositories, cached values, source provenance and offline CI.
+
+每周维护先更新关注度快照，再生成首页；失败保留原数值及日期。论文／博客入口只来自已核实材料，近期收录日期不等于发布日期。

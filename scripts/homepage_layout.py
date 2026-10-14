@@ -7,6 +7,8 @@ from __future__ import annotations
 
 import html
 
+from homepage_metadata import load_bundle, entry_extras, recent_line, snapshot_note
+
 ENGINE_DOMAINS = [
     ('text', 'Language models', '语言模型'),
     ('image', 'Image generation and processing', '图像生成与处理'),
@@ -132,6 +134,7 @@ def render_homepage(rows: list[dict[str, str]], schema: dict, notes_en: dict[str
         raise ValueError('Homepage starter cases must belong to the canonical showcase and cases')
     select = lambda en, cn: cn if chinese else en
     notes = notes_cn if chinese else notes_en
+    metadata_config, star_cache = load_bundle(rows)
     engines = [r for r in rows if r['catalog_role'] == 'system']
     group_members = {d: sorted((r for r in engines if primary_domain(r) == d), key=lambda r: r['project'].lower())
                      for d, _, _ in ENGINE_DOMAINS}
@@ -152,7 +155,7 @@ def render_homepage(rows: list[dict[str, str]], schema: dict, notes_en: dict[str
             domains.discard(primary_domain(row))
         metadata = [select(en, cn) for id, en, cn in SHORT_DOMAINS if id in domains]
         metadata.append(f'[{select("Details", "详情")}](docs/catalog.md#{row["id"]})')
-        return (f'- <a id="project-{row["id"]}"></a>**[{cell(row["project"])}]({row["url"]})** — '
+        return (f'- <a id="project-{row["id"]}"></a>**[{cell(row["project"])}]({row["url"]})**{entry_extras(row, metadata_config, star_cache, chinese)} — '
                 f'{cell(notes[row["id"]])} <sub>{" · ".join(metadata)}</sub>')
 
     counts = {role: sum(r['catalog_role'] == role for r in rows) for role in allowed_roles}
@@ -170,6 +173,7 @@ def render_homepage(rows: list[dict[str, str]], schema: dict, notes_en: dict[str
         f'{len(rows)} 个项目 · {counts["system"]} 个引擎 · {counts["construction"]} 个构建流程 · {counts["benchmark"]} 个基准 · {counts["support"]} 项资源') + '</sub>', '</p>', '',
         '<div align="center">', '', navigation, '',
         '<sub>' + select('By domain: ', '模型领域：') + domain_navigation + '</sub>', '', '</div>', '',
+        recent_line(metadata_config, chinese), '',
         '<a id="featured-reading"></a>', '<a id="start-here"></a>', '<a id="从这里开始"></a>', '', select('## Six ways to specialize', '## 六种专用化路径'), '',
         '<!-- STARTER-GRID-START -->', '<table align="center">', '<tr>']
     for index, id in enumerate(STARTER_CASE_IDS):
@@ -197,7 +201,7 @@ def render_homepage(rows: list[dict[str, str]], schema: dict, notes_en: dict[str
                                f'[{len(showcase)} 案例对照](docs/representative-comparison.md#chinese) · [跨案例综合](docs/synthesis.md) · 阅读选例，不是排名。') + '</sub>', '',
               '<a id="homepage-system"></a>', '', select('## Inference engines', '## 推理引擎'), '',
               '<sub>' + select('All projects expanded; names link upstream. [Execution boundaries](docs/systems.md#system) · [Overlapping domains](docs/domains.md)',
-                                '全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md)') + '</sub>', '']
+                                '全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md)') + ' · ' + snapshot_note(rows, star_cache, chinese) + '</sub>', '']
     for domain, en, cn in ENGINE_DOMAINS:
         members = group_members[domain]
         lines += [f'<a id="homepage-system-{domain}"></a>', '', f'### {select(en, cn)} <sub>· {len(members)}</sub>', '']

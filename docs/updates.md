@@ -2,6 +2,15 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Quick comparison](representative-comparison.md) · [Contributing](../CONTRIBUTING.md)
 
+## 2026-10-14 — Star snapshots and direct sources / 关注度快照与来源直达
+
+- Added compact GitHub repository-star snapshots beside project names, with observation dates, explicit parent-repository labels and failure-safe cached values. Stars do not change order or inclusion.
+- Promoted selected already-reviewed Paper / Blog / Case report links into the bilingual entries. Added a small recent-additions line whose dates mean catalog admission, not upstream release.
+- Added an opt-in, bounded metadata refresher and offline regression tests. Kept all 126 project records, 68 cases, technical review dates, descriptions, source evidence, banners and starter cards unchanged.
+- [Metadata and maintenance rules](homepage-metadata.md) explain cache age, missing numbers, parent repositories and the existing weekly maintenance path. This is a presentation/metadata change, not another source audit or engine benchmark.
+
+新增紧凑 Star 快照、已核实来源入口与近期收录提示。母仓库不冒充子项目，缺失或获取失败不记为零；关注度更新时间与技术核查日期分离。布局、条目与原有测试保持不变，普通生成和 CI 不联网。
+
 ## 2026-10-14 — Literature and industrial follow-up / 论文与工业案例补查
 
 - Added four records and associated construction cases: [VibeServe/VibeSys](catalog.md#vibesys), [AutoMegaKernel](catalog.md#automegakernel), [Infire](catalog.md#infire), and [KIE](catalog.md#kie). The catalog now contains **126 project records and 68 cases**.

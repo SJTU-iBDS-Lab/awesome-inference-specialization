@@ -43,3 +43,7 @@ The banner generator uses only the Python standard library. Its generated assets
 The 2026-10-13 presentation update was checked with local Chromium previews using GitHub-like Markdown typography at desktop and narrow widths. These are local layout checks, not screenshots captured from a signed-in GitHub session and not a claim that all clients render identically. GitHub remains responsible for final HTML sanitization and platform styling. No upstream engine benchmarks were run, and source-review dates were not changed.
 
 本次排版检查不等于重新审查所有上游项目，也不代表重新复现引擎性能。来源日期、项目内容、案例数据与许可保持原有边界。
+
+## 2026-10-14 metadata refinement
+
+Project names now carry compact repository-star text and selected Paper / Blog / Case report shortcuts. Subproject counts are explicitly parent-repository totals. A single recent-additions line uses admission dates rather than release dates. See [metadata rules](homepage-metadata.md). No remote badges or new visual framework are introduced; the six reading cards and original descriptions are unchanged.

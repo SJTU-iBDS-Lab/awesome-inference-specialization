@@ -1,0 +1,1121 @@
+{
+  "repositories": {
+    "alibaba-damo-academy/inferix": {
+      "etag": "\"8cca4e28ab5f228bee20978205f5db9745dd06ab5193942e459985f8db87bf36\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "alibaba-damo-academy/Inferix",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1084189665,
+      "stars": 140,
+      "status": "ok"
+    },
+    "alibaba/atrex-bench": {
+      "etag": "\"45b96e17119737950d74905f62cf27e8ee9dd98600dd4157b9e6a16a43970dc1\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "alibaba/atrex-bench",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1273087967,
+      "stars": 36,
+      "status": "ok"
+    },
+    "alibaba/atrex-kernel-agent": {
+      "etag": "\"2e12f21a08d900706720e092646013f3c0fafe7dcb71a64d5fe037f2c5480e4e\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "alibaba/atrex-kernel-agent",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1277637600,
+      "stars": 177,
+      "status": "ok"
+    },
+    "andreinknv/stable-diffusion.rs": {
+      "etag": "\"c6051955fe167e5656c5534dc471772ed38b7b49986eab89bf6a56a1446b9b07\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "andreinknv/stable-diffusion.rs",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1312265179,
+      "stars": 1,
+      "status": "ok"
+    },
+    "anemll/anemll": {
+      "etag": "\"d8a4ffb1e3fa1e6eb8675b32e1bbe9861a8f36c37060b09983be5515e00ca236\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "Anemll/Anemll",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 912587006,
+      "stars": 1693,
+      "status": "ok"
+    },
+    "anemll/anemll-flash-llama.cpp": {
+      "etag": "\"bfa7b6db8ac232a1c0589349530b0947ed61294fce47f65740f7cc202dd2b318\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "Anemll/anemll-flash-llama.cpp",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1196741896,
+      "stars": 135,
+      "status": "ok"
+    },
+    "antirez/ds4": {
+      "etag": "\"eb032bc8f8ed86686154cc419c344035881c2c56ae692aa4bc9fec2c8c0c9d08\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "antirez/ds4",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1231148626,
+      "stars": 23840,
+      "status": "ok"
+    },
+    "antirez/iris.c": {
+      "etag": "\"2c1fc1a71afa6ecaa4dfa91c5716378a91d9465469abcd2c6db4795925679e75\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "antirez/iris.c",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1136984342,
+      "stars": 1996,
+      "status": "ok"
+    },
+    "antirez/qwen-asr": {
+      "etag": "\"3222ec623c0ce5b346297d8673fc670f03ca04e1e92213ea3587571a3dc9663d\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "antirez/qwen-asr",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1156359631,
+      "stars": 623,
+      "status": "ok"
+    },
+    "apache/tvm": {
+      "etag": "\"d948298cfcaaf65406c55a09e7440d90882d4d51a478ecd43536da0081f56d14\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "apache/tvm",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 70746484,
+      "stars": 13830,
+      "status": "ok"
+    },
+    "argmaxinc/argmax-oss-swift": {
+      "etag": "\"8335d3f4cb1aa02aabade15cf8f2821503e6d0e817ae5f29dff28639e12f359f\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "argmaxinc/argmax-oss-swift",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 748528018,
+      "stars": 6405,
+      "status": "ok"
+    },
+    "ashalliants/ninfer-3090": {
+      "etag": "\"c19b15ef41bee36083c63b49d034bba39043ff80076ea05e2240658051546df5\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "ashalliants/ninfer-3090",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1350570743,
+      "stars": 49,
+      "status": "ok"
+    },
+    "ashhart/tensorfold": {
+      "etag": "\"0a370795acb652014769b45e6269fa10da65578f980360e7f4953b2a484d01bc\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "ashhart/TensorFold",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1274723381,
+      "stars": 1314,
+      "status": "ok"
+    },
+    "avifenesh/memra": {
+      "etag": "\"5d98a7d556bc9100f8e30ce267cdb2126ca9e8c366aae4bd0103e7e37d6728fa\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "avifenesh/memra",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1353598712,
+      "stars": 2,
+      "status": "ok"
+    },
+    "azerozero/saragossa": {
+      "etag": "\"ba7d8385b8fa36e644e01c4c774539222f6a6a4349622550b8ee713bc52429b6\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "azerozero/saragossa",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1266632115,
+      "stars": 8,
+      "status": "ok"
+    },
+    "basecompute/basert": {
+      "etag": "\"1c1b9d6be62ad39820634c6abbac4a2abbf95cbb2e254bea2707ffc5fd08d5a6\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "basecompute/baseRT",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1281381884,
+      "stars": 231,
+      "status": "ok"
+    },
+    "cactus-compute/cactus": {
+      "etag": "\"cadf44661915869ba45e980e6a2a642ce15a40411cb51506bd5c4bfb12e9fb98\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "cactus-compute/cactus",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 971447302,
+      "stars": 6123,
+      "status": "ok"
+    },
+    "cactus-compute/needle": {
+      "etag": "\"0be97868076b95c65dab322bb4e19de9abca5bc6898f18b81805e649859908cc\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "cactus-compute/needle",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1165361576,
+      "stars": 13915,
+      "status": "ok"
+    },
+    "cair-vinuni/vla.simd": {
+      "etag": "\"694f652611d907f3851cf86f2f7c73d33b35cadff4e7a365c4df702c77b7e8ff\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "cair-vinuni/vla.simd",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1379096739,
+      "stars": 24,
+      "status": "ok"
+    },
+    "chenfengxu714/streamdiffusionv2": {
+      "etag": "\"fade5fed0bb7e32cd9ad7134e7ec41a722fc1199f5873d41e3b6008d92bb5b66\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "chenfengxu714/StreamDiffusionV2",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1014967383,
+      "stars": 580,
+      "status": "ok"
+    },
+    "chengzeyi/stable-fast": {
+      "etag": "\"936c18a943f2186b082ac020ea470d0a8784599b602ce2a838ef3a27c17c96ff\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "chengzeyi/stable-fast",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 706023626,
+      "stars": 1305,
+      "status": "ok"
+    },
+    "ciru-ai/qwen3.8-flash-ciru-strix-iu4": {
+      "etag": "\"6d957a9e8a1033378e7198660f2e5063a35e72f2817596cfcb19d658b6b6e923\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "ciru-ai/Qwen3.8-Flash-CIRU-STRIX-IU4",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1350318796,
+      "stars": 20,
+      "status": "ok"
+    },
+    "cornell-relaxml/qtip": {
+      "etag": "\"71ed749d8c94df4b6dab3974c018e33329db4295ea57d9c874779116f465ad26\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "Cornell-RelaxML/qtip",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 816132537,
+      "stars": 195,
+      "status": "ok"
+    },
+    "cumulo-autumn/streamdiffusion": {
+      "etag": "\"a61e6d11bdfb94c3055e04ad6bd46f753d8b740420ef7adaa04da73bcaac8f3b\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "cumulo-autumn/StreamDiffusion",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 724635656,
+      "stars": 10822,
+      "status": "ok"
+    },
+    "danveloper/flash-moe": {
+      "etag": "\"6a342485fd93436c22f294acf03dacb26587eb8f6b54c8b6c9d7415631ac9bcf\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "danveloper/flash-moe",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1185476360,
+      "stars": 4248,
+      "status": "ok"
+    },
+    "dao-ailab/flash-attention": {
+      "etag": "\"753d21c5862b1645f3b8c23a7065ec60092e7e16f904b9198bbf408c000d52be\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "Dao-AILab/flash-attention",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 494232964,
+      "stars": 25132,
+      "status": "ok"
+    },
+    "deepspeedai/deepspeedexamples": {
+      "etag": "\"fb9da57be29b41b4882539ae3c68803c58c18bc94dc7b2576cbcdc7bfa646e86\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "deepspeedai/DeepSpeedExamples",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 237085793,
+      "stars": 6847,
+      "status": "ok"
+    },
+    "drawthingsai/draw-things-community": {
+      "etag": "\"08df36210e6bedd84bc6bdf60d48eaeb85d1ca3ab2ef78c73f7893b82a11a4b9\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "drawthingsai/draw-things-community",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 720870887,
+      "stars": 587,
+      "status": "ok"
+    },
+    "drumih/turbo-fieldfare": {
+      "etag": "\"7f81b7da0c21bd60803c07f4d9eeb9e1736640fbf5fe814ba0e13260b268dc8d\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "drumih/turbo-fieldfare",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1304159264,
+      "stars": 6923,
+      "status": "ok"
+    },
+    "efeslab/fiddler": {
+      "etag": "\"2b8b9c2fd978f004c25b9ecce50e713ef26253b124ae4239c76b1807a53be4f9\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "efeslab/fiddler",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 752856939,
+      "stars": 268,
+      "status": "ok"
+    },
+    "efficientmoe/moe-infinity": {
+      "etag": "\"107e7fc1f04b222cf0174d4b5a8aca2cd1adc7581da7edb35201f9048f6e160a\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "EfficientMoE/MoE-Infinity",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 746708555,
+      "stars": 370,
+      "status": "ok"
+    },
+    "epistates/pmetal": {
+      "etag": "\"194cfaea5540516b7cb8ce722a383f56b5cf0d579872ec6a516981eedb32b70e\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "Epistates/pmetal",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1132959458,
+      "stars": 327,
+      "status": "ok"
+    },
+    "ericlbuehler/diffusion-rs": {
+      "etag": "\"9296d78310ec903d6a28530c0bfaccaad66efc6d6d866fed3110796115aec025\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "EricLBuehler/diffusion-rs",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 897647576,
+      "stars": 130,
+      "status": "ok"
+    },
+    "fla-org/flash-linear-attention": {
+      "etag": "\"82a5f6b4b1b962d860bcb6360045bc4c78d0c27182e0732f6f07c15e22f59cb6\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "fla-org/flash-linear-attention",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 733802106,
+      "stars": 5859,
+      "status": "ok"
+    },
+    "flashinfer-ai/flashinfer": {
+      "etag": "\"8216353d2cad5001267e762231eca60c750f2767b99cb27f95f5f7b8782ca91a\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "flashinfer-ai/flashinfer",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 669331976,
+      "stars": 6613,
+      "status": "ok"
+    },
+    "flyinggiraffe/vidax": {
+      "etag": "\"7e1a5bb93b49de7415a996f3d5061a45a4f92da3e2f00aa51b91aac231229492\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "FlyingGiraffe/vidax",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1323389604,
+      "stars": 21,
+      "status": "ok"
+    },
+    "fminference/flexllmgen": {
+      "etag": "\"bf1963cbc1e74fc7c81a8b4f52a55cec9d3b9d5865bdf0f31ffc3f5563c72f87\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "FMInference/FlexLLMGen",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 602270517,
+      "stars": 9346,
+      "status": "ok"
+    },
+    "frikallo/parakeet.cpp": {
+      "etag": "\"7beb8e87238e925f71488634e1fe4a724608973d386f0b347b6e44d4c4d6e030\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "Frikallo/parakeet.cpp",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1166341098,
+      "stars": 306,
+      "status": "ok"
+    },
+    "gabriele-mastrapasqua/qwen3-tts": {
+      "etag": "\"63f93ec7be4f260405801a8e06a2bbf68612c6e9455ff3b77acaefddd9608755\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "gabriele-mastrapasqua/qwen3-tts",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1172518997,
+      "stars": 116,
+      "status": "ok"
+    },
+    "ggml-org/llama.cpp": {
+      "etag": "\"60f8120e466883364748d7fb77d8548e01e782c128227d9212e0f6eaac253d28\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "ggml-org/llama.cpp",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 612354784,
+      "stars": 131111,
+      "status": "ok"
+    },
+    "ggml-org/whisper.cpp": {
+      "etag": "\"4bca098c637487d6b3634492fc9096ccd17150b7b88cbd7b4ee4fa3c810c292f\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "ggml-org/whisper.cpp",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 541269386,
+      "stars": 54359,
+      "status": "ok"
+    },
+    "gufo-org/gufo": {
+      "etag": "\"3f7cc832c8a70d7b0149ca407ae367bdadfdbae3522d0d6bc4c3869ea0aa97cd\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "gufo-org/gufo",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1331203700,
+      "stars": 734,
+      "status": "ok"
+    },
+    "halo-box/strix-llama.cpp": {
+      "etag": "\"e6ceb84456cf26142e96afbba89b545a9e2fbcb3454ab8e716c7992d8f979c46\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "halo-box/strix-llama.cpp",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1348748480,
+      "stars": 231,
+      "status": "ok"
+    },
+    "hao-ai-lab/fastvideo": {
+      "etag": "\"ad4e6ea615bdd3489d920ddec0bad876c70a43985ba3123c4207a8cc25248ca4\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "hao-ai-lab/FastVideo",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 877649153,
+      "stars": 4601,
+      "status": "ok"
+    },
+    "hilum-labs/hilum-local-llm-engine": {
+      "etag": "\"c9fcc2344061eb09860ee465526168af3be0bc8ed6a6aae3826afa317e2c4a6c\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "hilum-labs/hilum-local-llm-engine",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1167933344,
+      "stars": 1,
+      "status": "ok"
+    },
+    "ikawrakow/ik_llama.cpp": {
+      "etag": "\"569c775f1da5b1d9f53e47fd397e38ceca834e4a2909d3d1f0199a4ef39e9831\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "ikawrakow/ik_llama.cpp",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 820758892,
+      "stars": 3300,
+      "status": "ok"
+    },
+    "incoai/splash": {
+      "etag": "\"a0a02baa24b29d00cb6b83a30814375ff5853eb1f652641d3240868438625077\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "incoai/splash",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1376380844,
+      "stars": 1421,
+      "status": "ok"
+    },
+    "ist-daslab/marlin": {
+      "etag": "\"10e34d2e8af336786a0d9542c32511dca3c98630818f1971d7e2f2fe0fbe019f\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "IST-DASLab/marlin",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 744514418,
+      "stars": 1162,
+      "status": "ok"
+    },
+    "jakeatx/llamampere": {
+      "etag": "\"408964b3abf287c92fba475cbc1725503efaa4747f647b7f927dacf9ee0975d0\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "JakeATX/llamAmpere",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1360317755,
+      "stars": 172,
+      "status": "ok"
+    },
+    "jeff-hiner/hearth": {
+      "etag": "\"7a7c019227a6cc93378df6ce550464860406e5b055feda86bcc8894711e6c80c\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "jeff-hiner/hearth",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1133811156,
+      "stars": 2,
+      "status": "ok"
+    },
+    "johnmai-dev/ane-lm": {
+      "etag": "\"5a101849848c730e04307857c1ce35b9a796bdadd97085c24feb68e19c94e397\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "johnmai-dev/ANE-LM",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1171731709,
+      "stars": 144,
+      "status": "ok"
+    },
+    "justvugg/colibri": {
+      "etag": "\"a681afee119c5d255b1360554a8d090e64de84eb5c4409e55efc30b407e49d0e\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "JustVugg/colibri",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1286080397,
+      "stars": 41799,
+      "status": "ok"
+    },
+    "kekzl/imp": {
+      "etag": "\"35c9380a64db4f55b0657be44dc81da4ad0fe9880bacbcf1329b407c7c39b261\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "kekzl/imp",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1164344011,
+      "stars": 44,
+      "status": "ok"
+    },
+    "kvcache-ai/ktransformers": {
+      "etag": "\"5f25d501bb1cc709b49b9605543e4197f02eff1c915dbd5d3b48c52466c7dddd\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "kvcache-ai/ktransformers",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 833984877,
+      "stars": 19604,
+      "status": "ok"
+    },
+    "kyuubyn/vte": {
+      "etag": "\"7dc8d4517f1fee147d05e0935975f35167e7cb3ceed593d34eeec79f7c6c4b72\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "kyuubyN/VTE",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1287327299,
+      "stars": 0,
+      "status": "ok"
+    },
+    "leejet/stable-diffusion.cpp": {
+      "etag": "\"79e156c8518e93a1d15952168729f6baf5129e4de15e305c82f79b8c35e5f532\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "leejet/stable-diffusion.cpp",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 677953180,
+      "stars": 7670,
+      "status": "ok"
+    },
+    "leonickson1/swiftlet": {
+      "etag": "\"6657568dc3dc81117973da58287fa23127d05b623c50dd1651adbb6e5d906d7d\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "leonickson1/Swiftlet",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1321790489,
+      "stars": 659,
+      "status": "ok"
+    },
+    "lithos-ai/lithos-metal": {
+      "etag": "\"86da7e11b44663a8e180ffe28f11e096f807ada92acfdc1d38779f8bcc996e91\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "lithos-ai/lithos-metal",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1405977474,
+      "stars": 210,
+      "status": "ok"
+    },
+    "llaminar/llaminar": {
+      "etag": "\"a47efdae8a189ed4e36a148a46b576076a2ef5d115d14c436016db12c92d628a\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "Llaminar/llaminar",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1212779336,
+      "stars": 45,
+      "status": "ok"
+    },
+    "magiccodingman/vllm-radiance": {
+      "etag": "\"ffaeaee2661b8862420fe1cf1172a28c19480fcee83ba1a45714c332b6e0546c\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "magiccodingman/vllm-radiance",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1343007241,
+      "stars": 116,
+      "status": "ok"
+    },
+    "magnitudedev/magnitude": {
+      "etag": "\"4fecb5c3c54c41260eb35ad90cc686fd5ca4de37ab6d5d0a568bb1a4d901c935\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "magnitudedev/magnitude",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1267145484,
+      "stars": 6719,
+      "status": "ok"
+    },
+    "matteospanio/aria": {
+      "etag": "\"76e790b40f970ae1ab98c9b4a1cecdc2cbf3e3ce7ecfb204e4fed4cf6656c970\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "matteospanio/aria",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1281399144,
+      "stars": 10,
+      "status": "ok"
+    },
+    "meta-pytorch/kernelagent": {
+      "etag": "\"895e11ab857daa4888a35fa2b54fdbaad7d4dbe5fd7ef64d7b794d032a522d8c\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "meta-pytorch/KernelAgent",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1017609284,
+      "stars": 587,
+      "status": "ok"
+    },
+    "metainfer/metainfer": {
+      "etag": "\"e24205427bb5428a060d74b1d2ac388c6affecfd10dc95767ef8f2c937d7d18a\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "HuangPuStar/MetaInfer",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1210328197,
+      "stars": 113,
+      "status": "ok"
+    },
+    "mflux-community/mflux": {
+      "etag": "\"92678b02fd9028619f18bb802fdb83202fecf72c12df1d71e372a8cb21b6c36b\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "mflux-community/mflux",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 840672252,
+      "stars": 2480,
+      "status": "ok"
+    },
+    "microsoft/bitnet": {
+      "etag": "\"c800b600dac17a2030fc6583f9ce26a79db7b37c42bacbb2ea744e48110ed269\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "microsoft/BitNet",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 838253246,
+      "stars": 41140,
+      "status": "ok"
+    },
+    "mindspore-ai/akg": {
+      "etag": "\"6a0623b00fded86ac7d8e2166a5260608949691c767fdcbc4d3ac87d6262224c\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "mindspore-ai/akg",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 274077856,
+      "stars": 262,
+      "status": "ok"
+    },
+    "mirage-project/mirage": {
+      "etag": "\"8ec099a215a52e8785c9e92bfdada0a295c9864cef0b6dd4187ca578da248612\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "mirage-project/mirage",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 797553215,
+      "stars": 2551,
+      "status": "ok"
+    },
+    "mit-han-lab/kernelwiki": {
+      "etag": "\"6677b1a006195e6eb3139b1d545d68526e20add8fda76dfad03101d6c4038322\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "mit-han-lab/KernelWiki",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1213595933,
+      "stars": 509,
+      "status": "ok"
+    },
+    "mit-han-lab/ncu-report-skill": {
+      "etag": "\"924e8af222e24e01ed0608dcb8c7ac2563e32d3a6241ad93075f6fa01aca2a4d\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "mit-han-lab/ncu-report-skill",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1209103931,
+      "stars": 255,
+      "status": "ok"
+    },
+    "mlc-ai/mlc-llm": {
+      "etag": "\"fc4beb5e1a81f156dba0eef56344f7b66d73f18e40781c0aa19a0074b3ac9790\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "mlc-ai/mlc-llm",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 634081686,
+      "stars": 23239,
+      "status": "ok"
+    },
+    "modeltc/lightx2v": {
+      "etag": "\"7e0b4ed26a97b29fcabe211b80e379baca0c09693a615f375b9ca4d163aad98d\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "ModelTC/LightX2V",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 953945624,
+      "stars": 2903,
+      "status": "ok"
+    },
+    "mudler/parakeet.cpp": {
+      "etag": "\"723cceba1947bbed7da01818a7f8395906780cf0d3d60569ad00f44ee8a9669c\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "mudler/parakeet.cpp",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1252434124,
+      "stars": 840,
+      "status": "ok"
+    },
+    "neroued/ninfer": {
+      "etag": "\"182bb65f69d54c18e706439377143e517f9524d74419a270d8e83f4396d40f40\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "Neroued/ninfer",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1281510950,
+      "stars": 2990,
+      "status": "ok"
+    },
+    "neuhaus/gufo": {
+      "etag": "\"85fb64e7d3dbe29aadf17c389bee550225827bc5b4aec7c58d85e5b1e2c1ca77\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "neuhaus/gufo",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1386191851,
+      "stars": 11,
+      "status": "ok"
+    },
+    "niko1221/strata": {
+      "etag": "\"5686e0578368b25671f93f43c1e26df48cfbe8adc667d41c08e2118764a49456\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "Niko1221/Strata",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1385946301,
+      "stars": 23943,
+      "status": "ok"
+    },
+    "nullmagic2/voxgen": {
+      "etag": "\"c64641d9223f3468e8e2865f5fce1aa7322a21fb29a89f8645a9f2462ede6ed2\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "NullMagic2/VoxGen",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1355206132,
+      "stars": 7,
+      "status": "ok"
+    },
+    "nunchux-ai/deepcompressor": {
+      "etag": "\"d0bc8f5dc5bab35ae5414b65031e12f7ca95234ac00f3998e7e6c13ebac9c016\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "nunchux-ai/deepcompressor",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 796839960,
+      "stars": 802,
+      "status": "ok"
+    },
+    "nunchux-ai/nunchaku": {
+      "etag": "\"8bbe100a0bec194cbcb54d2884edcf27e313213122d2318dba1a101be424f020\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "nunchux-ai/nunchaku",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 884123664,
+      "stars": 3959,
+      "status": "ok"
+    },
+    "nus-hpc-ai-lab/videosys": {
+      "etag": "\"b281433aeb1ca8ee5662b47bda910d73a2e05b061aa15ff6c9afea3bb89baebf\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "NUS-HPC-AI-Lab/VideoSys",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 758843605,
+      "stars": 2025,
+      "status": "ok"
+    },
+    "nvidia/tensorrt": {
+      "etag": "\"f1d4856109eff5201c0b717890f55b61ff22cc82cb2bb7a5d89c81b6380405aa\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "NVIDIA/TensorRT",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 184657328,
+      "stars": 13406,
+      "status": "ok"
+    },
+    "nvidia/tensorrt-edge-llm": {
+      "etag": "\"8a23bb48ad7993efb8620f2c90d844e5407f31f07a3b67fa4aec15f598016e16\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "NVIDIA/TensorRT-Edge-LLM",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1068647533,
+      "stars": 588,
+      "status": "ok"
+    },
+    "nvidia/tensorrt-llm": {
+      "etag": "\"9933288ff8df0fd4595377e0d5b55b2d54adae3e2990f597de8d604054438c84\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "NVIDIA/TensorRT-LLM",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 679366051,
+      "stars": 14807,
+      "status": "ok"
+    },
+    "nvlabs/sana": {
+      "etag": "\"cf80703f09a496f4758a9ac84fba60a68fc8b24596702432312a6f1ea8100ba8\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "NVlabs/Sana",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 871368615,
+      "stars": 9293,
+      "status": "ok"
+    },
+    "peonist-ai/halogen-flash-server": {
+      "etag": "\"ad9fca34141da150cce75f60c60ab5fe8da8f818c03663fa90fd3e3a3cf6be9d\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "peonist-ai/halogen-flash-server",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1347320778,
+      "stars": 964,
+      "status": "ok"
+    },
+    "perplexityai/pplx-garden": {
+      "etag": "\"5eef1b1ac233b9efdfc4da739907eb5273cc4e52551ab95fc276fd62c3e82b1a\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "perplexityai/pplx-garden",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1089699892,
+      "stars": 942,
+      "status": "ok"
+    },
+    "pipenetwork/minimax-h3-mlx": {
+      "etag": "\"fe24140ec04b6f697cda5f5bacbeb13188ec3c4253d8c760b81af0fce388efa9\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "PipeNetwork/minimax-h3-mlx",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1321260596,
+      "stars": 83,
+      "status": "ok"
+    },
+    "pku-sec-lab/hybrimoe": {
+      "etag": "\"4072a48f582b2468d3d2ddd09da3b3d2fed43d9bc8bac9414d9bb32786ff9ac7\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "PKU-SEC-Lab/HybriMoE",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 962352117,
+      "stars": 123,
+      "status": "ok"
+    },
+    "polished-snow/kipp": {
+      "etag": "\"c16645c3a2a1bc813580c03bc760afa6ec85b568828b37b02f449b4641a86f93\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "Polished-Snow/Kipp",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1295822896,
+      "stars": 1,
+      "status": "ok"
+    },
+    "rexmhall09/tuff": {
+      "etag": "\"c9ae468624e52cfd8746073f2cf6494937cb5a17a4c498a0df65815f0750dda1\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "rexmhall09/TUFF",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1335697199,
+      "stars": 52,
+      "status": "ok"
+    },
+    "rightnow-ai/automegakernel": {
+      "etag": "\"d027fd9fb00bbeb2e295c4b7c2063986b979855f0ccab4db1220a73036da4a2e\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "RightNow-AI/AutoMegaKernel",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1263098427,
+      "stars": 151,
+      "status": "ok"
+    },
+    "rocm/fastflowlm": {
+      "etag": "\"44a221fae91f029827ad1792fe9447137497d15776ea40410782acfa42527e3c\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "ROCm/FastFlowLM",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1003248064,
+      "stars": 1953,
+      "status": "ok"
+    },
+    "rocmfpx/rocmfpx": {
+      "etag": "\"4528d577f55aefc35257602b421e19b7e8a110ba7da56641fcef49477cb851fa\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "ROCmFPX/ROCmFPX",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1319332935,
+      "stars": 48,
+      "status": "ok"
+    },
+    "saientai/saient-quartz": {
+      "etag": "\"a2f3c21d03c4b0796d46f6eb4ace5ff210f54bbe57e0cbf7469f34783a906243\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "SaientAI/saient-quartz",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1260126326,
+      "stars": 7,
+      "status": "ok"
+    },
+    "scalingintelligence/kernelbench": {
+      "etag": "\"b0d27469439cd2d2c7c63d8274dd7d5a903a35d0bffee124fad7e2f5a2018555\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "ScalingIntelligence/KernelBench",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 878197542,
+      "stars": 1290,
+      "status": "ok"
+    },
+    "sgl-project/sglang": {
+      "etag": "\"ae0c0aeff1e8180853d301719940abd9639bb2d7cef82619f2d72b39b799758f\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "sgl-project/sglang",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 740303686,
+      "stars": 37110,
+      "status": "ok"
+    },
+    "sharpai/swiftlm": {
+      "etag": "\"d3d2a2f2f2e530b670d879852f6eb6301c09385958b19d01a2e0d98a28222a51\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "SharpAI/SwiftLM",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1187786518,
+      "stars": 780,
+      "status": "ok"
+    },
+    "shisa-ai/hipengine": {
+      "etag": "\"072046d760f235ee0f96ac860db2ae9bdee319955fd46ebcb288f7afc300e84c\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "shisa-ai/hipEngine",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1239563227,
+      "stars": 88,
+      "status": "ok"
+    },
+    "siliconflow/onediff": {
+      "etag": "\"94d4f5f5bb8fc2223ac95792a1ac955672df3e4eaa3bcdb3c1403f70db62e653\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "siliconflow/onediff",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 539362736,
+      "stars": 1961,
+      "status": "ok"
+    },
+    "skyfallsin/ane.cpp": {
+      "etag": "\"34ab5fe67a1b97c70e97bd9b5e3a32438858fa8f9866cd37f96a531d0e928037\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "skyfallsin/ane.cpp",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1193378265,
+      "stars": 6,
+      "status": "ok"
+    },
+    "skyfallsin/apple-neural-engine-field-guide": {
+      "etag": "\"aa7a5db416cc8a75f5303c8d89b1fd59cba82674f8ecf3bd68fbd82791d71ac2\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "skyfallsin/apple-neural-engine-field-guide",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1193801291,
+      "stars": 3,
+      "status": "ok"
+    },
+    "smpanaro/coreml-llm-cli": {
+      "etag": "\"8cdbe04fb0b36054b6b3a1509a6c09728162e584644d615f27fd17c67e1c34b1\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "smpanaro/coreml-llm-cli",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 807122463,
+      "stars": 131,
+      "status": "ok"
+    },
+    "smth-fun/self-evolving-inference-system": {
+      "etag": "\"3b4dabbef422ccda487db73576df7c8afea870ce9b1272f7cb5bd9629e9515d8\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "smth-fun/self-evolving-inference-system",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1189321088,
+      "stars": 0,
+      "status": "ok"
+    },
+    "snowflake-ai-research/fastkernels": {
+      "etag": "\"cffc4fa59178879939b4bb1942840e92050dd8f3738506edd1845cc658e3eefb\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "Snowflake-AI-Research/fastkernels",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1244130355,
+      "stars": 7,
+      "status": "ok"
+    },
+    "swedishembedded/brain": {
+      "etag": "\"3b1a13fb9fd145bfc87838d814272493085abed8e7b42bbf8870f6bccc1ab88d\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "swedishembedded/brain",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1279242507,
+      "stars": 41,
+      "status": "ok"
+    },
+    "tele-ai/telefuser": {
+      "etag": "\"9bf10bede30384dc043a67ef6cf87ce1ebe54f6ef923ace37c34ba16e5cdf53e\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "Tele-AI/TeleFuser",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1264718849,
+      "stars": 32,
+      "status": "ok"
+    },
+    "thu-mig/edge-dit.cpp": {
+      "etag": "\"72caadb25cc42f1a8775b9ade6396e461224efa8ccde9f7b929ea3721ed7babf\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "THU-MIG/edge-dit.cpp",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1246451746,
+      "stars": 52,
+      "status": "ok"
+    },
+    "thu-ml/sageattention": {
+      "etag": "\"6750ed71bee773f46729aef057e629ce063926659640e0eb0df3b0866a6ac1c5\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "thu-ml/SageAttention",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 867007699,
+      "stars": 3967,
+      "status": "ok"
+    },
+    "thu-ml/turbodiffusion": {
+      "etag": "\"5d996c657e5fb942f8d4153b3ecdc21b3aa4cd0b30c706fe7d451fa99680d65b\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "thu-ml/TurboDiffusion",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1110932933,
+      "stars": 3855,
+      "status": "ok"
+    },
+    "tiiny-ai/powerinfer": {
+      "etag": "\"8ee6c92339546f134667163d49fdd1779321e5ae4d2079047df765864a23a86f\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "Tiiny-AI/PowerInfer",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 731842419,
+      "stars": 9826,
+      "status": "ok"
+    },
+    "tile-ai/tilelang": {
+      "etag": "\"fc8c1bd45b3390dab6f63506d4e5729c22c52e001e4cccec49e10d13e4779776\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "tile-ai/tilelang",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 867004514,
+      "stars": 8598,
+      "status": "ok"
+    },
+    "triton-lang/triton": {
+      "etag": "\"b1ece568f8cf25345c322a448302f605584244a6c1211887e3c30b2ecc607cec\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "triton-lang/triton",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 23496542,
+      "stars": 20369,
+      "status": "ok"
+    },
+    "trymirai/uzu": {
+      "etag": "\"7c89b4203dce5f9002559ac77c62246a5b55c40f700eed96a69899c9d2258efd\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "trymirai/uzu",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1007360921,
+      "stars": 2298,
+      "status": "ok"
+    },
+    "turboderp-org/exllamav3": {
+      "etag": "\"e13102a5f4adfc5dc5fa766570d48af5918b2ec731aa5368b3785d0c9d3ad8cc\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "turboderp-org/exllamav3",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 961394714,
+      "stars": 1661,
+      "status": "ok"
+    },
+    "uulong950/qingming-qwen3-tts": {
+      "etag": "\"28c43ad28275bb21822fed65182cc8feb595d71cac907bbaba12709459cc99a0\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "uulong950/qingming-qwen3-tts",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1332854779,
+      "stars": 6,
+      "status": "ok"
+    },
+    "uw-syfi/vibesys": {
+      "etag": "\"502702c7487e43abbbe02b98d1047f7f54294cf5587f3dbf40f1d1ae781b433b\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "uw-syfi/vibesys",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1231867801,
+      "stars": 114,
+      "status": "ok"
+    },
+    "veneno1213822/agentcompile": {
+      "etag": "\"51dd4a5080bbf7c755008e0c5ff05e129701e546b82902c8d2d4df56c4b7bc95\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "veneno1213822/AgentCompile",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1308826715,
+      "stars": 7,
+      "status": "ok"
+    },
+    "vllm-project/vllm": {
+      "etag": "\"2341276f5de0d959ceb63cf89992f0151e06cc635ed442b97d5628c2a6f53917\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "vllm-project/vllm",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 599547518,
+      "stars": 93743,
+      "status": "ok"
+    },
+    "wallawalla47/infernix": {
+      "etag": "\"8411a5e17b2aaeb507b5ae7f5f59b663bb906d40ec32b79409bc4b467c1fc357\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "Wallawalla47/Infernix",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1411051572,
+      "stars": 111,
+      "status": "ok"
+    },
+    "wlejon/brodiffusion": {
+      "etag": "\"f4ef3861b4e05b83b2ac576cbbc32d41761fd0b09ea2f941708b25aea63c77a0\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "wlejon/brodiffusion",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1244883306,
+      "stars": 1,
+      "status": "ok"
+    },
+    "xdit-project/xdit": {
+      "etag": "\"a43f4add138b6b3bf7629d1cc48bb48fdd6668e53388c27eecae71378bb1f026\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "xdit-project/xDiT",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 774210161,
+      "stars": 2737,
+      "status": "ok"
+    },
+    "ybubnov/metalchat": {
+      "etag": "\"17884696693c4f484c233b7848529f98fb287db06618c8b194ef2ec46ca0a4df\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "ybubnov/metalchat",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 882110489,
+      "stars": 23,
+      "status": "ok"
+    },
+    "zllm-lab/zllm": {
+      "etag": "\"684017025b17e0558839e9866093cb8734ef7ffd4878f437424fe95c1047eee1\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "zllm-lab/zllm",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1351097095,
+      "stars": 11,
+      "status": "ok"
+    },
+    "zolotukhin/zinc": {
+      "etag": "\"8216a144d3ef30303fcdd0a98186ccda4107bbb308d54f565f4bdb439f581c6b\"",
+      "fetched_on": "2026-10-14",
+      "full_name": "zolotukhin/zinc",
+      "last_attempt_on": "2026-10-14",
+      "repository_id": 1191177873,
+      "stars": 521,
+      "status": "ok"
+    }
+  },
+  "schema_version": 1
+}
