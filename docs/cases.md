@@ -22,11 +22,11 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 
 ### Rebuilding around memory and expert placement / 围绕内存与专家驻留重建执行
 
-[Flash-MoE](#flash-moe) · [Strata](#strata) · [Swiftlet](#swiftlet) · [DwarfStar](#dwarfstar) · [TurboFieldfare](#turbo-fieldfare) · [TUFF](#tuff) · [SwiftLM](#swiftlm) · [Colibri](#colibri) · [KTransformers](#ktransformers)
+[Flash-MoE](#flash-moe) · [Strata](#strata) · [Swiftlet](#swiftlet) · [DwarfStar](#dwarfstar) · [TurboFieldfare](#turbo-fieldfare) · [TUFF](#tuff) · [SwiftLM](#swiftlm) · [Colibri](#colibri) · [KTransformers](#ktransformers) · [peregrine](#peregrine)
 
 ### Substantial forks and specialized backends / 通过深度分叉与专用后端改变执行
 
-[llamAmpere](#llamampere) · [vLLM Radiance](#vllm-radiance) · [ANEMLL Flash llama.cpp](#anemll-flash-llama) · [NInfer-3090](#ninfer-3090) · [Infernix](#infernix) · [CIRU runtime](#ciru-runtime) · [Gufo RDMA](#gufo-rdma) · [strix-llama.cpp](#strix-llama-cpp)
+[llamAmpere](#llamampere) · [vLLM Radiance](#vllm-radiance) · [ANEMLL Flash llama.cpp](#anemll-flash-llama) · [NInfer-3090](#ninfer-3090) · [Infernix](#infernix) · [CIRU runtime](#ciru-runtime) · [Gufo RDMA](#gufo-rdma) · [strix-llama.cpp](#strix-llama-cpp) · [dInfer](#dinfer)
 
 ### Reconstructing image-generation pipelines / 重建图像生成流水线
 
@@ -34,7 +34,7 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 
 ### Video execution, device migration and streaming / 视频执行、设备移植与连续生成
 
-[LightX2V](#lightx2v) · [Vidax](#vidax) · [TeleFuser](#telefuser) · [FastVideo](#fastvideo) · [MiniMax-H3 MLX](#minimax-h3-mlx) · [StreamDiffusionV2](#streamdiffusion-v2)
+[LightX2V](#lightx2v) · [Vidax](#vidax) · [TeleFuser](#telefuser) · [FastVideo](#fastvideo) · [MiniMax-H3 MLX](#minimax-h3-mlx) · [StreamDiffusionV2](#streamdiffusion-v2) · [FreeVideo](#freevideo)
 
 ### Speech, audio diffusion and action-model runtimes / 语音、音频扩散与动作模型运行时
 
@@ -800,6 +800,26 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 
 **Reviewed:** 2026-10-12. See the linked project record for mechanism-specific caveats.
 
+<a id="peregrine"></a>
+
+## peregrine: concurrent CPU, GPU and NVMe expert execution
+
+**Related project records:** [peregrine](catalog.md#peregrine).
+
+- **Why build it? / 为什么另建:** The previous phased engine can leave GPU-resident experts idle while CPU and SSD work is processed, motivating an overlapping heterogeneous execution path.
+- **Execution ownership / 重构边界:** Owns Rust host scheduling, io_uring completion paths, expert batching and fixed-order reduction; optional CUDA kernels and numerical formats reuse selected Colibri building blocks.
+- **Retained components / 复用什么:** Keeps the GLM-family model/checkpoint context, vendored or adapted CUDA operators, and existing quantified weights and tokenization resources.
+- **Scope given up / 取舍与兼容性:** Requires Linux/NVMe and an optional NVIDIA GPU. Parallel I/O does not remove the disk-bandwidth ceiling; enabling GPU paths needs independent hardware qualification.
+- **Construction process / 怎样构建:** The inspected Rust code implements owned completion reads, CPU worker dispatch and deterministic per-position reduction. Its benchmarks document ring-claim sizing, batch amortization and single-sequence performance alongside setbacks.
+- **AI participation / AI 参与的直接证据:** AI involvement in writing or tuning the engine was not established by the reviewed upstream sources.
+- **Disclosed effort / 构建投入:** Engineering and maintenance cost are unknown; performance is primarily author-measured on stated hardware, not independent reproduction.
+- **Validation boundary / 验证覆盖:** Reviewed README, core concurrent scheduler and ring implementation, plus the same-hardware comparison summary. Author-stated CPU unit tests and GPU-gated tests were not run; GPU correctness and broad device coverage remain unverified.
+- **Evolution evidence / 适配与维护:** Changes to checkpoint layout, io_uring behavior, NUMA scheduling, CUDA support and quantized kernels require regression checks; the project maintains explicit feature-gated and unmeasured paths.
+
+**Sources:** [Source 1](https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/README.md) · [Source 2](https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/crates/peregrine-model/src/concurrent.rs) · [Source 3](https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/crates/peregrine-io/src/ring.rs) · [Source 4](https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/docs/benchmarks.md).
+
+**Reviewed:** 2026-10-16. See the linked project record for mechanism-specific caveats.
+
 <a id="llamampere"></a>
 
 ## llamAmpere: specialize a shared runtime for Ampere and Qwen
@@ -959,6 +979,26 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 **Sources:** [Source 1](https://github.com/halo-box/strix-llama.cpp/blob/6aa81b88e14aa753c1c7e1a9ff27c9d50fd3c673/README.md) · [Source 2](https://github.com/halo-box/strix-llama.cpp/blob/6aa81b88e14aa753c1c7e1a9ff27c9d50fd3c673/ggml/src/ggml-cuda/gated_delta_net.cu) · [Source 3](https://github.com/halo-box/strix-llama.cpp/blob/6aa81b88e14aa753c1c7e1a9ff27c9d50fd3c673/ggml/src/ggml-vulkan/ggml-vulkan.cpp) · [Source 4](https://github.com/halo-box/strix-llama.cpp/blob/6aa81b88e14aa753c1c7e1a9ff27c9d50fd3c673/CONTRIBUTING.md).
 
 **Reviewed:** 2026-10-12. See the linked project record for mechanism-specific caveats.
+
+<a id="dinfer"></a>
+
+## dInfer: explicit denoising-time execution control
+
+**Related project records:** [dInfer](catalog.md#dinfer).
+
+- **Why build it? / 为什么另建:** Diffusion LMs require repeated refinement of candidate tokens and invalidation of changing context; conventional autoregressive decode scheduling and one-token KV growth do not express this behavior directly.
+- **Execution ownership / 重构边界:** Owns diffusion iterations, token-commit decoding policies, cache refresh and model adapters. Backend serving, tensor collectives, CUDA graphs and base kernel implementations are reused.
+- **Retained components / 复用什么:** Uses PyTorch and Hugging Face model modules, and vLLM for LLaDA-family serving or SGLang for LLaDA2; relies on supported multi-GPU toolchains.
+- **Scope given up / 取舍与兼容性:** Block diffusion, confidence thresholds and vicinity cache refresh are model-specific and can change the output distribution or reuse stale intermediates. Published model-vs-model performance is not engine-only speedup.
+- **Construction process / 怎样构建:** The repository implements decoding and refresh variants, a CUDA-graph model runner, serving coordination and benchmark/evaluation scripts. Some GPU tests contain checkpoint paths unavailable outside the authors' environment.
+- **AI participation / AI 参与的直接证据:** No direct source-reviewed statement attributes implementation to coding agents; algorithmic acceleration is not evidence of AI-written software.
+- **Disclosed effort / 构建投入:** No comparable implementation effort or long-term maintenance estimate; published H800 throughput cannot substitute for build cost.
+- **Validation boundary / 验证覆盖:** Inspected paper, pinned README, decoder, GPU runner and batching test. The paper supplies task scores and throughput for selected settings; no checkpoints or multi-GPU runs were reproduced. Testing script availability is not a correctness guarantee.
+- **Evolution evidence / 适配与维护:** New diffusion model versions, attention behavior and serving framework APIs require adapter, cache and numerical requalification; pinned version dependencies make compatibility maintenance visible.
+
+**Sources:** [Source 1](https://arxiv.org/abs/2510.08666) · [Source 2](https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/README.md) · [Source 3](https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/python/dinfer/decoding/generate_uniform.py) · [Source 4](https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/python/dinfer/decoding/diffusion_runner.py) · [Source 5](https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/tests/test_bd_serving_batching.py).
+
+**Reviewed:** 2026-10-16. See the linked project record for mechanism-specific caveats.
 
 <a id="iris"></a>
 
@@ -1239,6 +1279,26 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 **Sources:** [Source 1](https://github.com/chenfengxu714/StreamDiffusionV2/blob/6961a5cf2045d1dda05a04ef229698bdc04e873a/README.md) · [Source 2](https://github.com/chenfengxu714/StreamDiffusionV2/blob/6961a5cf2045d1dda05a04ef229698bdc04e873a/streamdiffusionv2/pipeline.py) · [Source 3](https://github.com/chenfengxu714/StreamDiffusionV2/blob/6961a5cf2045d1dda05a04ef229698bdc04e873a/streamv2v/inference_pipe.py) · [Source 4](https://github.com/chenfengxu714/StreamDiffusionV2/blob/6961a5cf2045d1dda05a04ef229698bdc04e873a/streamv2v/communication/kv_cache_manager.py) · [Source 5](https://github.com/chenfengxu714/StreamDiffusionV2/blob/6961a5cf2045d1dda05a04ef229698bdc04e873a/tools/eval_video_metrics.py).
 
 **Reviewed:** 2026-10-12. See the linked project record for mechanism-specific caveats.
+
+<a id="freevideo"></a>
+
+## FreeVideo: a capacity-aware local video execution plan
+
+**Related project records:** [FreeVideo](catalog.md#freevideo).
+
+- **Why build it? / 为什么另建:** Consumer GPUs often cannot hold the selected video checkpoint and decoder simultaneously, while device capability and request geometry change the optimal placement.
+- **Execution ownership / 重构边界:** Owns placement and execution planning for the supported VDN-H3 pipeline, weight streaming and selected kernels. The base/distilled checkpoint and major ML components come from OpenVDN and existing frameworks.
+- **Retained components / 复用什么:** Builds on Video DeltaNet/VDN-H3 pretrained weights, PyTorch kernels, probed attention backends and ComfyUI integration rather than generating a new foundation model.
+- **Scope given up / 取舍与兼容性:** Eight-step distillation, int8 or FP8 matmul, head grouping, dynamic offload and quality levels constrain numerical and output-quality comparisons; 8 GiB claims apply only to the documented workload/profile.
+- **Construction process / 怎样构建:** The official planner documents budget formulas and retry boundaries; source implements bounded pinned-host offload and CUDA execution. Profiles and request receipts expose resource and timing choices.
+- **AI participation / AI 参与的直接证据:** The newer agent-facing UI allows coding agents to request video generation; this is not a disclosure that agents developed the engine.
+- **Disclosed effort / 构建投入:** Public minimum hardware footprints and runtime observations do not measure engineering effort, model acquisition/quality cost or ongoing device-version adaptation.
+- **Validation boundary / 验证覆盖:** Inspected README, planner and offload implementation, not generated video quality or end-to-end throughput. The author describes constrained-device capacity tests; output parity and visual acceptance require workload-specific runs.
+- **Evolution evidence / 适配与维护:** Changing checkpoint structure, precision kernels, drivers or operating-system memory behavior requires capacity plan and output revalidation; model weights carry a separate restricted license.
+
+**Sources:** [Source 1](https://github.com/FlashML-org/FreeVideo/blob/7dd8a17c1da887de4baf8b12359f1b3f7008aaca/README.md) · [Source 2](https://github.com/FlashML-org/FreeVideo/blob/7dd8a17c1da887de4baf8b12359f1b3f7008aaca/docs/execution-planning.md) · [Source 3](https://github.com/FlashML-org/FreeVideo/blob/7dd8a17c1da887de4baf8b12359f1b3f7008aaca/freevideo_engine/offload.py) · [Source 4](https://github.com/FlashML-org/FreeVideo/blob/7dd8a17c1da887de4baf8b12359f1b3f7008aaca/freevideo_engine/backends/cuda.py).
+
+**Reviewed:** 2026-10-16. See the linked project record for mechanism-specific caveats.
 
 <a id="aria"></a>
 

@@ -1,0 +1,26 @@
+# Focused source review — 2026-10-16
+
+Starting main commit: `ac7d27cfc0fe0f7aee63e9179c249074415bf960` (2026-10-14). The previous catalog Actions run passed. No intervening main commits, repository issues or PRs were returned in this maintenance read. This is a focused discovery pass plus the first monthly coverage check, **not** a full audit of 126 upstream implementations.
+
+| Candidate | Decision | Construction evidence and scope |
+| --- | --- | --- |
+| [dInfer](https://github.com/inclusionAI/dInfer) | Add core specialized backend/case | Paper, pinned decoder, model runner, batching test; diffusion iteration and KV policies over vLLM/SGLang. Model-vs-AR performance is not engine-only; some tests use internal checkpoint paths. |
+| [FreeVideo](https://github.com/FlashML-org/FreeVideo) | Add core video runtime/case | Pinned capacity planner and pinned-host offload code. VDN-H3 is an eight-step distilled checkpoint; int8/FP8 and host/disk streaming change precision/runtime assumptions; model-weight restrictions differ from the Apache code license. |
+| [peregrine](https://github.com/s-b-repo/peregrine) | Add core memory/concurrency case | Pinned Rust io_uring, completion scheduler and comparative benchmark. Unlike a marketing-only speedup claim, the author reports 0.062 vs 0.077 tok/s single-sequence throughput compared with Colibri on disk-bound hardware. GPU remains feature-gated. |
+| [Metrale Engine](https://github.com/Metrale/metrale-inference) | Defer | Public Rust/CUDA source and author benchmark evidence are large and evolving quickly; comparison configurations and claimed cross-device coverage require further targeted validation before recording as a qualified case. Low star count is not the reason for deferral. |
+| [minWM](https://github.com/shengshu-ai/minWM) | Do not add as a separate execution-stack case now | Full training/distillation/tutorial pipeline for world models. Inference exists, but its central claimed contribution is broader model construction, not a separately isolated specialized inference runtime. Reassess if an independently controlled execution path is documented. |
+| ForgeMegakernel | Keep paper-only reading | Rechecked exact name, paper and adjacent project lists; no verified author-linked implementation source was established. This is not proof none exists. |
+
+## Evidence / reviewed boundaries
+
+- dInfer [paper](https://arxiv.org/abs/2510.08666), [pinned README](https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/README.md), [iteration/decoder](https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/python/dinfer/decoding/generate_uniform.py), [GPU runner](https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/python/dinfer/decoding/diffusion_runner.py), [batch test](https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/tests/test_bd_serving_batching.py).
+- FreeVideo [pinned README](https://github.com/FlashML-org/FreeVideo/blob/7dd8a17c1da887de4baf8b12359f1b3f7008aaca/README.md), [planner](https://github.com/FlashML-org/FreeVideo/blob/7dd8a17c1da887de4baf8b12359f1b3f7008aaca/docs/execution-planning.md), [offload](https://github.com/FlashML-org/FreeVideo/blob/7dd8a17c1da887de4baf8b12359f1b3f7008aaca/freevideo_engine/offload.py).
+- peregrine [pinned README](https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/README.md), [scheduler](https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/crates/peregrine-model/src/concurrent.rs), [io_uring](https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/crates/peregrine-io/src/ring.rs), [comparisons](https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/docs/benchmarks.md).
+
+## First monthly scope check
+
+The retained catalog spans language, image, video, audio and multimodal execution, including native paths, compiler/agent construction, selected validation methods and reference infrastructure. The review does not treat raw counts or Stars as quality indicators. Two gaps worth investigating for the survey are (a) explicit state/semantic validation for diffusion and non-autoregressive decoding, and (b) build and ongoing maintenance cost measured under matched specialized-vs-general-engine workloads. Source and model changes require qualification; published runtime speedups do not establish reduced engineering cost.
+
+## Maintenance and network boundaries
+
+Repo main, recent Actions, issues and PRs were read through the linked GitHub API. The source inspection focused on the named candidates; source-level checks do **not** constitute independent execution. No upstream GPU benchmarking, paid agent campaign, or exhaustive external-link audit was performed. Star values for only three newly admitted public repositories were fetched from GitHub repo metadata; the existing 124 cached repositories were still within their seven-day interval. For the next weekly refresh, use conditional requests and retain failed cached values. The baseline catalogue render and all existing tests passed before editing; generated docs and regression tests must pass again before publication.

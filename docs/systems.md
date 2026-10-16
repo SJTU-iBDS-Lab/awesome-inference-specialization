@@ -32,7 +32,7 @@ Integrated model runtimes and substantial specialized backends, including native
 
 集成模型运行时和实质专用后端，涵盖原生实现与有直接参照意义的既有执行栈。
 
-91 projects / 项目
+94 projects / 项目
 
 | Project and evidence | Why it belongs | Relevance / artifact |
 | --- | --- | --- |
@@ -44,12 +44,14 @@ Integrated model runtimes and substantial specialized backends, including native
 | [CIRU runtime](catalog.md#ciru-runtime) | Model/hardware-specific deep integration with traceable borrowed kernels, artifact compatibility work and release qualification. | core / backend |
 | [Cloudflare Infire](catalog.md#infire) | An industrial platform-specialization case documenting why a provider rebuilt execution instead of only configuring a general framework; useful without an AI-development attribution. | core / runtime |
 | [Colibri](catalog.md#colibri) | Exposes the alternative of several small architecture-specific execution programs sharing selected components. | core / runtime |
+| [dInfer](catalog.md#dinfer) | Specializes decoding, state refresh and serving for diffusion language models instead of treating denoising as autoregressive token generation. | core / backend |
 | [DwarfStar](catalog.md#dwarfstar) | A separately implemented runtime links disclosed AI assistance to model execution and expert-residency control. | core / runtime |
 | [edge-dit.cpp](catalog.md#edge-dit) | Core by execution ownership: native DiT graphs and model-component residency, graph segmentation and staged offload reconstruct the integrated constrained-memory path. | core / runtime |
 | [ExLlamaV3](catalog.md#exllamav3) | An integrated quantized-model runtime illustrates rebuilding execution around a chosen representation and supported architectures. | core / runtime |
 | [FastFlowLM](catalog.md#fastflowlm) | Shows device-specific NPU execution built from model-family host runtimes and compiled kernel providers, with a visible source/binary boundary. | core / runtime |
 | [FastVideo](catalog.md#fastvideo) | Core by integrated model execution: its own model implementations, registries, component loaders and denoising stages reconstruct inference, beyond the separately cataloged sparse/distillation methods. | core / runtime |
 | [Flash-MoE](catalog.md#flash-moe) | A model-specific implementation links disclosed AI-assisted construction to SSD expert streaming and explicit approximation choices. | core / research-prototype |
+| [FreeVideo](catalog.md#freevideo) | Turns the VDN-H3 video generator into an adaptive local execution path with request-specific residency, precision and attention choices on constrained consumer devices. | core / runtime |
 | [Gufo](catalog.md#gufo) | Rebuilds a vertical native execution and serving stack around one integrated GPU platform, with deliberately selected models and model-owned kernels. | core / runtime |
 | [Gufo RDMA](catalog.md#gufo-rdma) | Substantive deployment reconstruction from one unified-memory machine to two synchronized hosts, not merely another binary package. | core / runtime |
 | [Halogen Flash](catalog.md#halogen-flash) | A model-and-device-specific runtime illustrates how narrow deployment contracts reshape implementation choices. | core / runtime |
@@ -74,6 +76,7 @@ Integrated model runtimes and substantial specialized backends, including native
 | [Nunchaku](catalog.md#nunchaku) | A substantial low-bit diffusion backend connects representation-specific execution to reusable pipeline integration. | core / runtime |
 | [parakeet.cpp (axiom)](catalog.md#parakeet-axiom) | An independent Parakeet reconstruction uses axiom/MPSGraph instead of ggml; it exposes how model and streaming ownership can be retained while reusing a different tensor backend. | core / runtime |
 | [parakeet.cpp (ggml)](catalog.md#parakeet-ggml) | Ports NeMo speech graphs and cache-aware transcription semantics into C++/ggml, exposing the conversion, streaming-state and parity work needed to build a portable native ASR stack. | core / runtime |
+| [peregrine](catalog.md#peregrine) | Rebuilds Colibri's disk-streamed MoE architecture around concurrent I/O, CPU and optional CUDA lanes, with a measured same-hardware comparison exposing when the rewrite does not help. | core / runtime |
 | [Qingming Qwen3-TTS](catalog.md#qingming-qwen3-tts) | Tests the narrowest device-specialization boundary: separate native synthesis paths for two fixed 24GB GPUs, including their memory capacities and generation/decoder concurrency contracts. | core / runtime |
 | [Quartz](catalog.md#saient-quartz) | Exposes native Rust image generation and an evolving native Wan path, while a separate C++ video companion provides a concrete case for auditing claimed versus actual execution boundaries. | core / runtime |
 | [Qwen-ASR (C)](catalog.md#qwen-asr-c) | Reconstructs Qwen3-ASR from waveform preprocessing through autoregressive transcription in C, making streaming context policy and CPU/GPU execution responsibilities directly inspectable. | core / runtime |

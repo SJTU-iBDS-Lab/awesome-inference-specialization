@@ -20,7 +20,7 @@
 <!-- CATALOG-START -->
 
 <p align="center">
-<sub>126 个项目 · 91 个引擎 · 14 个构建流程 · 3 个基准 · 18 项资源</sub>
+<sub>129 个项目 · 94 个引擎 · 14 个构建流程 · 3 个基准 · 18 项资源</sub>
 </p>
 
 <div align="center">
@@ -31,7 +31,7 @@
 
 </div>
 
-<sub title="目录收录日期，不是项目发布日期"><b>近期收录</b> · 2026-10-14 · [VibeServe / VibeSys](#project-vibesys) · [AutoMegaKernel](#project-automegakernel) · [Infire](#project-infire) · [KIE](#project-kie) · [SEIS](#project-seis) · [更新记录](docs/updates.md)</sub>
+<sub title="目录收录日期，不是项目发布日期"><b>近期收录</b> · 2026-10-14–2026-10-16 · [dInfer](#project-dinfer) · [FreeVideo](#project-freevideo) · [peregrine](#project-peregrine) · [VibeServe / VibeSys](#project-vibesys) · [AutoMegaKernel](#project-automegakernel) · [更新记录](docs/updates.md)</sub>
 
 <a id="featured-reading"></a>
 <a id="start-here"></a>
@@ -96,11 +96,11 @@
 
 ## 推理引擎
 
-<sub>全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md) · [★ 仓库 Star 快照 · 2026-10-14](docs/homepage-metadata.md)</sub>
+<sub>全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md) · [★ 仓库 Star 快照 · 2026-10-14–2026-10-16](docs/homepage-metadata.md)</sub>
 
 <a id="homepage-system-text"></a>
 
-### 语言模型 <sub>· 51</sub>
+### 语言模型 <sub>· 53</sub>
 
 - <a id="project-ane-lm"></a>**[ANE-LM](https://github.com/johnmai-dev/ANE-LM)** <sub title="johnmai-dev/ANE-LM: 144 repository stars; observed 2026-10-14">★&nbsp;144</sub> — 作为 ane.cpp 的直接前身，以编译缓存连接 Qwen 的 ANE 内核与 CPU 运算，保留私有接口和有限模型范围的约束。 <sub>[详情](docs/catalog.md#ane-lm)</sub>
 - <a id="project-ane-cpp"></a>**[ane.cpp](https://github.com/skyfallsin/ane.cpp)** <sub title="skyfallsin/ane.cpp: 6 repository stars; observed 2026-10-14">★&nbsp;6</sub> — 通过硬件探针和保留／舍弃实验，将 Qwen 卷积编译到 ANE，并由 CPU 处理归一化、注意力与 KV 状态。 <sub>[详情](docs/catalog.md#ane-cpp)</sub>
@@ -112,6 +112,7 @@
 - <a id="project-infire"></a>**[Cloudflare Infire](https://blog.cloudflare.com/cloudflares-most-efficient-ai-inference-engine/)** <sub title="已核实来源">[博客](https://blog.cloudflare.com/high-performance-llms/)</sub> — 围绕 Cloudflare 节点重建的专有 Rust 服务栈，结合模型专用内核编译、批处理、分页状态及后续多 GPU 支持。依据官方工程报告；不同对照的部署条件有别，未确认 AI 辅助构建。 <sub>[详情](docs/catalog.md#infire)</sub>
 - <a id="project-coreml-llm-cli"></a>**[CoreML LLM CLI](https://github.com/smpanaro/coreml-llm-cli)** <sub title="smpanaro/coreml-llm-cli: 131 repository stars; observed 2026-10-14">★&nbsp;131</sub> — 以分块 Core ML 执行、KV 状态和 IOSurface 缓冲区编排 Llama 2，呈现 ANEMLL 之前的编译模型与宿主运行时适配。 <sub>[详情](docs/catalog.md#coreml-llm-cli)</sub>
 - <a id="project-zero-inference"></a>**[DeepSpeed ZeRO-Inference](https://github.com/deepspeedai/DeepSpeedExamples)** <sub title="deepspeedai/DeepSpeedExamples: 6,847 repository stars; observed 2026-10-14">★&nbsp;6.8k（母仓库） · [博客](https://www.deepspeed.ai/2022/09/09/zero-inference.html)</sub> — 将 CPU 或 NVMe 中的权重逐层送入 GPU，以预取和大批量摊薄传输开销，展示早于近期编程智能体的吞吐型卸载路线。 <sub>[详情](docs/catalog.md#zero-inference)</sub>
+- <a id="project-dinfer"></a>**[dInfer](https://github.com/inclusionAI/dInfer)** <sub title="inclusionAI/dInfer: 488 repository stars; observed 2026-10-16">★&nbsp;488 · [论文](https://arxiv.org/abs/2510.08666)</sub> — 面向 LLaDA 系列扩散语言模型实现分块确认、置信度解码与可配置 KV 更新，底层复用 vLLM/SGLang。缓存近似、模型依赖及特定 GPU 测试限制数值与性能结论的外推。 <sub>[详情](docs/catalog.md#dinfer)</sub>
 - <a id="project-dwarfstar"></a>**[DwarfStar](https://github.com/antirez/ds4)** <sub title="antirez/ds4: 23,840 repository stars; observed 2026-10-14">★&nbsp;23.8k</sub> — 披露 AI 辅助构建的原生运行时，为选定模型保留非路由状态，并用有界 SSD 缓存读取专家；其模型与后端支持具有明确边界。 <sub>[详情](docs/catalog.md#dwarfstar)</sub>
 - <a id="project-exllamav3"></a>**[ExLlamaV3](https://github.com/turboderp-org/exllamav3)** <sub title="turboderp-org/exllamav3: 1,661 repository stars; observed 2026-10-14">★&nbsp;1.7k</sub> — 围绕 EXL3 表示整合低比特执行、量化分页 KV 和形状限定解码路径，展示专用运行时重构，数值与支持范围取决于配置。 <sub>[详情](docs/catalog.md#exllamav3)</sub>
 - <a id="project-fiddler"></a>**[Fiddler](https://github.com/efeslab/fiddler)** <sub title="efeslab/fiddler: 268 repository stars; observed 2026-10-14">★&nbsp;268</sub> — 面向小批量 Mixtral 推理，将未驻留专家留在 CPU 计算并传输激活，用于比较异构计算与搬运专家权重两种路线。 <sub>[详情](docs/catalog.md#fiddler)</sub>
@@ -138,6 +139,7 @@
 - <a id="project-moe-infinity"></a>**[MoE-Infinity](https://github.com/EfficientMoE/MoE-Infinity)** <sub title="EfficientMoE/MoE-Infinity: 370 repository stars; observed 2026-10-14">★&nbsp;370</sub> — 将专家权重分层卸载，以激活感知缓存保留热点专家并按轨迹预取，作为既有专家驻留策略的对照，公开实现与论文系统有别。 <sub>[详情](docs/catalog.md#moe-infinity)</sub>
 - <a id="project-ninfer"></a>**[NInfer](https://github.com/Neroued/ninfer)** <sub title="Neroued/ninfer: 2,990 repository stars; observed 2026-10-14">★&nbsp;3k</sub> — 为指定 Qwen 模型在单张 RTX 5090 上自建原生执行、KV 状态和 CUDA 图，并管理请求与缓存；代理指令文件不构成 AI 作者证据。 <sub>多模态 · [详情](docs/catalog.md#ninfer)</sub>
 - <a id="project-ninfer-3090"></a>**[NInfer-3090](https://github.com/ashalliants/ninfer-3090)** <sub title="ashalliants/ninfer-3090: 49 repository stars; observed 2026-10-14">★&nbsp;49</sub> — 将 NInfer 分支适配至 24GB RTX 3090，重建 SM86 量化内核、内存规划和回放状态，超出单纯更改编译架构的范围。 <sub>多模态 · [详情](docs/catalog.md#ninfer-3090)</sub>
+- <a id="project-peregrine"></a>**[peregrine](https://github.com/s-b-repo/peregrine)** <sub title="s-b-repo/peregrine: 6 repository stars; observed 2026-10-16">★&nbsp;6</sub> — Colibri 的 Rust 衍生执行栈，借助 io_uring、CPU 与可选 CUDA 并发处理专家并固定顺序归约。作者披露的磁盘受限单序列解码仍慢于 Colibri；GPU 路径需另行验证。 <sub>[详情](docs/catalog.md#peregrine)</sub>
 - <a id="project-powerinfer"></a>**[PowerInfer](https://github.com/Tiiny-AI/PowerInfer)** <sub title="Tiiny-AI/PowerInfer: 9,826 repository stars; observed 2026-10-14">★&nbsp;9.8k</sub> — 依据神经元激活频率将热点放在 GPU、冷激活交给 CPU，并用预测器驱动稀疏算子；依赖兼容稀疏模型，不能直接套用任意稠密权重。 <sub>[详情](docs/catalog.md#powerinfer)</sub>
 - <a id="project-rocmfpx"></a>**[ROCmFPX](https://github.com/ROCmFPX/ROCmFPX)** <sub title="ROCmFPX/ROCmFPX: 48 repository stars; observed 2026-10-14">★&nbsp;48</sub> — 在 llama.cpp 下游定义 AMD 量化块、转换策略及匹配内核，展示格式与后端的协同构建，准确性依配方分别核验。 <sub>[详情](docs/catalog.md#rocmfpx)</sub>
 - <a id="project-saragossa"></a>**[Saragossa](https://github.com/azerozero/saragossa)** <sub title="azerozero/saragossa: 8 repository stars; observed 2026-10-14">★&nbsp;8</sub> — 以 Rust／Metal 为指定文本和语音模型自建执行、驻留解码状态、缓冲区及前缀快照，配有回归对照，聚焦 Apple 芯片单用户场景。 <sub>音频 · [详情](docs/catalog.md#saragossa)</sub>
@@ -177,9 +179,10 @@
 
 <a id="homepage-system-video"></a>
 
-### 视频生成与流式执行 <sub>· 10</sub>
+### 视频生成与流式执行 <sub>· 11</sub>
 
 - <a id="project-fastvideo"></a>**[FastVideo](https://github.com/hao-ai-lab/FastVideo)** <sub title="hao-ai-lab/FastVideo: 4,601 repository stars; observed 2026-10-14">★&nbsp;4.6k</sub> — 自有模型实现、组件加载与分阶段去噪构成集成视频运行时，并可选稀疏注意力、并行和卸载；稀疏与蒸馏路径可能改变模型。 <sub>音频 · [详情](docs/catalog.md#fastvideo)</sub>
+- <a id="project-freevideo"></a>**[FreeVideo](https://github.com/FlashML-org/FreeVideo)** <sub title="FlashML-org/FreeVideo: 1,970 repository stars; observed 2026-10-16">★&nbsp;2k</sub> — 针对八步 VDN-H3 视频模型按请求把权重块放在显存、内存和磁盘，选择 int8/FP8 及注意力后端。最低内存要求、生成质量与模型权重许可取决于具体检查点和负载。 <sub>多模态 · [详情](docs/catalog.md#freevideo)</sub>
 - <a id="project-inferix"></a>**[Inferix](https://github.com/alibaba-damo-academy/Inferix)** <sub title="alibaba-damo-academy/Inferix: 140 repository stars; observed 2026-10-14">★&nbsp;140 · [论文](https://arxiv.org/abs/2511.20714)</sub> — 为半自回归世界模型维护持续 KV 状态，另行分块解码 VAE 并流式输出视频，展示生成状态重组，不构成 AI 构建的证据。 <sub>[详情](docs/catalog.md#inferix)</sub>
 - <a id="project-lightx2v"></a>**[LightX2V](https://github.com/ModelTC/LightX2V)** <sub title="ModelTC/LightX2V: 2,903 repository stars; observed 2026-10-14">★&nbsp;2.9k</sub> — 自有模型路径和算子存储约定配合双槽权重加载，重构视频推理及卸载执行；量化、蒸馏权重和轻量 VAE 的贡献需单独区分。 <sub>图像 · 音频 · [详情](docs/catalog.md#lightx2v)</sub>
 - <a id="project-minimax-h3-mlx"></a>**[MiniMax-H3 MLX](https://github.com/PipeNetwork/minimax-h3-mlx)** <sub title="PipeNetwork/minimax-h3-mlx: 83 repository stars; observed 2026-10-14">★&nbsp;83</sub> — 以 MLX 重建 MiniMax-H3 联合音视频扩散，预计算时间步条件并分阶段驻留组件；量化主要影响可容纳规模。 <sub>音频 · [详情](docs/catalog.md#minimax-h3-mlx)</sub>

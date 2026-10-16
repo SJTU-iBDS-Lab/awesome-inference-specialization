@@ -78,6 +78,9 @@ Start with what is rebuilt and what effort is disclosed. Read each case for reta
 | [AutoMegaKernel](cases.md#automegakernel) | One persistent cooperative launch executes one forward pass; counters reset between launches, KV persists and the host advances decoding. Instruction tuning and ScheduleConfig search are different edit surfaces. | Unattended self-tuning demonstrations compare against their own starting point. This inspection establishes neither full construction cost nor maintenance savings over a shared serving framework. |
 | [Cloudflare Infire](cases.md#infire) | The disclosed stack includes the HTTP server, batcher and model executor, with model-specific kernels and execution graphs. Later work extends parallel model execution. | The initial report measures CPU usage and throughput in selected deployment configurations; those operational observations are not a measurement of development or lifecycle cost. |
 | [Kog Inference Engine](cases.md#kie) | The vendor describes a monokernel managing sequence generation, sampling, state and cross-device communication, not only an isolated matrix multiplication. | Reported latency and tokens per second do not quantify GPU cost per request, utilization under mixed load, construction effort or lifetime maintenance. |
+| [dInfer](cases.md#dinfer) | Owns diffusion iterations, token-commit decoding policies, cache refresh and model adapters. Backend serving, tensor collectives, CUDA graphs and base kernel implementations are reused. | No comparable implementation effort or long-term maintenance estimate; published H800 throughput cannot substitute for build cost. |
+| [FreeVideo](cases.md#freevideo) | Owns placement and execution planning for the supported VDN-H3 pipeline, weight streaming and selected kernels. The base/distilled checkpoint and major ML components come from OpenVDN and existing frameworks. | Public minimum hardware footprints and runtime observations do not measure engineering effort, model acquisition/quality cost or ongoing device-version adaptation. |
+| [peregrine](cases.md#peregrine) | Owns Rust host scheduling, io_uring completion paths, expert batching and fixed-order reduction; optional CUDA kernels and numerical formats reuse selected Colibri building blocks. | Engineering and maintenance cost are unknown; performance is primarily author-measured on stated hardware, not independent reproduction. |
 
 ## Library facets / 资料库的独立标签
 
@@ -96,10 +99,12 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [Fiddler](catalog.md#fiddler) · adjacent | system / research-prototype / text | layout / scheduling |
 | [Flash-MoE](catalog.md#flash-moe) · core | system / research-prototype / text | reduced precision, selective approximation |
 | [FlexLLMGen (FlexGen)](catalog.md#flexllmgen) · adjacent | system / runtime / text | layout / scheduling, reduced precision |
+| [FreeVideo](catalog.md#freevideo) · core | system / runtime / video, multimodal | reduced precision, configuration-dependent |
 | [HybriMoE](catalog.md#hybrimoe) · adjacent | system / research-prototype / text | layout / scheduling |
 | [Infernix](catalog.md#infernix) · core | system / runtime / text, multimodal | configuration-dependent |
 | [KTransformers / kt-kernel](catalog.md#ktransformers) · core | system / backend / text | layout / scheduling |
 | [MoE-Infinity](catalog.md#moe-infinity) · adjacent | system / runtime / text | layout / scheduling |
+| [peregrine](catalog.md#peregrine) · core | system / runtime / text | configuration-dependent |
 | [Strata](catalog.md#strata) · core | system / runtime / text | configuration-dependent, selective approximation |
 | [Swiftlet](catalog.md#swiftlet) · core | system / runtime / text | configuration-dependent |
 | [SwiftLM](catalog.md#swiftlm) · core | system / backend / text, multimodal | configuration-dependent |
@@ -139,6 +144,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 
 | Project / survey relevance | Artifact role / modality | Semantic considerations |
 | --- | --- | --- |
+| [dInfer](catalog.md#dinfer) · core | system / backend / text | configuration-dependent, earlier-state reuse |
 | [Inferix](catalog.md#inferix) · adjacent | system / runtime / video | layout / scheduling |
 | [llamAmpere](catalog.md#llamampere) · core | system / runtime / text | target-verified proposals, reduced precision, model / router training |
 

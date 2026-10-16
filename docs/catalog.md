@@ -4,7 +4,7 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Systems & construction](systems.md) · [Comparison](comparison.md) · [Taxonomy](taxonomy.md) · [Evidence policy](evidence-policy.md)
 
-126 entries. Source review: 2026-10-14. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
+129 entries. Source review: 2026-10-16. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
 
 Use the family links below, or search this page for a model, device, mechanism or project. Source visibility is not a license or correctness certification. Semantic labels identify evaluation obligations, not proven equivalence.
 
@@ -12,7 +12,7 @@ Use the family links below, or search this page for a model, device, mechanism o
 
 <a id="memory"></a>
 
-## Data residency & movement / 数据驻留与搬移 (16)
+## Data residency & movement / 数据驻留与搬移 (18)
 
 **What stays close to compute?** Place, page, prefetch or offload weights, experts and KV state.
 
@@ -190,6 +190,35 @@ Uses a block generation schedule and GPU/CPU/disk tensor placement to reuse laye
 
 </details>
 
+<a id="freevideo"></a>
+
+### [FreeVideo](https://github.com/FlashML-org/FreeVideo)
+
+[core](systems.md#core) · `system` · `runtime` · `video / multimodal` · **public code**
+
+**Survey relevance:** Turns the VDN-H3 video generator into an adaptive local execution path with request-specific residency, precision and attention choices on constrained consumer devices.
+
+Plans transformer/VAE block placement across VRAM, pinned RAM and disk from live capacity, selects int8 or FP8 paths and probed attention kernels, then streams nonresident weights with bounded prefetch.
+
+**Scope:** VDN-H3 eight-step MiniMax H3 video generation on qualified consumer NVIDIA GPUs; Apple-Silicon support is a separately qualified preview.
+
+**Boundary:** The claimed 8 GiB VRAM/16 GiB RAM path is tied to the VDN-H3 checkpoint and request plan, not general MiniMax H3. The pre-distilled eight-step checkpoint, int8/FP8 execution and quality presets change model/precision assumptions. Model weights have a separate restricted license; published capacity tests do not prove all devices or output quality.
+
+**Semantic considerations:** reduced precision, configuration-dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `adaptive-residency`, `layer-streaming`, `quantized-matmul`, `attention-dispatch`, `activation-staging`.
+
+**Constraints:** `model`, `gpu`, `host-memory`, `disk`, `precision`, `quality`.
+
+**Evidence:** [Source 1](https://github.com/FlashML-org/FreeVideo/blob/7dd8a17c1da887de4baf8b12359f1b3f7008aaca/README.md) · [Source 2](https://github.com/FlashML-org/FreeVideo/blob/7dd8a17c1da887de4baf8b12359f1b3f7008aaca/docs/execution-planning.md) · [Source 3](https://github.com/FlashML-org/FreeVideo/blob/7dd8a17c1da887de4baf8b12359f1b3f7008aaca/freevideo_engine/offload.py) · [Source 4](https://github.com/FlashML-org/FreeVideo/blob/7dd8a17c1da887de4baf8b12359f1b3f7008aaca/freevideo_engine/backends/cuda.py).
+
+**Reviewed:** 2026-10-16 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
+
+</details>
+
 <a id="hybrimoe"></a>
 
 ### [HybriMoE](https://github.com/PKU-SEC-Lab/HybriMoE)
@@ -303,6 +332,35 @@ Offloads expert weights to host memory and SSD, retains hot experts in an activa
 **Evidence:** [Source 1](https://github.com/EfficientMoE/MoE-Infinity/blob/HEAD/README.md) · [Source 2](https://github.com/EfficientMoE/MoE-Infinity/blob/HEAD/ARCHITECTURE.md) · [Source 3](https://github.com/EfficientMoE/MoE-Infinity/blob/HEAD/docs/configuration.md) · [Source 4](https://github.com/EfficientMoE/MoE-Infinity/blob/HEAD/moe_infinity/memory/expert_prefetcher.py).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
+
+</details>
+
+<a id="peregrine"></a>
+
+### [peregrine](https://github.com/s-b-repo/peregrine)
+
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** Rebuilds Colibri's disk-streamed MoE architecture around concurrent I/O, CPU and optional CUDA lanes, with a measured same-hardware comparison exposing when the rewrite does not help.
+
+Uses completion-driven io_uring expert reads, CPU compute workers and an optional GPU lane against routed-expert work lists, reducing in fixed order and sharing batch-union expert loads.
+
+**Scope:** GLM-5.2 744B-style int4 MoE streaming on Linux with NVMe, CPU and optional NVIDIA CUDA expert execution.
+
+**Boundary:** Author measurements on a disk-bound RTX 3060/Ryzen setup report slower single-sequence decode (0.062 tok/s) than Colibri (0.077 tok/s), despite concurrency gains in some batching and I/O experiments. CUDA is feature-gated and hardware validation is separate; source inspection and documented tests are not independent reproduction.
+
+**Semantic considerations:** configuration-dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `io-uring-streaming`, `heterogeneous-concurrency`, `expert-batching`, `fixed-order-reduce`, `expert-cache`.
+
+**Constraints:** `model`, `linux`, `cuda-optional`, `ram`, `nvme`, `precision`.
+
+**Evidence:** [Source 1](https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/README.md) · [Source 2](https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/crates/peregrine-model/src/concurrent.rs) · [Source 3](https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/crates/peregrine-io/src/ring.rs) · [Source 4](https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/docs/benchmarks.md).
+
+**Reviewed:** 2026-10-16 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
 
 </details>
 
@@ -877,9 +935,38 @@ Combines Pyramid Attention Broadcast with dynamic sequence parallelism, reusing 
 
 <a id="decoding"></a>
 
-## Generation order / 生成顺序 (2)
+## Generation order / 生成顺序 (3)
 
 **Can more output be produced per step?** Draft and verify tokens, or reorganize block generation.
+
+<a id="dinfer"></a>
+
+### [dInfer](https://github.com/inclusionAI/dInfer)
+
+[core](systems.md#core) · `system` · `backend` · `text` · **public code**
+
+**Survey relevance:** Specializes decoding, state refresh and serving for diffusion language models instead of treating denoising as autoregressive token generation.
+
+Combines diffusion-iteration and confidence-based block decoding with configurable KV refresh, batch handling and compiled/CUDA-graph execution, integrated through vLLM or SGLang adapters.
+
+**Scope:** LLaDA 8B, LLaDA-MoE 7B and LLaDA2 mini/flash families on qualified NVIDIA multi-GPU paths.
+
+**Boundary:** The paper's headline H800 result and any model-versus-AR comparison depend on model, precision, decoding policy and hardware; they do not isolate an engine-only gain. Partial KV updates can change semantics. Some committed GPU tests reference private checkpoint paths, and no GPU reproduction was performed.
+
+**Semantic considerations:** configuration-dependent, earlier-state reuse.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `block-diffusion`, `parallel-decoding`, `kv-refresh`, `batch-serving`.
+
+**Constraints:** `model-family`, `gpu`, `parallelism`, `cache`, `quality`.
+
+**Evidence:** [Source 1](https://arxiv.org/abs/2510.08666) · [Source 2](https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/README.md) · [Source 3](https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/python/dinfer/decoding/generate_uniform.py) · [Source 4](https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/python/dinfer/decoding/diffusion_runner.py) · [Source 5](https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/tests/test_bd_serving_batching.py).
+
+**Reviewed:** 2026-10-16 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
+
+</details>
 
 <a id="inferix"></a>
 

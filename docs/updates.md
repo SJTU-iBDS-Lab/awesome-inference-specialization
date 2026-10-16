@@ -2,6 +2,15 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Quick comparison](representative-comparison.md) · [Contributing](../CONTRIBUTING.md)
 
+## 2026-10-16 — Specialized decoding, video placement and MoE lanes / 专用解码、视频驻留与专家并发
+
+- Added three source-reviewed **core execution cases**: [dInfer](catalog.md#dinfer) (diffusion language decoding and KV refresh), [FreeVideo](catalog.md#freevideo) (VDN-H3 resource-aware video execution), and [peregrine](catalog.md#peregrine) (Rust CPU/NVMe/optional CUDA expert concurrency). The catalog now has **129 project records and 71 cases**.
+- Pinned direct upstream code and design evidence, retained strong qualifications on model changes and resource limits, and recorded that peregrine's single-sequence disk-bound benchmark is *slower* than Colibri; no independent GPU experiment was run.
+- Added bilingual summaries, three official GitHub star observations dated 2026-10-16 and a direct dInfer Paper link. Existing 2026-10-14 snapshots are within the seven-day freshness window and were not needlessly refreshed; six starter cards, project anchors and technical review dates of older entries are unchanged.
+- [Focused review decisions](source-review-2026-10-16.md) detail candidates excluded or deferred, evidence depth and the next refresh boundary. ForgeMegakernel's official implementation was not established in this review.
+
+本轮新增扩散语言模型、低显存视频及异构 MoE 并发三个不同的执行案例，核查并固定实现与限制；新增项目的 Star 单独采集，已有快照未到期不强制更新。未运行上游 GPU 实验，也不推断 AI 开发参与或普遍性能收益。
+
 ## 2026-10-14 — Star snapshots and direct sources / 关注度快照与来源直达
 
 - Added compact GitHub repository-star snapshots beside project names, with observation dates, explicit parent-repository labels and failure-safe cached values. Stars do not change order or inclusion.

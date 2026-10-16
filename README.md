@@ -20,7 +20,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 <!-- CATALOG-START -->
 
 <p align="center">
-<sub>126 projects · 91 engines · 14 build workflows · 3 benchmarks · 18 resources</sub>
+<sub>129 projects · 94 engines · 14 build workflows · 3 benchmarks · 18 resources</sub>
 </p>
 
 <div align="center">
@@ -31,7 +31,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 
 </div>
 
-<sub title="Catalog addition dates, not project release dates"><b>Recently added</b> · 2026-10-14 · [VibeServe / VibeSys](#project-vibesys) · [AutoMegaKernel](#project-automegakernel) · [Infire](#project-infire) · [KIE](#project-kie) · [SEIS](#project-seis) · [Updates](docs/updates.md)</sub>
+<sub title="Catalog addition dates, not project release dates"><b>Recently added</b> · 2026-10-14–2026-10-16 · [dInfer](#project-dinfer) · [FreeVideo](#project-freevideo) · [peregrine](#project-peregrine) · [VibeServe / VibeSys](#project-vibesys) · [AutoMegaKernel](#project-automegakernel) · [Updates](docs/updates.md)</sub>
 
 <a id="featured-reading"></a>
 <a id="start-here"></a>
@@ -96,11 +96,11 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 
 ## Inference engines
 
-<sub>All projects expanded; names link upstream. [Execution boundaries](docs/systems.md#system) · [Overlapping domains](docs/domains.md) · [★ Repository star snapshots · 2026-10-14](docs/homepage-metadata.md)</sub>
+<sub>All projects expanded; names link upstream. [Execution boundaries](docs/systems.md#system) · [Overlapping domains](docs/domains.md) · [★ Repository star snapshots · 2026-10-14–2026-10-16](docs/homepage-metadata.md)</sub>
 
 <a id="homepage-system-text"></a>
 
-### Language models <sub>· 51</sub>
+### Language models <sub>· 53</sub>
 
 - <a id="project-ane-lm"></a>**[ANE-LM](https://github.com/johnmai-dev/ANE-LM)** <sub title="johnmai-dev/ANE-LM: 144 repository stars; observed 2026-10-14">★&nbsp;144</sub> — A direct predecessor to ane.cpp, connecting Qwen ANE kernels and CPU operations through a compile cache; constrained by private interfaces and limited model coverage. <sub>[Details](docs/catalog.md#ane-lm)</sub>
 - <a id="project-ane-cpp"></a>**[ane.cpp](https://github.com/skyfallsin/ane.cpp)** <sub title="skyfallsin/ane.cpp: 6 repository stars; observed 2026-10-14">★&nbsp;6</sub> — Compiles Qwen convolution programs for ANE while the CPU handles normalization, attention and KV state, informed by hardware probes and kept/discarded experiments. <sub>[Details](docs/catalog.md#ane-cpp)</sub>
@@ -112,6 +112,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 - <a id="project-infire"></a>**[Cloudflare Infire](https://blog.cloudflare.com/cloudflares-most-efficient-ai-inference-engine/)** <sub title="Reviewed sources">[Blog](https://blog.cloudflare.com/high-performance-llms/)</sub> — A proprietary Rust serving stack built for Cloudflare nodes, combining model-specific kernel compilation, batching and paged state with later multi-GPU support. Official engineering reports describe the design; deployment conditions differ across comparisons, and AI-assisted construction is not established. <sub>[Details](docs/catalog.md#infire)</sub>
 - <a id="project-coreml-llm-cli"></a>**[CoreML LLM CLI](https://github.com/smpanaro/coreml-llm-cli)** <sub title="smpanaro/coreml-llm-cli: 131 repository stars; observed 2026-10-14">★&nbsp;131</sub> — A Llama 2 host runtime orchestrating chunked Core ML execution, KV state and IOSurface buffers; a compiled-model integration precedent to ANEMLL. <sub>[Details](docs/catalog.md#coreml-llm-cli)</sub>
 - <a id="project-zero-inference"></a>**[DeepSpeed ZeRO-Inference](https://github.com/deepspeedai/DeepSpeedExamples)** <sub title="deepspeedai/DeepSpeedExamples: 6,847 repository stars; observed 2026-10-14">★&nbsp;6.8k&nbsp;(parent repo) · [Blog](https://www.deepspeed.ai/2022/09/09/zero-inference.html)</sub> — Streams CPU/NVMe weights to the GPU layer by layer, amortizing transfers with prefetch and large batches. A throughput-oriented offload precedent predating recent coding agents. <sub>[Details](docs/catalog.md#zero-inference)</sub>
+- <a id="project-dinfer"></a>**[dInfer](https://github.com/inclusionAI/dInfer)** <sub title="inclusionAI/dInfer: 488 repository stars; observed 2026-10-16">★&nbsp;488 · [Paper](https://arxiv.org/abs/2510.08666)</sub> — Runs selected LLaDA diffusion language models with blockwise token commitment, confidence decoding and configurable KV refresh over vLLM/SGLang backends. Cache approximations, model dependencies and GPU-specific benchmarks limit numerical and performance generalization. <sub>[Details](docs/catalog.md#dinfer)</sub>
 - <a id="project-dwarfstar"></a>**[DwarfStar](https://github.com/antirez/ds4)** <sub title="antirez/ds4: 23,840 repository stars; observed 2026-10-14">★&nbsp;23.8k</sub> — An explicitly AI-assisted native runtime for selected models, combining resident non-routed state with bounded SSD expert caching; model and backend support is deliberately limited. <sub>[Details](docs/catalog.md#dwarfstar)</sub>
 - <a id="project-exllamav3"></a>**[ExLlamaV3](https://github.com/turboderp-org/exllamav3)** <sub title="turboderp-org/exllamav3: 1,661 repository stars; observed 2026-10-14">★&nbsp;1.7k</sub> — An EXL3-centered runtime coupling low-bit execution, quantized paged KV and shape-qualified decode paths; numerical behavior and coverage depend on configuration. <sub>[Details](docs/catalog.md#exllamav3)</sub>
 - <a id="project-fiddler"></a>**[Fiddler](https://github.com/efeslab/fiddler)** <sub title="efeslab/fiddler: 268 repository stars; observed 2026-10-14">★&nbsp;268</sub> — A small-batch Mixtral prototype that computes nonresident experts on the CPU and transfers activations, illustrating the alternative to moving expert weights. <sub>[Details](docs/catalog.md#fiddler)</sub>
@@ -138,6 +139,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 - <a id="project-moe-infinity"></a>**[MoE-Infinity](https://github.com/EfficientMoE/MoE-Infinity)** <sub title="EfficientMoE/MoE-Infinity: 370 repository stars; observed 2026-10-14">★&nbsp;370</sub> — Offloads experts across memory tiers with activation-aware caching and trace-based prefetch. A residency-policy precedent; the public implementation differs from the paper system. <sub>[Details](docs/catalog.md#moe-infinity)</sub>
 - <a id="project-ninfer"></a>**[NInfer](https://github.com/Neroued/ninfer)** <sub title="Neroued/ninfer: 2,990 repository stars; observed 2026-10-14">★&nbsp;3k</sub> — A native selected-Qwen runtime for one RTX 5090, owning execution, KV/CUDA graphs and request/cache management. Agent instruction files do not establish AI authorship. <sub>Multimodal · [Details](docs/catalog.md#ninfer)</sub>
 - <a id="project-ninfer-3090"></a>**[NInfer-3090](https://github.com/ashalliants/ninfer-3090)** <sub title="ashalliants/ninfer-3090: 49 repository stars; observed 2026-10-14">★&nbsp;49</sub> — An NInfer fork adapted to a 24 GB RTX 3090 through new SM86 quantized kernels, memory planning and replay state, beyond a compile-target change. <sub>Multimodal · [Details](docs/catalog.md#ninfer-3090)</sub>
+- <a id="project-peregrine"></a>**[peregrine](https://github.com/s-b-repo/peregrine)** <sub title="s-b-repo/peregrine: 6 repository stars; observed 2026-10-16">★&nbsp;6</sub> — A Rust spin-off of Colibri with concurrent io_uring, CPU and optional CUDA expert lanes and deterministic reduction. Its author-measured cold single-stream decode is slower than Colibri on the stated disk-bound machine; GPU execution needs separate qualification. <sub>[Details](docs/catalog.md#peregrine)</sub>
 - <a id="project-powerinfer"></a>**[PowerInfer](https://github.com/Tiiny-AI/PowerInfer)** <sub title="Tiiny-AI/PowerInfer: 9,826 repository stars; observed 2026-10-14">★&nbsp;9.8k</sub> — A CPU/GPU runtime placing frequently activated neurons on GPU and using predictors for sparse execution. Requires compatible sparse models, not arbitrary dense weights. <sub>[Details](docs/catalog.md#powerinfer)</sub>
 - <a id="project-rocmfpx"></a>**[ROCmFPX](https://github.com/ROCmFPX/ROCmFPX)** <sub title="ROCmFPX/ROCmFPX: 48 repository stars; observed 2026-10-14">★&nbsp;48</sub> — A llama.cpp downstream co-designing AMD quantization blocks, conversion policies and matching kernels; accuracy must be qualified per recipe. <sub>[Details](docs/catalog.md#rocmfpx)</sub>
 - <a id="project-saragossa"></a>**[Saragossa](https://github.com/azerozero/saragossa)** <sub title="azerozero/saragossa: 8 repository stars; observed 2026-10-14">★&nbsp;8</sub> — A single-user Apple Silicon runtime for selected text/speech models, with Rust/Metal execution, resident decode state, buffers and prefix snapshots backed by regression comparisons. <sub>Audio · [Details](docs/catalog.md#saragossa)</sub>
@@ -177,9 +179,10 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 
 <a id="homepage-system-video"></a>
 
-### Video generation and streaming <sub>· 10</sub>
+### Video generation and streaming <sub>· 11</sub>
 
 - <a id="project-fastvideo"></a>**[FastVideo](https://github.com/hao-ai-lab/FastVideo)** <sub title="hao-ai-lab/FastVideo: 4,601 repository stars; observed 2026-10-14">★&nbsp;4.6k</sub> — An integrated video runtime owning model implementations, loading and staged denoising, with optional sparsity, parallelism and offload. Sparse or distilled paths may change the model. <sub>Audio · [Details](docs/catalog.md#fastvideo)</sub>
+- <a id="project-freevideo"></a>**[FreeVideo](https://github.com/FlashML-org/FreeVideo)** <sub title="FlashML-org/FreeVideo: 1,970 repository stars; observed 2026-10-16">★&nbsp;2k</sub> — Runs the eight-step VDN-H3 video generator on consumer hardware, allocating model blocks across GPU, host RAM and disk while choosing int8/FP8 and attention backends per request. Quality, model weights licensing and minimum-memory claims are checkpoint/workload-dependent. <sub>Multimodal · [Details](docs/catalog.md#freevideo)</sub>
 - <a id="project-inferix"></a>**[Inferix](https://github.com/alibaba-damo-academy/Inferix)** <sub title="alibaba-damo-academy/Inferix: 140 repository stars; observed 2026-10-14">★&nbsp;140 · [Paper](https://arxiv.org/abs/2511.20714)</sub> — A semi-autoregressive world-model runtime separating persistent generation KV, VAE chunking and streamed video output. This execution redesign does not establish AI-assisted construction. <sub>[Details](docs/catalog.md#inferix)</sub>
 - <a id="project-lightx2v"></a>**[LightX2V](https://github.com/ModelTC/LightX2V)** <sub title="ModelTC/LightX2V: 2,903 repository stars; observed 2026-10-14">★&nbsp;2.9k</sub> — A video execution stack combining model-specific paths, storage contracts and double-buffered weight loading. Attribute quantization, distilled weights and lightweight VAE changes separately. <sub>Image · Audio · [Details](docs/catalog.md#lightx2v)</sub>
 - <a id="project-minimax-h3-mlx"></a>**[MiniMax-H3 MLX](https://github.com/PipeNetwork/minimax-h3-mlx)** <sub title="PipeNetwork/minimax-h3-mlx: 83 repository stars; observed 2026-10-14">★&nbsp;83</sub> — An MLX reconstruction of joint MiniMax-H3 audio/video diffusion, precomputing timestep conditioning and staging component residency; quantization mainly affects capacity. <sub>Audio · [Details](docs/catalog.md#minimax-h3-mlx)</sub>

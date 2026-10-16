@@ -1729,5 +1729,81 @@
       "https://blog.kog.ai/real-time-llm-inference-on-standard-gpus-3-000-tokens-s-per-request/"
     ],
     "checked_on": "2026-10-14"
+  },
+  {
+    "id": "dinfer",
+    "title": "dInfer: explicit denoising-time execution control",
+    "project_ids": [
+      "dinfer"
+    ],
+    "summary": "A diffusion-language execution path manages confidence-based token commitment and partially reusable state; it is not an autoregressive server with a renamed sampling loop.",
+    "summary_cn": "专用扩散语言模型执行路径，联合控制分块去噪、并行 token 确认与 KV 更新；复用 vLLM/SGLang 并不等同于普通自回归服务换一套采样参数。",
+    "motivation": "Diffusion LMs require repeated refinement of candidate tokens and invalidation of changing context; conventional autoregressive decode scheduling and one-token KV growth do not express this behavior directly.",
+    "boundary": "Owns diffusion iterations, token-commit decoding policies, cache refresh and model adapters. Backend serving, tensor collectives, CUDA graphs and base kernel implementations are reused.",
+    "reuse": "Uses PyTorch and Hugging Face model modules, and vLLM for LLaDA-family serving or SGLang for LLaDA2; relies on supported multi-GPU toolchains.",
+    "tradeoff": "Block diffusion, confidence thresholds and vicinity cache refresh are model-specific and can change the output distribution or reuse stale intermediates. Published model-vs-model performance is not engine-only speedup.",
+    "construction": "The repository implements decoding and refresh variants, a CUDA-graph model runner, serving coordination and benchmark/evaluation scripts. Some GPU tests contain checkpoint paths unavailable outside the authors' environment.",
+    "ai_role": "No direct source-reviewed statement attributes implementation to coding agents; algorithmic acceleration is not evidence of AI-written software.",
+    "cost": "No comparable implementation effort or long-term maintenance estimate; published H800 throughput cannot substitute for build cost.",
+    "validation": "Inspected paper, pinned README, decoder, GPU runner and batching test. The paper supplies task scores and throughput for selected settings; no checkpoints or multi-GPU runs were reproduced. Testing script availability is not a correctness guarantee.",
+    "maintenance": "New diffusion model versions, attention behavior and serving framework APIs require adapter, cache and numerical requalification; pinned version dependencies make compatibility maintenance visible.",
+    "evidence_urls": [
+      "https://arxiv.org/abs/2510.08666",
+      "https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/README.md",
+      "https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/python/dinfer/decoding/generate_uniform.py",
+      "https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/python/dinfer/decoding/diffusion_runner.py",
+      "https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/tests/test_bd_serving_batching.py"
+    ],
+    "checked_on": "2026-10-16"
+  },
+  {
+    "id": "freevideo",
+    "title": "FreeVideo: a capacity-aware local video execution plan",
+    "project_ids": [
+      "freevideo"
+    ],
+    "summary": "A model-specific consumer video path measures host/device resources and chooses resident blocks, asynchronous transfers and kernel variants per request.",
+    "summary_cn": "面向 VDN-H3 的本地视频引擎，根据每次请求的显存、内存与尺寸选择权重驻留、异步搬移、算子精度和注意力实现，提供可检查的资源计划。",
+    "motivation": "Consumer GPUs often cannot hold the selected video checkpoint and decoder simultaneously, while device capability and request geometry change the optimal placement.",
+    "boundary": "Owns placement and execution planning for the supported VDN-H3 pipeline, weight streaming and selected kernels. The base/distilled checkpoint and major ML components come from OpenVDN and existing frameworks.",
+    "reuse": "Builds on Video DeltaNet/VDN-H3 pretrained weights, PyTorch kernels, probed attention backends and ComfyUI integration rather than generating a new foundation model.",
+    "tradeoff": "Eight-step distillation, int8 or FP8 matmul, head grouping, dynamic offload and quality levels constrain numerical and output-quality comparisons; 8 GiB claims apply only to the documented workload/profile.",
+    "construction": "The official planner documents budget formulas and retry boundaries; source implements bounded pinned-host offload and CUDA execution. Profiles and request receipts expose resource and timing choices.",
+    "ai_role": "The newer agent-facing UI allows coding agents to request video generation; this is not a disclosure that agents developed the engine.",
+    "cost": "Public minimum hardware footprints and runtime observations do not measure engineering effort, model acquisition/quality cost or ongoing device-version adaptation.",
+    "validation": "Inspected README, planner and offload implementation, not generated video quality or end-to-end throughput. The author describes constrained-device capacity tests; output parity and visual acceptance require workload-specific runs.",
+    "maintenance": "Changing checkpoint structure, precision kernels, drivers or operating-system memory behavior requires capacity plan and output revalidation; model weights carry a separate restricted license.",
+    "evidence_urls": [
+      "https://github.com/FlashML-org/FreeVideo/blob/7dd8a17c1da887de4baf8b12359f1b3f7008aaca/README.md",
+      "https://github.com/FlashML-org/FreeVideo/blob/7dd8a17c1da887de4baf8b12359f1b3f7008aaca/docs/execution-planning.md",
+      "https://github.com/FlashML-org/FreeVideo/blob/7dd8a17c1da887de4baf8b12359f1b3f7008aaca/freevideo_engine/offload.py",
+      "https://github.com/FlashML-org/FreeVideo/blob/7dd8a17c1da887de4baf8b12359f1b3f7008aaca/freevideo_engine/backends/cuda.py"
+    ],
+    "checked_on": "2026-10-16"
+  },
+  {
+    "id": "peregrine",
+    "title": "peregrine: concurrent CPU, GPU and NVMe expert execution",
+    "project_ids": [
+      "peregrine"
+    ],
+    "summary": "A Rust MoE engine reworks Colibri's sequential expert streaming into completion-driven lanes, but its disclosed disk-bound single-request benchmark remains slower than the predecessor.",
+    "summary_cn": "围绕 Colibri 的磁盘流式专家推理重构 Rust 并发路径，使 I/O、CPU 与可选 GPU 计算交叠；作者实测磁盘瓶颈下单请求仍慢于原版，不能只按设计宣称提速。",
+    "motivation": "The previous phased engine can leave GPU-resident experts idle while CPU and SSD work is processed, motivating an overlapping heterogeneous execution path.",
+    "boundary": "Owns Rust host scheduling, io_uring completion paths, expert batching and fixed-order reduction; optional CUDA kernels and numerical formats reuse selected Colibri building blocks.",
+    "reuse": "Keeps the GLM-family model/checkpoint context, vendored or adapted CUDA operators, and existing quantified weights and tokenization resources.",
+    "tradeoff": "Requires Linux/NVMe and an optional NVIDIA GPU. Parallel I/O does not remove the disk-bandwidth ceiling; enabling GPU paths needs independent hardware qualification.",
+    "construction": "The inspected Rust code implements owned completion reads, CPU worker dispatch and deterministic per-position reduction. Its benchmarks document ring-claim sizing, batch amortization and single-sequence performance alongside setbacks.",
+    "ai_role": "AI involvement in writing or tuning the engine was not established by the reviewed upstream sources.",
+    "cost": "Engineering and maintenance cost are unknown; performance is primarily author-measured on stated hardware, not independent reproduction.",
+    "validation": "Reviewed README, core concurrent scheduler and ring implementation, plus the same-hardware comparison summary. Author-stated CPU unit tests and GPU-gated tests were not run; GPU correctness and broad device coverage remain unverified.",
+    "maintenance": "Changes to checkpoint layout, io_uring behavior, NUMA scheduling, CUDA support and quantized kernels require regression checks; the project maintains explicit feature-gated and unmeasured paths.",
+    "evidence_urls": [
+      "https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/README.md",
+      "https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/crates/peregrine-model/src/concurrent.rs",
+      "https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/crates/peregrine-io/src/ring.rs",
+      "https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/docs/benchmarks.md"
+    ],
+    "checked_on": "2026-10-16"
   }
 ]

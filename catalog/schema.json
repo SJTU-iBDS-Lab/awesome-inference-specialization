@@ -369,7 +369,8 @@
         "tuff",
         "swiftlm",
         "colibri",
-        "ktransformers"
+        "ktransformers",
+        "peregrine"
       ]
     },
     {
@@ -383,7 +384,8 @@
         "infernix",
         "ciru-runtime",
         "gufo-rdma",
-        "strix-llama-cpp"
+        "strix-llama-cpp",
+        "dinfer"
       ]
     },
     {
@@ -409,7 +411,8 @@
         "telefuser",
         "fastvideo",
         "minimax-h3-mlx",
-        "streamdiffusion-v2"
+        "streamdiffusion-v2",
+        "freevideo"
       ]
     },
     {

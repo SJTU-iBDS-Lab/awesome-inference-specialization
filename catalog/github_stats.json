@@ -315,6 +315,14 @@
       "stars": 6613,
       "status": "ok"
     },
+    "flashml-org/freevideo": {
+      "fetched_on": "2026-10-16",
+      "full_name": "FlashML-org/FreeVideo",
+      "last_attempt_on": "2026-10-16",
+      "repository_id": 1368913638,
+      "stars": 1970,
+      "status": "ok"
+    },
     "flyinggiraffe/vidax": {
       "etag": "\"7e1a5bb93b49de7415a996f3d5061a45a4f92da3e2f00aa51b91aac231229492\"",
       "fetched_on": "2026-10-14",
@@ -412,6 +420,14 @@
       "last_attempt_on": "2026-10-14",
       "repository_id": 820758892,
       "stars": 3300,
+      "status": "ok"
+    },
+    "inclusionai/dinfer": {
+      "fetched_on": "2026-10-16",
+      "full_name": "inclusionAI/dInfer",
+      "last_attempt_on": "2026-10-16",
+      "repository_id": 1066238513,
+      "stars": 488,
       "status": "ok"
     },
     "incoai/splash": {
@@ -835,6 +851,14 @@
       "last_attempt_on": "2026-10-14",
       "repository_id": 1319332935,
       "stars": 48,
+      "status": "ok"
+    },
+    "s-b-repo/peregrine": {
+      "fetched_on": "2026-10-16",
+      "full_name": "s-b-repo/peregrine",
+      "last_attempt_on": "2026-10-16",
+      "repository_id": 1303657766,
+      "stars": 6,
       "status": "ok"
     },
     "saientai/saient-quartz": {

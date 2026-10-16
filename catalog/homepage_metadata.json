@@ -21,13 +21,14 @@
     "zero-inference": [{"kind": "blog", "url": "https://www.deepspeed.ai/2022/09/09/zero-inference.html", "provenance": "catalog"}],
     "splash": [{"kind": "blog", "url": "https://inco.ai/blog/splash/", "provenance": "catalog"}],
     "infire": [{"kind": "blog", "url": "https://blog.cloudflare.com/high-performance-llms/", "provenance": "catalog"}],
-    "kie": [{"kind": "blog", "url": "https://blog.kog.ai/real-time-llm-inference-on-standard-gpus-3-000-tokens-s-per-request/", "provenance": "catalog"}]
+    "kie": [{"kind": "blog", "url": "https://blog.kog.ai/real-time-llm-inference-on-standard-gpus-3-000-tokens-s-per-request/", "provenance": "catalog"}],
+    "dinfer": [{"kind": "paper", "url": "https://arxiv.org/abs/2510.08666", "provenance": "catalog"}]
   },
   "recent": [
+    {"id": "dinfer", "added_on": "2026-10-16", "label": "dInfer"},
+    {"id": "freevideo", "added_on": "2026-10-16", "label": "FreeVideo"},
+    {"id": "peregrine", "added_on": "2026-10-16", "label": "peregrine"},
     {"id": "vibesys", "added_on": "2026-10-14", "label": "VibeServe / VibeSys"},
-    {"id": "automegakernel", "added_on": "2026-10-14", "label": "AutoMegaKernel"},
-    {"id": "infire", "added_on": "2026-10-14", "label": "Infire"},
-    {"id": "kie", "added_on": "2026-10-14", "label": "KIE"},
-    {"id": "seis", "added_on": "2026-10-14", "label": "SEIS"}
+    {"id": "automegakernel", "added_on": "2026-10-14", "label": "AutoMegaKernel"}
   ]
 }
