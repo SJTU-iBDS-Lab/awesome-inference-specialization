@@ -2,7 +2,7 @@
 
 This survey studies **whether the ways specialized execution stacks are built, who can obtain and maintain them, and their economics are changing**. It follows concrete decisions about model execution rather than treating all inference optimization as specialization. AI-assisted construction is one candidate explanation for change; lower total cost is a causal hypothesis to test, not an inclusion rule or an established result.
 
-Start with the [selected cases](cases.md). Each case connects a reason to build a separate execution path with the decisions it controls, the infrastructure it reuses, the generality it gives up, the construction work actually performed, and the costs that remain unknown. The [project index](systems.md) is organized around engines and construction workflows, with dedicated entries for [validation methods](validation.md), [benchmarks](benchmarks.md) and [supporting resources](resources.md). Mechanisms and model domains remain secondary search facets.
+Start with the [selected cases](cases.md). Each case connects a reason to build a separate execution path with the decisions it controls, the infrastructure it reuses, the generality it gives up, the construction work actually performed, and the costs that remain unknown. The [project index](systems.md) is organized around engines and construction workflows, with dedicated entries for [validation methods](validation.md), [benchmarks](benchmarks.md) and [supporting resources](resources.md). Mechanisms and model domains remain secondary search facets. Device constraints, including mobile CPU/GPU/NPU specialization, are an orthogonal [device × execution cross-index](device-execution-matrix.md), not a new project category.
 
 ## Five entry points: the primary navigation
 

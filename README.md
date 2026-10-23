@@ -395,7 +395,7 @@ A record needs a documented relationship to **building or validating a specializ
 
 Descriptions summarize reviewed public sources, not independently reproduced benchmarks. Keep runtime improvements separate from quantization, omitted computation and changed models. AI participation requires direct disclosure or an inspectable workflow; it does not by itself establish lower lifecycle cost. [Evidence policy](docs/evidence-policy.md).
 
-[Contribute or correct a record](CONTRIBUTING.md) · [Maintain the bilingual homepage](docs/homepage-maintenance.md) · [Visual map](assets/specialization.svg)
+[Contribute or correct a record](CONTRIBUTING.md) · [Maintain the bilingual homepage](docs/homepage-maintenance.md) · [Visual map](assets/specialization.svg) · [Device × execution mechanism cross-index](docs/device-execution-matrix.md)
 
 Project identities and domain coverage come from the [catalog](catalog/projects.csv); concise descriptions are maintained in matching [English](catalog/homepage_en.json) and [Chinese](catalog/homepage_cn.json) records. Original metadata, diagrams, commentary and scripts use [MIT](LICENSE); linked projects and models retain their own licenses.
 
