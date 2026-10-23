@@ -2,6 +2,14 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Quick comparison](representative-comparison.md) · [Contributing](../CONTRIBUTING.md)
 
+## 2026-10-23 — Device constraint cross-index / 设备约束与执行机制对照
+
+- Added a [bilingual device × execution matrix](device-execution-matrix.md) linking existing catalog entries to phone-specific CPU, GPU, NPU, KV-state and multimodal mechanisms **without changing primary categories, six starters, catalog counts or source-review dates**.
+- Inspected pinned official MNN Hexagon/C4 and UbiquitousLearning/mllm QNN AOT documentation and code; separated not-yet-admitted implementations from established catalog members and from ExecuTorch/LiteRT-LM construction comparators. MNN 3.6.1 phase-specific performance numbers are author reports, not reproduced measurements; PowerInfer-2 remains a paper-only lead.
+- Extended offline regression coverage for the repository's banner and normal README generation commands without modifying any Actions workflow; upstream phone/GPU experiments were not run.
+
+新增端侧横向检索表，不新增“手机端”一级分类，也不把研究线索直接计入项目数。候选源码已区分为官方证据、已核实路径和未独立复现结论；全量目录正式收录须另行执行源数据变更及生成校验。
+
 ## 2026-10-23 — Arc execution and NInfer-based reconstruction / Arc 执行与基于 NInfer 的重构
 
 - Added two source-reviewed core systems and cases: [Mach X](catalog.md#machx), with model-dispatched SYCL/XMX attention and lane serving on Intel Arc; [Ignis](catalog.md#ignis), with a new batch/state execution program over inherited NInfer kernels and integrated top-k / adapted prefill replacements. The catalog now contains **131 records and 73 cases**.

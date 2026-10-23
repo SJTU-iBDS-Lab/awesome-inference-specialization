@@ -395,7 +395,7 @@
 
 条目总结已审阅的公开来源，不表示独立复现了性能。运行时收益应与量化、计算省略和模型改变分开；AI 参与须有直接披露或可检查的工作流，不自动证明全生命周期成本下降。[证据规范](docs/evidence-policy.md)。
 
-[贡献或纠正条目](CONTRIBUTING.md) · [双语首页维护](docs/homepage-maintenance.md) · [结构示意图](assets/specialization.svg)
+[贡献或纠正条目](CONTRIBUTING.md) · [双语首页维护](docs/homepage-maintenance.md) · [结构示意图](assets/specialization.svg) · [设备约束 × 执行机制对照](docs/device-execution-matrix.md#chinese)
 
 项目标识与领域来自[目录数据](catalog/projects.csv)，简述按对应的[英文](catalog/homepage_en.json)和[中文](catalog/homepage_cn.json)记录维护。原创元数据、图示、评论和脚本使用 [MIT](LICENSE)；上游项目与模型保留各自许可证。
 
