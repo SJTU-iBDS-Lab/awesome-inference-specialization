@@ -4,7 +4,7 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Systems & construction](systems.md) · [Comparison](comparison.md) · [Taxonomy](taxonomy.md) · [Evidence policy](evidence-policy.md)
 
-129 entries. Source review: 2026-10-16. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
+131 entries. Source review: 2026-10-23. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
 
 Use the family links below, or search this page for a model, device, mechanism or project. Source visibility is not a license or correctness certification. Semantic labels identify evaluation obligations, not proven equivalence.
 
@@ -1237,7 +1237,7 @@ Combines Ulysses and Ring sequence parallelism with CFG/data parallelism and Pip
 
 <a id="execution"></a>
 
-## Compiled & native execution / 编译与原生执行 (72)
+## Compiled & native execution / 编译与原生执行 (74)
 
 **How does a graph become an executable?** Fuse, lower, specialize and dispatch graphs or native kernels.
 
@@ -2053,6 +2053,35 @@ A Python host drives HIP/C++ model runners, hardware-specific kernels, shared KV
 
 </details>
 
+<a id="ignis"></a>
+
+### [Ignis](https://github.com/gpillon/ignis)
+
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** Reconstructs scheduling, forward execution and state management over explicitly vendored NInfer kernels, with integrated kernel replacements; a substantive execution delta beyond the existing NInfer and 3090-retargeting cases.
+
+Rust scheduling drives a device-resident C++/CUDA step ABI, batch-wide model traversal and per-width CUDA graphs. DFlash2 dispatch uses a split/merge k=16 top-k replacement; hq prompt attention reads compressed history in bounded bands instead of full BF16 planes. Flash-Next integrates expert residency and prefetch.
+
+**Scope:** Single SM120a Blackwell GPU (RTX 5090 / RTX PRO 6000), selected Qwen3.8-27B NVFP4 and Flash-Next MoE text paths; image/vision features are advertised but not audited here.
+
+**Boundary:** Reuses NInfer lineage, its format and patched kernels; prompt attention is adapted from mkyt/qwen3-27b-5090, not wholly original. Author-only 1065 tok/s is eight-lane aggregate with NVFP4, hq-e8-2b KV and a grafted DFlash2 draft; the associated gain includes upstream ports. Quantization, YaRN and optional abliterated checkpoints change evaluation contracts. Default INT8/FP8 prompt attention is approximate; greedy outputs can drift across batch widths. Several benchmark drivers/raw logs are untracked; no independent GPU reproduction.
+
+**Semantic considerations:** layout / scheduling, reduced precision, target-verified proposals, model / router training, configuration-dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `native-execution`, `cuda-graphs`, `continuous-batching`, `paged-kv`, `prefix-caching`, `expert-caching`, `speculative-decoding`, `shape-specialization`.
+
+**Constraints:** `model`, `hardware`, `memory`, `precision`, `workload`.
+
+**Evidence:** [Source 1](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/README.md) · [Source 2](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/vendor/manifest.json) · [Source 3](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/NOTICE) · [Source 4](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/decode_graph.cu) · [Source 5](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/step.cu) · [Source 6](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/dflash2_drafter.cu) · [Source 7](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/dflash2_topk.cu) · [Source 8](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/tests/test_dflash2_topk.cu) · [Source 9](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/gqa_layer.cu) · [Source 10](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/hq_prompt_attention.cu) · [Source 11](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/residency.cu) · [Source 12](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/flash_next/program.cu) · [Source 13](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/docs/findings/2026-09-24-upstream-quick-wins-ab.md) · [Source 14](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/docs/findings/2026-10-21-prefill-attention-without-prompt-planes.md).
+
+**Reviewed:** 2026-10-23 · **AI involvement:** `disclosed` · **Discovery:** `keyword`.
+
+</details>
+
 <a id="imp"></a>
 
 ### [imp](https://github.com/kekzl/imp)
@@ -2282,6 +2311,35 @@ Loads GGUF model tensors and executes a native GGML graph through backend-specif
 **Evidence:** [Source 1](https://github.com/ggml-org/llama.cpp/blob/HEAD/README.md) · [Source 2](https://github.com/ggml-org/llama.cpp/blob/HEAD/ggml/src/ggml-cpu/ggml-cpu.c) · [Source 3](https://github.com/ggml-org/llama.cpp/blob/HEAD/ggml/src/ggml-cuda/mmvq.cu) · [Source 4](https://github.com/JakeATX/llamAmpere/blob/3e670a8ecfc3d6f2c382e038180a0029eb47a8be/QWEN_AMPERE.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
+
+</details>
+
+<a id="machx"></a>
+
+### [Mach X](https://github.com/Red-Weasel/machx-inference-engine)
+
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** A distinct Intel Arc execution stack with inspected SYCL/XMX dispatch, quantized kernels and request-lane orchestration; GGUF compatibility is not a duplicate llama.cpp entry.
+
+C++ model code selects custom SYCL split-K XMX attention by context and shape; the hd256 default pipelines two subgroups and keeps output tiles in joint_matrix registers. Q4_K GEMM reuses dequantized tiles; lane serving integrates batched rows and optional MTP draft/verify rounds.
+
+**Scope:** Intel Arc, built/tuned on Arc Pro B70; inspected Qwen 27B and 35B-A3B text decode paths. Other advertised architectures and video are outside this focused review.
+
+**Boundary:** Author-only 62.8 to 69.8 tok/s is v0.2.31 versus v0.2.32 on 35B-A3B Q8_0, two B70s, a 32K-token prompt and greedy prompt-cache-off decoding. Bit identity concerns the XMX rewrite, not all paths or reference models: XMX uses fp16 probabilities and can change near-tie tokens relative to the prior SIMD path. GGML-derived import/reference code and external libraries are retained; AI disclosure covers analysis/review, not autonomous authorship or saved cost.
+
+**Semantic considerations:** layout / scheduling, reduced precision, target-verified proposals, configuration-dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `native-execution`, `shape-specialization`, `kernel-fusion`, `quantized-gemm`, `multi-gpu`, `speculative-decoding`.
+
+**Constraints:** `model`, `hardware`, `memory`, `precision`, `workload`.
+
+**Evidence:** [Source 1](https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/README.md) · [Source 2](https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/src/model/q35_xmx_decode.hpp) · [Source 3](https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/src/model/qwen35moe_split.cpp) · [Source 4](https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/src/ops/attention.cpp) · [Source 5](https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/src/ops/gemm_q4k_xmx.cpp) · [Source 6](https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/src/engine/lanes_serve.cpp) · [Source 7](https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/tests/unit/attention_test.cpp) · [Source 8](https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/THIRD_PARTY_LICENSES.md) · [Source 9](https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/docs/glm53/SERVE_SPEED_2026-10-19.md).
+
+**Reviewed:** 2026-10-23 · **AI involvement:** `disclosed` · **Discovery:** `keyword`.
 
 </details>
 

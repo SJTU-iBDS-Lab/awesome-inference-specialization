@@ -2,6 +2,14 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Quick comparison](representative-comparison.md) · [Contributing](../CONTRIBUTING.md)
 
+## 2026-10-23 — Arc execution and NInfer-based reconstruction / Arc 执行与基于 NInfer 的重构
+
+- Added two source-reviewed core systems and cases: [Mach X](catalog.md#machx), with model-dispatched SYCL/XMX attention and lane serving on Intel Arc; [Ignis](catalog.md#ignis), with a new batch/state execution program over inherited NInfer kernels and integrated top-k / adapted prefill replacements. The catalog now contains **131 records and 73 cases**.
+- [Pinned source review](source-review-2026-10-23.md) traces dispatch, fallback, provenance and concrete test contracts. It distinguishes Mach X's local old/new-kernel bit-identity claim from reference equivalence, and Ignis's original/adapted work from upstream ports, quantization and changed checkpoints. All quoted performance remains author-reported; no upstream GPU execution was performed.
+- Updated bilingual summaries, case classification, evidence, recent additions and all generated indexes. Fetched only the two new GitHub star observations; existing snapshots and technical review dates retain their actual dates. Existing records, reading selections and homepage organization are preserved.
+
+新增两项均有源码调用链支持，不按宣传性能收录。Mach X 的 32K 测试为两张 B70 上的版本对比；Ignis 的 1,065 tok/s 为八路聚合结果，相关更新包含上游移植。低精度、草稿模型及部分未公开原始实验记录的限制已写入；未宣称独立复现。
+
 ## 2026-10-16 — Specialized decoding, video placement and MoE lanes / 专用解码、视频驻留与专家并发
 
 - Added three source-reviewed **core execution cases**: [dInfer](catalog.md#dinfer) (diffusion language decoding and KV refresh), [FreeVideo](catalog.md#freevideo) (VDN-H3 resource-aware video execution), and [peregrine](catalog.md#peregrine) (Rust CPU/NVMe/optional CUDA expert concurrency). The catalog now has **129 project records and 71 cases**.

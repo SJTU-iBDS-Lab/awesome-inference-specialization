@@ -73,3 +73,7 @@ Reviewed revision: `83e73eb94051dc67431829d0f3d3eb67db0b8e9b`.
 ## What this update establishes / 本轮能说明什么
 
 这五项资源为新的页面结构提供了具体内容：构建方案需要性能反馈，验证需要明确的输入与语义合同，评测需要独立的任务和比较协议，构建知识需要来源与适用边界。它们不能共同替代完整推理引擎的端到端验证，也不能据此认定 AI 已经降低了构建和维护的总成本。
+
+## Follow-up source inspection — 2026-10-23
+
+[Mach X and Ignis review](source-review-2026-10-23.md) records two user-supplied execution-stack candidates, pinned revisions, dispatch/kernel evidence, upstream reuse, author benchmark boundaries and concrete checks. Both qualify as core cases; neither is treated as independent performance reproduction. This follow-up does not change the October 12 resource findings or older project review dates.

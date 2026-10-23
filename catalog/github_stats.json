@@ -377,6 +377,14 @@
       "stars": 54359,
       "status": "ok"
     },
+    "gpillon/ignis": {
+      "fetched_on": "2026-10-23",
+      "full_name": "gpillon/ignis",
+      "last_attempt_on": "2026-10-23",
+      "repository_id": 1354134861,
+      "stars": 29,
+      "status": "ok"
+    },
     "gufo-org/gufo": {
       "etag": "\"3f7cc832c8a70d7b0149ca407ae367bdadfdbae3522d0d6bc4c3869ea0aa97cd\"",
       "fetched_on": "2026-10-14",
@@ -815,6 +823,14 @@
       "last_attempt_on": "2026-10-14",
       "repository_id": 1295822896,
       "stars": 1,
+      "status": "ok"
+    },
+    "red-weasel/machx-inference-engine": {
+      "fetched_on": "2026-10-23",
+      "full_name": "Red-Weasel/machx-inference-engine",
+      "last_attempt_on": "2026-10-23",
+      "repository_id": 1287577280,
+      "stars": 8,
       "status": "ok"
     },
     "rexmhall09/tuff": {

@@ -32,7 +32,7 @@ Integrated model runtimes and substantial specialized backends, including native
 
 集成模型运行时和实质专用后端，涵盖原生实现与有直接参照意义的既有执行栈。
 
-94 projects / 项目
+96 projects / 项目
 
 | Project and evidence | Why it belongs | Relevance / artifact |
 | --- | --- | --- |
@@ -57,6 +57,7 @@ Integrated model runtimes and substantial specialized backends, including native
 | [Halogen Flash](catalog.md#halogen-flash) | A model-and-device-specific runtime illustrates how narrow deployment contracts reshape implementation choices. | core / runtime |
 | [Hearth](catalog.md#hearth) | Reconstructs SD-family model graphs, samplers and dependency-ordered execution in Rust over CubeCL/wgpu, illustrating native pipeline ownership without rebuilding the entire GPU layer. | core / runtime |
 | [hipEngine](catalog.md#hipengine) | Native AMD reconstruction with explicit model/device qualification; Gufo cites this runtime as a design reference. | core / runtime |
+| [Ignis](catalog.md#ignis) | Reconstructs scheduling, forward execution and state management over explicitly vendored NInfer kernels, with integrated kernel replacements; a substantive execution delta beyond the existing NInfer and 3090-retargeting cases. | core / runtime |
 | [imp](catalog.md#imp) | Explicit single-architecture reconstruction plus a direct author disclosure of end-to-end coding-agent implementation. | core / runtime |
 | [Infernix](catalog.md#infernix) | Substantial descendant reconstructing heterogeneous execution for a model too large for GPU memory, with direct AI-development disclosure. | core / runtime |
 | [Iris](catalog.md#iris) | A native image-model runtime exposes which graph and execution responsibilities are taken out of a general framework. | core / runtime |
@@ -68,6 +69,7 @@ Integrated model runtimes and substantial specialized backends, including native
 | [Lithos Metal](catalog.md#lithos-metal) | Connects a graph compiler and chip-specific recipes to a concrete standalone inference runtime. | core / runtime |
 | [llamAmpere](catalog.md#llamampere) | A substantial llama.cpp fork couples model-specific speculative decoding, compressed state and Ampere kernels while retaining shared runtime services. | core / runtime |
 | [Llaminar](catalog.md#llaminar) | Native mixed-hardware construction route: owns model graphs, execution plans and cross-vendor coordination rather than wrapping existing engines. | core / runtime |
+| [Mach X](catalog.md#machx) | A distinct Intel Arc execution stack with inspected SYCL/XMX dispatch, quantized kernels and request-lane orchestration; GGUF compatibility is not a duplicate llama.cpp entry. | core / runtime |
 | [Magnitude](catalog.md#magnitude) | A dedicated inference stack exposes its kernel-composition and model-execution boundary for construction analysis. | core / runtime |
 | [memra](catalog.md#memra) | Native runtime with per-model/device exactness gates and explicit evidence of the maintenance and qualification burden. | core / runtime |
 | [MiniMax-H3 MLX](catalog.md#minimax-h3-mlx) | Reconstructs a complete joint video/audio diffusion model on MLX, including packed modality geometry and invariant AdaLN precomputation; distinguishes making a model fit from making it fast. | core / runtime |

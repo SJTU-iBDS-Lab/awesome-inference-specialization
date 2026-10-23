@@ -81,6 +81,8 @@ Start with what is rebuilt and what effort is disclosed. Read each case for reta
 | [dInfer](cases.md#dinfer) | Owns diffusion iterations, token-commit decoding policies, cache refresh and model adapters. Backend serving, tensor collectives, CUDA graphs and base kernel implementations are reused. | No comparable implementation effort or long-term maintenance estimate; published H800 throughput cannot substitute for build cost. |
 | [FreeVideo](cases.md#freevideo) | Owns placement and execution planning for the supported VDN-H3 pipeline, weight streaming and selected kernels. The base/distilled checkpoint and major ML components come from OpenVDN and existing frameworks. | Public minimum hardware footprints and runtime observations do not measure engineering effort, model acquisition/quality cost or ongoing device-version adaptation. |
 | [peregrine](cases.md#peregrine) | Owns Rust host scheduling, io_uring completion paths, expert batching and fixed-order reduction; optional CUDA kernels and numerical formats reuse selected Colibri building blocks. | Engineering and maintenance cost are unknown; performance is primarily author-measured on stated hardware, not independent reproduction. |
+| [Mach X](cases.md#machx) | Owns model orchestration, SYCL attention/quantized matmul and lane serving. The reviewed Qwen MoE split selects XMX by context, leaves INT8 KV on a separate path and falls back outside supported shapes/cache bounds. | Total construction/maintenance cost is unknown. Author reports 62.8 to 69.8 tok/s for 35B-A3B Q8_0 on two B70s at a 32K-token prompt, greedy, prompt cache off, v0.2.31 to v0.2.32. This is neither an independently reproduced result nor a cross-engine ranking. |
+| [Ignis](cases.md#ignis) | Rust owns admission, lanes and KV accounting; a step-level C ABI owns the forward pass. decode_graph.cu traverses the model once per batch width; step.cu replays a captured graph or uses the same eager traversal. Flash-Next explicitly calls expert demand/prefetch before MoE compute. | Author reports about 367 tok/s for one lane over eight short greedy coding prompts and 1065 tok/s aggregate for eight lanes on RTX 5090, NVFP4, hq-e8-2b KV, seven DFlash2 drafts. The associated September A/B includes upstream kernel ports. Engineering, verification and ongoing maintenance cost are unknown; these numbers cannot be compared directly with Mach X or asynchronous public engine reports. |
 
 ## Library facets / 资料库的独立标签
 
@@ -192,6 +194,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [Hearth](catalog.md#hearth) · core | system / runtime / image | configuration-dependent |
 | [Hilum LLM Engine](catalog.md#hilum-engine) · adjacent | system / backend / text, multimodal | configuration-dependent |
 | [hipEngine](catalog.md#hipengine) · core | system / runtime / text, multimodal, audio | configuration-dependent |
+| [Ignis](catalog.md#ignis) · core | system / runtime / text | layout / scheduling, reduced precision, target-verified proposals, model / router training, configuration-dependent |
 | [imp](catalog.md#imp) · core | system / runtime / text, multimodal | configuration-dependent |
 | [Iris](catalog.md#iris) · core | system / runtime / image | layout / scheduling |
 | [Kipp](catalog.md#kipp) · core | system / runtime / text | configuration-dependent |
@@ -200,6 +203,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [Lily](catalog.md#lily) · core | system / runtime / text | configuration-dependent |
 | [Lithos Metal](catalog.md#lithos-metal) · core | system / runtime / text | configuration-dependent, target-verified proposals |
 | [llama.cpp](catalog.md#llama-cpp) · foundation | support / runtime / text | configuration-dependent |
+| [Mach X](catalog.md#machx) · core | system / runtime / text | layout / scheduling, reduced precision, target-verified proposals, configuration-dependent |
 | [Magnitude](catalog.md#magnitude) · core | system / runtime / text | layout / scheduling |
 | [memra](catalog.md#memra) · core | system / runtime / text, multimodal | configuration-dependent |
 | [MetalChat](catalog.md#metalchat) · adjacent | system / runtime / text | configuration-dependent |

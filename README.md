@@ -20,7 +20,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 <!-- CATALOG-START -->
 
 <p align="center">
-<sub>129 projects · 94 engines · 14 build workflows · 3 benchmarks · 18 resources</sub>
+<sub>131 projects · 96 engines · 14 build workflows · 3 benchmarks · 18 resources</sub>
 </p>
 
 <div align="center">
@@ -31,7 +31,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 
 </div>
 
-<sub title="Catalog addition dates, not project release dates"><b>Recently added</b> · 2026-10-14–2026-10-16 · [dInfer](#project-dinfer) · [FreeVideo](#project-freevideo) · [peregrine](#project-peregrine) · [VibeServe / VibeSys](#project-vibesys) · [AutoMegaKernel](#project-automegakernel) · [Updates](docs/updates.md)</sub>
+<sub title="Catalog addition dates, not project release dates"><b>Recently added</b> · 2026-10-16–2026-10-23 · [Mach X](#project-machx) · [Ignis](#project-ignis) · [dInfer](#project-dinfer) · [FreeVideo](#project-freevideo) · [peregrine](#project-peregrine) · [Updates](docs/updates.md)</sub>
 
 <a id="featured-reading"></a>
 <a id="start-here"></a>
@@ -96,11 +96,11 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 
 ## Inference engines
 
-<sub>All projects expanded; names link upstream. [Execution boundaries](docs/systems.md#system) · [Overlapping domains](docs/domains.md) · [★ Repository star snapshots · 2026-10-14–2026-10-16](docs/homepage-metadata.md)</sub>
+<sub>All projects expanded; names link upstream. [Execution boundaries](docs/systems.md#system) · [Overlapping domains](docs/domains.md) · [★ Repository star snapshots · 2026-10-14–2026-10-23](docs/homepage-metadata.md)</sub>
 
 <a id="homepage-system-text"></a>
 
-### Language models <sub>· 53</sub>
+### Language models <sub>· 55</sub>
 
 - <a id="project-ane-lm"></a>**[ANE-LM](https://github.com/johnmai-dev/ANE-LM)** <sub title="johnmai-dev/ANE-LM: 144 repository stars; observed 2026-10-14">★&nbsp;144</sub> — A direct predecessor to ane.cpp, connecting Qwen ANE kernels and CPU operations through a compile cache; constrained by private interfaces and limited model coverage. <sub>[Details](docs/catalog.md#ane-lm)</sub>
 - <a id="project-ane-cpp"></a>**[ane.cpp](https://github.com/skyfallsin/ane.cpp)** <sub title="skyfallsin/ane.cpp: 6 repository stars; observed 2026-10-14">★&nbsp;6</sub> — Compiles Qwen convolution programs for ANE while the CPU handles normalization, attention and KV state, informed by hardware probes and kept/discarded experiments. <sub>[Details](docs/catalog.md#ane-cpp)</sub>
@@ -123,6 +123,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 - <a id="project-hilum-engine"></a>**[Hilum LLM Engine](https://github.com/hilum-labs/hilum-local-llm-engine)** <sub title="hilum-labs/hilum-local-llm-engine: 1 repository stars; observed 2026-10-14">★&nbsp;1</sub> — A llama.cpp/GGML mobile integration for Adreno/Vulkan and Metal, adjusting shader dispatch, allocation and device parameters. <sub>Multimodal · [Details](docs/catalog.md#hilum-engine)</sub>
 - <a id="project-hipengine"></a>**[hipEngine](https://github.com/shisa-ai/hipEngine)** <sub title="shisa-ai/hipEngine: 88 repository stars; observed 2026-10-14">★&nbsp;88</sub> — A selected-AMD execution stack with a Python host, HIP/C++ model kernels, shared KV and continuous batching, without PyTorch in the inference path. <sub>Audio · Multimodal · [Details](docs/catalog.md#hipengine)</sub>
 - <a id="project-hybrimoe"></a>**[HybriMoE](https://github.com/PKU-SEC-Lab/HybriMoE)** <sub title="PKU-SEC-Lab/HybriMoE: 123 repository stars; observed 2026-10-14">★&nbsp;123</sub> — A KTransformers-based combination of CPU/GPU expert scheduling, prefetch and caching; a precedent for placement and movement in models exceeding VRAM. <sub>[Details](docs/catalog.md#hybrimoe)</sub>
+- <a id="project-ignis"></a>**[Ignis](https://github.com/gpillon/ignis)** <sub title="gpillon/ignis: 29 repository stars; observed 2026-10-23">★&nbsp;29</sub> — A single-Blackwell Rust/CUDA engine for selected Qwen models: batch-wide decode graphs, KV ownership and expert residency over NInfer kernels. Adds specialized top-k and adapted bounded-band prefill attention; quantization and altered checkpoints require separate quality checks. <sub>[Details](docs/catalog.md#ignis)</sub>
 - <a id="project-ik-llama"></a>**[ik_llama.cpp](https://github.com/ikawrakow/ik_llama.cpp)** <sub title="ikawrakow/ik_llama.cpp: 3,300 repository stars; observed 2026-10-14">★&nbsp;3.3k</sub> — A deep llama.cpp fork extending packed formats, CPU IQK kernels and CUDA dispatch while retaining general-engine compatibility. <sub>[Details](docs/catalog.md#ik-llama)</sub>
 - <a id="project-imp"></a>**[imp](https://github.com/kekzl/imp)** <sub title="kekzl/imp: 44 repository stars; observed 2026-10-14">★&nbsp;44</sub> — A C++/CUDA engine for RTX 5090-class devices, owning model execution, paged KV, graph scheduling and serving. The author explicitly discloses end-to-end coding-agent implementation. <sub>Multimodal · [Details](docs/catalog.md#imp)</sub>
 - <a id="project-infernix"></a>**[Infernix](https://github.com/wallawalla47/infernix)** <sub title="Wallawalla47/Infernix: 111 repository stars; observed 2026-10-14">★&nbsp;111</sub> — An explicitly AI-assisted NInfer fork combining GPU hot-expert caching, CPU miss computation, overlapped PCIe transfers and NVMe storage. <sub>Multimodal · [Details](docs/catalog.md#infernix)</sub>
@@ -133,6 +134,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 - <a id="project-lithos-metal"></a>**[Lithos Metal](https://github.com/lithos-ai/lithos-metal)** <sub title="lithos-ai/lithos-metal: 210 repository stars; observed 2026-10-14">★&nbsp;210</sub> — Compiles typed model graphs into layer-fused and conventional kernels, using Metal indirect commands and GPU-resident draft state; backend coverage and fused numerics remain qualified. <sub>[Details](docs/catalog.md#lithos-metal)</sub>
 - <a id="project-llamampere"></a>**[llamAmpere](https://github.com/JakeATX/llamAmpere)** <sub title="JakeATX/llamAmpere: 172 repository stars; observed 2026-10-14">★&nbsp;172</sub> — A deep llama.cpp fork combining Ampere verification kernels, MTP drafts and compressed KV while retaining shared serving. Separate post-trained models and quantization from engine contributions. <sub>[Details](docs/catalog.md#llamampere)</sub>
 - <a id="project-llaminar"></a>**[Llaminar](https://github.com/Llaminar/llaminar)** <sub title="Llaminar/llaminar: 45 repository stars; observed 2026-10-14">★&nbsp;45</sub> — Builds native model graphs and device plans, placing stages and experts across CPU/NVIDIA/AMD devices with explicit heterogeneous communication. <sub>[Details](docs/catalog.md#llaminar)</sub>
+- <a id="project-machx"></a>**[Mach X](https://github.com/Red-Weasel/machx-inference-engine)** <sub title="Red-Weasel/machx-inference-engine: 8 repository stars; observed 2026-10-23">★&nbsp;8</sub> — An Intel Arc C++/SYCL runtime with model-dispatched XMX attention, tiled quantized GEMM and request lanes. The inspected Qwen path changes execution beyond GGUF loading; XMX numerics differ from SIMD, and author speedups remain configuration-specific. <sub>[Details](docs/catalog.md#machx)</sub>
 - <a id="project-magnitude"></a>**[Magnitude](https://github.com/magnitudedev/magnitude)** <sub title="magnitudedev/magnitude: 6,719 repository stars; observed 2026-10-14">★&nbsp;6.7k</sub> — The reviewed Metal/MLX path maps typed operations to compatible kernel plans and emits specialized fused entry points. This evidence does not cover other backends. <sub>[Details](docs/catalog.md#magnitude)</sub>
 - <a id="project-memra"></a>**[memra](https://github.com/avifenesh/memra)** <sub title="avifenesh/memra: 2 repository stars; observed 2026-10-14">★&nbsp;2</sub> — A Rust host connecting ahead-of-time CUDA kernels and model-specific programs, explicitly managing quantization, KV and multi-GPU placement with model/device-specific numerical checks. <sub>Multimodal · [Details](docs/catalog.md#memra)</sub>
 - <a id="project-metalchat"></a>**[MetalChat](https://github.com/ybubnov/metalchat)** <sub title="ybubnov/metalchat: 23 repository stars; observed 2026-10-14">★&nbsp;23</sub> — A C++/Metal native generation path built from tensor, layer and model abstractions; an adjacent reusable-framework example whose generation tests do not establish full quality coverage. <sub>[Details](docs/catalog.md#metalchat)</sub>

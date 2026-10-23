@@ -20,7 +20,7 @@
 <!-- CATALOG-START -->
 
 <p align="center">
-<sub>129 个项目 · 94 个引擎 · 14 个构建流程 · 3 个基准 · 18 项资源</sub>
+<sub>131 个项目 · 96 个引擎 · 14 个构建流程 · 3 个基准 · 18 项资源</sub>
 </p>
 
 <div align="center">
@@ -31,7 +31,7 @@
 
 </div>
 
-<sub title="目录收录日期，不是项目发布日期"><b>近期收录</b> · 2026-10-14–2026-10-16 · [dInfer](#project-dinfer) · [FreeVideo](#project-freevideo) · [peregrine](#project-peregrine) · [VibeServe / VibeSys](#project-vibesys) · [AutoMegaKernel](#project-automegakernel) · [更新记录](docs/updates.md)</sub>
+<sub title="目录收录日期，不是项目发布日期"><b>近期收录</b> · 2026-10-16–2026-10-23 · [Mach X](#project-machx) · [Ignis](#project-ignis) · [dInfer](#project-dinfer) · [FreeVideo](#project-freevideo) · [peregrine](#project-peregrine) · [更新记录](docs/updates.md)</sub>
 
 <a id="featured-reading"></a>
 <a id="start-here"></a>
@@ -96,11 +96,11 @@
 
 ## 推理引擎
 
-<sub>全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md) · [★ 仓库 Star 快照 · 2026-10-14–2026-10-16](docs/homepage-metadata.md)</sub>
+<sub>全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md) · [★ 仓库 Star 快照 · 2026-10-14–2026-10-23](docs/homepage-metadata.md)</sub>
 
 <a id="homepage-system-text"></a>
 
-### 语言模型 <sub>· 53</sub>
+### 语言模型 <sub>· 55</sub>
 
 - <a id="project-ane-lm"></a>**[ANE-LM](https://github.com/johnmai-dev/ANE-LM)** <sub title="johnmai-dev/ANE-LM: 144 repository stars; observed 2026-10-14">★&nbsp;144</sub> — 作为 ane.cpp 的直接前身，以编译缓存连接 Qwen 的 ANE 内核与 CPU 运算，保留私有接口和有限模型范围的约束。 <sub>[详情](docs/catalog.md#ane-lm)</sub>
 - <a id="project-ane-cpp"></a>**[ane.cpp](https://github.com/skyfallsin/ane.cpp)** <sub title="skyfallsin/ane.cpp: 6 repository stars; observed 2026-10-14">★&nbsp;6</sub> — 通过硬件探针和保留／舍弃实验，将 Qwen 卷积编译到 ANE，并由 CPU 处理归一化、注意力与 KV 状态。 <sub>[详情](docs/catalog.md#ane-cpp)</sub>
@@ -123,6 +123,7 @@
 - <a id="project-hilum-engine"></a>**[Hilum LLM Engine](https://github.com/hilum-labs/hilum-local-llm-engine)** <sub title="hilum-labs/hilum-local-llm-engine: 1 repository stars; observed 2026-10-14">★&nbsp;1</sub> — 在 llama.cpp/GGML 基础上接入移动端 Adreno、Vulkan 与 Metal 路径，调整着色器调度、内存分配和设备参数。 <sub>多模态 · [详情](docs/catalog.md#hilum-engine)</sub>
 - <a id="project-hipengine"></a>**[hipEngine](https://github.com/shisa-ai/hipEngine)** <sub title="shisa-ai/hipEngine: 88 repository stars; observed 2026-10-14">★&nbsp;88</sub> — 由 Python 宿主驱动 HIP/C++ 模型内核、共享 KV 状态和连续批处理，面向指定 AMD 设备重建不依赖 PyTorch 的推理路径。 <sub>音频 · 多模态 · [详情](docs/catalog.md#hipengine)</sub>
 - <a id="project-hybrimoe"></a>**[HybriMoE](https://github.com/PKU-SEC-Lab/HybriMoE)** <sub title="PKU-SEC-Lab/HybriMoE: 123 repository stars; observed 2026-10-14">★&nbsp;123</sub> — 基于 KTransformers 组合 CPU/GPU 专家调度、预取与缓存策略，为超显存 MoE 的专家放置和搬运提供既有参考。 <sub>[详情](docs/catalog.md#hybrimoe)</sub>
+- <a id="project-ignis"></a>**[Ignis](https://github.com/gpillon/ignis)** <sub title="gpillon/ignis: 29 repository stars; observed 2026-10-23">★&nbsp;29</sub> — 面向单张 Blackwell 与指定 Qwen 模型的 Rust/CUDA 引擎，在 NInfer 内核之上重建批量解码图、KV 状态管理与专家驻留；新增专用 top-k、改编的分带 prefill attention，量化和改动后的检查点需单独验证质量。 <sub>[详情](docs/catalog.md#ignis)</sub>
 - <a id="project-ik-llama"></a>**[ik_llama.cpp](https://github.com/ikawrakow/ik_llama.cpp)** <sub title="ikawrakow/ik_llama.cpp: 3,300 repository stars; observed 2026-10-14">★&nbsp;3.3k</sub> — 在 llama.cpp 分支中扩展压缩量化格式、CPU IQK 内核和 CUDA 分派，展示保留通用引擎兼容性与专用执行的取舍。 <sub>[详情](docs/catalog.md#ik-llama)</sub>
 - <a id="project-imp"></a>**[imp](https://github.com/kekzl/imp)** <sub title="kekzl/imp: 44 repository stars; observed 2026-10-14">★&nbsp;44</sub> — 面向 RTX 5090 级设备重建 C++/CUDA 模型执行、分页 KV、图调度与服务，作者明确披露由编程代理端到端实现。 <sub>多模态 · [详情](docs/catalog.md#imp)</sub>
 - <a id="project-infernix"></a>**[Infernix](https://github.com/wallawalla47/infernix)** <sub title="Wallawalla47/Infernix: 111 repository stars; observed 2026-10-14">★&nbsp;111</sub> — 在 NInfer 分支中组合 GPU 热专家缓存、CPU 缺失专家计算、PCIe 重叠传输及 NVMe 存储，作者披露 AI 辅助开发。 <sub>多模态 · [详情](docs/catalog.md#infernix)</sub>
@@ -133,6 +134,7 @@
 - <a id="project-lithos-metal"></a>**[Lithos Metal](https://github.com/lithos-ai/lithos-metal)** <sub title="lithos-ai/lithos-metal: 210 repository stars; observed 2026-10-14">★&nbsp;210</sub> — 将类型化模型图编译为层融合巨型内核及常规内核，以 Metal 间接命令和 GPU 驻留草稿状态执行，部分后端与融合数值仍有限定。 <sub>[详情](docs/catalog.md#lithos-metal)</sub>
 - <a id="project-llamampere"></a>**[llamAmpere](https://github.com/JakeATX/llamAmpere)** <sub title="JakeATX/llamAmpere: 172 repository stars; observed 2026-10-14">★&nbsp;172</sub> — 在 llama.cpp 深度分支中结合 Ampere 专用验证内核、MTP 草稿和压缩 KV，保留共享服务；后训练模型与量化变化需与引擎贡献分开。 <sub>[详情](docs/catalog.md#llamampere)</sub>
 - <a id="project-llaminar"></a>**[Llaminar](https://github.com/Llaminar/llaminar)** <sub title="Llaminar/llaminar: 45 repository stars; observed 2026-10-14">★&nbsp;45</sub> — 原生构建模型计算图和设备执行计划，跨 CPU、NVIDIA 与 AMD 放置模型阶段和专家，并显式协调异构通信。 <sub>[详情](docs/catalog.md#llaminar)</sub>
+- <a id="project-machx"></a>**[Mach X](https://github.com/Red-Weasel/machx-inference-engine)** <sub title="Red-Weasel/machx-inference-engine: 8 repository stars; observed 2026-10-23">★&nbsp;8</sub> — 面向 Intel Arc 的 C++/SYCL 引擎，以模型分派的 XMX attention、分块量化 GEMM 和请求并发通道改造执行，超出 GGUF 加载封装；XMX 数值与 SIMD 路径不同，作者性能收益仅适用于所述配置。 <sub>[详情](docs/catalog.md#machx)</sub>
 - <a id="project-magnitude"></a>**[Magnitude](https://github.com/magnitudedev/magnitude)** <sub title="magnitudedev/magnitude: 6,719 repository stars; observed 2026-10-14">★&nbsp;6.7k</sub> — 已审查的 Metal／MLX 路径将类型化操作映射到兼容内核方案，并生成专化融合入口，展示专用推理栈边界，不外推至其他后端。 <sub>[详情](docs/catalog.md#magnitude)</sub>
 - <a id="project-memra"></a>**[memra](https://github.com/avifenesh/memra)** <sub title="avifenesh/memra: 2 repository stars; observed 2026-10-14">★&nbsp;2</sub> — 以 Rust 宿主连接预编译 CUDA 内核与模型专用程序，显式管理量化、KV 和多卡放置，并按模型及设备设置精度验证。 <sub>多模态 · [详情](docs/catalog.md#memra)</sub>
 - <a id="project-metalchat"></a>**[MetalChat](https://github.com/ybubnov/metalchat)** <sub title="ybubnov/metalchat: 23 repository stars; observed 2026-10-14">★&nbsp;23</sub> — 以 C++/Metal 张量、层和模型抽象构建原生生成路径，作为可复用框架的邻近案例，生成测试不等于完整质量验证。 <sub>[详情](docs/catalog.md#metalchat)</sub>

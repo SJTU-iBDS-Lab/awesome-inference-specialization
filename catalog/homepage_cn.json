@@ -127,5 +127,7 @@
   "kie": "厂商披露的低延迟持久单内核，联动设计执行、权重流式读取、采样与多卡通信。已审阅的 FP16 预览使用 Laneformer/DTP 和八张 MI300X；未确认引擎源码公开，不能视为不改模型的加速结果。",
   "dinfer": "面向 LLaDA 系列扩散语言模型实现分块确认、置信度解码与可配置 KV 更新，底层复用 vLLM/SGLang。缓存近似、模型依赖及特定 GPU 测试限制数值与性能结论的外推。",
   "freevideo": "针对八步 VDN-H3 视频模型按请求把权重块放在显存、内存和磁盘，选择 int8/FP8 及注意力后端。最低内存要求、生成质量与模型权重许可取决于具体检查点和负载。",
-  "peregrine": "Colibri 的 Rust 衍生执行栈，借助 io_uring、CPU 与可选 CUDA 并发处理专家并固定顺序归约。作者披露的磁盘受限单序列解码仍慢于 Colibri；GPU 路径需另行验证。"
+  "peregrine": "Colibri 的 Rust 衍生执行栈，借助 io_uring、CPU 与可选 CUDA 并发处理专家并固定顺序归约。作者披露的磁盘受限单序列解码仍慢于 Colibri；GPU 路径需另行验证。",
+  "machx": "面向 Intel Arc 的 C++/SYCL 引擎，以模型分派的 XMX attention、分块量化 GEMM 和请求并发通道改造执行，超出 GGUF 加载封装；XMX 数值与 SIMD 路径不同，作者性能收益仅适用于所述配置。",
+  "ignis": "面向单张 Blackwell 与指定 Qwen 模型的 Rust/CUDA 引擎，在 NInfer 内核之上重建批量解码图、KV 状态管理与专家驻留；新增专用 top-k、改编的分带 prefill attention，量化和改动后的检查点需单独验证质量。"
 }

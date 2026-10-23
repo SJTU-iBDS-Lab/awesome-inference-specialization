@@ -25,6 +25,8 @@
     "dinfer": [{"kind": "paper", "url": "https://arxiv.org/abs/2510.08666", "provenance": "catalog"}]
   },
   "recent": [
+    {"id": "machx", "added_on": "2026-10-23", "label": "Mach X"},
+    {"id": "ignis", "added_on": "2026-10-23", "label": "Ignis"},
     {"id": "dinfer", "added_on": "2026-10-16", "label": "dInfer"},
     {"id": "freevideo", "added_on": "2026-10-16", "label": "FreeVideo"},
     {"id": "peregrine", "added_on": "2026-10-16", "label": "peregrine"},

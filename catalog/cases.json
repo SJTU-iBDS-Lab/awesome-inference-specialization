@@ -1805,5 +1805,75 @@
       "https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/docs/benchmarks.md"
     ],
     "checked_on": "2026-10-16"
+  },
+  {
+    "id": "machx",
+    "title": "Mach X: Arc-specific XMX execution and request lanes",
+    "project_ids": [
+      "machx",
+      "llama-cpp"
+    ],
+    "summary": "A C++/SYCL runtime controls model execution and request lanes on Intel Arc. Dispatch and kernel bodies establish a distinct execution path; the reported speedup is an author-measured, same-engine revision comparison.",
+    "summary_cn": "在 Intel Arc 上以 C++/SYCL 重建模型执行和请求并发；调用链与 XMX 内核体现独立执行改造。作者报告的是同一引擎版本间收益，不能扩展为已独立验证或全面优于其他引擎。",
+    "motivation": "The author targets local agent workloads on Arc. This motivates hardware-specific kernels and serving policies, but does not establish that a tuned existing engine cannot serve the workload.",
+    "boundary": "Owns model orchestration, SYCL attention/quantized matmul and lane serving. The reviewed Qwen MoE split selects XMX by context, leaves INT8 KV on a separate path and falls back outside supported shapes/cache bounds.",
+    "reuse": "Uses SYCL/oneAPI, GGUF and ggml quantization layouts, HTTP/JSON libraries and attributed ggml-derived import/reference routines. llama.cpp is a validation/comparison reference; inspected execution files are not a llama.cpp service wrapper. Attention comments also credit llama-SYCL techniques; no clean-room originality claim is inferred.",
+    "tradeoff": "B70-oriented tuning and shape/context dispatch restrict portability. XMX fp16 probabilities and accumulation order differ from the earlier SIMD route. Optional MTP and quantization must be compared under their own checkpoint/precision and decoding contracts.",
+    "construction": "Traced qwen35moe_split.cpp through q35_xmx_decode.hpp into full_attention_fa2_decode_xmx: the hd256 default uses two pipelined subgroups, shared score buffers and register-resident output fragments. Inspected Q4_K tiled GEMM and lane draft/verify orchestration as additional execution evidence.",
+    "ai_role": "Upstream records a Claude read-only host-synchronization analysis and a Codex adversarial review of the GLM serving delta. This is disclosed assistance in analysis/review, not evidence that AI wrote every kernel or autonomously built the engine.",
+    "cost": "Total construction/maintenance cost is unknown. Author reports 62.8 to 69.8 tok/s for 35B-A3B Q8_0 on two B70s at a 32K-token prompt, greedy, prompt cache off, v0.2.31 to v0.2.32. This is neither an independently reproduced result nor a cross-engine ranking.",
+    "validation": "Inspected attention tests actually invoke XMX and compare with fp32 reference on fp16-rounded inputs (absolute error <=1e-2), with a <=4e-3 SIMD comparison and finite-output check, including poisoned cache tails. README reports old/new kernel byte checks at 4K-32K and sampled engine continuations; those author checks were not rerun and do not prove distributional equivalence.",
+    "maintenance": "Kernel variants remain selectable for A/B checks; new shapes, context boundaries, SYCL drivers and lane state require regression checks. Rapid release notes and review records document ongoing work, not its total cost.",
+    "evidence_urls": [
+      "https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/README.md",
+      "https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/src/model/q35_xmx_decode.hpp",
+      "https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/src/model/qwen35moe_split.cpp",
+      "https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/src/ops/attention.cpp",
+      "https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/src/ops/gemm_q4k_xmx.cpp",
+      "https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/src/engine/lanes_serve.cpp",
+      "https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/tests/unit/attention_test.cpp",
+      "https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/THIRD_PARTY_LICENSES.md",
+      "https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/docs/glm53/SERVE_SPEED_2026-10-19.md",
+      "https://github.com/Red-Weasel/machx-inference-engine/blob/d953ea2bf88cc47e417d77931a5d2ff296726c7b/docs/deepseek4/79_DECODE_HOST_SYNC_PLAN_2026-09-10.md"
+    ],
+    "checked_on": "2026-10-23"
+  },
+  {
+    "id": "ignis",
+    "title": "Ignis: a new execution program over inherited NInfer kernels",
+    "project_ids": [
+      "ignis",
+      "ninfer"
+    ],
+    "summary": "A Rust scheduler and C++/CUDA execution program rebuild batch-wide decode and state ownership over a pinned NInfer kernel subtree, then replace selected bottlenecks. Reuse and adapted kernels are part of the construction account.",
+    "summary_cn": "在固定版本的 NInfer 内核之上，以 Rust 调度和 C++/CUDA 执行程序重建批量解码与状态管理，再替换已定位的内核瓶颈；明确保留上游复用、移植及低精度计算边界。",
+    "motivation": "The author describes replacing a growing NInfer cherry-pick branch with native scheduling, state and serving for one main coding agent plus concurrent subagents. This is stated motivation, not proof of an inherent limit of general engines.",
+    "boundary": "Rust owns admission, lanes and KV accounting; a step-level C ABI owns the forward pass. decode_graph.cu traverses the model once per batch width; step.cu replays a captured graph or uses the same eager traversal. Flash-Next explicitly calls expert demand/prefetch before MoE compute.",
+    "reuse": "The manifest pins gpillon/ninfer at a00648cb828457986cf5b4b4f712b4cbcd7af0d1, downstream of cometkim/ninfer, natpate/ninfer-windows and Neroued/ninfer. Retains .ninfer artifacts, CUDA operators and recorded patches. The new hq prompt attention adapts mkyt/qwen3-27b-5090 attention/MMA structure and retains the NInfer codec. It is not an all-from-scratch kernel stack.",
+    "tradeoff": "Targets selected checkpoints on single SM120a GPUs. NVFP4 weights, compressed KV, trellis MoE weights, YaRN context scaling and optional abliterated weights require quality checks. The shipped INT8 QK/FP8 PV prompt route adds approximation; not every graph width or sampling configuration has the same behavior.",
+    "construction": "Traced the DFlash2 drafter to an engine-owned k=16 split/merge top-k with register lists, deterministic tie ordering and vendored fallback. Traced the 27B hq prefill dispatcher to bounded-band attention and Flash-Next to residency. These program/kernel changes distinguish this record from the original NInfer and existing 3090 fork case; shared DFlash2 terminology does not make it a duplicate of Splash.",
+    "ai_role": "README explicitly says the engine serves some coding agents that build it. This establishes disclosed participation only; the AGENTS.md file alone is not used as authorship evidence. Human/agent task shares and total savings are unknown.",
+    "cost": "Author reports about 367 tok/s for one lane over eight short greedy coding prompts and 1065 tok/s aggregate for eight lanes on RTX 5090, NVFP4, hq-e8-2b KV, seven DFlash2 drafts. The associated September A/B includes upstream kernel ports. Engineering, verification and ongoing maintenance cost are unknown; these numbers cannot be compared directly with Mach X or asynchronous public engine reports.",
+    "validation": "Inspected top-k tests invoke both kernels, compare exact IDs/BF16 values, exercise ties/extremes and return failure on mismatches. Author findings provide hq route error/KLD and same-session A/B procedures but place several drivers/raw logs in untracked .scratch paths. Batch-width greedy drift is disclosed. No upstream build, GPU tests, quality suite or performance reproduction was run in this catalog review.",
+    "maintenance": "Manifest hashes and patch records preserve upstream provenance; changing model geometry, graphs, compressed KV and expert residency requires composed state tests. Public findings retain failed approaches and partial checks; long-term maintenance effort remains unknown.",
+    "evidence_urls": [
+      "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/README.md",
+      "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/vendor/manifest.json",
+      "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/NOTICE",
+      "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/decode_graph.cu",
+      "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/step.cu",
+      "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/dflash2_drafter.cu",
+      "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/dflash2_topk.cu",
+      "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/tests/test_dflash2_topk.cu",
+      "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/gqa_layer.cu",
+      "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/hq_prompt_attention.cu",
+      "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/residency.cu",
+      "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/flash_next/program.cu",
+      "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/docs/findings/2026-09-24-upstream-quick-wins-ab.md",
+      "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/docs/findings/2026-10-21-prefill-attention-without-prompt-planes.md",
+      "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/crates/runtime/src/cuda_leaf.rs",
+      "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/crates/core/src/scheduler.rs"
+    ],
+    "checked_on": "2026-10-23"
   }
 ]

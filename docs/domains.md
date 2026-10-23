@@ -176,7 +176,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Language models / 语言模型
 
-69 core/adjacent entries; 17 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+71 core/adjacent entries; 17 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
@@ -196,6 +196,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [Gufo RDMA](catalog.md#gufo-rdma) | core | Two Strix Halo machines can jointly host higher-precision Qwen Flash-Next weights, but request state, tensors and speculative execution must remain synchronized across hosts. |
 | [Halogen Flash](catalog.md#halogen-flash) | core | One model family and AMD gfx1151 unified-memory machines motivate tensor-specific precision choices and separate budgets for resident weights, KV state and the paged lookup table. |
 | [hipEngine](catalog.md#hipengine) | core | RDNA3 gfx1100 and Strix Halo gfx1151 need native model kernels, recurrent-state handling and request scheduling qualified for their memory and execution geometry. |
+| [Ignis](catalog.md#ignis) | core | Single SM120a Blackwell GPU (RTX 5090 / RTX PRO 6000), selected Qwen3.8-27B NVFP4 and Flash-Next MoE text paths; image/vision features are advertised but not audited here. |
 | [imp](catalog.md#imp) | core | A single RTX 5090-class sm_120a target and local agent workloads motivate native FP4 arithmetic, memory planning and low-overhead concurrent serving. |
 | [Infernix](catalog.md#infernix) | core | Qwen Flash-Next experts and n-gram embeddings exceed a single RTX 5090’s memory, while local agent sessions demand prefix reuse and bounded concurrency. |
 | [Kipp](catalog.md#kipp) | core | A pinned Qwen3 checkpoint registry and small native runtime motivate explicit model contracts and hardware-checked CPU/Metal/CUDA paths. |
@@ -205,6 +206,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [Lithos Metal](catalog.md#lithos-metal) | core | Registered Apple chip backends and selected Qwen target/draft checkpoints, with explicit recipe, format and context constraints. |
 | [llamAmpere](catalog.md#llamampere) | core | Qwen3.8-27B with an MTP head, primarily single-stream inference on Ampere RTX 3090/3090 Ti, where verification width and long-context state compete for compute and VRAM. |
 | [Llaminar](catalog.md#llaminar) | core | A selected mixture of x86 CPUs, SM86 NVIDIA GPUs and gfx906 AMD GPUs requires explicit placement and communication across vendor-specific execution stacks. |
+| [Mach X](catalog.md#machx) | core | Intel Arc, built/tuned on Arc Pro B70; inspected Qwen 27B and 35B-A3B text decode paths. Other advertised architectures and video are outside this focused review. |
 | [Magnitude](catalog.md#magnitude) | core | Encoding, dtype, tensor geometry, layout, numerical contracts and target capabilities constrain kernel composition, while dynamic positions remain operands. |
 | [memra](catalog.md#memra) | core | Per-card Blackwell execution, limited device memory and low-concurrency or large-model workloads motivate native model programs and explicit state placement. |
 | [MetaInfer](catalog.md#metainfer) | core | Requested model, hardware, parallelism, precision, API contract and iteration budget define the generated artifact. |
