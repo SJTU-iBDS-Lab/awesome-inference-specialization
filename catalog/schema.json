@@ -353,7 +353,9 @@
         "machx",
         "ignis",
         "qwenox",
-        "crucible"
+        "crucible",
+        "strixite",
+        "spark-engine"
       ],
       "featured": [
         "splash",
@@ -374,7 +376,8 @@
         "swiftlm",
         "colibri",
         "ktransformers",
-        "peregrine"
+        "peregrine",
+        "mobiinfer-android"
       ]
     },
     {
@@ -430,7 +433,8 @@
         "qingming-qwen3-tts",
         "voxgen",
         "parakeet-ggml",
-        "parakeet-axiom"
+        "parakeet-axiom",
+        "maya2-native"
       ]
     }
   ],

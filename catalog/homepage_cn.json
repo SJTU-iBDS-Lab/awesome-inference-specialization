@@ -131,5 +131,9 @@
   "machx": "面向 Intel Arc 的 C++/SYCL 引擎，以模型分派的 XMX attention、分块量化 GEMM 和请求并发通道改造执行，超出 GGUF 加载封装；XMX 数值与 SIMD 路径不同，作者性能收益仅适用于所述配置。",
   "ignis": "面向单张 Blackwell 与指定 Qwen 模型的 Rust/CUDA 引擎，在 NInfer 内核之上重建批量解码图、KV 状态管理与专家驻留；新增专用 top-k、改编的分带 prefill attention，量化和改动后的检查点需单独验证质量。",
   "qwenox": "面向 gfx1151 的 Flash-Next HIP 运行时，包含低比特 MoE 内核、分页状态与跨槽投机验证。复用 Halogen 格式、Gufo 内核及 hipfire 思路；W4A4 和草稿宽度需分别检查质量，公开速度仍为作者报告。",
-  "crucible": "面向 gfx1151 的 EXL3 Flash-Next 运行时，具有权重重排内核、合批模型遍历与带检查的递归状态验证。复用 ExLlamaV3 格式及量化权重；精确性声明相对于指定目标，不代表 BF16 等价，性能仍为作者报告。"
+  "crucible": "面向 gfx1151 的 EXL3 Flash-Next 运行时，具有权重重排内核、合批模型遍历与带检查的递归状态验证。复用 ExLlamaV3 格式及量化权重；精确性声明相对于指定目标，不代表 BF16 等价，性能仍为作者报告。",
+  "strixite": "面向 gfx1151 的原生 Flash-Next HIP 运行时，具有分组低比特内核、合批投机状态回滚与分页缓存。作者披露使用编程助手；量化、YaRN 及默认思考干预影响行为，所述完整内核测试未出现在核查的公开源码树中。",
+  "spark-engine": "面向 GB10 的运行时，将模型专用 CUDA 内核、投机执行和定制 RoCE 集合通信与 libtorch、ExLlamaV3 组件结合。已核查 Qwen 文本调用链及通信基础实现；其他模型需另行验证，量化与负载相关的投机接受率限制作者基准的可比性。",
+  "mobiinfer-android": "基于 llama.cpp-omni 的 Android 执行栈，将外置 MoE 专家槽位、前瞻预取与 Hexagon 执行及平铺权重结合。预测未命中仍需按需加载；量化、可选专家数削减及 DSpark 须单独评估，iPad LES 报告不是 Android NPU 性能证据。",
+  "maya2-native": "采用连续批处理、CUDA Graph、逐槽 Mimi 状态与融合 Triton 深度解码内核的流式 TTS 运行时。复用 Qwen、Mimi、PyTorch 等组件；精度和默认时长／EOS 干预影响输出，有限采样检查及作者音频吞吐报告不证明普遍等价。"
 }

@@ -1936,5 +1936,120 @@
       "https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/docs/THIRD_PARTY.md"
     ],
     "checked_on": "2026-11-03"
+  },
+  {
+    "id": "strixite",
+    "project_ids": [
+      "strixite"
+    ],
+    "title": "Strixite: couple grouped expert execution with speculative recurrent state",
+    "summary": "A single-model HIP runtime owns packed expert execution and per-sequence speculative state rather than wrapping another engine.",
+    "summary_cn": "以单模型 HIP 运行时实现打包专家计算与逐序列投机状态，而非封装另一引擎。",
+    "motivation": "Fit Flash-Next and long coding-agent conversations within one 128 GB unified-memory APU.",
+    "boundary": "Native model/runtime/kernel program and serving state; the inspected path is text generation on Linux gfx1151.",
+    "reuse": "Uses Qwen model weights and references, HIP and third-party HTTP/image utilities. The author states other engines were studied; this review does not certify clean-room originality.",
+    "tradeoff": "Narrow hardware/model coverage. Mixed low-bit weights, Q8 KV, YaRN and default thinking intervention must be separated from scheduling-only changes.",
+    "construction": "Model forward calls grouped route/gather/SwiGLU/combine kernels. forward_batch_verify prepares spare GDN state and row offsets, then each sequence resolves through keep/drop or accepted-prefix replay.",
+    "ai_role": "Disclosed: README describes building with a coding assistant; no model name, task share, autonomous workflow or total cost is established.",
+    "validation": "Runtime guards reject duplicate sequences, unresolved verification and invalid row budgets. The maintainer describes private kernel/reference testing; no full public suite was found in this tree. Source inspection and author reports only.",
+    "maintenance": "Author qualifies one Linux machine; Windows/macOS are unsupported. Reproducible numerical validation is limited by the unavailable full test suite.",
+    "cost": "Total development time, compute, token use and maintenance cost are not established by the reviewed evidence.",
+    "evidence_urls": [
+      "https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/README.md",
+      "https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/runtime/qwen4exp.cpp",
+      "https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/kernels/moe_grouped.hip",
+      "https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/serve/think_nudge.cpp",
+      "https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/deploy/strix-server.conf",
+      "https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/docs/weights.md",
+      "https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/THIRD_PARTY.md",
+      "https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/CONTRIBUTING.md"
+    ],
+    "checked_on": "2026-11-03"
+  },
+  {
+    "id": "spark-engine",
+    "project_ids": [
+      "spark-engine"
+    ],
+    "title": "Spark Engine: specialize model execution and communication for GB10",
+    "summary": "A Rust/CUDA stack controls low-bit model execution and small-node-count RoCE collectives while retaining tensor and format infrastructure.",
+    "summary_cn": "以 Rust/CUDA 栈控制低比特模型执行与少量节点的 RoCE 通信，同时复用张量和格式基础设施。",
+    "motivation": "Serve selected large MoE models on one or a few unified-memory DGX Spark nodes.",
+    "boundary": "Qwen text forward/FFI/kernel dispatch and the N-way collective implementation were inspected; this is not full qualification of all advertised GLM, DeepSeek or vision routes.",
+    "reuse": "libtorch/tch for tensors, streams and graphs; cuBLAS/NCCL; separately built ExLlamaV3 library and weight formats; libibverbs for RoCE.",
+    "tradeoff": "Hardware/topology-specific execution and quantized checkpoints. Precision-class switches can alter rounding or target behavior; benchmark dates, clocks, sampling and draft acceptance differ by model.",
+    "construction": "Qwen MoE dispatch overlaps router work with the shared expert, then invokes packed expert execution. The C++ shim gates custom collectives; N-way RDMA posts payload and sequence flags through CPU proxies and reduces peers in fixed rank order on GPU.",
+    "ai_role": "Not established by the reviewed documentation or implementation.",
+    "validation": "The public Qwen MoE probe compares routing, relative errors and repeated-output identity against a Python reference but only prints those results. It is diagnostic evidence, not an enforced passing gate. No hardware or model test was executed here.",
+    "maintenance": "CUDA/libtorch/EXL3 ABI and fabric configuration are explicit dependencies; one inspected communication substrate does not prove all model/TP combinations correct.",
+    "cost": "Total development time, compute, token use and maintenance cost are not established by the reviewed evidence.",
+    "evidence_urls": [
+      "https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/README.md",
+      "https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/engine-rs/src/qwen/model.rs",
+      "https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/engine-rs/shim/qwen_moe.cu",
+      "https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/engine-rs/shim/moe_exl3.cuh",
+      "https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/engine-rs/shim/shim.cpp",
+      "https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/engine-rs/shim/rdma_arn.cu",
+      "https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/reference/qwen38/test_kern_moe.py",
+      "https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/docs/qwen-switches.md",
+      "https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/THIRD_PARTY.md"
+    ],
+    "checked_on": "2026-11-03"
+  },
+  {
+    "id": "mobiinfer-android",
+    "project_ids": [
+      "mobiinfer-android"
+    ],
+    "title": "MobiInfer Android: integrate external expert scheduling with Hexagon execution",
+    "summary": "A specialized fork connects model routing, flash-backed expert slots and Hexagon execution under mobile memory constraints.",
+    "summary_cn": "在移动内存约束下，以专用分支串联模型路由、闪存专家槽位与 Hexagon 执行。",
+    "motivation": "Run MoE models whose full expert weights exceed practical handset RAM by loading required experts from storage.",
+    "boundary": "Model graph, expert I/O/slot runtime and Hexagon host/DSP dispatch; text source reviewed, not the app UI or advertised image-generation path.",
+    "reuse": "llama.cpp and llama.cpp-omni graph/model infrastructure and LES lineage, Snapdragon toolchain/backend components, pretrained models and DSpark drafts. Individual upstream kernel originality is not established.",
+    "tradeoff": "Flash latency, slot capacity and SDK/SoC support constrain execution. Keeping predicted and actual routing separate avoids intentional expert omission, but configurable top-k reduction and mixed precision do not preserve the original model contract.",
+    "construction": "qwen35moe creates next-layer router predictions; custom graph callbacks pass actual IDs and predictions into the slot runtime. Protected live mappings, pending installs and per-phase windows precede Hexagon matmul dispatch over tiled packs.",
+    "ai_role": "Not established; inherited contribution policies do not establish authorship.",
+    "validation": "Inspected code checks tensor type/shape, slot mapping and missing installations. Documentation separates lookahead scheduling from quantization and DSpark stages, but its staged LES performance is on iPad M4. Android results remain separate author reports, with no independent handset or end-to-end equivalence test here.",
+    "maintenance": "Requires matching external expert packs, Hexagon SDK/runtime and supported handset configuration. New image/vision features need their own source and quality review.",
+    "cost": "Total development time, compute, token use and maintenance cost are not established by the reviewed evidence.",
+    "evidence_urls": [
+      "https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/README.md",
+      "https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/src/models/qwen35moe.cpp",
+      "https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/src/llama-moe-slot.cpp",
+      "https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/ggml/src/ggml-hexagon/ggml-hexagon.cpp",
+      "https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/ggml/src/ggml-hexagon/htp/matmul-ops.c",
+      "https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/docs/les/lookahead-expert-scheduling.md",
+      "https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/docs/backend/snapdragon/README.md"
+    ],
+    "checked_on": "2026-11-03"
+  },
+  {
+    "id": "maya2-native",
+    "project_ids": [
+      "maya2-native"
+    ],
+    "title": "Maya2 Native / Maya3: schedule streaming speech around static codec state",
+    "summary": "A speech-specific runtime integrates request admission, fused depth decoding and stateful one-frame codec replay.",
+    "summary_cn": "面向语音的运行时整合请求准入、融合深度解码与有状态的逐帧编解码重放。",
+    "motivation": "Keep first-audio latency and playback stalls bounded while sharing one GPU among many speech streams.",
+    "boundary": "Owns the streaming engine and optimized backbone/depth/codec execution; model training and multilingual speech quality are separate contributions.",
+    "reuse": "PyTorch/Transformers/Triton plus a Qwen3-derived trained backbone, Mimi codec and ECAPA speaker conditioning. Maya3 is the package/model name in the maya2-native repository, not a second catalog record.",
+    "tradeoff": "Bucketed static state and per-seat context limits constrain admission and memory. BF16/FP16 choices and on-by-default duration caps/EOS boosts change generation relative to an unguarded full-precision reference.",
+    "construction": "The engine admits/reset slots, combines text prefill with live decode, runs all depth codebooks and decodes one frame through static Mimi state. Triton add/LayerNorm and top-k sampling are called inside the captured depth body.",
+    "ai_role": "Not established by the reviewed sources.",
+    "validation": "test_depth_fused samples 200,000 draws from one fixed logit row, asserts total variation below 0.03 and no mass outside top-k, and compares greedy agreement on 16 hidden states with an FP16/FP32 baseline allowing 0.05 slack. These finite checks were inspected, not executed; no perceptual or end-to-end reproduction here.",
+    "maintenance": "Checkpoint format, CUDA-graph bucket/context sizes and pinned torch/transformers versions are part of the deployment contract. Pre-release engine benchmarks must not be mixed with release-checkpoint results.",
+    "cost": "Total development time, compute, token use and maintenance cost are not established by the reviewed evidence.",
+    "evidence_urls": [
+      "https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/README.md",
+      "https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/docs/ENGINE.md",
+      "https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/maya3/engine.py",
+      "https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/serve/fast_depth.py",
+      "https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/serve/fast_depth_kernels.py",
+      "https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/serve/fast_codec.py",
+      "https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/maya3/tests/test_depth_fused.py"
+    ],
+    "checked_on": "2026-11-03"
   }
 ]

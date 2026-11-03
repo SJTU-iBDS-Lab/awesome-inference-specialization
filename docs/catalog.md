@@ -4,7 +4,7 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Systems & construction](systems.md) · [Comparison](comparison.md) · [Taxonomy](taxonomy.md) · [Evidence policy](evidence-policy.md)
 
-133 entries. Source review: 2026-11-03. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
+137 entries. Source review: 2026-11-03. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
 
 Use the family links below, or search this page for a model, device, mechanism or project. Source visibility is not a license or correctness certification. Semantic labels identify evaluation obligations, not proven equivalence.
 
@@ -12,7 +12,7 @@ Use the family links below, or search this page for a model, device, mechanism o
 
 <a id="memory"></a>
 
-## Data residency & movement / 数据驻留与搬移 (18)
+## Data residency & movement / 数据驻留与搬移 (19)
 
 **What stays close to compute?** Place, page, prefetch or offload weights, experts and KV state.
 
@@ -303,6 +303,35 @@ Runs memory-heavy MoE experts through ISA-specific CPU kernels and NUMA-aware pl
 **Evidence:** [Source 1](https://github.com/kvcache-ai/ktransformers/blob/HEAD/README.md) · [Source 2](https://github.com/kvcache-ai/ktransformers/blob/HEAD/kt-kernel/README.md) · [Source 3](https://github.com/kvcache-ai/ktransformers/blob/HEAD/kt-kernel/operators/amx/moe.hpp).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `initial`.
+
+</details>
+
+<a id="mobiinfer-android"></a>
+
+### [MobiInfer Android](https://github.com/IPADS-SAI/Mobiinfer-Android)
+
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** A substantial llama.cpp-omni-derived execution stack integrating flash-resident MoE experts with Hexagon host/DSP execution, beyond Android UI packaging.
+
+Model graph predicts next-layer expert IDs for prefetch, while a slot runtime installs actually routed experts, protects live mappings and separates small-batch decode from prefill storage. Hexagon dispatch and DSP matmul consume specialized tiled expert layouts.
+
+**Scope:** Selected 30B/35B-A3B MoE text paths on Snapdragon Android devices using Hexagon HTP/HVX/HMX and external expert packs; advertised multimodal and MOSS-Image paths are outside this review.
+
+**Boundary:** Builds on llama.cpp, llama.cpp-omni and Snapdragon tooling; LES is not claimed as an Android-only invention. Prediction misses retain demand loading, but optional expert-count reduction changes computation. Quantization and DSpark add separate contracts. The LES document reports iPad M4 data, not Android results; phone README measurements are author-only. No handset execution.
+
+**Semantic considerations:** layout / scheduling, reduced precision, configuration-dependent, target-verified proposals.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `expert-offload`, `expert-prefetch`, `expert-slot-mapping`, `tiled-weight-layout`, `npu-kernels`, `speculative-decoding`.
+
+**Constraints:** `model`, `hardware`, `memory`, `precision`, `workload`.
+
+**Evidence:** [Source 1](https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/README.md) · [Source 2](https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/src/models/qwen35moe.cpp) · [Source 3](https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/src/llama-moe-slot.cpp) · [Source 4](https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/ggml/src/ggml-hexagon/ggml-hexagon.cpp) · [Source 5](https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/ggml/src/ggml-hexagon/htp/matmul-ops.c) · [Source 6](https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/docs/les/lookahead-expert-scheduling.md) · [Source 7](https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/docs/backend/snapdragon/README.md).
+
+**Reviewed:** 2026-11-03 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 
 </details>
 
@@ -1028,7 +1057,7 @@ Extends the llama.cpp/TurboQuant lineage with SM86 verification kernels, a draft
 
 <a id="serving"></a>
 
-## Parallelism & scheduling / 并行与调度 (7)
+## Parallelism & scheduling / 并行与调度 (8)
 
 **Who executes what, and when?** Partition stages, devices and requests around workload constraints.
 
@@ -1087,6 +1116,35 @@ Builds model-specific compute graphs and rank plans, placing tensor/pipeline sta
 **Evidence:** [Source 1](https://github.com/Llaminar/llaminar/blob/454741b1b2228bc6874e46ade75bbf523a8385d5/README.md) · [Source 2](https://github.com/Llaminar/llaminar/blob/454741b1b2228bc6874e46ade75bbf523a8385d5/src/v2/execution/local_execution/engine/ForwardExecutionEngine.cpp) · [Source 3](https://github.com/Llaminar/llaminar/blob/454741b1b2228bc6874e46ade75bbf523a8385d5/src/v2/collective/backends/HeterogeneousBackend.cpp) · [Source 4](https://github.com/Llaminar/llaminar/blob/454741b1b2228bc6874e46ade75bbf523a8385d5/src/v2/planning/AutomaticOrchestrationPlanner.cpp).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
+
+</details>
+
+<a id="maya2-native"></a>
+
+### [Maya2 Native / Maya3](https://github.com/MayaResearch/maya2-native)
+
+[core](systems.md#core) · `system` · `runtime` · `audio` · **public code**
+
+**Survey relevance:** A model-specific streaming TTS execution stack with continuous admission, static per-slot codec state and fused kernels; distinct from the trained speech model or HTTP wrapper.
+
+A GPU-owner loop mixes new text prefill with active audio streams, captures bucketed backbone/depth/codec steps and stores per-slot Mimi convolution/KV state. Triton kernels fuse residual/LayerNorm and top-k sampling in the depth decoder.
+
+**Scope:** Maya3 speech checkpoint with a Qwen3-derived backbone, depth decoder and Mimi codec on NVIDIA CUDA GPUs; author qualification includes H100 and RTX 4090.
+
+**Boundary:** Reuses PyTorch, Transformers, Triton, Qwen, Mimi and ECAPA components. BF16 backbone/FP16 depth and default duration/EOS loop guards affect the target output. Pre-release engine tables and release README results differ; audio-seconds/s is aggregate audio throughput, not token rate. Finite sampler/parity checks do not establish universal equivalence. No GPU or listening evaluation here.
+
+**Semantic considerations:** layout / scheduling, reduced precision, configuration-dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `continuous-batching`, `cuda-graphs`, `static-state-buffers`, `kernel-fusion`, `prefix-caching`, `streaming-audio`.
+
+**Constraints:** `model`, `hardware`, `memory`, `precision`, `workload`.
+
+**Evidence:** [Source 1](https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/README.md) · [Source 2](https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/docs/ENGINE.md) · [Source 3](https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/maya3/engine.py) · [Source 4](https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/serve/fast_depth.py) · [Source 5](https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/serve/fast_depth_kernels.py) · [Source 6](https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/serve/fast_codec.py) · [Source 7](https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/maya3/tests/test_depth_fused.py).
+
+**Reviewed:** 2026-11-03 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 
 </details>
 
@@ -1237,7 +1295,7 @@ Combines Ulysses and Ring sequence parallelism with CFG/data parallelism and Pip
 
 <a id="execution"></a>
 
-## Compiled & native execution / 编译与原生执行 (76)
+## Compiled & native execution / 编译与原生执行 (78)
 
 **How does a graph become an executable?** Fuse, lower, specialize and dispatch graphs or native kernels.
 
@@ -2952,6 +3010,35 @@ Implements Rust/Metal model paths with resident decode state, leased scratch buf
 
 </details>
 
+<a id="spark-engine"></a>
+
+### [Spark Engine](https://github.com/fly9i/spark-engine)
+
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** Rebuilds model-specific kernels, speculative state and GB10 communication while retaining libtorch and EXL3 components; distinct from generic serving or a launcher.
+
+Rust model execution calls CUDA EXL3 and fused routing/expert kernels. The communication shim selects a custom RoCE path with pinned host-mapped buffers, CPU proxy posting and fixed-rank GPU reductions, alongside library collective paths.
+
+**Scope:** NVIDIA DGX Spark / GB10 sm_121, Linux aarch64. Qwen3.8-Flash-Next text path on one node and N-way RDMA substrate inspected; GLM/DeepSeek multi-node and vision paths are advertised but not fully audited here.
+
+**Boundary:** Reuses libtorch/tch, cuBLAS/NCCL and ExLlamaV3 components; not a dependency-free runtime. Quantized weights/KV, rounding switches and optional altered checkpoints are separate from execution gains. Structured counting has high draft acceptance; aggregate throughput is not single-request speed. An inspected MoE probe prints errors without failing a tolerance gate. No GPU/RDMA reproduction.
+
+**Semantic considerations:** layout / scheduling, reduced precision, configuration-dependent, target-verified proposals.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `native-execution`, `model-specific-kernels`, `packed-weight-kernels`, `speculative-decoding`, `rdma-collectives`, `prefix-caching`, `cuda-graphs`.
+
+**Constraints:** `model`, `hardware`, `memory`, `precision`, `workload`.
+
+**Evidence:** [Source 1](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/README.md) · [Source 2](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/engine-rs/src/qwen/model.rs) · [Source 3](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/engine-rs/shim/qwen_moe.cu) · [Source 4](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/engine-rs/shim/moe_exl3.cuh) · [Source 5](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/engine-rs/shim/shim.cpp) · [Source 6](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/engine-rs/shim/rdma_arn.cu) · [Source 7](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/reference/qwen38/test_kern_moe.py) · [Source 8](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/docs/qwen-switches.md) · [Source 9](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/THIRD_PARTY.md).
+
+**Reviewed:** 2026-11-03 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
+
+</details>
+
 <a id="splash"></a>
 
 ### [Splash](https://github.com/incoai/splash)
@@ -3094,6 +3181,35 @@ A community llama.cpp fork adds guarded gfx1151 matmul, MoE and Gated DeltaNet f
 **Evidence:** [Source 1](https://github.com/halo-box/strix-llama.cpp/blob/6aa81b88e14aa753c1c7e1a9ff27c9d50fd3c673/README.md) · [Source 2](https://github.com/halo-box/strix-llama.cpp/blob/6aa81b88e14aa753c1c7e1a9ff27c9d50fd3c673/ggml/src/ggml-cuda/gated_delta_net.cu) · [Source 3](https://github.com/halo-box/strix-llama.cpp/blob/6aa81b88e14aa753c1c7e1a9ff27c9d50fd3c673/ggml/src/ggml-vulkan/ggml-vulkan.cpp) · [Source 4](https://github.com/halo-box/strix-llama.cpp/blob/6aa81b88e14aa753c1c7e1a9ff27c9d50fd3c673/CONTRIBUTING.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
+
+</details>
+
+<a id="strixite"></a>
+
+### [Strixite](https://github.com/shawnshekari/strixite)
+
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** Owns the Flash-Next model program, native HIP kernels and speculative sequence state on gfx1151; independent runtime evidence beyond shared model support.
+
+Dispatches grouped low-bit expert kernels with WMMA and shared-expert fusion. Batched verification writes recurrent state to spare buffers and commits or rolls back each sequence separately; paged KV and RAM/disk prompt state support long conversations.
+
+**Scope:** Qwen3.8-Flash-Next on one Linux AMD Strix Halo / gfx1151 machine with 128 GB unified memory; text paths inspected, vision not qualified here.
+
+**Boundary:** Mixed 4/8-bit weights, 8-bit KV and YaRN change the reference contract. The served configuration enables a thinking nudge that can alter generation. Full kernel/reference tests are described by the author but not present in the inspected public tree. Public speed and quality results are author reports; no GPU reproduction.
+
+**Semantic considerations:** layout / scheduling, reduced precision, configuration-dependent, target-verified proposals.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `native-execution`, `model-specific-kernels`, `packed-weight-kernels`, `speculative-decoding`, `continuous-batching`, `paged-kv`, `prefix-caching`.
+
+**Constraints:** `model`, `hardware`, `memory`, `precision`, `workload`.
+
+**Evidence:** [Source 1](https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/README.md) · [Source 2](https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/runtime/qwen4exp.cpp) · [Source 3](https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/kernels/moe_grouped.hip) · [Source 4](https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/serve/think_nudge.cpp) · [Source 5](https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/deploy/strix-server.conf) · [Source 6](https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/docs/weights.md) · [Source 7](https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/THIRD_PARTY.md) · [Source 8](https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/CONTRIBUTING.md).
+
+**Reviewed:** 2026-11-03 · **AI involvement:** `disclosed` · **Discovery:** `keyword`.
 
 </details>
 

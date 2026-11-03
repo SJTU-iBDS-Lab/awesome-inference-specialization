@@ -25,6 +25,10 @@
     "dinfer": [{"kind": "paper", "url": "https://arxiv.org/abs/2510.08666", "provenance": "catalog"}]
   },
   "recent": [
+    {"id": "strixite", "added_on": "2026-11-03", "label": "Strixite"},
+    {"id": "spark-engine", "added_on": "2026-11-03", "label": "Spark Engine"},
+    {"id": "mobiinfer-android", "added_on": "2026-11-03", "label": "MobiInfer Android"},
+    {"id": "maya2-native", "added_on": "2026-11-03", "label": "Maya2 Native / Maya3"},
     {"id": "qwenox", "added_on": "2026-11-03", "label": "Qwenox"},
     {"id": "crucible", "added_on": "2026-11-03", "label": "Crucible"},
     {"id": "machx", "added_on": "2026-10-23", "label": "Mach X"},

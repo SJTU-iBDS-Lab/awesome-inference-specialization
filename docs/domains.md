@@ -137,7 +137,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Speech & audio / 语音与音频
 
-23 core/adjacent entries; 1 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+24 core/adjacent entries; 1 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
@@ -148,6 +148,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [Gufo](catalog.md#gufo) | core | Selected models on Linux x86-64 AMD Strix Halo (gfx1151), optimized for 128 GiB unified-memory systems; smaller memory configurations are conditional on model fit. |
 | [hipEngine](catalog.md#hipengine) | core | RDNA3 gfx1100 and Strix Halo gfx1151 need native model kernels, recurrent-state handling and request scheduling qualified for their memory and execution geometry. |
 | [LightX2V](catalog.md#lightx2v) | core | Targets large supported image and video models on memory-constrained accelerators and multi-device systems. |
+| [Maya2 Native / Maya3](catalog.md#maya2-native) | core | Maya3 speech checkpoint with a Qwen3-derived backbone, depth decoder and Mimi codec on NVIDIA CUDA GPUs; author qualification includes H100 and RTX 4090. |
 | [MiniMax-H3 MLX](catalog.md#minimax-h3-mlx) | core | MiniMax-H3 joint video/audio diffusion on Apple Silicon with large unified memory. |
 | [parakeet.cpp (axiom)](catalog.md#parakeet-axiom) | core | Parakeet ASR on CPU and Apple Metal/MPSGraph through the axiom tensor library. |
 | [parakeet.cpp (ggml)](catalog.md#parakeet-ggml) | core | NeMo FastConformer CTC/RNNT/TDT families, including cache-aware streaming, on ggml backends. |
@@ -176,7 +177,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Language models / 语言模型
 
-73 core/adjacent entries; 17 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+76 core/adjacent entries; 17 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
@@ -212,6 +213,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [memra](catalog.md#memra) | core | Per-card Blackwell execution, limited device memory and low-concurrency or large-model workloads motivate native model programs and explicit state placement. |
 | [MetaInfer](catalog.md#metainfer) | core | Requested model, hardware, parallelism, precision, API contract and iteration budget define the generated artifact. |
 | [Mirage Persistent Kernel](catalog.md#mirage) | core | NVIDIA GPU architecture, SM worker/scheduler allocation, model graph, batch shape and multi-GPU topology constrain the compiled execution. |
+| [MobiInfer Android](catalog.md#mobiinfer-android) | core | Selected 30B/35B-A3B MoE text paths on Snapdragon Android devices using Hexagon HTP/HVX/HMX and external expert packs; advertised multimodal and MOSS-Image paths are outside this review. |
 | [NInfer](catalog.md#ninfer) | core | Selected Qwen Dense/MoE checkpoints on Linux and one RTX 5090 (sm_120a), with one resident model and one to eight startup-fixed execution lanes. |
 | [NInfer-3090](catalog.md#ninfer-3090) | core | Qwen dense/MoE serving on a 24 GB RTX 3090 requires SM86-compatible kernels and a smaller memory budget than upstream consumer Blackwell. |
 | [peregrine](catalog.md#peregrine) | core | GLM-5.2 744B-style int4 MoE streaming on Linux with NVMe, CPU and optional NVIDIA CUDA expert execution. |
@@ -219,9 +221,11 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [Qwenox](catalog.md#qwenox) | core | Qwen3.8-Flash-Next on AMD Ryzen AI Max+ 395 / gfx1151 with 128 GB unified memory; Linux and Windows. Text execution reviewed; advertised vision paths not audited. |
 | [Saragossa](catalog.md#saragossa) | core | Single-user local latency on Apple Silicon for selected text and speech architectures with MLX affine integer weights. |
 | [SEIS: Self-Evolving Inference Systems](catalog.md#seis) | core | The paper centers on Qwen3-0.6B on one H100 with single-request greedy decoding, with supplementary Llama-3.2-1B experiments. The linked public ten-trial example uses RTX PRO 6000 Blackwell and is a separate configuration. |
+| [Spark Engine](catalog.md#spark-engine) | core | NVIDIA DGX Spark / GB10 sm_121, Linux aarch64. Qwen3.8-Flash-Next text path on one node and N-way RDMA substrate inspected; GLM/DeepSeek multi-node and vision paths are advertised but not fully audited here. |
 | [Splash](catalog.md#splash) | core | Selected Qwen3.8-27B and Qwen3.6-35B-A3B checkpoints, plus compatible Ternary Bonsai 2, on Apple M3 or newer and macOS 26.4+; text and vision. |
 | [Strata](catalog.md#strata) | core | The Qwen3.8-Flash-Next model family, supported quantized layouts, consumer GPU VRAM and CPU memory/bandwidth define expert residency and transfer-versus-compute choices. |
 | [strix-llama.cpp](catalog.md#strix-llama-cpp) | core | Strix Halo gfx1151 shares limited bandwidth between CPU and GPU and exhibits device/driver-specific Vulkan and HIP behavior. |
+| [Strixite](catalog.md#strixite) | core | Qwen3.8-Flash-Next on one Linux AMD Strix Halo / gfx1151 machine with 128 GB unified memory; text paths inspected, vision not qualified here. |
 | [Swiftlet](catalog.md#swiftlet) | core | Selected Qwen hybrid MoE architectures on macOS/iOS, using qpack containers and bounded resident memory. |
 | [SwiftLM](catalog.md#swiftlm) | core | Oversized MoE checkpoints on Apple Silicon with explicit SSD streaming alongside selected speculative and memory controls. |
 | [TensorFold](catalog.md#tensorfold) | core | Explicit model–checkpoint-format–platform qualification, quantization group/bit metadata and memory admission restrict which execution paths are accepted. |

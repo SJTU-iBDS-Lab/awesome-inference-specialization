@@ -81,3 +81,5 @@ Reviewed revision: `83e73eb94051dc67431829d0f3d3eb67db0b8e9b`.
 ## Follow-up source inspection — 2026-11-03
 
 [Qwenox, Halogen and Crucible review](source-review-2026-11-03.md) adds two public-code execution cases and refreshes Halogen's existing closed-core record. It records adapted kernels, quantization and state-validation limits, corrects current API/cache comparisons and preserves expanded-discovery leads separately from admitted records. Other historical findings and review dates are unchanged.
+
+[Expanded native, mobile and speech review](source-review-2026-11-03-expanded.md) subsequently adds Strixite, Spark Engine, MobiInfer Android and Maya2 Native. It distinguishes actual execution contributions from inherited code, model changes, private tests and diagnostic-only comparisons. The device cross-index links the admitted mobile-expert case; unreviewed search hits are not counted.

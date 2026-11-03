@@ -20,7 +20,7 @@
 <!-- CATALOG-START -->
 
 <p align="center">
-<sub>133 个项目 · 98 个引擎 · 14 个构建流程 · 3 个基准 · 18 项资源</sub>
+<sub>137 个项目 · 102 个引擎 · 14 个构建流程 · 3 个基准 · 18 项资源</sub>
 </p>
 
 <div align="center">
@@ -31,7 +31,7 @@
 
 </div>
 
-<sub title="目录收录日期，不是项目发布日期"><b>近期收录</b> · 2026-10-16–2026-11-03 · [Qwenox](#project-qwenox) · [Crucible](#project-crucible) · [Mach X](#project-machx) · [Ignis](#project-ignis) · [dInfer](#project-dinfer) · [更新记录](docs/updates.md)</sub>
+<sub title="目录收录日期，不是项目发布日期"><b>近期收录</b> · 2026-11-03 · [Strixite](#project-strixite) · [Spark Engine](#project-spark-engine) · [MobiInfer Android](#project-mobiinfer-android) · [Maya2 Native / Maya3](#project-maya2-native) · [Qwenox](#project-qwenox) · [更新记录](docs/updates.md)</sub>
 
 <a id="featured-reading"></a>
 <a id="start-here"></a>
@@ -100,7 +100,7 @@
 
 <a id="homepage-system-text"></a>
 
-### 语言模型 <sub>· 57</sub>
+### 语言模型 <sub>· 60</sub>
 
 - <a id="project-ane-lm"></a>**[ANE-LM](https://github.com/johnmai-dev/ANE-LM)** <sub title="johnmai-dev/ANE-LM: 144 repository stars; observed 2026-10-14">★&nbsp;144</sub> — 作为 ane.cpp 的直接前身，以编译缓存连接 Qwen 的 ANE 内核与 CPU 运算，保留私有接口和有限模型范围的约束。 <sub>[详情](docs/catalog.md#ane-lm)</sub>
 - <a id="project-ane-cpp"></a>**[ane.cpp](https://github.com/skyfallsin/ane.cpp)** <sub title="skyfallsin/ane.cpp: 6 repository stars; observed 2026-10-14">★&nbsp;6</sub> — 通过硬件探针和保留／舍弃实验，将 Qwen 卷积编译到 ANE，并由 CPU 处理归一化、注意力与 KV 状态。 <sub>[详情](docs/catalog.md#ane-cpp)</sub>
@@ -139,6 +139,7 @@
 - <a id="project-magnitude"></a>**[Magnitude](https://github.com/magnitudedev/magnitude)** <sub title="magnitudedev/magnitude: 6,719 repository stars; observed 2026-10-14">★&nbsp;6.7k</sub> — 已审查的 Metal／MLX 路径将类型化操作映射到兼容内核方案，并生成专化融合入口，展示专用推理栈边界，不外推至其他后端。 <sub>[详情](docs/catalog.md#magnitude)</sub>
 - <a id="project-memra"></a>**[memra](https://github.com/avifenesh/memra)** <sub title="avifenesh/memra: 2 repository stars; observed 2026-10-14">★&nbsp;2</sub> — 以 Rust 宿主连接预编译 CUDA 内核与模型专用程序，显式管理量化、KV 和多卡放置，并按模型及设备设置精度验证。 <sub>多模态 · [详情](docs/catalog.md#memra)</sub>
 - <a id="project-metalchat"></a>**[MetalChat](https://github.com/ybubnov/metalchat)** <sub title="ybubnov/metalchat: 23 repository stars; observed 2026-10-14">★&nbsp;23</sub> — 以 C++/Metal 张量、层和模型抽象构建原生生成路径，作为可复用框架的邻近案例，生成测试不等于完整质量验证。 <sub>[详情](docs/catalog.md#metalchat)</sub>
+- <a id="project-mobiinfer-android"></a>**[MobiInfer Android](https://github.com/IPADS-SAI/Mobiinfer-Android)** <sub title="IPADS-SAI/Mobiinfer-Android: 196 repository stars; observed 2026-11-03">★&nbsp;196</sub> — 基于 llama.cpp-omni 的 Android 执行栈，将外置 MoE 专家槽位、前瞻预取与 Hexagon 执行及平铺权重结合。预测未命中仍需按需加载；量化、可选专家数削减及 DSpark 须单独评估，iPad LES 报告不是 Android NPU 性能证据。 <sub>[详情](docs/catalog.md#mobiinfer-android)</sub>
 - <a id="project-moe-infinity"></a>**[MoE-Infinity](https://github.com/EfficientMoE/MoE-Infinity)** <sub title="EfficientMoE/MoE-Infinity: 370 repository stars; observed 2026-10-14">★&nbsp;370</sub> — 将专家权重分层卸载，以激活感知缓存保留热点专家并按轨迹预取，作为既有专家驻留策略的对照，公开实现与论文系统有别。 <sub>[详情](docs/catalog.md#moe-infinity)</sub>
 - <a id="project-ninfer"></a>**[NInfer](https://github.com/Neroued/ninfer)** <sub title="Neroued/ninfer: 2,990 repository stars; observed 2026-10-14">★&nbsp;3k</sub> — 为指定 Qwen 模型在单张 RTX 5090 上自建原生执行、KV 状态和 CUDA 图，并管理请求与缓存；代理指令文件不构成 AI 作者证据。 <sub>多模态 · [详情](docs/catalog.md#ninfer)</sub>
 - <a id="project-ninfer-3090"></a>**[NInfer-3090](https://github.com/ashalliants/ninfer-3090)** <sub title="ashalliants/ninfer-3090: 49 repository stars; observed 2026-10-14">★&nbsp;49</sub> — 将 NInfer 分支适配至 24GB RTX 3090，重建 SM86 量化内核、内存规划和回放状态，超出单纯更改编译架构的范围。 <sub>多模态 · [详情](docs/catalog.md#ninfer-3090)</sub>
@@ -147,9 +148,11 @@
 - <a id="project-qwenox"></a>**[Qwenox](https://github.com/IIIIIllllIIIIIlllll/Qwenox)** <sub title="IIIIIllllIIIIIlllll/Qwenox: 126 repository stars; observed 2026-11-03">★&nbsp;126</sub> — 面向 gfx1151 的 Flash-Next HIP 运行时，包含低比特 MoE 内核、分页状态与跨槽投机验证。复用 Halogen 格式、Gufo 内核及 hipfire 思路；W4A4 和草稿宽度需分别检查质量，公开速度仍为作者报告。 <sub>[详情](docs/catalog.md#qwenox)</sub>
 - <a id="project-rocmfpx"></a>**[ROCmFPX](https://github.com/ROCmFPX/ROCmFPX)** <sub title="ROCmFPX/ROCmFPX: 48 repository stars; observed 2026-10-14">★&nbsp;48</sub> — 在 llama.cpp 下游定义 AMD 量化块、转换策略及匹配内核，展示格式与后端的协同构建，准确性依配方分别核验。 <sub>[详情](docs/catalog.md#rocmfpx)</sub>
 - <a id="project-saragossa"></a>**[Saragossa](https://github.com/azerozero/saragossa)** <sub title="azerozero/saragossa: 8 repository stars; observed 2026-10-14">★&nbsp;8</sub> — 以 Rust／Metal 为指定文本和语音模型自建执行、驻留解码状态、缓冲区及前缀快照，配有回归对照，聚焦 Apple 芯片单用户场景。 <sub>音频 · [详情](docs/catalog.md#saragossa)</sub>
+- <a id="project-spark-engine"></a>**[Spark Engine](https://github.com/fly9i/spark-engine)** <sub title="fly9i/spark-engine: 9 repository stars; observed 2026-11-03">★&nbsp;9</sub> — 面向 GB10 的运行时，将模型专用 CUDA 内核、投机执行和定制 RoCE 集合通信与 libtorch、ExLlamaV3 组件结合。已核查 Qwen 文本调用链及通信基础实现；其他模型需另行验证，量化与负载相关的投机接受率限制作者基准的可比性。 <sub>[详情](docs/catalog.md#spark-engine)</sub>
 - <a id="project-splash"></a>**[Splash](https://github.com/incoai/splash)** <sub title="incoai/splash: 1,421 repository stars; observed 2026-10-14">★&nbsp;1.4k · [博客](https://inco.ai/blog/splash/)</sub> — 在 Apple 芯片上以模型专用 Metal 内核、草稿验证和前缀复用构建原生服务栈，披露的智能体辅助范围是内核生成，并非整个引擎。 <sub>多模态 · [详情](docs/catalog.md#splash)</sub>
 - <a id="project-strata"></a>**[Strata](https://github.com/Niko1221/Strata)** <sub title="Niko1221/Strata: 23,943 repository stars; observed 2026-10-14">★&nbsp;23.9k</sub> — 面向指定 Qwen 模型，将注意力与热点专家留在 GPU，其余专家交由 CPU，并分层管理 KV；含专家跳过近似，AI 作者身份未证实。 <sub>[详情](docs/catalog.md#strata)</sub>
 - <a id="project-strix-llama-cpp"></a>**[strix-llama.cpp](https://github.com/halo-box/strix-llama.cpp)** <sub title="halo-box/strix-llama.cpp: 231 repository stars; observed 2026-10-14">★&nbsp;231</sub> — 在 llama.cpp 分支中加入 Strix Halo 专用融合内核与推测状态管理；可选推测预填充属近似执行，接受代理贡献不证明 AI 作者身份。 <sub>多模态 · [详情](docs/catalog.md#strix-llama-cpp)</sub>
+- <a id="project-strixite"></a>**[Strixite](https://github.com/shawnshekari/strixite)** <sub title="shawnshekari/strixite: 93 repository stars; observed 2026-11-03">★&nbsp;93</sub> — 面向 gfx1151 的原生 Flash-Next HIP 运行时，具有分组低比特内核、合批投机状态回滚与分页缓存。作者披露使用编程助手；量化、YaRN 及默认思考干预影响行为，所述完整内核测试未出现在核查的公开源码树中。 <sub>[详情](docs/catalog.md#strixite)</sub>
 - <a id="project-swiftlet"></a>**[Swiftlet](https://github.com/leonickson1/Swiftlet)** <sub title="leonickson1/Swiftlet: 659 repository stars; observed 2026-10-14">★&nbsp;659</sub> — 以 Swift/Metal 重建部分 Qwen 混合 MoE 路径，结合专家容器、缓存与原生状态；作者披露 AI 辅助并记录参考验证。 <sub>[详情](docs/catalog.md#swiftlet)</sub>
 - <a id="project-swiftlm"></a>**[SwiftLM](https://github.com/SharpAI/SwiftLM)** <sub title="SharpAI/SwiftLM: 780 repository stars; observed 2026-10-14">★&nbsp;780</sub> — 在 MLX Swift 及维护分支中重构专家读取、异步 I/O 和生成同步边界，为超内存 MoE 增加显式 SSD 流式执行。 <sub>多模态 · [详情](docs/catalog.md#swiftlm)</sub>
 - <a id="project-tensorfold"></a>**[TensorFold](https://github.com/ashhart/TensorFold)** <sub title="ashhart/TensorFold: 1,314 repository stars; observed 2026-10-14">★&nbsp;1.3k</sub> — 以原生 Zig 运行时执行限定模型与格式，按压缩布局契约读取权重并选择 Metal 或 CUDA 路径，投影融合以格式兼容为前提。 <sub>[详情](docs/catalog.md#tensorfold)</sub>
@@ -201,9 +204,10 @@
 
 <a id="homepage-system-audio"></a>
 
-### 语音与音频 <sub>· 9</sub>
+### 语音与音频 <sub>· 10</sub>
 
 - <a id="project-aria"></a>**[Aria](https://github.com/matteospanio/aria)** <sub title="matteospanio/aria: 10 repository stars; observed 2026-10-14">★&nbsp;10</sub> — 以 C 重建 Stable Audio 3 的条件编码、扩散、采样和音频解码，作者披露 LLM 辅助并提供受控参考测试，成本仍未知。 <sub>[详情](docs/catalog.md#aria)</sub>
+- <a id="project-maya2-native"></a>**[Maya2 Native / Maya3](https://github.com/MayaResearch/maya2-native)** <sub title="MayaResearch/maya2-native: 21 repository stars; observed 2026-11-03">★&nbsp;21</sub> — 采用连续批处理、CUDA Graph、逐槽 Mimi 状态与融合 Triton 深度解码内核的流式 TTS 运行时。复用 Qwen、Mimi、PyTorch 等组件；精度和默认时长／EOS 干预影响输出，有限采样检查及作者音频吞吐报告不证明普遍等价。 <sub>[详情](docs/catalog.md#maya2-native)</sub>
 - <a id="project-parakeet-axiom"></a>**[parakeet.cpp (axiom)](https://github.com/Frikallo/parakeet.cpp)** <sub title="Frikallo/parakeet.cpp: 306 repository stars; observed 2026-10-14">★&nbsp;306</sub> — 基于 axiom 在 C++ 中独立重建 Parakeet 编码解码及流式缓存，复用 CPU/MPSGraph 张量后端，局部测试非端到端结果。 <sub>[详情](docs/catalog.md#parakeet-axiom)</sub>
 - <a id="project-parakeet-ggml"></a>**[parakeet.cpp (ggml)](https://github.com/mudler/parakeet.cpp)** <sub title="mudler/parakeet.cpp: 840 repository stars; observed 2026-10-14">★&nbsp;840</sub> — 将 NeMo 语音特征、编码解码图和缓存感知流式会话移植到 C++/ggml，结合 GGUF 转换与参考一致性测试样例。 <sub>[详情](docs/catalog.md#parakeet-ggml)</sub>
 - <a id="project-qingming-qwen3-tts"></a>**[Qingming Qwen3-TTS](https://github.com/uulong950/qingming-qwen3-tts)** <sub title="uulong950/qingming-qwen3-tts: 6 repository stars; observed 2026-10-14">★&nbsp;6</sub> — 分别为 24GB RX 7900 XTX 与 RTX 4090 构建 Qwen3-TTS 原生路径，显式划分常驻生成和流式解码资源。 <sub>[详情](docs/catalog.md#qingming-qwen3-tts)</sub>

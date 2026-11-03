@@ -85,6 +85,10 @@ Start with what is rebuilt and what effort is disclosed. Read each case for reta
 | [Ignis](cases.md#ignis) | Rust owns admission, lanes and KV accounting; a step-level C ABI owns the forward pass. decode_graph.cu traverses the model once per batch width; step.cu replays a captured graph or uses the same eager traversal. Flash-Next explicitly calls expert demand/prefetch before MoE compute. | Author reports about 367 tok/s for one lane over eight short greedy coding prompts and 1065 tok/s aggregate for eight lanes on RTX 5090, NVFP4, hq-e8-2b KV, seven DFlash2 drafts. The associated September A/B includes upstream kernel ports. Engineering, verification and ongoing maintenance cost are unknown; these numbers cannot be compared directly with Mach X or asynchronous public engine reports. |
 | [Qwenox](cases.md#qwenox) | C++/HIP model and state runtime plus API serving; text call paths inspected, not vision or experimental DFlash2/NPU paths. | Total construction time, compute, token use and human maintenance costs are not established. |
 | [Crucible](cases.md#crucible) | C++20/HIP engine owns the forward program and state; Python is the HTTP frontend. Text paths inspected; vision qualification is outside this review. | Total construction time, compute, token use and human maintenance costs are not established. |
+| [Strixite](cases.md#strixite) | Native model/runtime/kernel program and serving state; the inspected path is text generation on Linux gfx1151. | Total development time, compute, token use and maintenance cost are not established by the reviewed evidence. |
+| [Spark Engine](cases.md#spark-engine) | Qwen text forward/FFI/kernel dispatch and the N-way collective implementation were inspected; this is not full qualification of all advertised GLM, DeepSeek or vision routes. | Total development time, compute, token use and maintenance cost are not established by the reviewed evidence. |
+| [MobiInfer Android](cases.md#mobiinfer-android) | Model graph, expert I/O/slot runtime and Hexagon host/DSP dispatch; text source reviewed, not the app UI or advertised image-generation path. | Total development time, compute, token use and maintenance cost are not established by the reviewed evidence. |
+| [Maya2 Native / Maya3](cases.md#maya2-native) | Owns the streaming engine and optimized backbone/depth/codec execution; model training and multilingual speech quality are separate contributions. | Total development time, compute, token use and maintenance cost are not established by the reviewed evidence. |
 
 ## Library facets / 资料库的独立标签
 
@@ -107,6 +111,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [HybriMoE](catalog.md#hybrimoe) · adjacent | system / research-prototype / text | layout / scheduling |
 | [Infernix](catalog.md#infernix) · core | system / runtime / text, multimodal | configuration-dependent |
 | [KTransformers / kt-kernel](catalog.md#ktransformers) · core | system / backend / text | layout / scheduling |
+| [MobiInfer Android](catalog.md#mobiinfer-android) · core | system / runtime / text | layout / scheduling, reduced precision, configuration-dependent, target-verified proposals |
 | [MoE-Infinity](catalog.md#moe-infinity) · adjacent | system / runtime / text | layout / scheduling |
 | [peregrine](catalog.md#peregrine) · core | system / runtime / text | configuration-dependent |
 | [Strata](catalog.md#strata) · core | system / runtime / text | configuration-dependent, selective approximation |
@@ -158,6 +163,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | --- | --- | --- |
 | [Gufo RDMA](catalog.md#gufo-rdma) · core | system / runtime / text, multimodal | configuration-dependent |
 | [Llaminar](catalog.md#llaminar) · core | system / runtime / text | configuration-dependent |
+| [Maya2 Native / Maya3](catalog.md#maya2-native) · core | system / runtime / audio | layout / scheduling, reduced precision, configuration-dependent |
 | [StreamDiffusion](catalog.md#streamdiffusion) · adjacent | system / runtime / image, video | layout / scheduling, selective approximation, model / router training |
 | [StreamDiffusionV2](catalog.md#streamdiffusion-v2) · core | system / runtime / video | layout / scheduling, model / router training, configuration-dependent |
 | [TeleFuser](catalog.md#telefuser) · core | system / runtime / video, image, audio, multimodal | configuration-dependent |
@@ -227,11 +233,13 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [Qwen3-TTS (C)](catalog.md#qwen3-tts-c) · core | system / runtime / audio | configuration-dependent |
 | [Qwenox](catalog.md#qwenox) · core | system / runtime / text | layout / scheduling, reduced precision, target-verified proposals, configuration-dependent |
 | [Saragossa](catalog.md#saragossa) · core | system / runtime / text, audio | configuration-dependent |
+| [Spark Engine](catalog.md#spark-engine) · core | system / runtime / text | layout / scheduling, reduced precision, configuration-dependent, target-verified proposals |
 | [Splash](catalog.md#splash) · core | system / runtime / text, multimodal | configuration-dependent, reduced precision, target-verified proposals |
 | [Stable Fast](catalog.md#stable-fast) · adjacent | construction / compiler / image, video | layout / scheduling |
 | [stable-diffusion.cpp](catalog.md#stable-diffusion-cpp) · core | system / runtime / image, video | configuration-dependent |
 | [stable-diffusion.rs](catalog.md#stable-diffusion-rs) · core | system / runtime / image | configuration-dependent |
 | [strix-llama.cpp](catalog.md#strix-llama-cpp) · core | system / backend / text, multimodal | configuration-dependent |
+| [Strixite](catalog.md#strixite) · core | system / runtime / text | layout / scheduling, reduced precision, configuration-dependent, target-verified proposals |
 | [TensorFold](catalog.md#tensorfold) · core | system / runtime / text | configuration-dependent |
 | [TensorRT Edge-LLM](catalog.md#tensorrt-edge-llm) · adjacent | system / runtime / text, image, audio, multimodal | configuration-dependent |
 | [Uzu](catalog.md#uzu) · adjacent | system / runtime / text | configuration-dependent |

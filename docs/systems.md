@@ -32,7 +32,7 @@ Integrated model runtimes and substantial specialized backends, including native
 
 集成模型运行时和实质专用后端，涵盖原生实现与有直接参照意义的既有执行栈。
 
-98 projects / 项目
+102 projects / 项目
 
 | Project and evidence | Why it belongs | Relevance / artifact |
 | --- | --- | --- |
@@ -72,8 +72,10 @@ Integrated model runtimes and substantial specialized backends, including native
 | [Llaminar](catalog.md#llaminar) | Native mixed-hardware construction route: owns model graphs, execution plans and cross-vendor coordination rather than wrapping existing engines. | core / runtime |
 | [Mach X](catalog.md#machx) | A distinct Intel Arc execution stack with inspected SYCL/XMX dispatch, quantized kernels and request-lane orchestration; GGUF compatibility is not a duplicate llama.cpp entry. | core / runtime |
 | [Magnitude](catalog.md#magnitude) | A dedicated inference stack exposes its kernel-composition and model-execution boundary for construction analysis. | core / runtime |
+| [Maya2 Native / Maya3](catalog.md#maya2-native) | A model-specific streaming TTS execution stack with continuous admission, static per-slot codec state and fused kernels; distinct from the trained speech model or HTTP wrapper. | core / runtime |
 | [memra](catalog.md#memra) | Native runtime with per-model/device exactness gates and explicit evidence of the maintenance and qualification burden. | core / runtime |
 | [MiniMax-H3 MLX](catalog.md#minimax-h3-mlx) | Reconstructs a complete joint video/audio diffusion model on MLX, including packed modality geometry and invariant AdaLN precomputation; distinguishes making a model fit from making it fast. | core / runtime |
+| [MobiInfer Android](catalog.md#mobiinfer-android) | A substantial llama.cpp-omni-derived execution stack integrating flash-resident MoE experts with Hexagon host/DSP execution, beyond Android UI packaging. | core / runtime |
 | [NInfer](catalog.md#ninfer) | Rebuilds model execution and serving for selected Qwen checkpoints on one GPU; exposes the scope and ownership of a purpose-built stack. | core / runtime |
 | [NInfer-3090](catalog.md#ninfer-3090) | Concrete retargeting case: kernel and memory-program changes beyond changing a CUDA architecture flag; one representative records the 3090 fork family. | core / runtime |
 | [Nunchaku](catalog.md#nunchaku) | A substantial low-bit diffusion backend connects representation-specific execution to reusable pipeline integration. | core / runtime |
@@ -86,12 +88,14 @@ Integrated model runtimes and substantial specialized backends, including native
 | [Qwen3-TTS (C)](catalog.md#qwen3-tts-c) | Rebuilds the Qwen3-TTS talker, code predictor and waveform decoder as one native path; published engineering records connect implementation choices to reference checks and measurement corrections. | core / runtime |
 | [Qwenox](catalog.md#qwenox) | Reuses existing formats and selected kernels but owns a substantial gfx1151 model, state and speculative-serving program; distinct from the Halogen binary and Gufo runtime. | core / runtime |
 | [Saragossa](catalog.md#saragossa) | Replaces array-framework execution with an explicitly owned local runtime and regression oracles. | core / runtime |
+| [Spark Engine](catalog.md#spark-engine) | Rebuilds model-specific kernels, speculative state and GB10 communication while retaining libtorch and EXL3 components; distinct from generic serving or a launcher. | core / runtime |
 | [Splash](catalog.md#splash) | Builds model-specific execution and serving on Apple silicon, with disclosed agent-generated kernels inside a native runtime. | core / runtime |
 | [stable-diffusion.cpp](catalog.md#stable-diffusion-cpp) | Core by construction boundary: the native image/video model implementation owns loading, conditioning, sampling and component placement over reusable ggml backends. | core / runtime |
 | [stable-diffusion.rs](catalog.md#stable-diffusion-rs) | Documents a native Rust diffusion implementation and its Candle-to-MLX migration, exposing which model/backend boundaries can survive a device-stack change and which require new parity checks. | core / runtime |
 | [Strata](catalog.md#strata) | A narrow MoE runtime makes expert placement and execution choices inspectable; AI authorship is not established. | core / runtime |
 | [StreamDiffusionV2](catalog.md#streamdiffusion-v2) | Reconstructs causal video execution around chunked denoising and distributed KV ownership; concrete source and adopter evidence connect a specialized schedule to an integrated streaming artifact. | core / runtime |
 | [strix-llama.cpp](catalog.md#strix-llama-cpp) | Hardware-specialized fork with substantial kernel/state changes and a documented upstream/staging boundary; represents the overlapping Strix llama.cpp fork family. | core / backend |
+| [Strixite](catalog.md#strixite) | Owns the Flash-Next model program, native HIP kernels and speculative sequence state on gfx1151; independent runtime evidence beyond shared model support. | core / runtime |
 | [Swiftlet](catalog.md#swiftlet) | Links explicit AI-assisted authorship to a model-family-specific runtime and documented reference-based validation. | core / runtime |
 | [SwiftLM](catalog.md#swiftlm) | Shows substantial backend reconstruction while retaining the MLX ecosystem and serving integration. | core / backend |
 | [TeleFuser](catalog.md#telefuser) | Builds model-specific generation stages together with bounded streaming dataflow, retained session state and execution leases, connecting model execution ownership to an interactive serving workload. | core / runtime |

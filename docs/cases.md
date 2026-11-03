@@ -18,11 +18,11 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 
 ### Native runtimes for qualified models and devices / 围绕指定模型与设备重建原生运行时
 
-[Splash](#splash) · [Gufo](#gufo) · [zLLM](#zllm) · [NInfer](#ninfer) · [Lily](#lily) · [hipEngine](#hipengine) · [imp](#imp) · [VTE](#vte) · [ZINC](#zinc) · [memra](#memra) · [Kipp](#kipp) · [Saragossa](#saragossa) · [TensorFold](#tensorfold) · [Halogen Flash](#halogen-flash) · [ExLlamaV3](#exllamav3) · [Llaminar](#llaminar) · [ane.cpp](#ane-cpp) · [Cactus](#cactus) · [FastFlowLM](#fastflowlm) · [Cloudflare Infire](#infire) · [Kog Inference Engine](#kie) · [Mach X](#machx) · [Ignis](#ignis) · [Qwenox](#qwenox) · [Crucible](#crucible)
+[Splash](#splash) · [Gufo](#gufo) · [zLLM](#zllm) · [NInfer](#ninfer) · [Lily](#lily) · [hipEngine](#hipengine) · [imp](#imp) · [VTE](#vte) · [ZINC](#zinc) · [memra](#memra) · [Kipp](#kipp) · [Saragossa](#saragossa) · [TensorFold](#tensorfold) · [Halogen Flash](#halogen-flash) · [ExLlamaV3](#exllamav3) · [Llaminar](#llaminar) · [ane.cpp](#ane-cpp) · [Cactus](#cactus) · [FastFlowLM](#fastflowlm) · [Cloudflare Infire](#infire) · [Kog Inference Engine](#kie) · [Mach X](#machx) · [Ignis](#ignis) · [Qwenox](#qwenox) · [Crucible](#crucible) · [Strixite](#strixite) · [Spark Engine](#spark-engine)
 
 ### Rebuilding around memory and expert placement / 围绕内存与专家驻留重建执行
 
-[Flash-MoE](#flash-moe) · [Strata](#strata) · [Swiftlet](#swiftlet) · [DwarfStar](#dwarfstar) · [TurboFieldfare](#turbo-fieldfare) · [TUFF](#tuff) · [SwiftLM](#swiftlm) · [Colibri](#colibri) · [KTransformers](#ktransformers) · [peregrine](#peregrine)
+[Flash-MoE](#flash-moe) · [Strata](#strata) · [Swiftlet](#swiftlet) · [DwarfStar](#dwarfstar) · [TurboFieldfare](#turbo-fieldfare) · [TUFF](#tuff) · [SwiftLM](#swiftlm) · [Colibri](#colibri) · [KTransformers](#ktransformers) · [peregrine](#peregrine) · [MobiInfer Android](#mobiinfer-android)
 
 ### Substantial forks and specialized backends / 通过深度分叉与专用后端改变执行
 
@@ -38,7 +38,7 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 
 ### Speech, audio diffusion and action-model runtimes / 语音、音频扩散与动作模型运行时
 
-[Aria](#aria) · [Qwen-ASR](#qwen-asr-c) · [vla.simd](#vla-simd) · [Qwen3-TTS](#qwen3-tts-c) · [Qingming Qwen3-TTS](#qingming-qwen3-tts) · [VoxGen](#voxgen) · [parakeet.cpp (ggml)](#parakeet-ggml) · [parakeet.cpp (axiom)](#parakeet-axiom)
+[Aria](#aria) · [Qwen-ASR](#qwen-asr-c) · [vla.simd](#vla-simd) · [Qwen3-TTS](#qwen3-tts-c) · [Qingming Qwen3-TTS](#qingming-qwen3-tts) · [VoxGen](#voxgen) · [parakeet.cpp (ggml)](#parakeet-ggml) · [parakeet.cpp (axiom)](#parakeet-axiom) · [Maya2 Native / Maya3](#maya2-native)
 
 <a id="vibeqwen"></a>
 
@@ -700,6 +700,46 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 
 **Reviewed:** 2026-11-03. See the linked project record for mechanism-specific caveats.
 
+<a id="strixite"></a>
+
+## Strixite: couple grouped expert execution with speculative recurrent state
+
+**Related project records:** [Strixite](catalog.md#strixite).
+
+- **Why build it? / 为什么另建:** Fit Flash-Next and long coding-agent conversations within one 128 GB unified-memory APU.
+- **Execution ownership / 重构边界:** Native model/runtime/kernel program and serving state; the inspected path is text generation on Linux gfx1151.
+- **Retained components / 复用什么:** Uses Qwen model weights and references, HIP and third-party HTTP/image utilities. The author states other engines were studied; this review does not certify clean-room originality.
+- **Scope given up / 取舍与兼容性:** Narrow hardware/model coverage. Mixed low-bit weights, Q8 KV, YaRN and default thinking intervention must be separated from scheduling-only changes.
+- **Construction process / 怎样构建:** Model forward calls grouped route/gather/SwiGLU/combine kernels. forward_batch_verify prepares spare GDN state and row offsets, then each sequence resolves through keep/drop or accepted-prefix replay.
+- **AI participation / AI 参与的直接证据:** Disclosed: README describes building with a coding assistant; no model name, task share, autonomous workflow or total cost is established.
+- **Disclosed effort / 构建投入:** Total development time, compute, token use and maintenance cost are not established by the reviewed evidence.
+- **Validation boundary / 验证覆盖:** Runtime guards reject duplicate sequences, unresolved verification and invalid row budgets. The maintainer describes private kernel/reference testing; no full public suite was found in this tree. Source inspection and author reports only.
+- **Evolution evidence / 适配与维护:** Author qualifies one Linux machine; Windows/macOS are unsupported. Reproducible numerical validation is limited by the unavailable full test suite.
+
+**Sources:** [Source 1](https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/README.md) · [Source 2](https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/runtime/qwen4exp.cpp) · [Source 3](https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/kernels/moe_grouped.hip) · [Source 4](https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/serve/think_nudge.cpp) · [Source 5](https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/deploy/strix-server.conf) · [Source 6](https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/docs/weights.md) · [Source 7](https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/THIRD_PARTY.md) · [Source 8](https://github.com/shawnshekari/strixite/blob/b455955a89683a16d0b71db0fd20b9f369d524d9/CONTRIBUTING.md).
+
+**Reviewed:** 2026-11-03. See the linked project record for mechanism-specific caveats.
+
+<a id="spark-engine"></a>
+
+## Spark Engine: specialize model execution and communication for GB10
+
+**Related project records:** [Spark Engine](catalog.md#spark-engine).
+
+- **Why build it? / 为什么另建:** Serve selected large MoE models on one or a few unified-memory DGX Spark nodes.
+- **Execution ownership / 重构边界:** Qwen text forward/FFI/kernel dispatch and the N-way collective implementation were inspected; this is not full qualification of all advertised GLM, DeepSeek or vision routes.
+- **Retained components / 复用什么:** libtorch/tch for tensors, streams and graphs; cuBLAS/NCCL; separately built ExLlamaV3 library and weight formats; libibverbs for RoCE.
+- **Scope given up / 取舍与兼容性:** Hardware/topology-specific execution and quantized checkpoints. Precision-class switches can alter rounding or target behavior; benchmark dates, clocks, sampling and draft acceptance differ by model.
+- **Construction process / 怎样构建:** Qwen MoE dispatch overlaps router work with the shared expert, then invokes packed expert execution. The C++ shim gates custom collectives; N-way RDMA posts payload and sequence flags through CPU proxies and reduces peers in fixed rank order on GPU.
+- **AI participation / AI 参与的直接证据:** Not established by the reviewed documentation or implementation.
+- **Disclosed effort / 构建投入:** Total development time, compute, token use and maintenance cost are not established by the reviewed evidence.
+- **Validation boundary / 验证覆盖:** The public Qwen MoE probe compares routing, relative errors and repeated-output identity against a Python reference but only prints those results. It is diagnostic evidence, not an enforced passing gate. No hardware or model test was executed here.
+- **Evolution evidence / 适配与维护:** CUDA/libtorch/EXL3 ABI and fabric configuration are explicit dependencies; one inspected communication substrate does not prove all model/TP combinations correct.
+
+**Sources:** [Source 1](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/README.md) · [Source 2](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/engine-rs/src/qwen/model.rs) · [Source 3](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/engine-rs/shim/qwen_moe.cu) · [Source 4](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/engine-rs/shim/moe_exl3.cuh) · [Source 5](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/engine-rs/shim/shim.cpp) · [Source 6](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/engine-rs/shim/rdma_arn.cu) · [Source 7](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/reference/qwen38/test_kern_moe.py) · [Source 8](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/docs/qwen-switches.md) · [Source 9](https://github.com/fly9i/spark-engine/blob/ba66a57edbe6b47641f4ceb374284764a7b1b1f6/THIRD_PARTY.md).
+
+**Reviewed:** 2026-11-03. See the linked project record for mechanism-specific caveats.
+
 <a id="flash-moe"></a>
 
 ## Flash-MoE: SSD-streamed experts in a native prototype
@@ -899,6 +939,26 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 **Sources:** [Source 1](https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/README.md) · [Source 2](https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/crates/peregrine-model/src/concurrent.rs) · [Source 3](https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/crates/peregrine-io/src/ring.rs) · [Source 4](https://github.com/s-b-repo/peregrine/blob/869a5edd3d13848c42bd1bb728139c85c8b12961/docs/benchmarks.md).
 
 **Reviewed:** 2026-10-16. See the linked project record for mechanism-specific caveats.
+
+<a id="mobiinfer-android"></a>
+
+## MobiInfer Android: integrate external expert scheduling with Hexagon execution
+
+**Related project records:** [MobiInfer Android](catalog.md#mobiinfer-android).
+
+- **Why build it? / 为什么另建:** Run MoE models whose full expert weights exceed practical handset RAM by loading required experts from storage.
+- **Execution ownership / 重构边界:** Model graph, expert I/O/slot runtime and Hexagon host/DSP dispatch; text source reviewed, not the app UI or advertised image-generation path.
+- **Retained components / 复用什么:** llama.cpp and llama.cpp-omni graph/model infrastructure and LES lineage, Snapdragon toolchain/backend components, pretrained models and DSpark drafts. Individual upstream kernel originality is not established.
+- **Scope given up / 取舍与兼容性:** Flash latency, slot capacity and SDK/SoC support constrain execution. Keeping predicted and actual routing separate avoids intentional expert omission, but configurable top-k reduction and mixed precision do not preserve the original model contract.
+- **Construction process / 怎样构建:** qwen35moe creates next-layer router predictions; custom graph callbacks pass actual IDs and predictions into the slot runtime. Protected live mappings, pending installs and per-phase windows precede Hexagon matmul dispatch over tiled packs.
+- **AI participation / AI 参与的直接证据:** Not established; inherited contribution policies do not establish authorship.
+- **Disclosed effort / 构建投入:** Total development time, compute, token use and maintenance cost are not established by the reviewed evidence.
+- **Validation boundary / 验证覆盖:** Inspected code checks tensor type/shape, slot mapping and missing installations. Documentation separates lookahead scheduling from quantization and DSpark stages, but its staged LES performance is on iPad M4. Android results remain separate author reports, with no independent handset or end-to-end equivalence test here.
+- **Evolution evidence / 适配与维护:** Requires matching external expert packs, Hexagon SDK/runtime and supported handset configuration. New image/vision features need their own source and quality review.
+
+**Sources:** [Source 1](https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/README.md) · [Source 2](https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/src/models/qwen35moe.cpp) · [Source 3](https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/src/llama-moe-slot.cpp) · [Source 4](https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/ggml/src/ggml-hexagon/ggml-hexagon.cpp) · [Source 5](https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/ggml/src/ggml-hexagon/htp/matmul-ops.c) · [Source 6](https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/docs/les/lookahead-expert-scheduling.md) · [Source 7](https://github.com/IPADS-SAI/Mobiinfer-Android/blob/2874bd68102c3213e55c696d917a81806ff8bda6/docs/backend/snapdragon/README.md).
+
+**Reviewed:** 2026-11-03. See the linked project record for mechanism-specific caveats.
 
 <a id="llamampere"></a>
 
@@ -1539,4 +1599,24 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 **Sources:** [Source 1](https://github.com/Frikallo/parakeet.cpp/blob/a212eea694ab2de39d4dd1dc601806fed9ce8b19/README.md) · [Source 2](https://github.com/Frikallo/parakeet.cpp/blob/a212eea694ab2de39d4dd1dc601806fed9ce8b19/src/models/encoder.cpp) · [Source 3](https://github.com/Frikallo/parakeet.cpp/blob/a212eea694ab2de39d4dd1dc601806fed9ce8b19/src/models/streaming_encoder.cpp) · [Source 4](https://github.com/Frikallo/parakeet.cpp/blob/a212eea694ab2de39d4dd1dc601806fed9ce8b19/tests/test_all.cpp).
 
 **Reviewed:** 2026-10-12. See the linked project record for mechanism-specific caveats.
+
+<a id="maya2-native"></a>
+
+## Maya2 Native / Maya3: schedule streaming speech around static codec state
+
+**Related project records:** [Maya2 Native / Maya3](catalog.md#maya2-native).
+
+- **Why build it? / 为什么另建:** Keep first-audio latency and playback stalls bounded while sharing one GPU among many speech streams.
+- **Execution ownership / 重构边界:** Owns the streaming engine and optimized backbone/depth/codec execution; model training and multilingual speech quality are separate contributions.
+- **Retained components / 复用什么:** PyTorch/Transformers/Triton plus a Qwen3-derived trained backbone, Mimi codec and ECAPA speaker conditioning. Maya3 is the package/model name in the maya2-native repository, not a second catalog record.
+- **Scope given up / 取舍与兼容性:** Bucketed static state and per-seat context limits constrain admission and memory. BF16/FP16 choices and on-by-default duration caps/EOS boosts change generation relative to an unguarded full-precision reference.
+- **Construction process / 怎样构建:** The engine admits/reset slots, combines text prefill with live decode, runs all depth codebooks and decodes one frame through static Mimi state. Triton add/LayerNorm and top-k sampling are called inside the captured depth body.
+- **AI participation / AI 参与的直接证据:** Not established by the reviewed sources.
+- **Disclosed effort / 构建投入:** Total development time, compute, token use and maintenance cost are not established by the reviewed evidence.
+- **Validation boundary / 验证覆盖:** test_depth_fused samples 200,000 draws from one fixed logit row, asserts total variation below 0.03 and no mass outside top-k, and compares greedy agreement on 16 hidden states with an FP16/FP32 baseline allowing 0.05 slack. These finite checks were inspected, not executed; no perceptual or end-to-end reproduction here.
+- **Evolution evidence / 适配与维护:** Checkpoint format, CUDA-graph bucket/context sizes and pinned torch/transformers versions are part of the deployment contract. Pre-release engine benchmarks must not be mixed with release-checkpoint results.
+
+**Sources:** [Source 1](https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/README.md) · [Source 2](https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/docs/ENGINE.md) · [Source 3](https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/maya3/engine.py) · [Source 4](https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/serve/fast_depth.py) · [Source 5](https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/serve/fast_depth_kernels.py) · [Source 6](https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/serve/fast_codec.py) · [Source 7](https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/maya3/tests/test_depth_fused.py).
+
+**Reviewed:** 2026-11-03. See the linked project record for mechanism-specific caveats.
 

@@ -2,6 +2,15 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Quick comparison](representative-comparison.md) · [Contributing](../CONTRIBUTING.md)
 
+## 2026-11-03 — Expanded native, mobile and speech execution / 原生、移动与语音执行扩展核查
+
+- Added four source-reviewed core cases: [Strixite](catalog.md#strixite), [Spark Engine](catalog.md#spark-engine), [MobiInfer Android](catalog.md#mobiinfer-android), and [Maya2 Native / Maya3](catalog.md#maya2-native). The catalog now contains **137 records and 79 cases**.
+- The [expanded review](source-review-2026-11-03-expanded.md) traces HIP/CUDA kernel dispatch, recurrent-state commit/rollback, RoCE collectives, external-expert slot callbacks, and CUDA-graph speech execution. Upstream reuse is explicit; Maya3 is not counted separately from its repository.
+- Qualified author benchmarks and numerical contracts: Strixite's default thinking nudge and unavailable full test suite, Spark Engine's diagnostic-only MoE probe, iPad versus Android LES results, and Maya's precision/EOS guards and pre-release measurements. No upstream hardware experiment was run.
+- Updated bilingual entries, cases, evidence, recent additions and generated views; added mobile expert placement to the existing device cross-index. All prior records and review dates are preserved. gr8, Basalt and Delta remain leads pending direct implementation/delta checks.
+
+本轮新增四项，覆盖 395、DGX Spark、手机 NPU 和流式语音；目录共 137 个项目、79 个案例。收录依据具体执行实现，不依据作者速度排名。保留原有首页组织，并明确模型改动、上游复用和验证覆盖范围。
+
 ## 2026-11-03 — Flash-Next on Strix Halo / Strix Halo 专用执行补查
 
 - Added [Qwenox](catalog.md#qwenox) and [Crucible](catalog.md#crucible) as source-reviewed core systems and native-runtime cases. Refreshed the existing [Halogen Flash](catalog.md#halogen-flash) entry, preserving its closed-core classification. The catalog now contains **133 records and 75 cases**.
