@@ -2,6 +2,15 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Quick comparison](representative-comparison.md) · [Contributing](../CONTRIBUTING.md)
 
+## 2026-11-03 — Flash-Next on Strix Halo / Strix Halo 专用执行补查
+
+- Added [Qwenox](catalog.md#qwenox) and [Crucible](catalog.md#crucible) as source-reviewed core systems and native-runtime cases. Refreshed the existing [Halogen Flash](catalog.md#halogen-flash) entry, preserving its closed-core classification. The catalog now contains **133 records and 75 cases**.
+- The [pinned review](source-review-2026-11-03.md) traces actual kernel dispatch, weight-format reuse, speculative state and concrete validation contracts. It separates adapted Gufo/hipfire kernels from Qwenox integration, EXL3 packs from Crucible execution, and Halogen's public documentation from its unavailable core source.
+- Current Halogen documentation includes Anthropic Messages and persistent disk caching; these are not Qwenox-exclusive features. Default cache identity, W4A4 approximation, adaptive draft width and author-only benchmark limitations are explicit. The supplied third-party comparison is a discovery lead, not an independently reproduced ranking.
+- Updated bilingual summaries, classification, evidence, recent additions, generated indexes and three focused star observations. Preserved unrelated records, review dates and homepage organization; broader candidates and outstanding checks are recorded without inflating counts.
+
+新增两项、更新 Halogen 原条目；共 133 个项目、75 个案例。完成源码与文档核查及目录一致性检查，未运行上游 GPU 实验。量化、缓存与投机配置的影响单独注明，不以同权重推断数值等价，不把单次任务分数解释为已证实的质量结论。
+
 ## 2026-10-23 — Device constraint cross-index / 设备约束与执行机制对照
 
 - Added a [bilingual device × execution matrix](device-execution-matrix.md) linking existing catalog entries to phone-specific CPU, GPU, NPU, KV-state and multimodal mechanisms **without changing primary categories, six starters, catalog counts or source-review dates**.

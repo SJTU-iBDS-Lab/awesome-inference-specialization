@@ -18,7 +18,7 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 
 ### Native runtimes for qualified models and devices / 围绕指定模型与设备重建原生运行时
 
-[Splash](#splash) · [Gufo](#gufo) · [zLLM](#zllm) · [NInfer](#ninfer) · [Lily](#lily) · [hipEngine](#hipengine) · [imp](#imp) · [VTE](#vte) · [ZINC](#zinc) · [memra](#memra) · [Kipp](#kipp) · [Saragossa](#saragossa) · [TensorFold](#tensorfold) · [Halogen Flash](#halogen-flash) · [ExLlamaV3](#exllamav3) · [Llaminar](#llaminar) · [ane.cpp](#ane-cpp) · [Cactus](#cactus) · [FastFlowLM](#fastflowlm) · [Cloudflare Infire](#infire) · [Kog Inference Engine](#kie) · [Mach X](#machx) · [Ignis](#ignis)
+[Splash](#splash) · [Gufo](#gufo) · [zLLM](#zllm) · [NInfer](#ninfer) · [Lily](#lily) · [hipEngine](#hipengine) · [imp](#imp) · [VTE](#vte) · [ZINC](#zinc) · [memra](#memra) · [Kipp](#kipp) · [Saragossa](#saragossa) · [TensorFold](#tensorfold) · [Halogen Flash](#halogen-flash) · [ExLlamaV3](#exllamav3) · [Llaminar](#llaminar) · [ane.cpp](#ane-cpp) · [Cactus](#cactus) · [FastFlowLM](#fastflowlm) · [Cloudflare Infire](#infire) · [Kog Inference Engine](#kie) · [Mach X](#machx) · [Ignis](#ignis) · [Qwenox](#qwenox) · [Crucible](#crucible)
 
 ### Rebuilding around memory and expert placement / 围绕内存与专家驻留重建执行
 
@@ -467,18 +467,18 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 **Related project records:** [Halogen Flash](catalog.md#halogen-flash).
 
 - **Why build it? / 为什么另建:** The README explicitly trades portability for model-and-chip specialization, targeting long local coding-agent sessions.
-- **Execution ownership / 重构边界:** Public material exposes deployment and behavior; the core engine and complete tensor-level quantization choices are not publicly inspectable.
+- **Execution ownership / 重构边界:** Public deployment, API, checkpoint and validation descriptions; engine kernels remain closed. This refresh covers Flash-Next, not the newly documented NPU sidecar.
 - **Retained components / 复用什么:** Uses pretrained weights and accepts selected llama.cpp GGUF files; underlying implementation reuse is not established by public documentation.
-- **Scope given up / 取舍与兼容性:** Mixed precision and narrow hardware support shape the result; repeatable binary benchmarks cannot substitute for source-level inspection.
-- **Construction process / 怎样构建:** Documentation describes dedicated attention/expert kernels, separate state budgets and a paged n-gram lookup table.
+- **Scope given up / 取舍与兼容性:** Mixed precision, attention budget and extended context change the numerical contract. Default prompt-cache mode sacrifices cold-run identity; mode 1 is the documented exact-cache option.
+- **Construction process / 怎样构建:** Documents dedicated attention/expert execution, paged lookup tables, prompt-lookup/MTP verification and RAM/disk state reuse; APIs now include Anthropic Messages.
 - **AI participation / AI 参与的直接证据:** Not established in reviewed sources; serving agents does not establish that agents built the engine.
 - **Disclosed effort / 构建投入:** Development time, token usage and engineering costs are not disclosed in reviewed sources.
-- **Validation boundary / 验证覆盖:** The publisher provides verification and benchmark modes; their numerical guarantees and performance were not independently reproduced here.
+- **Validation boundary / 验证覆盖:** Author reports distinguish BF16 reference comparisons, same-dequantized-weight checks and greedy speculation identity. Cache identity is configuration-dependent. Neither implementation nor benchmark claims were independently reproduced here.
 - **Evolution evidence / 适配与维护:** Compatibility follows binary releases and supported hardware; maintenance effort and reproducible source builds are not established.
 
-**Sources:** [Source 1](https://github.com/peonist-ai/halogen-flash-server/blob/HEAD/README.md) · [Source 2](https://github.com/peonist-ai/halogen-flash-server/blob/HEAD/docs/QUANT.md) · [Source 3](https://github.com/peonist-ai/halogen-flash-server/blob/HEAD/LICENSE.md).
+**Sources:** [Source 1](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/README.md) · [Source 2](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/docs/QUANT.md) · [Source 3](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/docs/quality.md) · [Source 4](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/docs/configuration.md) · [Source 5](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/docs/api.md) · [Source 6](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/LICENSE.md).
 
-**Reviewed:** 2026-10-12. See the linked project record for mechanism-specific caveats.
+**Reviewed:** 2026-11-03. See the linked project record for mechanism-specific caveats.
 
 <a id="exllamav3"></a>
 
@@ -659,6 +659,46 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 **Sources:** [Source 1](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/README.md) · [Source 2](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/vendor/manifest.json) · [Source 3](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/NOTICE) · [Source 4](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/decode_graph.cu) · [Source 5](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/step.cu) · [Source 6](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/dflash2_drafter.cu) · [Source 7](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/dflash2_topk.cu) · [Source 8](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/tests/test_dflash2_topk.cu) · [Source 9](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/gqa_layer.cu) · [Source 10](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/hq_prompt_attention.cu) · [Source 11](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/residency.cu) · [Source 12](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/kernel/src/flash_next/program.cu) · [Source 13](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/docs/findings/2026-09-24-upstream-quick-wins-ab.md) · [Source 14](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/docs/findings/2026-10-21-prefill-attention-without-prompt-planes.md) · [Source 15](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/crates/runtime/src/cuda_leaf.rs) · [Source 16](https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/crates/core/src/scheduler.rs).
 
 **Reviewed:** 2026-10-23. See the linked project record for mechanism-specific caveats.
+
+<a id="qwenox"></a>
+
+## Qwenox: integrate low-bit execution and speculative state on gfx1151
+
+**Related project records:** [Qwenox](catalog.md#qwenox).
+
+- **Why build it? / 为什么另建:** Fit a large MoE and long local-agent contexts within a 128 GB unified-memory APU.
+- **Execution ownership / 重构边界:** C++/HIP model and state runtime plus API serving; text call paths inspected, not vision or experimental DFlash2/NPU paths.
+- **Retained components / 复用什么:** Halogen HGN checkpoint/container; Gufo routed F16 WMMA kernel and tensor transforms; hipfire-inspired IU4 path; llama.cpp ngram/cache ideas and tables; ROCm libraries.
+- **Scope given up / 取舍与兼容性:** Weight quantization and optional W4A4 activation quantization are separate from scheduling. GGUF near-tie outputs can depend on adaptive draft width; fixed width and row-invariant verification narrow the contract.
+- **Construction process / 怎样构建:** moe_b_v2 dispatches quantization and IU4 kernels; per-request state is switched under GPU ownership and rendezvous combines draft/verification rows. Row-window backups protect later commit/rollback; RAM checkpoints and SSD snapshots preserve continuation state.
+- **AI participation / AI 参与的直接证据:** Not established in the reviewed sources; agent-facing APIs and repository instructions do not establish AI authorship.
+- **Disclosed effort / 构建投入:** Total construction time, compute, token use and human maintenance costs are not established.
+- **Validation boundary / 验证覆盖:** Public concurrency scripts compare tokens, termination and speculation statistics with matched prefill chunks; exercise cancellation and pool overflow. They disable SSD snapshots and fix ngram chunks, so they are not universal cache/distribution proofs. Static inspection only; README throughput is author-reported.
+- **Evolution evidence / 适配与维护:** Linux/Windows launch defaults, HGN/GGUF arithmetic and speculative width must be qualified separately. Shared-file compatibility does not make it the Halogen engine.
+
+**Sources:** [Source 1](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/README_EN.md) · [Source 2](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/src/gpu/parts/40_model.inc) · [Source 3](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/src/gpu/parts/27_kernels_moe_lut.inc) · [Source 4](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/src/gpu/parts/49_rckpt.inc) · [Source 5](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/src/gpu/parts/50_serve.inc) · [Source 6](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/docs/CONCURRENCY.md) · [Source 7](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/tools/conc_verify.sh) · [Source 8](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/docs/KLD.md).
+
+**Reviewed:** 2026-11-03. See the linked project record for mechanism-specific caveats.
+
+<a id="crucible"></a>
+
+## Crucible: rebuild EXL3 execution for a single APU
+
+**Related project records:** [Crucible](catalog.md#crucible).
+
+- **Why build it? / 为什么另建:** Reuse quantized Flash-Next packs while specializing execution to gfx1151 bandwidth, instruction and memory constraints.
+- **Execution ownership / 重构边界:** C++20/HIP engine owns the forward program and state; Python is the HTTP frontend. Text paths inspected; vision qualification is outside this review.
+- **Retained components / 复用什么:** ExLlamaV3 EXL3 format/reference and Turboderp packs; HIP/compiler infrastructure. Third-party inventory explicitly does not establish independent authorship of every fragment.
+- **Scope given up / 取舍与兼容性:** Quantized 3.05/4.05 packs differ from BF16 and each other. Fixed accumulation order and guarded state transitions target within-configuration identity, not universal numerical equivalence.
+- **Construction process / 怎样构建:** Column-block-major weight repacking feeds native trellis-decode GEMV and prefill GEMM. Batched forward invokes one trunk loop with independent sequence state; verification validates all spans before changing recurrent prefixes.
+- **AI participation / AI 参与的直接证据:** Not established in the reviewed sources; agent-facing APIs and repository instructions do not establish AI authorship.
+- **Disclosed effort / 构建投入:** Total construction time, compute, token use and human maintenance costs are not established.
+- **Validation boundary / 验证覆盖:** Sampling tests assert filter/tie behavior and reject nonfinite target logits; span guards enforce unique streams, token/context bounds and valid retained-prefix transitions. Author quality reports use finite text sets and bucketed KL lower bounds. No upstream execution or independent speed reproduction.
+- **Evolution evidence / 适配与维护:** One model/chip research scope; archived comparisons use older Halogen/Gufo versions. Public architecture notes say some development-history commits and measurements are unavailable.
+
+**Sources:** [Source 1](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/README.md) · [Source 2](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/engine/runtime/batch_forward.h) · [Source 3](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/engine/runtime/batch_spec_contract.h) · [Source 4](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/engine/exl3/kernels/exl3_gemv.h) · [Source 5](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/engine/exl3/prefill_linear.h) · [Source 6](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/tests/sampling_test.cpp) · [Source 7](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/docs/QUALITY.md) · [Source 8](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/docs/THIRD_PARTY.md).
+
+**Reviewed:** 2026-11-03. See the linked project record for mechanism-specific caveats.
 
 <a id="flash-moe"></a>
 

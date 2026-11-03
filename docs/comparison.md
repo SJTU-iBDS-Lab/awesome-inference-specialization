@@ -21,7 +21,7 @@ Start with what is rebuilt and what effort is disclosed. Read each case for reta
 | [Gufo](cases.md#gufo) | Owns model execution, kernels, sessions and local serving. Text/vision, ASR/TTS, image generation and video paths have different qualification levels. | Total development effort, human hours, agent tokens and long-term maintenance expenditure are not disclosed in the reviewed material. |
 | [Iris](cases.md#iris) | Implements text encoding, diffusion-transformer execution and image decoding for selected FLUX and Z-Image variants. | Construction time, AI-token spending and maintenance economics are not disclosed in reviewed sources. |
 | [TensorFold](cases.md#tensorfold) | Owns loading, tokenization, serving and execution for admitted combinations; experimental Living Weights is a separate model-changing feature. | Development time, token/GPU expenditure and long-term engineering costs are not disclosed. |
-| [Halogen Flash](cases.md#halogen-flash) | Public material exposes deployment and behavior; the core engine and complete tensor-level quantization choices are not publicly inspectable. | Development time, token usage and engineering costs are not disclosed in reviewed sources. |
+| [Halogen Flash](cases.md#halogen-flash) | Public deployment, API, checkpoint and validation descriptions; engine kernels remain closed. This refresh covers Flash-Next, not the newly documented NPU sidecar. | Development time, token usage and engineering costs are not disclosed in reviewed sources. |
 | [Magnitude](cases.md#magnitude) | The inspected kernel layer owns planning and generated entry points, not a second device runtime or independent scheduler. | Total development effort and amortization of device-specific tuning are not disclosed in reviewed sources. |
 | [KTransformers](cases.md#ktransformers) | The reviewed kt-kernel path is an integrated backend; it is distinct from legacy injection examples and separate training features. | Hardware configurations are documented; controlled construction-time and maintenance-cost accounting is not disclosed. |
 | [Nunchaku](cases.md#nunchaku) | Implements specialized diffusion-model execution components and integrations; it does not replace all text encoding, decoding or application layers. | Calibration and conversion are preparation work; developer effort and total construction economics are not disclosed. |
@@ -83,6 +83,8 @@ Start with what is rebuilt and what effort is disclosed. Read each case for reta
 | [peregrine](cases.md#peregrine) | Owns Rust host scheduling, io_uring completion paths, expert batching and fixed-order reduction; optional CUDA kernels and numerical formats reuse selected Colibri building blocks. | Engineering and maintenance cost are unknown; performance is primarily author-measured on stated hardware, not independent reproduction. |
 | [Mach X](cases.md#machx) | Owns model orchestration, SYCL attention/quantized matmul and lane serving. The reviewed Qwen MoE split selects XMX by context, leaves INT8 KV on a separate path and falls back outside supported shapes/cache bounds. | Total construction/maintenance cost is unknown. Author reports 62.8 to 69.8 tok/s for 35B-A3B Q8_0 on two B70s at a 32K-token prompt, greedy, prompt cache off, v0.2.31 to v0.2.32. This is neither an independently reproduced result nor a cross-engine ranking. |
 | [Ignis](cases.md#ignis) | Rust owns admission, lanes and KV accounting; a step-level C ABI owns the forward pass. decode_graph.cu traverses the model once per batch width; step.cu replays a captured graph or uses the same eager traversal. Flash-Next explicitly calls expert demand/prefetch before MoE compute. | Author reports about 367 tok/s for one lane over eight short greedy coding prompts and 1065 tok/s aggregate for eight lanes on RTX 5090, NVFP4, hq-e8-2b KV, seven DFlash2 drafts. The associated September A/B includes upstream kernel ports. Engineering, verification and ongoing maintenance cost are unknown; these numbers cannot be compared directly with Mach X or asynchronous public engine reports. |
+| [Qwenox](cases.md#qwenox) | C++/HIP model and state runtime plus API serving; text call paths inspected, not vision or experimental DFlash2/NPU paths. | Total construction time, compute, token use and human maintenance costs are not established. |
+| [Crucible](cases.md#crucible) | C++20/HIP engine owns the forward program and state; Python is the HTTP frontend. Text paths inspected; vision qualification is outside this review. | Total construction time, compute, token use and human maintenance costs are not established. |
 
 ## Library facets / 资料库的独立标签
 
@@ -180,6 +182,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [CIRU runtime](catalog.md#ciru-runtime) · core | system / backend / text, multimodal | configuration-dependent |
 | [Cloudflare Infire](catalog.md#infire) · core · **closed core** | system / runtime / text | configuration-dependent |
 | [CoreML LLM CLI](catalog.md#coreml-llm-cli) · adjacent | system / research-prototype / text | configuration-dependent |
+| [Crucible](catalog.md#crucible) · core | system / runtime / text | layout / scheduling, reduced precision, target-verified proposals, configuration-dependent |
 | [diffusion-rs](catalog.md#diffusion-rs) · adjacent | system / runtime / image | configuration-dependent |
 | [Draw Things Community](catalog.md#draw-things) · adjacent | system / runtime / image, video | configuration-dependent |
 | [DwarfStar](catalog.md#dwarfstar) · core | system / runtime / text | configuration-dependent |
@@ -190,7 +193,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [FlashAttention](catalog.md#flash-attention) · foundation | support / kernel-library / text | layout / scheduling |
 | [FlashInfer](catalog.md#flashinfer) · foundation | support / kernel-library / text | layout / scheduling |
 | [Gufo](catalog.md#gufo) · core | system / runtime / text, audio, image, video, multimodal | configuration-dependent, reduced precision, target-verified proposals |
-| [Halogen Flash](catalog.md#halogen-flash) · core · **closed core** | system / runtime / text | reduced precision |
+| [Halogen Flash](catalog.md#halogen-flash) · core · **closed core** | system / runtime / text | reduced precision, target-verified proposals, configuration-dependent |
 | [Hearth](catalog.md#hearth) · core | system / runtime / image | configuration-dependent |
 | [Hilum LLM Engine](catalog.md#hilum-engine) · adjacent | system / backend / text, multimodal | configuration-dependent |
 | [hipEngine](catalog.md#hipengine) · core | system / runtime / text, multimodal, audio | configuration-dependent |
@@ -222,6 +225,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [Quartz](catalog.md#saient-quartz) · core | system / runtime / text, image, video | configuration-dependent |
 | [Qwen-ASR (C)](catalog.md#qwen-asr-c) · core | system / runtime / audio | configuration-dependent |
 | [Qwen3-TTS (C)](catalog.md#qwen3-tts-c) · core | system / runtime / audio | configuration-dependent |
+| [Qwenox](catalog.md#qwenox) · core | system / runtime / text | layout / scheduling, reduced precision, target-verified proposals, configuration-dependent |
 | [Saragossa](catalog.md#saragossa) · core | system / runtime / text, audio | configuration-dependent |
 | [Splash](catalog.md#splash) · core | system / runtime / text, multimodal | configuration-dependent, reduced precision, target-verified proposals |
 | [Stable Fast](catalog.md#stable-fast) · adjacent | construction / compiler / image, video | layout / scheduling |

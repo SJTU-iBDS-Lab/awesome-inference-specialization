@@ -421,6 +421,14 @@
       "stars": 1,
       "status": "ok"
     },
+    "iiiiilllliiiiilllll/qwenox": {
+      "fetched_on": "2026-11-03",
+      "full_name": "IIIIIllllIIIIIlllll/Qwenox",
+      "last_attempt_on": "2026-11-03",
+      "repository_id": 1376940807,
+      "stars": 126,
+      "status": "ok"
+    },
     "ikawrakow/ik_llama.cpp": {
       "etag": "\"569c775f1da5b1d9f53e47fd397e38ceca834e4a2909d3d1f0199a4ef39e9831\"",
       "fetched_on": "2026-10-14",
@@ -454,6 +462,14 @@
       "last_attempt_on": "2026-10-14",
       "repository_id": 744514418,
       "stars": 1162,
+      "status": "ok"
+    },
+    "jaedync/crucible-strix-halo": {
+      "fetched_on": "2026-11-03",
+      "full_name": "jaedync/crucible-strix-halo",
+      "last_attempt_on": "2026-11-03",
+      "repository_id": 1420739467,
+      "stars": 16,
       "status": "ok"
     },
     "jakeatx/llamampere": {
@@ -781,12 +797,11 @@
       "status": "ok"
     },
     "peonist-ai/halogen-flash-server": {
-      "etag": "\"ad9fca34141da150cce75f60c60ab5fe8da8f818c03663fa90fd3e3a3cf6be9d\"",
-      "fetched_on": "2026-10-14",
+      "fetched_on": "2026-11-03",
       "full_name": "peonist-ai/halogen-flash-server",
-      "last_attempt_on": "2026-10-14",
+      "last_attempt_on": "2026-11-03",
       "repository_id": 1347320778,
-      "stars": 964,
+      "stars": 1196,
       "status": "ok"
     },
     "perplexityai/pplx-garden": {

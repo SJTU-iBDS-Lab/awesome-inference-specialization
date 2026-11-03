@@ -295,20 +295,23 @@
     "summary": "A distributed binary targets one Qwen family and AMD Strix Halo, with public deployment and quantization descriptions.",
     "summary_cn": "以一个模型家族和一类芯片为边界发布专用二进制，公开部署与量化说明。",
     "motivation": "The README explicitly trades portability for model-and-chip specialization, targeting long local coding-agent sessions.",
-    "boundary": "Public material exposes deployment and behavior; the core engine and complete tensor-level quantization choices are not publicly inspectable.",
+    "boundary": "Public deployment, API, checkpoint and validation descriptions; engine kernels remain closed. This refresh covers Flash-Next, not the newly documented NPU sidecar.",
     "reuse": "Uses pretrained weights and accepts selected llama.cpp GGUF files; underlying implementation reuse is not established by public documentation.",
-    "tradeoff": "Mixed precision and narrow hardware support shape the result; repeatable binary benchmarks cannot substitute for source-level inspection.",
-    "construction": "Documentation describes dedicated attention/expert kernels, separate state budgets and a paged n-gram lookup table.",
+    "tradeoff": "Mixed precision, attention budget and extended context change the numerical contract. Default prompt-cache mode sacrifices cold-run identity; mode 1 is the documented exact-cache option.",
+    "construction": "Documents dedicated attention/expert execution, paged lookup tables, prompt-lookup/MTP verification and RAM/disk state reuse; APIs now include Anthropic Messages.",
     "ai_role": "Not established in reviewed sources; serving agents does not establish that agents built the engine.",
     "cost": "Development time, token usage and engineering costs are not disclosed in reviewed sources.",
-    "validation": "The publisher provides verification and benchmark modes; their numerical guarantees and performance were not independently reproduced here.",
+    "validation": "Author reports distinguish BF16 reference comparisons, same-dequantized-weight checks and greedy speculation identity. Cache identity is configuration-dependent. Neither implementation nor benchmark claims were independently reproduced here.",
     "maintenance": "Compatibility follows binary releases and supported hardware; maintenance effort and reproducible source builds are not established.",
     "evidence_urls": [
-      "https://github.com/peonist-ai/halogen-flash-server/blob/HEAD/README.md",
-      "https://github.com/peonist-ai/halogen-flash-server/blob/HEAD/docs/QUANT.md",
-      "https://github.com/peonist-ai/halogen-flash-server/blob/HEAD/LICENSE.md"
+      "https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/README.md",
+      "https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/docs/QUANT.md",
+      "https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/docs/quality.md",
+      "https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/docs/configuration.md",
+      "https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/docs/api.md",
+      "https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/LICENSE.md"
     ],
-    "checked_on": "2026-10-12"
+    "checked_on": "2026-11-03"
   },
   {
     "id": "magnitude",
@@ -1875,5 +1878,63 @@
       "https://github.com/gpillon/ignis/blob/752103608ffeae5de1f9023a41698544fd339d8e/crates/core/src/scheduler.rs"
     ],
     "checked_on": "2026-10-23"
+  },
+  {
+    "id": "qwenox",
+    "title": "Qwenox: integrate low-bit execution and speculative state on gfx1151",
+    "project_ids": [
+      "qwenox"
+    ],
+    "summary": "A native Flash-Next program combines adapted kernels with its own paging, checkpoint and multi-slot verification paths.",
+    "summary_cn": "以原生 Flash-Next 程序整合移植内核、分页、检查点及多槽投机验证路径。",
+    "motivation": "Fit a large MoE and long local-agent contexts within a 128 GB unified-memory APU.",
+    "boundary": "C++/HIP model and state runtime plus API serving; text call paths inspected, not vision or experimental DFlash2/NPU paths.",
+    "reuse": "Halogen HGN checkpoint/container; Gufo routed F16 WMMA kernel and tensor transforms; hipfire-inspired IU4 path; llama.cpp ngram/cache ideas and tables; ROCm libraries.",
+    "tradeoff": "Weight quantization and optional W4A4 activation quantization are separate from scheduling. GGUF near-tie outputs can depend on adaptive draft width; fixed width and row-invariant verification narrow the contract.",
+    "construction": "moe_b_v2 dispatches quantization and IU4 kernels; per-request state is switched under GPU ownership and rendezvous combines draft/verification rows. Row-window backups protect later commit/rollback; RAM checkpoints and SSD snapshots preserve continuation state.",
+    "ai_role": "Not established in the reviewed sources; agent-facing APIs and repository instructions do not establish AI authorship.",
+    "cost": "Total construction time, compute, token use and human maintenance costs are not established.",
+    "validation": "Public concurrency scripts compare tokens, termination and speculation statistics with matched prefill chunks; exercise cancellation and pool overflow. They disable SSD snapshots and fix ngram chunks, so they are not universal cache/distribution proofs. Static inspection only; README throughput is author-reported.",
+    "maintenance": "Linux/Windows launch defaults, HGN/GGUF arithmetic and speculative width must be qualified separately. Shared-file compatibility does not make it the Halogen engine.",
+    "evidence_urls": [
+      "https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/README_EN.md",
+      "https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/src/gpu/parts/40_model.inc",
+      "https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/src/gpu/parts/27_kernels_moe_lut.inc",
+      "https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/src/gpu/parts/49_rckpt.inc",
+      "https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/src/gpu/parts/50_serve.inc",
+      "https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/docs/CONCURRENCY.md",
+      "https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/tools/conc_verify.sh",
+      "https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/docs/KLD.md"
+    ],
+    "checked_on": "2026-11-03"
+  },
+  {
+    "id": "crucible",
+    "title": "Crucible: rebuild EXL3 execution for a single APU",
+    "project_ids": [
+      "crucible"
+    ],
+    "summary": "A model-owned HIP runtime couples packed-weight execution with per-session recurrent state and verified batched generation.",
+    "summary_cn": "以模型专用 HIP 运行时结合打包权重执行、逐会话递归状态与合批生成验证。",
+    "motivation": "Reuse quantized Flash-Next packs while specializing execution to gfx1151 bandwidth, instruction and memory constraints.",
+    "boundary": "C++20/HIP engine owns the forward program and state; Python is the HTTP frontend. Text paths inspected; vision qualification is outside this review.",
+    "reuse": "ExLlamaV3 EXL3 format/reference and Turboderp packs; HIP/compiler infrastructure. Third-party inventory explicitly does not establish independent authorship of every fragment.",
+    "tradeoff": "Quantized 3.05/4.05 packs differ from BF16 and each other. Fixed accumulation order and guarded state transitions target within-configuration identity, not universal numerical equivalence.",
+    "construction": "Column-block-major weight repacking feeds native trellis-decode GEMV and prefill GEMM. Batched forward invokes one trunk loop with independent sequence state; verification validates all spans before changing recurrent prefixes.",
+    "ai_role": "Not established in the reviewed sources; agent-facing APIs and repository instructions do not establish AI authorship.",
+    "cost": "Total construction time, compute, token use and human maintenance costs are not established.",
+    "validation": "Sampling tests assert filter/tie behavior and reject nonfinite target logits; span guards enforce unique streams, token/context bounds and valid retained-prefix transitions. Author quality reports use finite text sets and bucketed KL lower bounds. No upstream execution or independent speed reproduction.",
+    "maintenance": "One model/chip research scope; archived comparisons use older Halogen/Gufo versions. Public architecture notes say some development-history commits and measurements are unavailable.",
+    "evidence_urls": [
+      "https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/README.md",
+      "https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/engine/runtime/batch_forward.h",
+      "https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/engine/runtime/batch_spec_contract.h",
+      "https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/engine/exl3/kernels/exl3_gemv.h",
+      "https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/engine/exl3/prefill_linear.h",
+      "https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/tests/sampling_test.cpp",
+      "https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/docs/QUALITY.md",
+      "https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/docs/THIRD_PARTY.md"
+    ],
+    "checked_on": "2026-11-03"
   }
 ]

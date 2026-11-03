@@ -84,8 +84,13 @@ class MetadataTests(unittest.TestCase):
         text=metadata.recent_line(self.config)
         self.assertIn('Catalog addition dates, not project release dates',text)
         self.assertLessEqual(text.count('](#project-'),5)
-        for item in self.config['recent'][:5]:
-            self.assertIn(item['added_on'],text)
+        items=sorted(self.config['recent'],key=lambda item:item['added_on'],reverse=True)[:5]
+        dates=sorted({item['added_on'] for item in items})
+        # The compact renderer shows a range, including when three or more
+        # admission dates occur among the five entries.
+        self.assertIn(dates[0],text)
+        self.assertIn(dates[-1],text)
+        for item in items:
             self.assertIn(f'#project-{item["id"]}',text)
 
     def test_regeneration_is_offline_and_preserves_descriptions(self):

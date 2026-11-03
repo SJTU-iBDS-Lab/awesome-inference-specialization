@@ -4,7 +4,7 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Systems & construction](systems.md) · [Comparison](comparison.md) · [Taxonomy](taxonomy.md) · [Evidence policy](evidence-policy.md)
 
-131 entries. Source review: 2026-10-23. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
+133 entries. Source review: 2026-11-03. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
 
 Use the family links below, or search this page for a model, device, mechanism or project. Source visibility is not a license or correctness certification. Semantic labels identify evaluation obligations, not proven equivalence.
 
@@ -1237,7 +1237,7 @@ Combines Ulysses and Ring sequence parallelism with CFG/data parallelism and Pip
 
 <a id="execution"></a>
 
-## Compiled & native execution / 编译与原生执行 (74)
+## Compiled & native execution / 编译与原生执行 (76)
 
 **How does a graph become an executable?** Fuse, lower, specialize and dispatch graphs or native kernels.
 
@@ -1647,6 +1647,35 @@ Orchestrates chunked CoreML model execution and KV state, with reshaped convolut
 
 </details>
 
+<a id="crucible"></a>
+
+### [Crucible](https://github.com/jaedync/crucible-strix-halo)
+
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** Reconstructs EXL3 execution and multi-request recurrent state for one model/chip rather than exposing ExLlamaV3 through a new frontend.
+
+C++20/HIP runtime repacks EXL3 weights into a column-block-major layout and dispatches gfx1151 decode/prefill kernels. Batched forward shares model traversal while retaining per-request state; draft verification checks temporal spans before committing recurrent prefixes.
+
+**Scope:** Qwen3.8-Flash-Next EXL3 packs on one Linux AMD Ryzen AI Max+ 395 / gfx1151 with 128 GB unified memory; text execution reviewed.
+
+**Boundary:** EXL3 format/reference and quantized packs are reused from ExLlamaV3/Turboderp. Exactness claims concern the configured quantized target, not BF16 equivalence. Author quality scores include a 21-bucket KL lower bound; different packs and older competitor versions prevent an engine-only ranking. Some development notes/history are not public; no GPU reproduction here.
+
+**Semantic considerations:** layout / scheduling, reduced precision, target-verified proposals, configuration-dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `native-execution`, `packed-weight-kernels`, `continuous-batching`, `speculative-decoding`, `prefix-caching`, `shape-specialization`.
+
+**Constraints:** `model`, `hardware`, `memory`, `precision`, `workload`.
+
+**Evidence:** [Source 1](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/README.md) · [Source 2](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/engine/runtime/batch_forward.h) · [Source 3](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/engine/runtime/batch_spec_contract.h) · [Source 4](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/engine/exl3/kernels/exl3_gemv.h) · [Source 5](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/engine/exl3/prefill_linear.h) · [Source 6](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/tests/sampling_test.cpp) · [Source 7](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/docs/QUALITY.md) · [Source 8](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/docs/THIRD_PARTY.md).
+
+**Reviewed:** 2026-11-03 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
+
+</details>
+
 <a id="diffusion-rs"></a>
 
 ### [diffusion-rs](https://github.com/EricLBuehler/diffusion-rs)
@@ -1945,24 +1974,24 @@ Owns per-model C++/HIP execution, kernels and state alongside serving, batching 
 
 **Survey relevance:** A model-and-device-specific runtime illustrates how narrow deployment contracts reshape implementation choices.
 
-Ships a model-and-chip-specific inference binary with mixed-precision weight layouts, a paged n-gram lookup table and dedicated attention/expert execution for Qwen3.8-Flash-Next.
+Public documentation describes a model-and-chip-specific binary with mixed-precision weights, paged lookup tables, MTP and prompt-lookup verification, batched serving and RAM/disk prompt-state caching. Current APIs include OpenAI and Anthropic Messages.
 
 **Scope:** One model family and AMD gfx1151 unified-memory machines motivate tensor-specific precision choices and separate budgets for resident weights, KV state and the paged lookup table.
 
-**Boundary:** The engine is distributed as a closed-source binary; public deployment files and quantization documentation cannot establish kernel implementation or all numerical-equivalence claims.
+**Boundary:** Closed engine core: deployment files and author verification reports do not expose kernel implementation. Default prompt-cache mode trades exact cold-run identity for speed; mode 1 is the documented identity mode. Quantization, attention budget and context extension have separate contracts. Performance is not independently reproduced.
 
-**Semantic considerations:** reduced precision.
+**Semantic considerations:** reduced precision, target-verified proposals, configuration-dependent.
 
 <details>
 <summary>Mechanism tags and source evidence / 机制标签与证据</summary>
 
-**Mechanisms:** `native-model-path`, `mixed-precision-layout`, `paged-lookup-table`.
+**Mechanisms:** `native-model-path`, `mixed-precision-layout`, `paged-lookup-table`, `speculative-decoding`, `prefix-caching`.
 
 **Constraints:** `model`, `hardware`, `memory`, `precision`.
 
-**Evidence:** [Source 1](https://github.com/peonist-ai/halogen-flash-server/blob/HEAD/README.md) · [Source 2](https://github.com/peonist-ai/halogen-flash-server/blob/HEAD/docs/QUANT.md) · [Source 3](https://github.com/peonist-ai/halogen-flash-server/blob/HEAD/LICENSE.md).
+**Evidence:** [Source 1](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/README.md) · [Source 2](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/docs/QUANT.md) · [Source 3](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/docs/quality.md) · [Source 4](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/docs/configuration.md) · [Source 5](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/docs/api.md) · [Source 6](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/LICENSE.md).
 
-**Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `initial`.
+**Reviewed:** 2026-11-03 · **AI involvement:** `not-established` · **Discovery:** `initial`.
 
 </details>
 
@@ -2862,6 +2891,35 @@ Implements talker, code predictor and speech decoder in C, with model-specific d
 **Evidence:** [Source 1](https://github.com/gabriele-mastrapasqua/qwen3-tts/blob/ef339be58a778b062e1c14382347964552eae007/README.md) · [Source 2](https://github.com/gabriele-mastrapasqua/qwen3-tts/blob/ef339be58a778b062e1c14382347964552eae007/qwen_tts_talker.c) · [Source 3](https://github.com/gabriele-mastrapasqua/qwen3-tts/blob/ef339be58a778b062e1c14382347964552eae007/docs/pipeline.md) · [Source 4](https://github.com/gabriele-mastrapasqua/qwen3-tts/blob/ef339be58a778b062e1c14382347964552eae007/docs/ENGINEERING-METHOD.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
+
+</details>
+
+<a id="qwenox"></a>
+
+### [Qwenox](https://github.com/IIIIIllllIIIIIlllll/Qwenox)
+
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** Reuses existing formats and selected kernels but owns a substantial gfx1151 model, state and speculative-serving program; distinct from the Halogen binary and Gufo runtime.
+
+C++/HIP model dispatch integrates fused low-bit MoE kernels, paged KV, per-slot recurrent checkpoints, RAM/SSD continuation state and prompt-lookup/MTP verification. GPU ticket scheduling interleaves requests; draft/verify rendezvous can batch across slots.
+
+**Scope:** Qwen3.8-Flash-Next on AMD Ryzen AI Max+ 395 / gfx1151 with 128 GB unified memory; Linux and Windows. Text execution reviewed; advertised vision paths not audited.
+
+**Boundary:** Credits Halogen HGN weights/format, Gufo kernel ports, hipfire IU4 design and llama.cpp ideas/tables. W4A4 prefill is an additional approximation; identical weight files do not ensure identical arithmetic. GGUF dynamic draft width can change near-tie outputs; fixed width and row-invariant verification qualify comparisons. Author benchmarks only; GPU tests not run here.
+
+**Semantic considerations:** layout / scheduling, reduced precision, target-verified proposals, configuration-dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `native-execution`, `model-specific-kernels`, `paged-kv`, `prefix-caching`, `speculative-decoding`, `shape-specialization`.
+
+**Constraints:** `model`, `hardware`, `memory`, `precision`, `workload`.
+
+**Evidence:** [Source 1](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/README_EN.md) · [Source 2](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/src/gpu/parts/40_model.inc) · [Source 3](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/src/gpu/parts/27_kernels_moe_lut.inc) · [Source 4](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/src/gpu/parts/49_rckpt.inc) · [Source 5](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/src/gpu/parts/50_serve.inc) · [Source 6](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/docs/CONCURRENCY.md) · [Source 7](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/tools/conc_verify.sh) · [Source 8](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/docs/KLD.md).
+
+**Reviewed:** 2026-11-03 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 
 </details>
 

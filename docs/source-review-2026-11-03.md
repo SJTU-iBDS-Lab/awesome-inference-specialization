@@ -1,0 +1,62 @@
+# Focused source review — 2026-11-03
+
+[Home](../README.md) · [中文首页](../README_CN.md) · [Evidence policy](evidence-policy.md)
+
+Starting main: `e3836cac34c49140a7a5df047ef64b0f9011c422`, with 131 records and 73 cases. A user-supplied comparison of Qwenox 0.1.0 and Halogen 0.18.18 prompted official-repository research and a bounded expansion into nearby specialized engines. This is static implementation/documentation review, **not a GPU benchmark, exhaustive provenance audit or full catalog refresh**.
+
+| Inspected artifact | Decision | Relationship |
+| --- | --- | --- |
+| [Qwenox, 91b111a](https://github.com/IIIIIllllIIIIIlllll/Qwenox/tree/91b111aeb4bf85723433a821f200398ca8d91cc2) | Add core native-execution case | HGN compatibility and adapted Gufo kernels coexist with a substantial separate model/state/verification runtime. |
+| [Halogen Flash, d64a233](https://github.com/peonist-ai/halogen-flash-server/tree/d64a2330f3f48ff0a447f3b03bddbe389fded982) | Refresh existing record and case | Keep `halogen-flash` and `closed-core`; do not count it again or claim source inspection of its kernels. |
+| [Crucible, e2742d4](https://github.com/jaedync/crucible-strix-halo/tree/e2742d41e5d07895589ddf6c5d15ef71847ba0c0) | Add core native-execution case | EXL3 reuse is explicit; gfx1151 execution and recurrent-state orchestration are more than an ExLlamaV3 frontend. |
+
+New records use the existing `execution` family and native-runtime case group. Reviewed domains are text; advertised vision, NPU and other experimental paths are not certified by these entries. No AI-construction attribution is inferred from agent APIs or instruction files.
+
+## Qwenox: implementation, reuse and numerical boundaries
+
+- **The dispatch reaches real kernels.** [`moe_b_v2` in 40_model.inc](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/src/gpu/parts/40_model.inc) routes eligible prefill work through `k_quant_a4` and `k_moe_iu4`. The [kernel body](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/src/gpu/parts/27_kernels_moe_lut.inc) computes per-128-element activation scales, packs four-bit values, stages tiles in LDS and uses the gfx1151 IU4 WMMA path. The non-A4 route retains LUT-based kernels and different tiling. These are device programs integrated into the model forward path.
+- **Reuse is not hidden.** [Acknowledgements](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/README_EN.md) credit Halogen's HGN container/weights, Gufo's ported routed F16 WMMA kernel and tensor-transform semantics, hipfire's IU4 design, and llama.cpp ngram/cache ideas and tables. Catalog admission concerns the meaningful integrated execution delta, not a claim that every kernel is original.
+- **State and scheduling matter.** [Serving](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/src/gpu/parts/50_serve.inc), the model's `OccGamma`/rendezvous paths and [recurrent checkpoints](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/src/gpu/parts/49_rckpt.inc) implement GPU ownership, per-slot state, cross-slot draft/verification batching and row-window backups before delayed commit/rollback. [Concurrency documentation](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/docs/CONCURRENCY.md) begins with serial GPU interleaving but later describes batched speculative rendezvous. Neither “all requests are batch decoded” nor “nothing is ever batched” accurately describes this revision.
+- **Same weights are not the same computation.** W4A4 prefill adds activation quantization; source comments explicitly report increased prompt KLD. It must not be credited as a lossless scheduling gain. Configuration also affects accumulation order and draft width. The concurrency document records GGUF near-tie divergence with adaptive width, a fixed-width control, and a row-invariant verification switch that disables some faster paths. Greedy invariance, fixed-seed repeatability and sampled-distribution correctness are distinct contracts.
+- **Concrete tests, not a passing run here.** [`conc_verify.sh`](https://github.com/IIIIIllllIIIIIlllll/Qwenox/blob/91b111aeb4bf85723433a821f200398ca8d91cc2/tools/conc_verify.sh) checks serial/concurrent token and termination behavior, cancellation and pool-overflow recovery. It matches prefill chunking, disables SSD snapshots and fixes ngram verification chunking. Its scope does not prove all disk-cache, draft-width or sampling configurations correct. No upstream tests were executed here.
+
+The README's Linux prefill and speculative-decode numbers use named launch settings; Windows figures use another environment. Their quality, power, precision, draft acceptance and workload conditions must travel with the numbers. We do not turn the article's comparison or the author's Windows concurrency figure into a general ranking.
+
+## Halogen: update the existing closed-core boundary
+
+The current public artifact documents Flash-Next plus newer sidecars; this review refreshes only Flash-Next. [API documentation](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/docs/api.md) includes Anthropic Messages, and [configuration](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/docs/configuration.md) includes an optional persistent disk prompt cache. These cannot be listed as Qwenox-exclusive features in a current comparison. This does not retroactively establish which features were enabled in the article's test.
+
+[Quality documentation](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/docs/quality.md) separates original-BF16 comparisons, same-dequantized-weight checks and serial/speculative identity claims. It also states that the **default prompt-cache mode trades cold-run identity for speed**; mode 1 is the documented identity mode. Checkpoint precision, attention-selection budget and extended-context options are separate effects. Public [quantization descriptions](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/docs/QUANT.md) and binary verification modes remain useful evidence, but do not reveal the engine implementation. The [EULA](https://github.com/peonist-ai/halogen-flash-server/blob/d64a2330f3f48ff0a447f3b03bddbe389fded982/LICENSE.md) and public repository do not justify calling the core open source.
+
+## Crucible: separate packed execution from checkpoint quality
+
+[`batch_forward.h`](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/engine/runtime/batch_forward.h) validates requests, prepares independent sequence state, launches embedding, and invokes the shared trunk loop with a model-owned block function. [`prefill_linear.h`](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/engine/exl3/prefill_linear.h) dispatches concrete row/shape-specific GEMM variants. [`exl3_gemv.h`](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/engine/exl3/kernels/exl3_gemv.h) decodes packed trellis states with AMD lane operations and half2 arithmetic, using column-block-major repacking and a fixed accumulation structure across activation rows. This is substantive format/hardware co-design, not just Python serving around an existing runtime.
+
+[`SpecSpansError`](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/engine/runtime/batch_spec_contract.h) checks distinct valid streams, projection/temporal limits, token IDs, context capacities and retained-prefix transitions before state mutation. [`sampling_test.cpp`](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/tests/sampling_test.cpp) asserts filtering/tie behavior and nonfinite-target rejection. These inspectable checks support the design boundary; they are not tests we ran or a universal equivalence proof.
+
+[Third-party notes](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/docs/THIRD_PARTY.md) identify ExLlamaV3 format/reference reuse and Turboderp quantized packs. “Exact” is relative to the configured quantized target. The [quality report](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/docs/QUALITY.md) includes **21-bucket KL lower bounds**, not full-vocabulary KL, and bounded text-position tests, not general agent or long-context reasoning validation. The [README](https://github.com/jaedync/crucible-strix-halo/blob/e2742d41e5d07895589ddf6c5d15ef71847ba0c0/README.md) distinguishes newer self-comparisons from older Halogen/Gufo comparisons. Different packs and versions cannot isolate an engine-only speedup. Architecture notes also identify nonpublic development-history material.
+
+## Expanded discovery and deferred work
+
+Official-repository searches covered recent specialized-inference candidates and the 395/Flash-Next neighborhood. Discovery is not an admission gate by itself. The following remain **unadmitted leads**, not negative correctness findings:
+
+| Candidate | Evidence inspected and remaining work |
+| --- | --- |
+| [AIMA Windows](https://github.com/Approaching-AI/AIMA-AMD395-Qwen36-35B-Windows-Engine/tree/6cdce444177f54e8985a2d6148da863369bece32) and [Linux companion](https://github.com/skyguan92/AIMA-AMD395-Qwen36-35B-Linux-Engine) | Windows README, native-provider inventory and whole-provider code indicate fixed-shape BF16 execution, AOT artifacts and smooth-tail dispatch. Full generator-to-loaded-provider provenance and companion/fork deduplication remain to be traced. Its batch-one FIFO service should not be described as concurrent batched decode. |
+| [Strixite](https://github.com/shawnshekari/strixite) | README indicates native HIP Flash-Next execution, paging and speculative batching. Kernel call paths, numerical switches and upstream reuse need inspection. |
+| [Spark Engine](https://github.com/fly9i/spark-engine) | README describes GB10 execution, EXL3 and distributed paths. Model-specific dispatch, kernel lineage and multi-node correctness remain to be checked. |
+| [mkyt/qwen3-27b-5090](https://github.com/mkyt/qwen3-27b-5090) | README describes a 5090 runtime with low-bit state and DFlash2; already a named implementation source in the Ignis case. A separate entry needs direct runtime/state inspection and an explicit delta relative to existing NInfer/Ignis records. |
+| [recursive-oss/rec](https://github.com/recursive-oss/rec) | README presents a downloadable Apple-GPU engine. Public core implementation and construction evidence were not established in this pass. |
+| [vllm-qwen](https://github.com/hec-ovi/vllm-qwen) | Described as a thin Docker Compose wrapper; no distinct execution contribution established. Do not duplicate vLLM for deployment packaging. |
+
+## Interpreting the supplied comparison / 如何使用用户提供的实测
+
+用户贴文没有可追溯的原始日志或评分规则，作为补查线索处理，未将其数值纳入已验证基准。文中是 Halogen 线上参数对 Qwenox 默认配置；同机同权重减少了部分变量，但缓存、投机策略、采样、功耗、编译器与计时口径仍需对齐。单路速度和多路聚合吞吐不可混算，Windows 编码题与 Linux 采样写作也不能直接比较。
+
+33 道题每题一次，以及来自不同日期的两组评分，不能证明质量等价，也不能据此断言差异属于正常波动。需要题目、逐题输出、评分办法、种子及重复实验。现行 Halogen 已文档化 Anthropic 接口和磁盘缓存；本轮不沿用贴文中可能过时的功能区分。收录根据可核查的执行贡献，而非哪一组 tok/s 更高。
+
+## Maintenance and verification
+
+Counts become **133 records and 75 cases**. Added bilingual summaries, pinned evidence, native-runtime membership and recent additions; refreshed Halogen in place. Existing organization, starter selections, other project/case content and their technical-review dates are preserved. Only these three repositories' star observations were refreshed; older snapshots retain their actual dates.
+
+Catalog validation, generated-view freshness, all 66 repository unit tests, preservation checks and `git diff --check` cover this documentation update. An existing recent-additions test assumed every admission date appeared literally; three distinct dates exposed that assumption. It now checks the existing range endpoints and every displayed project link, preserving the renderer and layout. These checks do not test upstream engines. No GPU build, quality experiment, benchmark reproduction or complete external-link audit was performed.

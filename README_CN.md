@@ -20,7 +20,7 @@
 <!-- CATALOG-START -->
 
 <p align="center">
-<sub>131 个项目 · 96 个引擎 · 14 个构建流程 · 3 个基准 · 18 项资源</sub>
+<sub>133 个项目 · 98 个引擎 · 14 个构建流程 · 3 个基准 · 18 项资源</sub>
 </p>
 
 <div align="center">
@@ -31,7 +31,7 @@
 
 </div>
 
-<sub title="目录收录日期，不是项目发布日期"><b>近期收录</b> · 2026-10-16–2026-10-23 · [Mach X](#project-machx) · [Ignis](#project-ignis) · [dInfer](#project-dinfer) · [FreeVideo](#project-freevideo) · [peregrine](#project-peregrine) · [更新记录](docs/updates.md)</sub>
+<sub title="目录收录日期，不是项目发布日期"><b>近期收录</b> · 2026-10-16–2026-11-03 · [Qwenox](#project-qwenox) · [Crucible](#project-crucible) · [Mach X](#project-machx) · [Ignis](#project-ignis) · [dInfer](#project-dinfer) · [更新记录](docs/updates.md)</sub>
 
 <a id="featured-reading"></a>
 <a id="start-here"></a>
@@ -96,11 +96,11 @@
 
 ## 推理引擎
 
-<sub>全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md) · [★ 仓库 Star 快照 · 2026-10-14–2026-10-23](docs/homepage-metadata.md)</sub>
+<sub>全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md) · [★ 仓库 Star 快照 · 2026-10-14–2026-11-03](docs/homepage-metadata.md)</sub>
 
 <a id="homepage-system-text"></a>
 
-### 语言模型 <sub>· 55</sub>
+### 语言模型 <sub>· 57</sub>
 
 - <a id="project-ane-lm"></a>**[ANE-LM](https://github.com/johnmai-dev/ANE-LM)** <sub title="johnmai-dev/ANE-LM: 144 repository stars; observed 2026-10-14">★&nbsp;144</sub> — 作为 ane.cpp 的直接前身，以编译缓存连接 Qwen 的 ANE 内核与 CPU 运算，保留私有接口和有限模型范围的约束。 <sub>[详情](docs/catalog.md#ane-lm)</sub>
 - <a id="project-ane-cpp"></a>**[ane.cpp](https://github.com/skyfallsin/ane.cpp)** <sub title="skyfallsin/ane.cpp: 6 repository stars; observed 2026-10-14">★&nbsp;6</sub> — 通过硬件探针和保留／舍弃实验，将 Qwen 卷积编译到 ANE，并由 CPU 处理归一化、注意力与 KV 状态。 <sub>[详情](docs/catalog.md#ane-cpp)</sub>
@@ -111,6 +111,7 @@
 - <a id="project-ciru-runtime"></a>**[CIRU runtime](https://github.com/ciru-ai/Qwen3.8-Flash-CIRU-STRIX-IU4)** <sub title="ciru-ai/Qwen3.8-Flash-CIRU-STRIX-IU4: 20 repository stars; observed 2026-10-14">★&nbsp;20</sub> — 在 llama.cpp 衍生运行时中整合专家分页、专用内核、稀疏注意力和推测状态修正，模型格式与特定发布构建紧密耦合。 <sub>多模态 · [详情](docs/catalog.md#ciru-runtime)</sub>
 - <a id="project-infire"></a>**[Cloudflare Infire](https://blog.cloudflare.com/cloudflares-most-efficient-ai-inference-engine/)** <sub title="已核实来源">[博客](https://blog.cloudflare.com/high-performance-llms/)</sub> — 围绕 Cloudflare 节点重建的专有 Rust 服务栈，结合模型专用内核编译、批处理、分页状态及后续多 GPU 支持。依据官方工程报告；不同对照的部署条件有别，未确认 AI 辅助构建。 <sub>[详情](docs/catalog.md#infire)</sub>
 - <a id="project-coreml-llm-cli"></a>**[CoreML LLM CLI](https://github.com/smpanaro/coreml-llm-cli)** <sub title="smpanaro/coreml-llm-cli: 131 repository stars; observed 2026-10-14">★&nbsp;131</sub> — 以分块 Core ML 执行、KV 状态和 IOSurface 缓冲区编排 Llama 2，呈现 ANEMLL 之前的编译模型与宿主运行时适配。 <sub>[详情](docs/catalog.md#coreml-llm-cli)</sub>
+- <a id="project-crucible"></a>**[Crucible](https://github.com/jaedync/crucible-strix-halo)** <sub title="jaedync/crucible-strix-halo: 16 repository stars; observed 2026-11-03">★&nbsp;16</sub> — 面向 gfx1151 的 EXL3 Flash-Next 运行时，具有权重重排内核、合批模型遍历与带检查的递归状态验证。复用 ExLlamaV3 格式及量化权重；精确性声明相对于指定目标，不代表 BF16 等价，性能仍为作者报告。 <sub>[详情](docs/catalog.md#crucible)</sub>
 - <a id="project-zero-inference"></a>**[DeepSpeed ZeRO-Inference](https://github.com/deepspeedai/DeepSpeedExamples)** <sub title="deepspeedai/DeepSpeedExamples: 6,847 repository stars; observed 2026-10-14">★&nbsp;6.8k（母仓库） · [博客](https://www.deepspeed.ai/2022/09/09/zero-inference.html)</sub> — 将 CPU 或 NVMe 中的权重逐层送入 GPU，以预取和大批量摊薄传输开销，展示早于近期编程智能体的吞吐型卸载路线。 <sub>[详情](docs/catalog.md#zero-inference)</sub>
 - <a id="project-dinfer"></a>**[dInfer](https://github.com/inclusionAI/dInfer)** <sub title="inclusionAI/dInfer: 488 repository stars; observed 2026-10-16">★&nbsp;488 · [论文](https://arxiv.org/abs/2510.08666)</sub> — 面向 LLaDA 系列扩散语言模型实现分块确认、置信度解码与可配置 KV 更新，底层复用 vLLM/SGLang。缓存近似、模型依赖及特定 GPU 测试限制数值与性能结论的外推。 <sub>[详情](docs/catalog.md#dinfer)</sub>
 - <a id="project-dwarfstar"></a>**[DwarfStar](https://github.com/antirez/ds4)** <sub title="antirez/ds4: 23,840 repository stars; observed 2026-10-14">★&nbsp;23.8k</sub> — 披露 AI 辅助构建的原生运行时，为选定模型保留非路由状态，并用有界 SSD 缓存读取专家；其模型与后端支持具有明确边界。 <sub>[详情](docs/catalog.md#dwarfstar)</sub>
@@ -119,7 +120,7 @@
 - <a id="project-flash-moe"></a>**[Flash-MoE](https://github.com/danveloper/flash-moe)** <sub title="danveloper/flash-moe: 4,248 repository stars; observed 2026-10-14">★&nbsp;4.2k</sub> — 披露 AI 辅助构建的 Qwen 专用 Metal 实现，从 SSD 流式读取量化专家，但将十个激活专家缩减为四个，含近似取舍。 <sub>[详情](docs/catalog.md#flash-moe)</sub>
 - <a id="project-flexllmgen"></a>**[FlexLLMGen (FlexGen)](https://github.com/FMInference/FlexLLMGen)** <sub title="FMInference/FlexLLMGen: 9,346 repository stars; observed 2026-10-14">★&nbsp;9.3k</sub> — 面向 OPT 的吞吐型运行时，通过 GPU、CPU 与磁盘分层、跨微批权重复用和传输重叠调度执行，不代表通用低延迟表现。 <sub>[详情](docs/catalog.md#flexllmgen)</sub>
 - <a id="project-gufo-rdma"></a>**[Gufo RDMA](https://github.com/neuhaus/gufo)** <sub title="neuhaus/gufo: 11 repository stars; observed 2026-10-14">★&nbsp;11</sub> — 将 Gufo 扩展到两台 Strix Halo，以模型张量分区、RDMA 集合通信和镜像请求保持跨主机执行与推测状态同步。 <sub>多模态 · [详情](docs/catalog.md#gufo-rdma)</sub>
-- <a id="project-halogen-flash"></a>**[Halogen Flash](https://github.com/peonist-ai/halogen-flash-server)** <sub title="peonist-ai/halogen-flash-server: 964 repository stars; observed 2026-10-14">★&nbsp;964</sub> — 面向指定 Qwen 模型与芯片，以混合精度、分页 n-gram 查找和专用专家执行提供二进制运行时；核心闭源，公开资料无法验证全部实现。 <sub>[详情](docs/catalog.md#halogen-flash)</sub>
+- <a id="project-halogen-flash"></a>**[Halogen Flash](https://github.com/peonist-ai/halogen-flash-server)** <sub title="peonist-ai/halogen-flash-server: 1,196 repository stars; observed 2026-11-03">★&nbsp;1.2k</sub> — 面向 gfx1151 的闭源核心 Flash-Next 二进制，采用混合精度、分页查表、投机解码与内存／磁盘缓存。现行文档包含 Anthropic Messages；默认缓存以冷运行一致性换速度，内核实现与作者性能尚未经独立验证。 <sub>[详情](docs/catalog.md#halogen-flash)</sub>
 - <a id="project-hilum-engine"></a>**[Hilum LLM Engine](https://github.com/hilum-labs/hilum-local-llm-engine)** <sub title="hilum-labs/hilum-local-llm-engine: 1 repository stars; observed 2026-10-14">★&nbsp;1</sub> — 在 llama.cpp/GGML 基础上接入移动端 Adreno、Vulkan 与 Metal 路径，调整着色器调度、内存分配和设备参数。 <sub>多模态 · [详情](docs/catalog.md#hilum-engine)</sub>
 - <a id="project-hipengine"></a>**[hipEngine](https://github.com/shisa-ai/hipEngine)** <sub title="shisa-ai/hipEngine: 88 repository stars; observed 2026-10-14">★&nbsp;88</sub> — 由 Python 宿主驱动 HIP/C++ 模型内核、共享 KV 状态和连续批处理，面向指定 AMD 设备重建不依赖 PyTorch 的推理路径。 <sub>音频 · 多模态 · [详情](docs/catalog.md#hipengine)</sub>
 - <a id="project-hybrimoe"></a>**[HybriMoE](https://github.com/PKU-SEC-Lab/HybriMoE)** <sub title="PKU-SEC-Lab/HybriMoE: 123 repository stars; observed 2026-10-14">★&nbsp;123</sub> — 基于 KTransformers 组合 CPU/GPU 专家调度、预取与缓存策略，为超显存 MoE 的专家放置和搬运提供既有参考。 <sub>[详情](docs/catalog.md#hybrimoe)</sub>
@@ -143,6 +144,7 @@
 - <a id="project-ninfer-3090"></a>**[NInfer-3090](https://github.com/ashalliants/ninfer-3090)** <sub title="ashalliants/ninfer-3090: 49 repository stars; observed 2026-10-14">★&nbsp;49</sub> — 将 NInfer 分支适配至 24GB RTX 3090，重建 SM86 量化内核、内存规划和回放状态，超出单纯更改编译架构的范围。 <sub>多模态 · [详情](docs/catalog.md#ninfer-3090)</sub>
 - <a id="project-peregrine"></a>**[peregrine](https://github.com/s-b-repo/peregrine)** <sub title="s-b-repo/peregrine: 6 repository stars; observed 2026-10-16">★&nbsp;6</sub> — Colibri 的 Rust 衍生执行栈，借助 io_uring、CPU 与可选 CUDA 并发处理专家并固定顺序归约。作者披露的磁盘受限单序列解码仍慢于 Colibri；GPU 路径需另行验证。 <sub>[详情](docs/catalog.md#peregrine)</sub>
 - <a id="project-powerinfer"></a>**[PowerInfer](https://github.com/Tiiny-AI/PowerInfer)** <sub title="Tiiny-AI/PowerInfer: 9,826 repository stars; observed 2026-10-14">★&nbsp;9.8k</sub> — 依据神经元激活频率将热点放在 GPU、冷激活交给 CPU，并用预测器驱动稀疏算子；依赖兼容稀疏模型，不能直接套用任意稠密权重。 <sub>[详情](docs/catalog.md#powerinfer)</sub>
+- <a id="project-qwenox"></a>**[Qwenox](https://github.com/IIIIIllllIIIIIlllll/Qwenox)** <sub title="IIIIIllllIIIIIlllll/Qwenox: 126 repository stars; observed 2026-11-03">★&nbsp;126</sub> — 面向 gfx1151 的 Flash-Next HIP 运行时，包含低比特 MoE 内核、分页状态与跨槽投机验证。复用 Halogen 格式、Gufo 内核及 hipfire 思路；W4A4 和草稿宽度需分别检查质量，公开速度仍为作者报告。 <sub>[详情](docs/catalog.md#qwenox)</sub>
 - <a id="project-rocmfpx"></a>**[ROCmFPX](https://github.com/ROCmFPX/ROCmFPX)** <sub title="ROCmFPX/ROCmFPX: 48 repository stars; observed 2026-10-14">★&nbsp;48</sub> — 在 llama.cpp 下游定义 AMD 量化块、转换策略及匹配内核，展示格式与后端的协同构建，准确性依配方分别核验。 <sub>[详情](docs/catalog.md#rocmfpx)</sub>
 - <a id="project-saragossa"></a>**[Saragossa](https://github.com/azerozero/saragossa)** <sub title="azerozero/saragossa: 8 repository stars; observed 2026-10-14">★&nbsp;8</sub> — 以 Rust／Metal 为指定文本和语音模型自建执行、驻留解码状态、缓冲区及前缀快照，配有回归对照，聚焦 Apple 芯片单用户场景。 <sub>音频 · [详情](docs/catalog.md#saragossa)</sub>
 - <a id="project-splash"></a>**[Splash](https://github.com/incoai/splash)** <sub title="incoai/splash: 1,421 repository stars; observed 2026-10-14">★&nbsp;1.4k · [博客](https://inco.ai/blog/splash/)</sub> — 在 Apple 芯片上以模型专用 Metal 内核、草稿验证和前缀复用构建原生服务栈，披露的智能体辅助范围是内核生成，并非整个引擎。 <sub>多模态 · [详情](docs/catalog.md#splash)</sub>

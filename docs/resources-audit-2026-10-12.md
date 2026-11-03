@@ -77,3 +77,7 @@ Reviewed revision: `83e73eb94051dc67431829d0f3d3eb67db0b8e9b`.
 ## Follow-up source inspection — 2026-10-23
 
 [Mach X and Ignis review](source-review-2026-10-23.md) records two user-supplied execution-stack candidates, pinned revisions, dispatch/kernel evidence, upstream reuse, author benchmark boundaries and concrete checks. Both qualify as core cases; neither is treated as independent performance reproduction. This follow-up does not change the October 12 resource findings or older project review dates.
+
+## Follow-up source inspection — 2026-11-03
+
+[Qwenox, Halogen and Crucible review](source-review-2026-11-03.md) adds two public-code execution cases and refreshes Halogen's existing closed-core record. It records adapted kernels, quantization and state-validation limits, corrects current API/cache comparisons and preserves expanded-discovery leads separately from admitted records. Other historical findings and review dates are unchanged.

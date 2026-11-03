@@ -30,7 +30,7 @@
   "flash-linear-attention": "提供 ExLlamaV3 复用的线性注意力与递归状态内核，以分块预填充和状态更新执行兼容架构，不能等价替换任意 softmax 注意力。",
   "flash-attention": "以 IO 感知分块和融合归约执行注意力，并提供 KV 更新接口，供模型运行时复用；数学运算精确不代表逐位一致或整机收益。",
   "flashinfer": "按精度、头部形状和缓存布局选择或生成注意力等内核，在支持路径中供 MoE-Infinity 复用，本身不是独立推理服务器。",
-  "halogen-flash": "面向指定 Qwen 模型与芯片，以混合精度、分页 n-gram 查找和专用专家执行提供二进制运行时；核心闭源，公开资料无法验证全部实现。",
+  "halogen-flash": "面向 gfx1151 的闭源核心 Flash-Next 二进制，采用混合精度、分页查表、投机解码与内存／磁盘缓存。现行文档包含 Anthropic Messages；默认缓存以冷运行一致性换速度，内核实现与作者性能尚未经独立验证。",
   "iris": "以 C 与 Metal 或 CPU 内核实现指定图像模型流水线，使用权重映射并在条件生成后释放文本编码器，展示原生图与执行的承担范围。",
   "lightx2v": "自有模型路径和算子存储约定配合双槽权重加载，重构视频推理及卸载执行；量化、蒸馏权重和轻量 VAE 的贡献需单独区分。",
   "llama-cpp": "通过 GGUF 加载、GGML 图及后端量化内核提供原生执行，是多个专用分支的共享基础，便于区分继承代码与新增执行路径。",
@@ -129,5 +129,7 @@
   "freevideo": "针对八步 VDN-H3 视频模型按请求把权重块放在显存、内存和磁盘，选择 int8/FP8 及注意力后端。最低内存要求、生成质量与模型权重许可取决于具体检查点和负载。",
   "peregrine": "Colibri 的 Rust 衍生执行栈，借助 io_uring、CPU 与可选 CUDA 并发处理专家并固定顺序归约。作者披露的磁盘受限单序列解码仍慢于 Colibri；GPU 路径需另行验证。",
   "machx": "面向 Intel Arc 的 C++/SYCL 引擎，以模型分派的 XMX attention、分块量化 GEMM 和请求并发通道改造执行，超出 GGUF 加载封装；XMX 数值与 SIMD 路径不同，作者性能收益仅适用于所述配置。",
-  "ignis": "面向单张 Blackwell 与指定 Qwen 模型的 Rust/CUDA 引擎，在 NInfer 内核之上重建批量解码图、KV 状态管理与专家驻留；新增专用 top-k、改编的分带 prefill attention，量化和改动后的检查点需单独验证质量。"
+  "ignis": "面向单张 Blackwell 与指定 Qwen 模型的 Rust/CUDA 引擎，在 NInfer 内核之上重建批量解码图、KV 状态管理与专家驻留；新增专用 top-k、改编的分带 prefill attention，量化和改动后的检查点需单独验证质量。",
+  "qwenox": "面向 gfx1151 的 Flash-Next HIP 运行时，包含低比特 MoE 内核、分页状态与跨槽投机验证。复用 Halogen 格式、Gufo 内核及 hipfire 思路；W4A4 和草稿宽度需分别检查质量，公开速度仍为作者报告。",
+  "crucible": "面向 gfx1151 的 EXL3 Flash-Next 运行时，具有权重重排内核、合批模型遍历与带检查的递归状态验证。复用 ExLlamaV3 格式及量化权重；精确性声明相对于指定目标，不代表 BF16 等价，性能仍为作者报告。"
 }

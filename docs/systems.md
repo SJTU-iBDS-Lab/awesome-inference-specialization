@@ -32,7 +32,7 @@ Integrated model runtimes and substantial specialized backends, including native
 
 集成模型运行时和实质专用后端，涵盖原生实现与有直接参照意义的既有执行栈。
 
-96 projects / 项目
+98 projects / 项目
 
 | Project and evidence | Why it belongs | Relevance / artifact |
 | --- | --- | --- |
@@ -44,6 +44,7 @@ Integrated model runtimes and substantial specialized backends, including native
 | [CIRU runtime](catalog.md#ciru-runtime) | Model/hardware-specific deep integration with traceable borrowed kernels, artifact compatibility work and release qualification. | core / backend |
 | [Cloudflare Infire](catalog.md#infire) | An industrial platform-specialization case documenting why a provider rebuilt execution instead of only configuring a general framework; useful without an AI-development attribution. | core / runtime |
 | [Colibri](catalog.md#colibri) | Exposes the alternative of several small architecture-specific execution programs sharing selected components. | core / runtime |
+| [Crucible](catalog.md#crucible) | Reconstructs EXL3 execution and multi-request recurrent state for one model/chip rather than exposing ExLlamaV3 through a new frontend. | core / runtime |
 | [dInfer](catalog.md#dinfer) | Specializes decoding, state refresh and serving for diffusion language models instead of treating denoising as autoregressive token generation. | core / backend |
 | [DwarfStar](catalog.md#dwarfstar) | A separately implemented runtime links disclosed AI assistance to model execution and expert-residency control. | core / runtime |
 | [edge-dit.cpp](catalog.md#edge-dit) | Core by execution ownership: native DiT graphs and model-component residency, graph segmentation and staged offload reconstruct the integrated constrained-memory path. | core / runtime |
@@ -83,6 +84,7 @@ Integrated model runtimes and substantial specialized backends, including native
 | [Quartz](catalog.md#saient-quartz) | Exposes native Rust image generation and an evolving native Wan path, while a separate C++ video companion provides a concrete case for auditing claimed versus actual execution boundaries. | core / runtime |
 | [Qwen-ASR (C)](catalog.md#qwen-asr-c) | Reconstructs Qwen3-ASR from waveform preprocessing through autoregressive transcription in C, making streaming context policy and CPU/GPU execution responsibilities directly inspectable. | core / runtime |
 | [Qwen3-TTS (C)](catalog.md#qwen3-tts-c) | Rebuilds the Qwen3-TTS talker, code predictor and waveform decoder as one native path; published engineering records connect implementation choices to reference checks and measurement corrections. | core / runtime |
+| [Qwenox](catalog.md#qwenox) | Reuses existing formats and selected kernels but owns a substantial gfx1151 model, state and speculative-serving program; distinct from the Halogen binary and Gufo runtime. | core / runtime |
 | [Saragossa](catalog.md#saragossa) | Replaces array-framework execution with an explicitly owned local runtime and regression oracles. | core / runtime |
 | [Splash](catalog.md#splash) | Builds model-specific execution and serving on Apple silicon, with disclosed agent-generated kernels inside a native runtime. | core / runtime |
 | [stable-diffusion.cpp](catalog.md#stable-diffusion-cpp) | Core by construction boundary: the native image/video model implementation owns loading, conditioning, sampling and component placement over reusable ggml backends. | core / runtime |
