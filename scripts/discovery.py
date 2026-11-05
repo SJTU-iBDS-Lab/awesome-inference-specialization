@@ -46,9 +46,9 @@ def render_shortcuts(rows: list[dict], chinese: bool = False) -> list[str]:
     routes = load_routes(rows)
     key = 'label_cn' if chinese else 'label'
     lines = ['<!-- DISCOVERY-START -->', '<a id="find-a-stack"></a>', '',
-             '| 查找入口 | 已收录的执行路径 |' if chinese else '| Find a stack | Explore reviewed paths |',
+             '| 入口 | 已收录的执行路径 |' if chinese else '| Find a stack | Explore reviewed paths |',
              '| :--- | :--- |']
-    for kind, en, cn in [('hardware', 'Hardware', '按硬件'), ('models', 'Models', '按模型')]:
+    for kind, en, cn in [('hardware', 'Hardware', '硬件'), ('models', 'Models', '模型')]:
         links = [f'[{cell(g[key])}](docs/find-a-stack.md#{g["id"]})' for g in routes[kind] if g['homepage']]
         links.append(f'[{"更多" if chinese else "More"}](docs/find-a-stack.md#{kind})')
         lines.append(f'| **{cn if chinese else en}** | ' + ' · '.join(links) + ' |')

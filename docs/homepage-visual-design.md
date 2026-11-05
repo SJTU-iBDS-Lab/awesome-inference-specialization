@@ -53,3 +53,5 @@ Project names now carry compact repository-star text and selected Paper / Blog /
 Added two compact discovery rows before the reading cards, backed by curated IDs and canonical scope in the generated guide. Shortened 17 bilingual summary pairs and moved generic non-reproduction wording into a shared evidence note above the list; substantive model changes, closed cores and verification gaps stay visible.
 
 The SVGs retain the input → specialization → execution-stack concept, now using a stronger central panel, subtle dot field and numbered stack layers. Wide/compact and light/dark variants remain self-contained. This is presentation work; the 140 project records, 82 cases, source-review dates and star observations are unchanged.
+
+The published Chinese README was visually checked on GitHub at desktop width and a 390 px viewport; the compact banner selected correctly. Narrow navigation labels were shortened to avoid splitting single category names. Light-wide and dark-compact SVGs were also raster-checked. These checks do not cover every GitHub client or constitute a new source audit.
