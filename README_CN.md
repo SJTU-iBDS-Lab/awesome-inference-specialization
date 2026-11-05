@@ -34,10 +34,10 @@
 <!-- DISCOVERY-START -->
 <a id="find-a-stack"></a>
 
-| 入口 | 已收录的执行路径 |
+| 入&#8288;口 | 已收录的执行路径 |
 | :--- | :--- |
-| **硬件** | [RTX 5090 / Blackwell](docs/find-a-stack.md#blackwell) · [DGX Spark](docs/find-a-stack.md#spark) · [Strix Halo / 395](docs/find-a-stack.md#strix-halo) · [Apple Silicon](docs/find-a-stack.md#apple) · [更多](docs/find-a-stack.md#hardware) |
-| **模型** | [Flash-Next](docs/find-a-stack.md#flash-next) · [其他 Qwen](docs/find-a-stack.md#qwen) · [GLM-5.3](docs/find-a-stack.md#glm) · [图像 / 视频](docs/find-a-stack.md#diffusion) · [语音](docs/find-a-stack.md#speech) · [更多](docs/find-a-stack.md#models) |
+| **硬&#8288;件** | [RTX 5090 / Blackwell](docs/find-a-stack.md#blackwell) · [DGX Spark](docs/find-a-stack.md#spark) · [Strix Halo / 395](docs/find-a-stack.md#strix-halo) · [Apple Silicon](docs/find-a-stack.md#apple) · [更多](docs/find-a-stack.md#hardware) |
+| **模&#8288;型** | [Flash-Next](docs/find-a-stack.md#flash-next) · [其他 Qwen](docs/find-a-stack.md#qwen) · [GLM-5.3](docs/find-a-stack.md#glm) · [图像 / 视频](docs/find-a-stack.md#diffusion) · [语音](docs/find-a-stack.md#speech) · [更多](docs/find-a-stack.md#models) |
 
 <sub>范围以已查模型、设备和配置为准；不代表兼容性认证或性能排名。</sub>
 <!-- DISCOVERY-END -->

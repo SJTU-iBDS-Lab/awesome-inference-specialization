@@ -45,10 +45,11 @@ def cell(value: str) -> str:
 def render_shortcuts(rows: list[dict], chinese: bool = False) -> list[str]:
     routes = load_routes(rows)
     key = 'label_cn' if chinese else 'label'
+    # Word joiners keep two-character Chinese labels intact in GitHub's narrow tables.
     lines = ['<!-- DISCOVERY-START -->', '<a id="find-a-stack"></a>', '',
-             '| 入口 | 已收录的执行路径 |' if chinese else '| Find a stack | Explore reviewed paths |',
+             '| 入&#8288;口 | 已收录的执行路径 |' if chinese else '| Find a stack | Explore reviewed paths |',
              '| :--- | :--- |']
-    for kind, en, cn in [('hardware', 'Hardware', '硬件'), ('models', 'Models', '模型')]:
+    for kind, en, cn in [('hardware', 'Hardware', '硬&#8288;件'), ('models', 'Models', '模&#8288;型')]:
         links = [f'[{cell(g[key])}](docs/find-a-stack.md#{g["id"]})' for g in routes[kind] if g['homepage']]
         links.append(f'[{"更多" if chinese else "More"}](docs/find-a-stack.md#{kind})')
         lines.append(f'| **{cn if chinese else en}** | ' + ' · '.join(links) + ' |')
