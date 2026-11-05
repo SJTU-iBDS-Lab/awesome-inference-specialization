@@ -18,15 +18,15 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 
 ### Native runtimes for qualified models and devices / 围绕指定模型与设备重建原生运行时
 
-[Splash](#splash) · [Gufo](#gufo) · [zLLM](#zllm) · [NInfer](#ninfer) · [Lily](#lily) · [hipEngine](#hipengine) · [imp](#imp) · [VTE](#vte) · [ZINC](#zinc) · [memra](#memra) · [Kipp](#kipp) · [Saragossa](#saragossa) · [TensorFold](#tensorfold) · [Halogen Flash](#halogen-flash) · [ExLlamaV3](#exllamav3) · [Llaminar](#llaminar) · [ane.cpp](#ane-cpp) · [Cactus](#cactus) · [FastFlowLM](#fastflowlm) · [Cloudflare Infire](#infire) · [Kog Inference Engine](#kie) · [Mach X](#machx) · [Ignis](#ignis) · [Qwenox](#qwenox) · [Crucible](#crucible) · [Strixite](#strixite) · [Spark Engine](#spark-engine)
+[Splash](#splash) · [Gufo](#gufo) · [zLLM](#zllm) · [NInfer](#ninfer) · [Lily](#lily) · [hipEngine](#hipengine) · [imp](#imp) · [VTE](#vte) · [ZINC](#zinc) · [memra](#memra) · [Kipp](#kipp) · [Saragossa](#saragossa) · [TensorFold](#tensorfold) · [Halogen Flash](#halogen-flash) · [ExLlamaV3](#exllamav3) · [Llaminar](#llaminar) · [ane.cpp](#ane-cpp) · [Cactus](#cactus) · [FastFlowLM](#fastflowlm) · [Cloudflare Infire](#infire) · [Kog Inference Engine](#kie) · [Mach X](#machx) · [Ignis](#ignis) · [Qwenox](#qwenox) · [Crucible](#crucible) · [Strixite](#strixite) · [Spark Engine](#spark-engine) · [gr8](#gr8)
 
 ### Rebuilding around memory and expert placement / 围绕内存与专家驻留重建执行
 
-[Flash-MoE](#flash-moe) · [Strata](#strata) · [Swiftlet](#swiftlet) · [DwarfStar](#dwarfstar) · [TurboFieldfare](#turbo-fieldfare) · [TUFF](#tuff) · [SwiftLM](#swiftlm) · [Colibri](#colibri) · [KTransformers](#ktransformers) · [peregrine](#peregrine) · [MobiInfer Android](#mobiinfer-android)
+[Flash-MoE](#flash-moe) · [Strata](#strata) · [Swiftlet](#swiftlet) · [DwarfStar](#dwarfstar) · [TurboFieldfare](#turbo-fieldfare) · [TUFF](#tuff) · [SwiftLM](#swiftlm) · [Colibri](#colibri) · [KTransformers](#ktransformers) · [peregrine](#peregrine) · [MobiInfer Android](#mobiinfer-android) · [N3komata](#n3komata)
 
 ### Substantial forks and specialized backends / 通过深度分叉与专用后端改变执行
 
-[llamAmpere](#llamampere) · [vLLM Radiance](#vllm-radiance) · [ANEMLL Flash llama.cpp](#anemll-flash-llama) · [NInfer-3090](#ninfer-3090) · [Infernix](#infernix) · [CIRU runtime](#ciru-runtime) · [Gufo RDMA](#gufo-rdma) · [strix-llama.cpp](#strix-llama-cpp) · [dInfer](#dinfer)
+[llamAmpere](#llamampere) · [vLLM Radiance](#vllm-radiance) · [ANEMLL Flash llama.cpp](#anemll-flash-llama) · [NInfer-3090](#ninfer-3090) · [Infernix](#infernix) · [CIRU runtime](#ciru-runtime) · [Gufo RDMA](#gufo-rdma) · [strix-llama.cpp](#strix-llama-cpp) · [dInfer](#dinfer) · [Basalt](#basalt)
 
 ### Reconstructing image-generation pipelines / 重建图像生成流水线
 
@@ -740,6 +740,26 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 
 **Reviewed:** 2026-11-03. See the linked project record for mechanism-specific caveats.
 
+<a id="gr8"></a>
+
+## gr8: co-design GLM kernels, rank communication and KV placement
+
+**Related project records:** [gr8](catalog.md#gr8).
+
+- **Why build it? / 为什么另建:** Fit the full GLM-5.3 and long conversations across a few 128 GB unified-memory nodes with a narrow model and fabric contract.
+- **Execution ownership / 重构边界:** CUDA model/kernel execution, native S2 serving steps, custom RoCE collectives and optional KV block-store integration. The broader current model list is not certified by this GLM-focused inspection.
+- **Retained components / 复用什么:** EXL3 format and ExLlamaV3 quantizer, QTIP lineage, pretrained GLM/MTP/DFlash2 models, CUDA and libibverbs; Rust page/loader/front-end components. No PyTorch or NCCL serving dependency is claimed by the author, not absence of all dependencies.
+- **Scope given up / 取舍与兼容性:** GB10, supported TP widths and network topology constrain deployment. Quantization varies by topology; shared-batch/context-parallel reduction can change tokens relative to solo execution. Opt-in steering and compressed KV need separate quality checks.
+- **Construction process / 怎样构建:** K1 dispatch selects trellis width/codebook and fused or split fc1/fc2/finalize paths. Native S2 launches enqueue fabric operations before captured model steps. g6m4 binds page stores to model/draft caches; kv_tier copies shard/replicated page parts with spills ordered before restores.
+- **AI participation / AI 参与的直接证据:** Not established by the reviewed sources; agent contribution instructions are not an authorship disclosure.
+- **Disclosed effort / 构建投入:** Author hardware/results are documented; total construction, compute and maintenance costs are not established.
+- **Validation boundary / 验证覆盖:** The trellis test enumerates codebook states, checks fixed hashes across reference implementations and checks random K2-K4 tiles. The host-only pool-stash test models token rows on two ranks and checks restoration/order/digests; it is not a GPU or fabric test. Tests were read, not run. Author RigMark results compare different expert precisions and report cold/cached and solo/aggregate separately.
+- **Evolution evidence / 适配与维护:** Build widths, release manifests, model/draft state, collective ordering and persisted KV compatibility must remain aligned. The executable stamp and block-format version distinguish stored state. Development/operating costs and full cross-model coverage are unknown.
+
+**Sources:** [Source 1](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/README.md) · [Source 2](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/CREDITS.md) · [Source 3](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/kernels/k1.cuh) · [Source 4](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/kernels/bind.cuh) · [Source 5](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/runtime/s2/native.cuh) · [Source 6](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/runtime/g6m4.cu) · [Source 7](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/comms/fabric.cpp) · [Source 8](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/runtime/s2/kv_tier.cuh) · [Source 9](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/kernels/tests/tr3_e4m3_test.cu) · [Source 10](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/runtime/s2/tests/pool_stash_test.cpp) · [Source 11](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/runtime/s2/cp_rows.h).
+
+**Reviewed:** 2026-11-05. See the linked project record for mechanism-specific caveats.
+
 <a id="flash-moe"></a>
 
 ## Flash-MoE: SSD-streamed experts in a native prototype
@@ -960,6 +980,26 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 
 **Reviewed:** 2026-11-03. See the linked project record for mechanism-specific caveats.
 
+<a id="n3komata"></a>
+
+## N3komata: adapt Vulkan expert caching to a storage-limited UMA device
+
+**Related project records:** [N3komata](catalog.md#n3komata).
+
+- **Why build it? / 为什么另建:** Use a model far larger than 16 GiB UMA over a narrow SSD link without pretending its full weights are resident.
+- **Execution ownership / 重构边界:** Pinned llama.cpp/GGML graph, expert-cache callbacks, upload APIs and Vulkan shader changes; the Python UI is not the admission basis.
+- **Retained components / 复用什么:** llama.cpp at f5027fb21307eb264aed483242603d68c87b0fe3 supplies the engine, graph and existing cache substrate; GGUF/IQ3_XXS weights, Vulkan/Mesa and OS mmap/page cache are retained.
+- **Scope given up / 取舍与兼容性:** Dynamic K skips routed contributions without making the original model equivalent; quantization is another change. Vulkan allocations and OS page cache compete for UMA. A cache miss can still block on SSD, and byte quotas did not show a consistent speed improvement in the small reported study.
+- **Construction process / 怎样构建:** materialize.py pins upstream and checks patch applicability. The patch adds router cumulative-mass masks, fixed-shape inactive route padding, -1 cache-slot sentinels checked by matvec shaders, per-layer extra slots and batched upload calls. The release profile enables K=4..6/mass 0.60, Vulkan selection and batch-direct uploads.
+- **AI participation / AI 参与的直接证据:** Not established by the inspected public sources.
+- **Disclosed effort / 构建投入:** Author hardware/results are documented; total construction, compute and maintenance costs are not established.
+- **Validation boundary / 验证覆盖:** Verified the published patch checksum against the file, and inspected graph/cache/shader wiring. Author speed cells are one prompt/run per condition; quality uses eight documents and 1016 scored tokens. A separate CPU/Vulkan selector A/B uses K=4..8/mass 0.80 and matching output hashes, not the release defaults. No standalone numerical suite or raw results were found in this tree. Patch application/build and hardware execution were not performed.
+- **Evolution evidence / 适配与维护:** Rebasing a large pinned patch must preserve graph/backend/cache contracts; the materializer records base revision and patch hash. A new package needs release-profile performance and quality validation; costs are unknown.
+
+**Sources:** [Source 1](https://github.com/nyacom/n3komata/blob/ee0fd1182f9b045922eeb52b22dc7ac51165587d/README.md) · [Source 2](https://github.com/nyacom/n3komata/blob/ee0fd1182f9b045922eeb52b22dc7ac51165587d/engine/README.md) · [Source 3](https://github.com/nyacom/n3komata/blob/ee0fd1182f9b045922eeb52b22dc7ac51165587d/engine/materialize.py) · [Source 4](https://github.com/nyacom/n3komata/blob/ee0fd1182f9b045922eeb52b22dc7ac51165587d/engine/patches/llama.cpp/moe-correction.patch) · [Source 5](https://github.com/nyacom/n3komata/blob/ee0fd1182f9b045922eeb52b22dc7ac51165587d/config/profiles/release.toml).
+
+**Reviewed:** 2026-11-05. See the linked project record for mechanism-specific caveats.
+
 <a id="llamampere"></a>
 
 ## llamAmpere: specialize a shared runtime for Ampere and Qwen
@@ -1139,6 +1179,26 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 **Sources:** [Source 1](https://arxiv.org/abs/2510.08666) · [Source 2](https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/README.md) · [Source 3](https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/python/dinfer/decoding/generate_uniform.py) · [Source 4](https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/python/dinfer/decoding/diffusion_runner.py) · [Source 5](https://github.com/inclusionAI/dInfer/blob/1ffeb961cd258bede74fcf5ca8a416ae6d57b18f/tests/test_bd_serving_batching.py).
 
 **Reviewed:** 2026-10-16. See the linked project record for mechanism-specific caveats.
+
+<a id="basalt"></a>
+
+## Basalt: rebuild expert windows around Blackwell and peer execution
+
+**Related project records:** [Basalt](catalog.md#basalt).
+
+- **Why build it? / 为什么另建:** Run Flash-Next with experts beyond one Blackwell card while reducing decode hand-offs and exploiting block-scaled tensor cores in prefill.
+- **Execution ownership / 重构边界:** The inspected delta is the device-planned verify/expert program and integrated grouped prefill path, not the existence of CPU/GPU tiering, an API or a new model container alone.
+- **Retained components / 复用什么:** Strata is the declared fork base and already has peer experts. ggml/llama.cpp supply formats and adapted kernels; Infernix supplies the grouped NVFP4 MMA/tile lineage and other prefill ideas. NVIDIA supplies NVFP4 expert weights; dense DQ6/DQ8 conversion is distinct from engine work.
+- **Scope given up / 取舍与兼容性:** Specializes to sm_120 and one model. Weight, activation and KV rounding change numerics; optional route-prior, route-tail-skip and relaxed drafting change execution or sampling. Thinking-loop/answer-room defaults also modify generation. Linux author tests do not establish Windows quality.
+- **Construction process / 怎样构建:** Verifier synchronizes residency tables, starts peer workers for a complete window and exchanges ring/sequence flags with host/primary paths. The combine kernel waits for required tiers. Prefill groups routed experts, stages quantized activations and runs adapted FP4 MMA with bounded peer output buffers.
+- **AI participation / AI 参与的直接证据:** Not established: instructions for agent contributions do not quantify actual AI implementation or saved effort.
+- **Disclosed effort / 构建投入:** Author hardware/results are documented; total construction, compute and maintenance costs are not established.
+- **Validation boundary / 验证覆盖:** prefill_fp4_test enforces RMS &lt;=1e-5 for gate/up and &lt;=1e-4 for down against the same A4 rounding, while allowing 0.2 against unrounded layer output; it also checks grouping and optional peer parity. The BF16 teacher-forced gate scores positions 256-510 and skips base log-probability &lt;=-16 terms. It misses long-context index selection and &gt;=1024-token W4A4 prefill, which authors evaluate separately. No upstream tests were executed here.
+- **Evolution evidence / 适配与维护:** Compiler/OS seams, quantized pack versions, residency and window state need regression coverage. Windows has documented memory limits and no published quality run. No total development or maintenance cost established.
+
+**Sources:** [Source 1](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/README.md) · [Source 2](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/THIRD_PARTY_LICENSES) · [Source 3](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/core/verify/expert_execution.cpp) · [Source 4](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/core/verify/expert_plan.cpp) · [Source 5](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/kernels/cuda/dec_moe.cuh) · [Source 6](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/kernels/cuda/native_moe.cu) · [Source 7](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/prefill/peer_experts.cpp) · [Source 8](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/prefill/fp4/moe_fp4.cu) · [Source 9](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/tests/cuda/prefill_fp4_test.cpp) · [Source 10](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/include/basalt/program/ppl_gate.hpp) · [Source 11](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/docs/precision/quality.md) · [Source 12](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/docs/precision/isolated-costs.md) · [Source 13](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/docs/precision/routing.md) · [Source 14](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/docs/configuration/index.md) · [Source 15](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/docs/platforms.md).
+
+**Reviewed:** 2026-11-05. See the linked project record for mechanism-specific caveats.
 
 <a id="iris"></a>
 

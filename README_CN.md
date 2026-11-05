@@ -20,7 +20,7 @@
 <!-- CATALOG-START -->
 
 <p align="center">
-<sub>137 个项目 · 102 个引擎 · 14 个构建流程 · 3 个基准 · 18 项资源</sub>
+<sub>140 个项目 · 105 个引擎 · 14 个构建流程 · 3 个基准 · 18 项资源</sub>
 </p>
 
 <div align="center">
@@ -31,7 +31,7 @@
 
 </div>
 
-<sub title="目录收录日期，不是项目发布日期"><b>近期收录</b> · 2026-11-03 · [Strixite](#project-strixite) · [Spark Engine](#project-spark-engine) · [MobiInfer Android](#project-mobiinfer-android) · [Maya2 Native / Maya3](#project-maya2-native) · [Qwenox](#project-qwenox) · [更新记录](docs/updates.md)</sub>
+<sub title="目录收录日期，不是项目发布日期"><b>近期收录</b> · 2026-11-03–2026-11-05 · [gr8](#project-gr8) · [Basalt](#project-basalt) · [N3komata](#project-n3komata) · [Strixite](#project-strixite) · [Spark Engine](#project-spark-engine) · [更新记录](docs/updates.md)</sub>
 
 <a id="featured-reading"></a>
 <a id="start-here"></a>
@@ -96,15 +96,16 @@
 
 ## 推理引擎
 
-<sub>全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md) · [★ 仓库 Star 快照 · 2026-10-14–2026-11-03](docs/homepage-metadata.md)</sub>
+<sub>全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md) · [★ 仓库 Star 快照 · 2026-10-14–2026-11-05](docs/homepage-metadata.md)</sub>
 
 <a id="homepage-system-text"></a>
 
-### 语言模型 <sub>· 60</sub>
+### 语言模型 <sub>· 63</sub>
 
 - <a id="project-ane-lm"></a>**[ANE-LM](https://github.com/johnmai-dev/ANE-LM)** <sub title="johnmai-dev/ANE-LM: 144 repository stars; observed 2026-10-14">★&nbsp;144</sub> — 作为 ane.cpp 的直接前身，以编译缓存连接 Qwen 的 ANE 内核与 CPU 运算，保留私有接口和有限模型范围的约束。 <sub>[详情](docs/catalog.md#ane-lm)</sub>
 - <a id="project-ane-cpp"></a>**[ane.cpp](https://github.com/skyfallsin/ane.cpp)** <sub title="skyfallsin/ane.cpp: 6 repository stars; observed 2026-10-14">★&nbsp;6</sub> — 通过硬件探针和保留／舍弃实验，将 Qwen 卷积编译到 ANE，并由 CPU 处理归一化、注意力与 KV 状态。 <sub>[详情](docs/catalog.md#ane-cpp)</sub>
 - <a id="project-anemll-flash-llama"></a>**[ANEMLL Flash llama.cpp](https://github.com/Anemll/anemll-flash-llama.cpp)** <sub title="Anemll/anemll-flash-llama.cpp: 135 repository stars; observed 2026-10-14">★&nbsp;135</sub> — 在 llama.cpp 分支中加入专家旁路文件、槽位映射和按层预填充；可选缩减 top-k 与仅共享专家模式会改变计算。 <sub>[详情](docs/catalog.md#anemll-flash-llama)</sub>
+- <a id="project-basalt"></a>**[Basalt](https://github.com/jesdga95/basalt)** <sub title="jesdga95/basalt: 563 repository stars; observed 2026-11-05">★&nbsp;563</sub> — 面向 Blackwell Flash-Next 的 Strata 深度分支，重构专家执行窗口与常驻同伴 GPU 执行，并改编 Infernix 分组 NVFP4 预填充。量化、可选路由／草稿近似和默认思考控制影响输出；短上下文质量检查不证明普遍等价，性能仍为作者报告。 <sub>[详情](docs/catalog.md#basalt)</sub>
 - <a id="project-basert"></a>**[BaseRT](https://github.com/basecompute/baseRT)** <sub title="basecompute/baseRT: 231 repository stars; observed 2026-10-14">★&nbsp;231</sub> — 公开转换器、C API 与语言绑定围绕专有原生引擎部署模型；执行核心未公开，内核机制与性能依赖作者文档。 <sub>多模态 · [详情](docs/catalog.md#basert)</sub>
 - <a id="project-bitnet-cpp"></a>**[bitnet.cpp](https://github.com/microsoft/BitNet)** <sub title="microsoft/BitNet: 41,140 repository stars; observed 2026-10-14">★&nbsp;41.1k</sub> — 围绕兼容的三值模型，以压缩低比特内核、查找表及形状专化执行；其无损表述针对已有三值表示，不适用于任意浮点模型。 <sub>[详情](docs/catalog.md#bitnet-cpp)</sub>
 - <a id="project-needle"></a>**[Cactus Needle](https://github.com/cactus-compute/needle)** <sub title="cactus-compute/needle: 13,915 repository stars; observed 2026-10-14">★&nbsp;13.9k</sub> — 将可切分注意力模型、量化权重与平台原生引擎配套分发；仓库公开模型和打包代码，未公开所分发 C++ 引擎实现。 <sub>音频 · [详情](docs/catalog.md#needle)</sub>
@@ -119,6 +120,7 @@
 - <a id="project-fiddler"></a>**[Fiddler](https://github.com/efeslab/fiddler)** <sub title="efeslab/fiddler: 268 repository stars; observed 2026-10-14">★&nbsp;268</sub> — 面向小批量 Mixtral 推理，将未驻留专家留在 CPU 计算并传输激活，用于比较异构计算与搬运专家权重两种路线。 <sub>[详情](docs/catalog.md#fiddler)</sub>
 - <a id="project-flash-moe"></a>**[Flash-MoE](https://github.com/danveloper/flash-moe)** <sub title="danveloper/flash-moe: 4,248 repository stars; observed 2026-10-14">★&nbsp;4.2k</sub> — 披露 AI 辅助构建的 Qwen 专用 Metal 实现，从 SSD 流式读取量化专家，但将十个激活专家缩减为四个，含近似取舍。 <sub>[详情](docs/catalog.md#flash-moe)</sub>
 - <a id="project-flexllmgen"></a>**[FlexLLMGen (FlexGen)](https://github.com/FMInference/FlexLLMGen)** <sub title="FMInference/FlexLLMGen: 9,346 repository stars; observed 2026-10-14">★&nbsp;9.3k</sub> — 面向 OPT 的吞吐型运行时，通过 GPU、CPU 与磁盘分层、跨微批权重复用和传输重叠调度执行，不代表通用低延迟表现。 <sub>[详情](docs/catalog.md#flexllmgen)</sub>
+- <a id="project-gr8"></a>**[gr8](https://github.com/kindlingai/gr8)** <sub title="kindlingai/gr8: 57 repository stars; observed 2026-11-05">★&nbsp;57</sub> — 面向 DGX Spark 集群的完整 GLM-5.3 CUDA 栈，具有 trellis 专家内核、自建 RoCE 集合通信与上下文并行 KV。复用 EXL3 量化，与 Spark Engine 为不同项目。混合精度、共享步数值差异及可选引导限制作者成绩的可比性；新增模型路径未纳入本次完整核查。 <sub>[详情](docs/catalog.md#gr8)</sub>
 - <a id="project-gufo-rdma"></a>**[Gufo RDMA](https://github.com/neuhaus/gufo)** <sub title="neuhaus/gufo: 11 repository stars; observed 2026-10-14">★&nbsp;11</sub> — 将 Gufo 扩展到两台 Strix Halo，以模型张量分区、RDMA 集合通信和镜像请求保持跨主机执行与推测状态同步。 <sub>多模态 · [详情](docs/catalog.md#gufo-rdma)</sub>
 - <a id="project-halogen-flash"></a>**[Halogen Flash](https://github.com/peonist-ai/halogen-flash-server)** <sub title="peonist-ai/halogen-flash-server: 1,196 repository stars; observed 2026-11-03">★&nbsp;1.2k</sub> — 面向 gfx1151 的闭源核心 Flash-Next 二进制，采用混合精度、分页查表、投机解码与内存／磁盘缓存。现行文档包含 Anthropic Messages；默认缓存以冷运行一致性换速度，内核实现与作者性能尚未经独立验证。 <sub>[详情](docs/catalog.md#halogen-flash)</sub>
 - <a id="project-hilum-engine"></a>**[Hilum LLM Engine](https://github.com/hilum-labs/hilum-local-llm-engine)** <sub title="hilum-labs/hilum-local-llm-engine: 1 repository stars; observed 2026-10-14">★&nbsp;1</sub> — 在 llama.cpp/GGML 基础上接入移动端 Adreno、Vulkan 与 Metal 路径，调整着色器调度、内存分配和设备参数。 <sub>多模态 · [详情](docs/catalog.md#hilum-engine)</sub>
@@ -141,6 +143,7 @@
 - <a id="project-metalchat"></a>**[MetalChat](https://github.com/ybubnov/metalchat)** <sub title="ybubnov/metalchat: 23 repository stars; observed 2026-10-14">★&nbsp;23</sub> — 以 C++/Metal 张量、层和模型抽象构建原生生成路径，作为可复用框架的邻近案例，生成测试不等于完整质量验证。 <sub>[详情](docs/catalog.md#metalchat)</sub>
 - <a id="project-mobiinfer-android"></a>**[MobiInfer Android](https://github.com/IPADS-SAI/Mobiinfer-Android)** <sub title="IPADS-SAI/Mobiinfer-Android: 196 repository stars; observed 2026-11-03">★&nbsp;196</sub> — 基于 llama.cpp-omni 的 Android 执行栈，将外置 MoE 专家槽位、前瞻预取与 Hexagon 执行及平铺权重结合。预测未命中仍需按需加载；量化、可选专家数削减及 DSpark 须单独评估，iPad LES 报告不是 Android NPU 性能证据。 <sub>[详情](docs/catalog.md#mobiinfer-android)</sub>
 - <a id="project-moe-infinity"></a>**[MoE-Infinity](https://github.com/EfficientMoE/MoE-Infinity)** <sub title="EfficientMoE/MoE-Infinity: 370 repository stars; observed 2026-10-14">★&nbsp;370</sub> — 将专家权重分层卸载，以激活感知缓存保留热点专家并按轨迹预取，作为既有专家驻留策略的对照，公开实现与论文系统有别。 <sub>[详情](docs/catalog.md#moe-infinity)</sub>
+- <a id="project-n3komata"></a>**[N3komata](https://github.com/nyacom/n3komata)** <sub title="nyacom/n3komata: 4 repository stars; observed 2026-11-05">★&nbsp;4</sub> — 面向 BC-250、从 SSD 加载 MoE 的 llama.cpp／Vulkan 补丁栈，增加缓存配额、批量上传和路由概率质量驱动的专家选择。默认会舍弃部分专家，冷未命中仍需等待存储；已报告的开发实验未覆盖完整发布配置，也未经独立复现。 <sub>[详情](docs/catalog.md#n3komata)</sub>
 - <a id="project-ninfer"></a>**[NInfer](https://github.com/Neroued/ninfer)** <sub title="Neroued/ninfer: 2,990 repository stars; observed 2026-10-14">★&nbsp;3k</sub> — 为指定 Qwen 模型在单张 RTX 5090 上自建原生执行、KV 状态和 CUDA 图，并管理请求与缓存；代理指令文件不构成 AI 作者证据。 <sub>多模态 · [详情](docs/catalog.md#ninfer)</sub>
 - <a id="project-ninfer-3090"></a>**[NInfer-3090](https://github.com/ashalliants/ninfer-3090)** <sub title="ashalliants/ninfer-3090: 49 repository stars; observed 2026-10-14">★&nbsp;49</sub> — 将 NInfer 分支适配至 24GB RTX 3090，重建 SM86 量化内核、内存规划和回放状态，超出单纯更改编译架构的范围。 <sub>多模态 · [详情](docs/catalog.md#ninfer-3090)</sub>
 - <a id="project-peregrine"></a>**[peregrine](https://github.com/s-b-repo/peregrine)** <sub title="s-b-repo/peregrine: 6 repository stars; observed 2026-10-16">★&nbsp;6</sub> — Colibri 的 Rust 衍生执行栈，借助 io_uring、CPU 与可选 CUDA 并发处理专家并固定顺序归约。作者披露的磁盘受限单序列解码仍慢于 Colibri；GPU 路径需另行验证。 <sub>[详情](docs/catalog.md#peregrine)</sub>

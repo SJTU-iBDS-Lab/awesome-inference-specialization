@@ -135,5 +135,8 @@
   "strixite": "面向 gfx1151 的原生 Flash-Next HIP 运行时，具有分组低比特内核、合批投机状态回滚与分页缓存。作者披露使用编程助手；量化、YaRN 及默认思考干预影响行为，所述完整内核测试未出现在核查的公开源码树中。",
   "spark-engine": "面向 GB10 的运行时，将模型专用 CUDA 内核、投机执行和定制 RoCE 集合通信与 libtorch、ExLlamaV3 组件结合。已核查 Qwen 文本调用链及通信基础实现；其他模型需另行验证，量化与负载相关的投机接受率限制作者基准的可比性。",
   "mobiinfer-android": "基于 llama.cpp-omni 的 Android 执行栈，将外置 MoE 专家槽位、前瞻预取与 Hexagon 执行及平铺权重结合。预测未命中仍需按需加载；量化、可选专家数削减及 DSpark 须单独评估，iPad LES 报告不是 Android NPU 性能证据。",
-  "maya2-native": "采用连续批处理、CUDA Graph、逐槽 Mimi 状态与融合 Triton 深度解码内核的流式 TTS 运行时。复用 Qwen、Mimi、PyTorch 等组件；精度和默认时长／EOS 干预影响输出，有限采样检查及作者音频吞吐报告不证明普遍等价。"
+  "maya2-native": "采用连续批处理、CUDA Graph、逐槽 Mimi 状态与融合 Triton 深度解码内核的流式 TTS 运行时。复用 Qwen、Mimi、PyTorch 等组件；精度和默认时长／EOS 干预影响输出，有限采样检查及作者音频吞吐报告不证明普遍等价。",
+  "gr8": "面向 DGX Spark 集群的完整 GLM-5.3 CUDA 栈，具有 trellis 专家内核、自建 RoCE 集合通信与上下文并行 KV。复用 EXL3 量化，与 Spark Engine 为不同项目。混合精度、共享步数值差异及可选引导限制作者成绩的可比性；新增模型路径未纳入本次完整核查。",
+  "basalt": "面向 Blackwell Flash-Next 的 Strata 深度分支，重构专家执行窗口与常驻同伴 GPU 执行，并改编 Infernix 分组 NVFP4 预填充。量化、可选路由／草稿近似和默认思考控制影响输出；短上下文质量检查不证明普遍等价，性能仍为作者报告。",
+  "n3komata": "面向 BC-250、从 SSD 加载 MoE 的 llama.cpp／Vulkan 补丁栈，增加缓存配额、批量上传和路由概率质量驱动的专家选择。默认会舍弃部分专家，冷未命中仍需等待存储；已报告的开发实验未覆盖完整发布配置，也未经独立复现。"
 }

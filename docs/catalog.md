@@ -4,7 +4,7 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Systems & construction](systems.md) · [Comparison](comparison.md) · [Taxonomy](taxonomy.md) · [Evidence policy](evidence-policy.md)
 
-137 entries. Source review: 2026-11-03. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
+140 entries. Source review: 2026-11-05. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
 
 Use the family links below, or search this page for a model, device, mechanism or project. Source visibility is not a license or correctness certification. Semantic labels identify evaluation obligations, not proven equivalence.
 
@@ -12,7 +12,7 @@ Use the family links below, or search this page for a model, device, mechanism o
 
 <a id="memory"></a>
 
-## Data residency & movement / 数据驻留与搬移 (19)
+## Data residency & movement / 数据驻留与搬移 (20)
 
 **What stays close to compute?** Place, page, prefetch or offload weights, experts and KV state.
 
@@ -361,6 +361,35 @@ Offloads expert weights to host memory and SSD, retains hot experts in an activa
 **Evidence:** [Source 1](https://github.com/EfficientMoE/MoE-Infinity/blob/HEAD/README.md) · [Source 2](https://github.com/EfficientMoE/MoE-Infinity/blob/HEAD/ARCHITECTURE.md) · [Source 3](https://github.com/EfficientMoE/MoE-Infinity/blob/HEAD/docs/configuration.md) · [Source 4](https://github.com/EfficientMoE/MoE-Infinity/blob/HEAD/moe_infinity/memory/expert_prefetcher.py).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
+
+</details>
+
+<a id="n3komata"></a>
+
+### [N3komata](https://github.com/nyacom/n3komata)
+
+[core](systems.md#core) · `system` · `backend` · `text` · **public code**
+
+**Survey relevance:** A pinned llama.cpp/GGML patch stack changes Vulkan expert uploads, cache quotas and routed-expert execution under BC-250 memory/storage limits, beyond launch/UI configuration.
+
+Extends mmap-backed expert-cache handling with per-layer quotas, same-layer prefetch and batched Vulkan uploads. A router-mass graph masks inactive experts and marks their cache slots invalid; Vulkan matvec shaders skip those rows while retaining a fixed Kmax graph shape.
+
+**Scope:** AMD BC-250, 16 GiB unified memory, Linux/Mesa RADV Vulkan and SSD-backed Qwen3.8-Flash-Next IQ3_XXS GGUF shards.
+
+**Boundary:** A llama.cpp patch package, not an independent from-scratch engine. Default Dynamic K=4..6/mass 0.60 omits experts; IQ3_XXS adds quantization. Cold misses still require SSD I/O. Published quota/Dynamic-K tests used CPU selection; the combined Vulkan-selection release profile lacks an end-to-end controlled benchmark. No standalone automated numerical suite or raw experiment logs found in the reviewed tree; no BC-250 execution here.
+
+**Semantic considerations:** layout / scheduling, reduced precision, selective approximation, configuration-dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `ssd-expert-offload`, `expert-cache-quotas`, `batched-upload`, `expert-prefetch`, `dynamic-expert-count`, `vulkan-dispatch`.
+
+**Constraints:** `model`, `hardware`, `memory`, `precision`, `workload`.
+
+**Evidence:** [Source 1](https://github.com/nyacom/n3komata/blob/ee0fd1182f9b045922eeb52b22dc7ac51165587d/README.md) · [Source 2](https://github.com/nyacom/n3komata/blob/ee0fd1182f9b045922eeb52b22dc7ac51165587d/engine/README.md) · [Source 3](https://github.com/nyacom/n3komata/blob/ee0fd1182f9b045922eeb52b22dc7ac51165587d/engine/materialize.py) · [Source 4](https://github.com/nyacom/n3komata/blob/ee0fd1182f9b045922eeb52b22dc7ac51165587d/engine/patches/llama.cpp/moe-correction.patch) · [Source 5](https://github.com/nyacom/n3komata/blob/ee0fd1182f9b045922eeb52b22dc7ac51165587d/config/profiles/release.toml).
+
+**Reviewed:** 2026-11-05 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 
 </details>
 
@@ -1295,7 +1324,7 @@ Combines Ulysses and Ring sequence parallelism with CFG/data parallelism and Pip
 
 <a id="execution"></a>
 
-## Compiled & native execution / 编译与原生执行 (78)
+## Compiled & native execution / 编译与原生执行 (80)
 
 **How does a graph become an executable?** Fuse, lower, specialize and dispatch graphs or native kernels.
 
@@ -1470,6 +1499,35 @@ Lowers model graphs through a typed task/counter IR to one cooperative CUDA laun
 **Evidence:** [Source 1](https://arxiv.org/html/2606.09682v1) · [Source 2](https://github.com/RightNow-AI/AutoMegaKernel/blob/884534c4d2dbed4381576f81a79ae97feca53c34/HARNESS.md) · [Source 3](https://github.com/RightNow-AI/AutoMegaKernel/blob/884534c4d2dbed4381576f81a79ae97feca53c34/schedule/ir.py).
 
 **Reviewed:** 2026-10-14 · **AI involvement:** `intrinsic` · **Discovery:** `keyword`.
+
+</details>
+
+<a id="basalt"></a>
+
+### [Basalt](https://github.com/jesdga95/basalt)
+
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** A substantial Strata fork with device-planned expert windows, persistent peer execution and integrated Blackwell prefill kernels; basic expert tiering is inherited, not a new invention.
+
+Reworks Strata expert execution into device-planned windows with synchronized residency tables, host/peer ring signals and a persistent peer worker. Grouped NVFP4 prefill quantizes token activations, pipelines block-scaled MMA and streams peer result chunks back for composition.
+
+**Scope:** Qwen3.8-Flash-Next on Linux/Windows x64 with NVIDIA Blackwell sm_120 and CPU RAM; optional peer GPU tier. Text expert/verify and NVFP4 prefill paths inspected; vision not qualified here.
+
+**Boundary:** Retains Strata tiering and ggml/llama.cpp code; grouped NVFP4 prefill adapts Infernix. Dense re-quantization, W4A4 prefill and KV precision add numerical changes. Optional route prior/tail skipping and relaxed drafting change computation/distribution; default thinking controls can alter generation. The short-context BF16 gate misses long-context selection and W4A4 prefill. Windows quality and independent GPU performance are unverified.
+
+**Semantic considerations:** layout / scheduling, reduced precision, target-verified proposals, selective approximation, configuration-dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `device-planned-expert-execution`, `persistent-peer-kernels`, `kernel-fusion`, `expert-tiering`, `nvfp4-prefill`, `speculative-decoding`.
+
+**Constraints:** `model`, `hardware`, `memory`, `precision`, `workload`.
+
+**Evidence:** [Source 1](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/README.md) · [Source 2](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/THIRD_PARTY_LICENSES) · [Source 3](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/core/verify/expert_execution.cpp) · [Source 4](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/core/verify/expert_plan.cpp) · [Source 5](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/kernels/cuda/dec_moe.cuh) · [Source 6](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/kernels/cuda/native_moe.cu) · [Source 7](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/prefill/peer_experts.cpp) · [Source 8](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/prefill/fp4/moe_fp4.cu) · [Source 9](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/tests/cuda/prefill_fp4_test.cpp) · [Source 10](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/include/basalt/program/ppl_gate.hpp) · [Source 11](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/docs/precision/quality.md) · [Source 12](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/docs/precision/isolated-costs.md) · [Source 13](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/docs/precision/routing.md) · [Source 14](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/docs/configuration/index.md) · [Source 15](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/docs/platforms.md).
+
+**Reviewed:** 2026-11-05 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 
 </details>
 
@@ -1992,6 +2050,35 @@ Builds or selects attention/GEMM/MoE kernels from dtype, head geometry, cache la
 **Evidence:** [Source 1](https://github.com/flashinfer-ai/flashinfer/blob/HEAD/README.md) · [Source 2](https://github.com/flashinfer-ai/flashinfer/blob/HEAD/flashinfer/decode.py) · [Source 3](https://github.com/EfficientMoE/MoE-Infinity/blob/HEAD/README.md).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `dependency`.
+
+</details>
+
+<a id="gr8"></a>
+
+### [gr8](https://github.com/kindlingai/gr8)
+
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** A native GLM/GB10 execution and communication stack integrates trellis kernels, multi-session steps and context-parallel state; distinct from the separately listed Spark Engine.
+
+Binds mixed-width trellis experts to fused or split CUDA launches and shares captured steps across sessions. A verbs fabric carries rank collectives; replicated-prefix/sharded-tail KV and optional block stores coordinate page spill/restore with the runtime.
+
+**Scope:** Full GLM-5.3 on three to six DGX Spark / GB10 sm_121a nodes with RoCE v2. Review covers the GLM trellis, S2 and KV-store substrate; newer GLM-Flash and DeepSeek paths are not fully qualified here.
+
+**Boundary:** EXL3/QTIP formats and ExLlamaV3 quantization are retained foundations, not gr8 inventions. TP=3 uses different expert precision from TP=4-6; cached prefill and aggregate decode are separate metrics. Shared-step numerics can differ from solo execution. Steering, thinking controls and experimental int4 KV change the reference contract. Author results only; no GPU/RDMA reproduction.
+
+**Semantic considerations:** layout / scheduling, reduced precision, target-verified proposals, configuration-dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `native-execution`, `packed-weight-kernels`, `rdma-collectives`, `context-parallelism`, `kv-tiering`, `speculative-decoding`, `cuda-graphs`.
+
+**Constraints:** `model`, `hardware`, `memory`, `precision`, `workload`.
+
+**Evidence:** [Source 1](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/README.md) · [Source 2](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/CREDITS.md) · [Source 3](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/kernels/k1.cuh) · [Source 4](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/kernels/bind.cuh) · [Source 5](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/runtime/s2/native.cuh) · [Source 6](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/runtime/g6m4.cu) · [Source 7](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/comms/fabric.cpp) · [Source 8](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/runtime/s2/kv_tier.cuh) · [Source 9](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/kernels/tests/tr3_e4m3_test.cu) · [Source 10](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/runtime/s2/tests/pool_stash_test.cpp) · [Source 11](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/runtime/s2/cp_rows.h).
+
+**Reviewed:** 2026-11-05 · **AI involvement:** `not-established` · **Discovery:** `keyword`.
 
 </details>
 

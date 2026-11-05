@@ -32,13 +32,14 @@ Integrated model runtimes and substantial specialized backends, including native
 
 集成模型运行时和实质专用后端，涵盖原生实现与有直接参照意义的既有执行栈。
 
-102 projects / 项目
+105 projects / 项目
 
 | Project and evidence | Why it belongs | Relevance / artifact |
 | --- | --- | --- |
 | [ane.cpp](catalog.md#ane-cpp) | Connects hardware probes and a documented keep/discard workflow to concrete changes in a specialized execution stack. | core / runtime |
 | [ANEMLL Flash llama.cpp](catalog.md#anemll-flash-llama) | A substantial fork exposes exactly which graph/runtime boundary must change to support explicit expert residency. | core / backend |
 | [Aria](catalog.md#aria) | Links an explicit author disclosure of LLM-assisted development to a complete native Stable Audio 3 artifact and controlled reference tests, without assuming lower total construction cost. | core / runtime |
+| [Basalt](catalog.md#basalt) | A substantial Strata fork with device-planned expert windows, persistent peer execution and integrated Blackwell prefill kernels; basic expert tiering is inherited, not a new invention. | core / runtime |
 | [brodiffusion](catalog.md#brodiffusion) | Owns C++ image-model pipelines and denoiser capture/replay policy over a reused tensor backend, making the boundary between model reconstruction and lower-level reuse explicit. | core / runtime |
 | [Cactus](catalog.md#cactus) | Connects model graph capture and lowering to a native mobile execution stack with its own quantized state and kernels. | core / runtime |
 | [CIRU runtime](catalog.md#ciru-runtime) | Model/hardware-specific deep integration with traceable borrowed kernels, artifact compatibility work and release qualification. | core / backend |
@@ -53,6 +54,7 @@ Integrated model runtimes and substantial specialized backends, including native
 | [FastVideo](catalog.md#fastvideo) | Core by integrated model execution: its own model implementations, registries, component loaders and denoising stages reconstruct inference, beyond the separately cataloged sparse/distillation methods. | core / runtime |
 | [Flash-MoE](catalog.md#flash-moe) | A model-specific implementation links disclosed AI-assisted construction to SSD expert streaming and explicit approximation choices. | core / research-prototype |
 | [FreeVideo](catalog.md#freevideo) | Turns the VDN-H3 video generator into an adaptive local execution path with request-specific residency, precision and attention choices on constrained consumer devices. | core / runtime |
+| [gr8](catalog.md#gr8) | A native GLM/GB10 execution and communication stack integrates trellis kernels, multi-session steps and context-parallel state; distinct from the separately listed Spark Engine. | core / runtime |
 | [Gufo](catalog.md#gufo) | Rebuilds a vertical native execution and serving stack around one integrated GPU platform, with deliberately selected models and model-owned kernels. | core / runtime |
 | [Gufo RDMA](catalog.md#gufo-rdma) | Substantive deployment reconstruction from one unified-memory machine to two synchronized hosts, not merely another binary package. | core / runtime |
 | [Halogen Flash](catalog.md#halogen-flash) | A model-and-device-specific runtime illustrates how narrow deployment contracts reshape implementation choices. | core / runtime |
@@ -76,6 +78,7 @@ Integrated model runtimes and substantial specialized backends, including native
 | [memra](catalog.md#memra) | Native runtime with per-model/device exactness gates and explicit evidence of the maintenance and qualification burden. | core / runtime |
 | [MiniMax-H3 MLX](catalog.md#minimax-h3-mlx) | Reconstructs a complete joint video/audio diffusion model on MLX, including packed modality geometry and invariant AdaLN precomputation; distinguishes making a model fit from making it fast. | core / runtime |
 | [MobiInfer Android](catalog.md#mobiinfer-android) | A substantial llama.cpp-omni-derived execution stack integrating flash-resident MoE experts with Hexagon host/DSP execution, beyond Android UI packaging. | core / runtime |
+| [N3komata](catalog.md#n3komata) | A pinned llama.cpp/GGML patch stack changes Vulkan expert uploads, cache quotas and routed-expert execution under BC-250 memory/storage limits, beyond launch/UI configuration. | core / backend |
 | [NInfer](catalog.md#ninfer) | Rebuilds model execution and serving for selected Qwen checkpoints on one GPU; exposes the scope and ownership of a purpose-built stack. | core / runtime |
 | [NInfer-3090](catalog.md#ninfer-3090) | Concrete retargeting case: kernel and memory-program changes beyond changing a CUDA architecture flag; one representative records the 3090 fork family. | core / runtime |
 | [Nunchaku](catalog.md#nunchaku) | A substantial low-bit diffusion backend connects representation-specific execution to reusable pipeline integration. | core / runtime |

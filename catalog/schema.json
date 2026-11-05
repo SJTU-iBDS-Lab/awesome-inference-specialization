@@ -355,7 +355,8 @@
         "qwenox",
         "crucible",
         "strixite",
-        "spark-engine"
+        "spark-engine",
+        "gr8"
       ],
       "featured": [
         "splash",
@@ -377,7 +378,8 @@
         "colibri",
         "ktransformers",
         "peregrine",
-        "mobiinfer-android"
+        "mobiinfer-android",
+        "n3komata"
       ]
     },
     {
@@ -392,7 +394,8 @@
         "ciru-runtime",
         "gufo-rdma",
         "strix-llama-cpp",
-        "dinfer"
+        "dinfer",
+        "basalt"
       ]
     },
     {

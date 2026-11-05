@@ -69,6 +69,15 @@ The [ForgeMegakernel paper](https://arxiv.org/html/2609.12379v1) adds intermedia
 
 本节补充三种不同边界：受限 IR 的静态检查、论文提出的中间状态检验、构建框架对验收流程和结果来源的管理。未运行这些上游验证，也不把缺少源码的论文方案称为已检查的实现；首页原有四类验证入口保持不变。
 
+## Embedded numerical and state checks — November 2026
+
+These are methods inside existing engine records, not additional validation-tool projects. See the [source review](source-review-2026-11-05.md) for inspection scope.
+
+- **Basalt:** [NVFP4 prefill tests](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/tests/cuda/prefill_fp4_test.cpp) distinguish same-A4-rounding kernel parity (gate/up RMS <=1e-5, down <=1e-4) from approximation against unrounded arithmetic (layer RMS <=0.2). Grouping and optional peer checks test composition. The [teacher-forced KL implementation](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/include/basalt/program/ppl_gate.hpp) omits base log-probability <=-16 terms; its [256-token prompt / positions 256–510 protocol](https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/docs/precision/quality.md) does not cover long-context sparse selection or W4A4 prompt execution. An interval including zero in an author ablation is not a universal equivalence proof.
+- **gr8:** [Trellis codebook tests](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/kernels/tests/tr3_e4m3_test.cu) enumerate codebook states, compare fixed hashes across implementations and check random packed tiles. [Pool-stash checks](https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/runtime/s2/tests/pool_stash_test.cpp) model token rows on two host ranks to assert restore/order/digest contracts; they do not execute GPU attention or RoCE. Shared-step and solo output need distinct references.
+
+以上测试均仅审阅源码、未在本次执行。相同量化舍入下的内核一致性、有限样本质量与缓存状态恢复是不同验收合同；不能合并成整栈无损或性能已验证结论。
+
 ## Efficient validation: an open research question
 
 Automation alone does not establish efficiency. A useful report accounts for candidate compilation, reference runs, device time, judge calls, human review and failed attempts. It must also state what coverage was reduced to save that cost.

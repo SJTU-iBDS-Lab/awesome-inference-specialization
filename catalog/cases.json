@@ -2051,5 +2051,99 @@
       "https://github.com/MayaResearch/maya2-native/blob/c6b376868e268551d065c4206193e96257bef4a1/maya3/tests/test_depth_fused.py"
     ],
     "checked_on": "2026-11-03"
+  },
+  {
+    "id": "gr8",
+    "project_ids": [
+      "gr8"
+    ],
+    "title": "gr8: co-design GLM kernels, rank communication and KV placement",
+    "summary": "A GB10 cluster runtime owns model-shaped trellis execution, collective sequencing and shared-session state while reusing established quantization.",
+    "summary_cn": "面向 GB10 集群，围绕模型重建 trellis 执行、集合通信顺序与共享会话状态，同时复用既有量化技术。",
+    "motivation": "Fit the full GLM-5.3 and long conversations across a few 128 GB unified-memory nodes with a narrow model and fabric contract.",
+    "boundary": "CUDA model/kernel execution, native S2 serving steps, custom RoCE collectives and optional KV block-store integration. The broader current model list is not certified by this GLM-focused inspection.",
+    "reuse": "EXL3 format and ExLlamaV3 quantizer, QTIP lineage, pretrained GLM/MTP/DFlash2 models, CUDA and libibverbs; Rust page/loader/front-end components. No PyTorch or NCCL serving dependency is claimed by the author, not absence of all dependencies.",
+    "tradeoff": "GB10, supported TP widths and network topology constrain deployment. Quantization varies by topology; shared-batch/context-parallel reduction can change tokens relative to solo execution. Opt-in steering and compressed KV need separate quality checks.",
+    "construction": "K1 dispatch selects trellis width/codebook and fused or split fc1/fc2/finalize paths. Native S2 launches enqueue fabric operations before captured model steps. g6m4 binds page stores to model/draft caches; kv_tier copies shard/replicated page parts with spills ordered before restores.",
+    "ai_role": "Not established by the reviewed sources; agent contribution instructions are not an authorship disclosure.",
+    "validation": "The trellis test enumerates codebook states, checks fixed hashes across reference implementations and checks random K2-K4 tiles. The host-only pool-stash test models token rows on two ranks and checks restoration/order/digests; it is not a GPU or fabric test. Tests were read, not run. Author RigMark results compare different expert precisions and report cold/cached and solo/aggregate separately.",
+    "maintenance": "Build widths, release manifests, model/draft state, collective ordering and persisted KV compatibility must remain aligned. The executable stamp and block-format version distinguish stored state. Development/operating costs and full cross-model coverage are unknown.",
+    "cost": "Author hardware/results are documented; total construction, compute and maintenance costs are not established.",
+    "evidence_urls": [
+      "https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/README.md",
+      "https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/CREDITS.md",
+      "https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/kernels/k1.cuh",
+      "https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/kernels/bind.cuh",
+      "https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/runtime/s2/native.cuh",
+      "https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/runtime/g6m4.cu",
+      "https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/comms/fabric.cpp",
+      "https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/runtime/s2/kv_tier.cuh",
+      "https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/kernels/tests/tr3_e4m3_test.cu",
+      "https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/runtime/s2/tests/pool_stash_test.cpp",
+      "https://github.com/kindlingai/gr8/blob/35a8f1c771991a87b0c6308006b74ce70faf0378/engine/runtime/s2/cp_rows.h"
+    ],
+    "checked_on": "2026-11-05"
+  },
+  {
+    "id": "basalt",
+    "project_ids": [
+      "basalt"
+    ],
+    "title": "Basalt: rebuild expert windows around Blackwell and peer execution",
+    "summary": "A narrow Strata descendant combines persistent expert execution with an adapted block-scaled prefill pipeline; tiering and upstream kernels remain explicitly attributed.",
+    "summary_cn": "以 Strata 深度分支将常驻专家执行与改编的块缩放预填充流水线结合，明确归因继承的分层机制与上游内核。",
+    "motivation": "Run Flash-Next with experts beyond one Blackwell card while reducing decode hand-offs and exploiting block-scaled tensor cores in prefill.",
+    "boundary": "The inspected delta is the device-planned verify/expert program and integrated grouped prefill path, not the existence of CPU/GPU tiering, an API or a new model container alone.",
+    "reuse": "Strata is the declared fork base and already has peer experts. ggml/llama.cpp supply formats and adapted kernels; Infernix supplies the grouped NVFP4 MMA/tile lineage and other prefill ideas. NVIDIA supplies NVFP4 expert weights; dense DQ6/DQ8 conversion is distinct from engine work.",
+    "tradeoff": "Specializes to sm_120 and one model. Weight, activation and KV rounding change numerics; optional route-prior, route-tail-skip and relaxed drafting change execution or sampling. Thinking-loop/answer-room defaults also modify generation. Linux author tests do not establish Windows quality.",
+    "construction": "Verifier synchronizes residency tables, starts peer workers for a complete window and exchanges ring/sequence flags with host/primary paths. The combine kernel waits for required tiers. Prefill groups routed experts, stages quantized activations and runs adapted FP4 MMA with bounded peer output buffers.",
+    "ai_role": "Not established: instructions for agent contributions do not quantify actual AI implementation or saved effort.",
+    "validation": "prefill_fp4_test enforces RMS <=1e-5 for gate/up and <=1e-4 for down against the same A4 rounding, while allowing 0.2 against unrounded layer output; it also checks grouping and optional peer parity. The BF16 teacher-forced gate scores positions 256-510 and skips base log-probability <=-16 terms. It misses long-context index selection and >=1024-token W4A4 prefill, which authors evaluate separately. No upstream tests were executed here.",
+    "maintenance": "Compiler/OS seams, quantized pack versions, residency and window state need regression coverage. Windows has documented memory limits and no published quality run. No total development or maintenance cost established.",
+    "cost": "Author hardware/results are documented; total construction, compute and maintenance costs are not established.",
+    "evidence_urls": [
+      "https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/README.md",
+      "https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/THIRD_PARTY_LICENSES",
+      "https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/core/verify/expert_execution.cpp",
+      "https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/core/verify/expert_plan.cpp",
+      "https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/kernels/cuda/dec_moe.cuh",
+      "https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/kernels/cuda/native_moe.cu",
+      "https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/prefill/peer_experts.cpp",
+      "https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/src/prefill/fp4/moe_fp4.cu",
+      "https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/tests/cuda/prefill_fp4_test.cpp",
+      "https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/include/basalt/program/ppl_gate.hpp",
+      "https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/docs/precision/quality.md",
+      "https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/docs/precision/isolated-costs.md",
+      "https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/docs/precision/routing.md",
+      "https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/docs/configuration/index.md",
+      "https://github.com/jesdga95/basalt/blob/dc047a77beeddf1e91234d983a91d6bf929e9619/docs/platforms.md"
+    ],
+    "checked_on": "2026-11-05"
+  },
+  {
+    "id": "n3komata",
+    "project_ids": [
+      "n3komata"
+    ],
+    "title": "N3komata: adapt Vulkan expert caching to a storage-limited UMA device",
+    "summary": "A patch-defined execution backend addresses BC-250 cache and I/O limits while explicitly trading routed computation for reduced expert demand.",
+    "summary_cn": "通过补丁定义的执行后端应对 BC-250 缓存与 I/O 约束，并明确以减少路由计算换取更低专家读取需求。",
+    "motivation": "Use a model far larger than 16 GiB UMA over a narrow SSD link without pretending its full weights are resident.",
+    "boundary": "Pinned llama.cpp/GGML graph, expert-cache callbacks, upload APIs and Vulkan shader changes; the Python UI is not the admission basis.",
+    "reuse": "llama.cpp at f5027fb21307eb264aed483242603d68c87b0fe3 supplies the engine, graph and existing cache substrate; GGUF/IQ3_XXS weights, Vulkan/Mesa and OS mmap/page cache are retained.",
+    "tradeoff": "Dynamic K skips routed contributions without making the original model equivalent; quantization is another change. Vulkan allocations and OS page cache compete for UMA. A cache miss can still block on SSD, and byte quotas did not show a consistent speed improvement in the small reported study.",
+    "construction": "materialize.py pins upstream and checks patch applicability. The patch adds router cumulative-mass masks, fixed-shape inactive route padding, -1 cache-slot sentinels checked by matvec shaders, per-layer extra slots and batched upload calls. The release profile enables K=4..6/mass 0.60, Vulkan selection and batch-direct uploads.",
+    "ai_role": "Not established by the inspected public sources.",
+    "validation": "Verified the published patch checksum against the file, and inspected graph/cache/shader wiring. Author speed cells are one prompt/run per condition; quality uses eight documents and 1016 scored tokens. A separate CPU/Vulkan selector A/B uses K=4..8/mass 0.80 and matching output hashes, not the release defaults. No standalone numerical suite or raw results were found in this tree. Patch application/build and hardware execution were not performed.",
+    "maintenance": "Rebasing a large pinned patch must preserve graph/backend/cache contracts; the materializer records base revision and patch hash. A new package needs release-profile performance and quality validation; costs are unknown.",
+    "cost": "Author hardware/results are documented; total construction, compute and maintenance costs are not established.",
+    "evidence_urls": [
+      "https://github.com/nyacom/n3komata/blob/ee0fd1182f9b045922eeb52b22dc7ac51165587d/README.md",
+      "https://github.com/nyacom/n3komata/blob/ee0fd1182f9b045922eeb52b22dc7ac51165587d/engine/README.md",
+      "https://github.com/nyacom/n3komata/blob/ee0fd1182f9b045922eeb52b22dc7ac51165587d/engine/materialize.py",
+      "https://github.com/nyacom/n3komata/blob/ee0fd1182f9b045922eeb52b22dc7ac51165587d/engine/patches/llama.cpp/moe-correction.patch",
+      "https://github.com/nyacom/n3komata/blob/ee0fd1182f9b045922eeb52b22dc7ac51165587d/config/profiles/release.toml"
+    ],
+    "checked_on": "2026-11-05"
   }
 ]

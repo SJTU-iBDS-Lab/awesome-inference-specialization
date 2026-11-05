@@ -1202,6 +1202,30 @@
       "repository_id": 1191177873,
       "stars": 521,
       "status": "ok"
+    },
+    "kindlingai/gr8": {
+      "repository_id": 1413437745,
+      "full_name": "kindlingai/gr8",
+      "stars": 57,
+      "fetched_on": "2026-11-05",
+      "last_attempt_on": "2026-11-05",
+      "status": "ok"
+    },
+    "jesdga95/basalt": {
+      "repository_id": 1407972121,
+      "full_name": "jesdga95/basalt",
+      "stars": 563,
+      "fetched_on": "2026-11-05",
+      "last_attempt_on": "2026-11-05",
+      "status": "ok"
+    },
+    "nyacom/n3komata": {
+      "repository_id": 1445406673,
+      "full_name": "nyacom/n3komata",
+      "stars": 4,
+      "fetched_on": "2026-11-05",
+      "last_attempt_on": "2026-11-05",
+      "status": "ok"
     }
   },
   "schema_version": 1

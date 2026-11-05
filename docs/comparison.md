@@ -89,6 +89,9 @@ Start with what is rebuilt and what effort is disclosed. Read each case for reta
 | [Spark Engine](cases.md#spark-engine) | Qwen text forward/FFI/kernel dispatch and the N-way collective implementation were inspected; this is not full qualification of all advertised GLM, DeepSeek or vision routes. | Total development time, compute, token use and maintenance cost are not established by the reviewed evidence. |
 | [MobiInfer Android](cases.md#mobiinfer-android) | Model graph, expert I/O/slot runtime and Hexagon host/DSP dispatch; text source reviewed, not the app UI or advertised image-generation path. | Total development time, compute, token use and maintenance cost are not established by the reviewed evidence. |
 | [Maya2 Native / Maya3](cases.md#maya2-native) | Owns the streaming engine and optimized backbone/depth/codec execution; model training and multilingual speech quality are separate contributions. | Total development time, compute, token use and maintenance cost are not established by the reviewed evidence. |
+| [gr8](cases.md#gr8) | CUDA model/kernel execution, native S2 serving steps, custom RoCE collectives and optional KV block-store integration. The broader current model list is not certified by this GLM-focused inspection. | Author hardware/results are documented; total construction, compute and maintenance costs are not established. |
+| [Basalt](cases.md#basalt) | The inspected delta is the device-planned verify/expert program and integrated grouped prefill path, not the existence of CPU/GPU tiering, an API or a new model container alone. | Author hardware/results are documented; total construction, compute and maintenance costs are not established. |
+| [N3komata](cases.md#n3komata) | Pinned llama.cpp/GGML graph, expert-cache callbacks, upload APIs and Vulkan shader changes; the Python UI is not the admission basis. | Author hardware/results are documented; total construction, compute and maintenance costs are not established. |
 
 ## Library facets / 资料库的独立标签
 
@@ -113,6 +116,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [KTransformers / kt-kernel](catalog.md#ktransformers) · core | system / backend / text | layout / scheduling |
 | [MobiInfer Android](catalog.md#mobiinfer-android) · core | system / runtime / text | layout / scheduling, reduced precision, configuration-dependent, target-verified proposals |
 | [MoE-Infinity](catalog.md#moe-infinity) · adjacent | system / runtime / text | layout / scheduling |
+| [N3komata](catalog.md#n3komata) · core | system / backend / text | layout / scheduling, reduced precision, selective approximation, configuration-dependent |
 | [peregrine](catalog.md#peregrine) · core | system / runtime / text | configuration-dependent |
 | [Strata](catalog.md#strata) · core | system / runtime / text | configuration-dependent, selective approximation |
 | [Swiftlet](catalog.md#swiftlet) · core | system / runtime / text | configuration-dependent |
@@ -180,6 +184,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [Apache TVM](catalog.md#tvm) · foundation | support / compiler / text, general | layout / scheduling |
 | [Aria](catalog.md#aria) · core | system / runtime / audio | configuration-dependent |
 | [AutoMegaKernel](catalog.md#automegakernel) · core | construction / compiler / text | generated-artifact dependent, reduced precision |
+| [Basalt](catalog.md#basalt) · core | system / runtime / text | layout / scheduling, reduced precision, target-verified proposals, selective approximation, configuration-dependent |
 | [BaseRT](catalog.md#basert) · adjacent · **closed core** | system / runtime / text, multimodal | configuration-dependent |
 | [BRaiN](catalog.md#brain) · adjacent | system / runtime / text, image, video, audio, multimodal | configuration-dependent |
 | [brodiffusion](catalog.md#brodiffusion) · core | system / runtime / image | configuration-dependent |
@@ -198,6 +203,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [Flash Linear Attention](catalog.md#flash-linear-attention) · foundation | support / kernel-library / text | layout / scheduling |
 | [FlashAttention](catalog.md#flash-attention) · foundation | support / kernel-library / text | layout / scheduling |
 | [FlashInfer](catalog.md#flashinfer) · foundation | support / kernel-library / text | layout / scheduling |
+| [gr8](catalog.md#gr8) · core | system / runtime / text | layout / scheduling, reduced precision, target-verified proposals, configuration-dependent |
 | [Gufo](catalog.md#gufo) · core | system / runtime / text, audio, image, video, multimodal | configuration-dependent, reduced precision, target-verified proposals |
 | [Halogen Flash](catalog.md#halogen-flash) · core · **closed core** | system / runtime / text | reduced precision, target-verified proposals, configuration-dependent |
 | [Hearth](catalog.md#hearth) · core | system / runtime / image | configuration-dependent |

@@ -2,6 +2,15 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Quick comparison](representative-comparison.md) · [Contributing](../CONTRIBUTING.md)
 
+## 2026-11-05 — Cluster execution, Blackwell reconstruction and BC-250 offload / 集群执行、Blackwell 重构与 BC-250 卸载
+
+- Added three source-reviewed core cases: [gr8](catalog.md#gr8), [Basalt](catalog.md#basalt) and [N3komata](catalog.md#n3komata). The catalog now contains **140 records and 82 cases**. Only N3komata was created after the preceding review; admission dates are not release dates.
+- The [pinned source review](source-review-2026-11-05.md) traces trellis/collective/KV integration, Strata-derived device-planned expert windows and Infernix-adapted FP4 prefill, and a llama.cpp/Vulkan graph/cache/upload patch. Upstream tiering and quantization are not presented as new inventions.
+- Distinguished topology-dependent precision, shared-step numerics, finite quality gates, optional routing/drafting approximations and N3komata's default expert reduction. The complete N3komata release profile lacks a controlled end-to-end benchmark. All performance remains author-reported; no upstream build or GPU test was run.
+- Updated bilingual summaries, cases, classifications, recent additions, validation evidence and generated indexes. Added only three new star observations. Prior project/case facts, dates, reading selections and homepage organization remain unchanged. Overall repository improvement ideas were reviewed separately, without implementing a redesign or new workflow.
+
+新增三项均有实际执行改造证据：gr8 为完整 GLM 的 Spark 集群路径，Basalt 为明确归因上游的 Blackwell 深度分支，N3komata 为带近似默认配置的 BC-250 补丁栈。Legion 继续核查，LiteMoE 暂不作为教学型引擎新增；未把新建日期、源码检查或作者实验混同为独立复现。
+
 ## 2026-11-03 — Expanded native, mobile and speech execution / 原生、移动与语音执行扩展核查
 
 - Added four source-reviewed core cases: [Strixite](catalog.md#strixite), [Spark Engine](catalog.md#spark-engine), [MobiInfer Android](catalog.md#mobiinfer-android), and [Maya2 Native / Maya3](catalog.md#maya2-native). The catalog now contains **137 records and 79 cases**.

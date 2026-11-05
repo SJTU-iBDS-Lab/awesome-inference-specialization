@@ -177,13 +177,14 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Language models / 语言模型
 
-76 core/adjacent entries; 17 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+79 core/adjacent entries; 17 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
 | [ane.cpp](catalog.md#ane-cpp) | core | Dense Qwen3/Qwen3.5 text inference through private ANE APIs, with M3 Max-specific empirical constraints. |
 | [ANEMLL Flash llama.cpp](catalog.md#anemll-flash-llama) | core | Selected GGUF MoE architectures on Apple Silicon with sidecar expert storage and bounded slot-bank memory. |
 | [AutoMegaKernel](catalog.md#automegakernel) | core | Supported HuggingFace Llama-family graphs on CUDA, principally batch-one decode. Paper speed sweeps at position zero use synthetic weights at real model shapes; real-checkpoint quality tests have a separate scope. |
+| [Basalt](catalog.md#basalt) | core | Qwen3.8-Flash-Next on Linux/Windows x64 with NVIDIA Blackwell sm_120 and CPU RAM; optional peer GPU tier. Text expert/verify and NVFP4 prefill paths inspected; vision not qualified here. |
 | [Cactus](catalog.md#cactus) | core | Mobile and wearable deployments; model bundles tested on selected Liquid, Gemma, Qwen and speech families. |
 | [CIRU runtime](catalog.md#ciru-runtime) | core | Qwen3.8 Flash model artifacts, paged embeddings and Strix Halo unified memory require coordinated quantization, sparse attention and speculative-state paths. |
 | [Cloudflare Infire](catalog.md#infire) | core | Cloudflare distributed inference nodes with constrained host CPU, startup and isolation requirements. The initial Hopper-focused report and later large-model/multi-GPU update describe different deployment stages. |
@@ -194,6 +195,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [ExLlamaV3](catalog.md#exllamav3) | core | EXL3/codebook formats, supported model architectures, CUDA GPU capabilities and small decode shapes determine the available optimized path. |
 | [FastFlowLM](catalog.md#fastflowlm) | core | AMD XDNA2 client NPUs, including supported Ryzen AI platforms; selected language, vision and audio models. |
 | [Flash-MoE](catalog.md#flash-moe) | core | The implementation targets Qwen3.5-397B-A17B on Apple unified-memory hardware with SSD capacity far exceeding RAM and fixed model geometry. |
+| [gr8](catalog.md#gr8) | core | Full GLM-5.3 on three to six DGX Spark / GB10 sm_121a nodes with RoCE v2. Review covers the GLM trellis, S2 and KV-store substrate; newer GLM-Flash and DeepSeek paths are not fully qualified here. |
 | [Gufo](catalog.md#gufo) | core | Selected models on Linux x86-64 AMD Strix Halo (gfx1151), optimized for 128 GiB unified-memory systems; smaller memory configurations are conditional on model fit. |
 | [Gufo RDMA](catalog.md#gufo-rdma) | core | Two Strix Halo machines can jointly host higher-precision Qwen Flash-Next weights, but request state, tensors and speculative execution must remain synchronized across hosts. |
 | [Halogen Flash](catalog.md#halogen-flash) | core | One model family and AMD gfx1151 unified-memory machines motivate tensor-specific precision choices and separate budgets for resident weights, KV state and the paged lookup table. |
@@ -214,6 +216,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [MetaInfer](catalog.md#metainfer) | core | Requested model, hardware, parallelism, precision, API contract and iteration budget define the generated artifact. |
 | [Mirage Persistent Kernel](catalog.md#mirage) | core | NVIDIA GPU architecture, SM worker/scheduler allocation, model graph, batch shape and multi-GPU topology constrain the compiled execution. |
 | [MobiInfer Android](catalog.md#mobiinfer-android) | core | Selected 30B/35B-A3B MoE text paths on Snapdragon Android devices using Hexagon HTP/HVX/HMX and external expert packs; advertised multimodal and MOSS-Image paths are outside this review. |
+| [N3komata](catalog.md#n3komata) | core | AMD BC-250, 16 GiB unified memory, Linux/Mesa RADV Vulkan and SSD-backed Qwen3.8-Flash-Next IQ3_XXS GGUF shards. |
 | [NInfer](catalog.md#ninfer) | core | Selected Qwen Dense/MoE checkpoints on Linux and one RTX 5090 (sm_120a), with one resident model and one to eight startup-fixed execution lanes. |
 | [NInfer-3090](catalog.md#ninfer-3090) | core | Qwen dense/MoE serving on a 24 GB RTX 3090 requires SM86-compatible kernels and a smaller memory budget than upstream consumer Blackwell. |
 | [peregrine](catalog.md#peregrine) | core | GLM-5.2 744B-style int4 MoE streaming on Linux with NVMe, CPU and optional NVIDIA CUDA expert execution. |
