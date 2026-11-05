@@ -2,6 +2,15 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Quick comparison](representative-comparison.md) · [Contributing](../CONTRIBUTING.md)
 
+## 2026-11-05 — Hardware/model discovery and concise homepages / 硬件模型入口与首页精简
+
+- Added a compact hardware/model finder near the top of both homepages and a [generated scope guide](find-a-stack.md) with 13 curated routes. Existing project IDs, canonical target scope, source visibility and review dates remain the authority; overlapping routes add no records or compatibility claims.
+- Shortened 17 bilingual summary pairs, retaining upstream attribution, closed cores, model/precision changes, default expert reduction and material verification gaps. A shared evidence note states that benchmark performance has not been independently reproduced.
+- Refined the four light/dark, wide/compact SVG banners with stronger hierarchy and numbered execution layers. Kept all **140 projects** expanded exactly once on each homepage, the domain-first organization and all **82 cases**.
+- Updated generators, contributor guidance and referential-integrity checks. This presentation update does not refresh technical review dates, star snapshots or performance evidence.
+
+按设备／模型查找入口前置，长摘要精简，头图加强主次与深浅主题适配。范围页直接引用原始记录，不把硬件家族标签当作全面兼容性承诺；原有手机执行机制交叉索引继续保留。
+
 ## 2026-11-05 — Cluster execution, Blackwell reconstruction and BC-250 offload / 集群执行、Blackwell 重构与 BC-250 卸载
 
 - Added three source-reviewed core cases: [gr8](catalog.md#gr8), [Basalt](catalog.md#basalt) and [N3komata](catalog.md#n3komata). The catalog now contains **140 records and 82 cases**. Only N3komata was created after the preceding review; admission dates are not release dates.

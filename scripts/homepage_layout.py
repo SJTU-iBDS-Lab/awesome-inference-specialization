@@ -8,6 +8,7 @@ from __future__ import annotations
 import html
 
 from homepage_metadata import load_bundle, entry_extras, recent_line, snapshot_note
+from discovery import render_shortcuts
 
 ENGINE_DOMAINS = [
     ('text', 'Language models', '语言模型'),
@@ -173,6 +174,7 @@ def render_homepage(rows: list[dict[str, str]], schema: dict, notes_en: dict[str
         f'{len(rows)} 个项目 · {counts["system"]} 个引擎 · {counts["construction"]} 个构建流程 · {counts["benchmark"]} 个基准 · {counts["support"]} 项资源') + '</sub>', '</p>', '',
         '<div align="center">', '', navigation, '',
         '<sub>' + select('By domain: ', '模型领域：') + domain_navigation + '</sub>', '', '</div>', '',
+        *render_shortcuts(rows, chinese),
         recent_line(metadata_config, chinese), '',
         '<a id="featured-reading"></a>', '<a id="start-here"></a>', '<a id="从这里开始"></a>', '', select('## Six ways to specialize', '## 六种专用化路径'), '',
         '<!-- STARTER-GRID-START -->', '<table align="center">', '<tr>']
@@ -201,7 +203,9 @@ def render_homepage(rows: list[dict[str, str]], schema: dict, notes_en: dict[str
                                f'[{len(showcase)} 案例对照](docs/representative-comparison.md#chinese) · [跨案例综合](docs/synthesis.md) · 阅读选例，不是排名。') + '</sub>', '',
               '<a id="homepage-system"></a>', '', select('## Inference engines', '## 推理引擎'), '',
               '<sub>' + select('All projects expanded; names link upstream. [Execution boundaries](docs/systems.md#system) · [Overlapping domains](docs/domains.md)',
-                                '全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md)') + ' · ' + snapshot_note(rows, star_cache, chinese) + '</sub>', '']
+                                '全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md)') + ' · ' + snapshot_note(rows, star_cache, chinese) + '</sub>', '',
+              '> ' + select('**Evidence:** Source-reviewed descriptions; performance has not been independently reproduced here. Model changes and material limits remain in each summary. [Reading the evidence](docs/evidence-policy.md).',
+                             '**证据说明：**描述依据来源核查，性能未在本仓库独立复现。模型改动与重要限制仍随条目列出。[如何阅读证据](docs/evidence-policy.md)。'), '']
     for domain, en, cn in ENGINE_DOMAINS:
         members = group_members[domain]
         lines += [f'<a id="homepage-system-{domain}"></a>', '', f'### {select(en, cn)} <sub>· {len(members)}</sub>', '']

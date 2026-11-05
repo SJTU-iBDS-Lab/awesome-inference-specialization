@@ -14,7 +14,7 @@ The survey does not require a new project, AI involvement or an implementation f
 6. State concrete scope and caveats: quantization, omitted work, stale state, changed models, unsupported configurations and incomplete verification where relevant. Do not infer that a kernel generator delivers a complete engine.
 7. Mark AI involvement only from direct disclosure or an inspected construction method. Name the actual work and human intervention where known; an `AGENTS.md` or `CLAUDE.md` filename alone establishes neither authorship nor saved cost.
 8. Set `checked_on` to the direct source-review date. Prefer commit-pinned evidence for sensitive or version-dependent claims. Summarize inspection depth and discovery path in the PR.
-9. Add or update the associated selected case when the change affects a core project's construction account. Regenerate and validate all ten views using the commands below.
+9. Add or update the associated selected case when the change affects a core project's construction account. Regenerate and validate all eleven views using the commands below.
 
 ## Add or correct a selected case
 
@@ -60,17 +60,19 @@ python scripts/update_readme.py --check
 python -m unittest discover -s tests
 ```
 
-The ten generated views are the catalog sections of `README.md` and `README_CN.md`, plus `docs/cases.md`, `docs/systems.md`, `docs/catalog.md`, `docs/comparison.md`, `docs/domains.md`, `docs/benchmarks.md`, `docs/resources.md` and `docs/representative-comparison.md`. The validation guide (`docs/validation.md`) is maintained by hand and can link to methods embedded in existing engines or construction frameworks. Do not edit those outputs directly. Hand-written README introductions and guides can be edited normally.
+The eleven generated views are the catalog sections of `README.md` and `README_CN.md`, plus `docs/cases.md`, `docs/systems.md`, `docs/catalog.md`, `docs/comparison.md`, `docs/domains.md`, `docs/benchmarks.md`, `docs/resources.md`, `docs/representative-comparison.md` and `docs/find-a-stack.md`. The validation guide (`docs/validation.md`) is maintained by hand and can link to methods embedded in existing engines or construction frameworks. Do not edit those outputs directly. Hand-written README introductions and guides can be edited normally.
 
 The homepage foregrounds engines, construction and validation, with benchmarks separate and diagnostics/knowledge/components as support. Detailed case groups are reading routes, not disjoint scientific categories; the complete set belongs in `docs/cases.md`. Domain facets overlap and are independent of survey relevance and construction route; do not add their counts as unique projects. A repository with multiple models remains one record, while a substantial fork needs an explicit execution delta and upstream provenance.
 
 Use `catalog/schema.json` for controlled facets and navigation configuration, `catalog/projects.csv` for project records, and `catalog/cases.json` for selected-case narratives. Keep both homepages and original diagrams consistent with classification changes. Construction routes can overlap; distinguish generated kernels, composed model programs and complete servers. The homepage should foreground cases and research questions rather than entry totals.
 
+Hardware/model discovery routes are curated in `catalog/discovery.json` and rendered by `scripts/discovery.py`. Use only existing project IDs and reviewed device/model scope; never infer hardware compatibility from generic CUDA/Metal support. Routes may overlap without adding records. The guide copies scope and review dates from the CSV, so presentation-only work must not change those facts.
+
 ## Keep the full Awesome listing on the homepages
 
 Both homepages must list **every project exactly once**, always expanded, with its canonical upstream link and an evidence-detail link. Do not replace the complete list with featured selections or links to separate directory pages. Group engines by primary model domain and construction workflows by output boundary; supporting resources retain their purpose groups. Avoid repeating the section domain; keep additional domains as secondary text.
 
-Concise homepage descriptions come from `catalog/homepage_en.json` and `catalog/homepage_cn.json`; maintain equivalent facts for every project ID in both languages. Project identities, scope and detailed mechanisms remain in `projects.csv`. Update the source records and both summaries when facts change. Translations may explain the inspected mechanism or scope, but must not strengthen evidence, imply AI authorship, or invent support or performance claims.
+Aim for roughly 20–35 English words per entry (hard limit: 60), with the target and execution contribution first. Preserve consequential limitations; put generic non-reproduction caveats in the shared evidence note. Concise homepage descriptions come from `catalog/homepage_en.json` and `catalog/homepage_cn.json`; maintain equivalent facts for every project ID in both languages. Project identities, scope and detailed mechanisms remain in `projects.csv`. Update the source records and both summaries when facts change. Translations may explain the inspected mechanism or scope, but must not strengthen evidence, imply AI authorship, or invent support or performance claims.
 
 The homepage also expands validation contracts and named methods from `docs/validation.md`, construction output boundaries, benchmark comparison questions, and the purpose of each support category. Keep the method summaries in `HOMEPAGE_VALIDATION` in `scripts/homepage_layout.py` aligned with the source-backed validation guide. Embedded methods link to their containing project without adding duplicate repository entries. Featured reading and deeper documents are supplements to this full homepage content.
 

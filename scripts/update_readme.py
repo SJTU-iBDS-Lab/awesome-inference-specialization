@@ -8,6 +8,7 @@ import html
 import json
 from pathlib import Path
 import sys
+from discovery import render_guide
 
 from homepage_layout import (
     ENGINE_DOMAINS, STARTER_CASE_IDS, HOMEPAGE_VALIDATION,
@@ -319,6 +320,7 @@ def generated_files(rows: list[dict[str, str]]) -> dict[Path, str]:
     outputs[ROOT / 'docs/domains.md'] = render_domains(rows)
     outputs[ROOT / 'docs/benchmarks.md'] = render_benchmarks(rows)
     outputs[ROOT / 'docs/resources.md'] = render_resources(rows)
+    outputs[ROOT / 'docs/find-a-stack.md'] = render_guide(rows)
     return outputs
 
 

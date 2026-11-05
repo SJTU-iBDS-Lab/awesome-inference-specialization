@@ -7,10 +7,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PALETTES = {
-    'light': dict(bg='#f5f8fa', panel='#ffffff', ink='#203342', muted='#526675',
-                  line='#c5d4dc', accent='#087e8b', tint='#e6f3f3'),
-    'dark': dict(bg='#121c25', panel='#192936', ink='#edf4f7', muted='#b1c4cf',
-                 line='#425b6a', accent='#65d5c5', tint='#1c393e'),
+    'light': dict(bg='#f1f7f7', panel='#ffffff', ink='#18343c', muted='#506974',
+                  line='#c5d9dc', accent='#087f83', tint='#e3f1ef', core='#163f46', coretext='#f1fffb'),
+    'dark': dict(bg='#0e1c24', panel='#182c35', ink='#edf7f8', muted='#b2c9d2',
+                 line='#35545e', accent='#70d9c4', tint='#203e43', core='#214b50', coretext='#f1fffb'),
 }
 
 
@@ -33,12 +33,16 @@ def banner(theme: str, compact: bool = False) -> str:
     def path(d, color='line', width=1.5):
         parts.append(f'<path d="{d}" fill="none" stroke="{p[color]}" stroke-width="{width}" stroke-linecap="round" stroke-linejoin="round"/>')
 
+    # A quiet dot field suggests a design space without adding a third-party asset.
+    parts.append(f'<defs><pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="18" cy="12" r="0.7" fill="{p["line"]}" opacity="0.48"/></pattern></defs>')
+    parts.append(f'<rect width="{width}" height="{height}" rx="16" fill="url(#dots)"/>')
+
     if compact:
         for x, label in zip((16, 153, 290), ('MODEL', 'HARDWARE', 'WORKLOAD')):
             rect(x, 15, 114, 30)
             text(x+57, 35, label, 12, 'muted', 700, spacing=0.6)
-        rect(61, 88, 298, 45, 'tint', 'accent', 10)
-        text(210, 117, 'Specialized execution', 20, 'ink', 700)
+        rect(61, 88, 298, 45, 'core', 'core', 10)
+        text(210, 117, 'Specialized execution', 20, 'coretext', 700)
         text(210, 77, 'build · optimize · verify', 11, 'muted', 400)
         # The input bus leaves a gap for the construction caption.
         path('M73 45 V56 H347 V45 M210 45 V56 M210 79 V88', 'accent')
@@ -59,14 +63,15 @@ def banner(theme: str, compact: bool = False) -> str:
         path('M226 84 H367', 'accent')
         path('M226 134 H264 Q286 134 286 111 V106 Q286 84 310 84', 'accent')
         path('M360 78 L367 84 L360 90', 'accent')
-        rect(382, 36, 286, 96, 'panel', 'line', 12)
+        rect(382, 31, 286, 106, 'core', 'core', 14)
         parts.append(f'<rect x="382" y="58" width="3" height="52" rx="1.5" fill="{p["accent"]}"/>')
-        text(525, 81, 'Specialize', 31, 'ink', 700)
-        text(525, 107, 'BUILD · OPTIMIZE · VERIFY', 11, 'muted', 600, spacing=1.15)
+        text(525, 81, 'Specialize', 32, 'coretext', 700)
+        text(525, 107, 'BUILD · OPTIMIZE · VERIFY', 11, 'coretext', 600, spacing=1.15)
         path('M668 84 H730 M730 43 V125 M730 43 H786 M730 84 H786 M730 125 H786', 'accent')
-        for y,label in ((29,'MODEL EXECUTION'),(70,'STATE + SCHEDULING'),(111,'TARGET KERNELS')):
+        for index, (y,label) in enumerate(((29,'MODEL EXECUTION'),(70,'STATE + SCHEDULING'),(111,'TARGET KERNELS')), 1):
             rect(799, y, 281, 29, 'tint' if y==29 else 'panel', 'accent' if y==29 else 'line', 7)
-            text(939, y+19, label, 12, 'ink', 600, spacing=0.6)
+            text(817, y+19, f'0{index}', 10, 'accent', 700, anchor='start')
+            text(849, y+19, label, 12, 'ink', 600, anchor='start', spacing=0.6)
         text(939, 18, 'PURPOSE-BUILT STACK', 10, 'muted', 600, spacing=1.5)
         for y in (43,84,125):
             path(f'M780 {y-4} L785 {y} L780 {y+4}', 'accent')

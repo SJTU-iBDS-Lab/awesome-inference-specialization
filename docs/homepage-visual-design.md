@@ -4,7 +4,7 @@
 
 ## Presentation, not a new taxonomy
 
-The homepage keeps the complete project list and its domain-first organization. The visual layer supplies a compact theme-aware banner, one primary navigation row, a domain shortcut row and six reading cards. Project names link upstream; details link to the existing evidence records. The cards are examples of construction approaches, not a performance or maturity ranking.
+The homepage keeps the complete project list and its domain-first organization. The visual layer supplies a compact theme-aware banner, one primary navigation row, a domain shortcut row, a two-row hardware/model finder and six reading cards. Project names link upstream; details link to the existing evidence records. The cards are examples of construction approaches, not a performance or maturity ranking.
 
 The introductory copy is maintained outside the generated markers in each README. `scripts/homepage_layout.py` generates the counts, navigation, cards and catalog. Long-form case explanations remain in the case collection and comparison; cards use a short label with the full reading rationale available as a tooltip and in the linked comparison.
 
@@ -15,9 +15,9 @@ The introductory copy is maintained outside the generated markers in each README
 | Component | Rule |
 | --- | --- |
 | Banner | Four self-contained SVGs: light/dark × wide/compact. A conceptual diagram, not a performance claim. |
-| Navigation | One main row and one domain row. No repeated table of contents. |
+| Navigation | One main row and one domain row, followed by a compact hardware/model finder. No repeated table of contents. |
 | Six cards | A two-row, three-column HTML table; short copy, relative case links and no per-card images. |
-| Project entries | Keep every source-backed description, important limitation and upstream link. Do not repeat the section's domain; retain additional domains as secondary text. |
+| Project entries | Keep every project, its source-backed concise description, important limitation and upstream link. Do not repeat the section's domain; retain additional domains as secondary text. |
 | Mechanisms | Keep the full mechanism index and legacy anchors in further reading. |
 | Counts | Generated from the catalog, not manually updated numbers in image assets. |
 
@@ -47,3 +47,9 @@ The 2026-10-13 presentation update was checked with local Chromium previews usin
 ## 2026-10-14 metadata refinement
 
 Project names now carry compact repository-star text and selected Paper / Blog / Case report shortcuts. Subproject counts are explicitly parent-repository totals. A single recent-additions line uses admission dates rather than release dates. See [metadata rules](homepage-metadata.md). No remote badges or new visual framework are introduced; the six reading cards and original descriptions are unchanged.
+
+## 2026-11-05 discovery and visual refinement
+
+Added two compact discovery rows before the reading cards, backed by curated IDs and canonical scope in the generated guide. Shortened 17 bilingual summary pairs and moved generic non-reproduction wording into a shared evidence note above the list; substantive model changes, closed cores and verification gaps stay visible.
+
+The SVGs retain the input → specialization → execution-stack concept, now using a stronger central panel, subtle dot field and numbered stack layers. Wide/compact and light/dark variants remain self-contained. This is presentation work; the 140 project records, 82 cases, source-review dates and star observations are unchanged.

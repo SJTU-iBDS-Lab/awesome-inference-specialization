@@ -6,7 +6,7 @@
 
 Project identity, upstream URL, role and domain coverage remain in [projects.csv](../catalog/projects.csv). Detailed mechanisms and evidence stay in the catalog and case records. Neither homepage is a replacement for those records.
 
-Maintain [English summaries](../catalog/homepage_en.json) and [Chinese summaries](../catalog/homepage_cn.json) together. They must cover exactly the same project identifiers, with nonempty text. Describe the target and artifact first, then the distinctive execution decision. Keep English summaries within 60 words. The two versions need equivalent facts, not word-for-word syntax.
+Maintain [English summaries](../catalog/homepage_en.json) and [Chinese summaries](../catalog/homepage_cn.json) together. They must cover exactly the same project identifiers, with nonempty text. Describe the target and artifact first, then the distinctive execution decision. Aim for 20–35 English words, allowing up to 60 when consequential limits need space. The two versions need equivalent facts, not word-for-word syntax.
 
 Preserve consequential limits in both languages: changed expert counts, approximation, a closed execution core, or incomplete verification. Generic caveats belong in the shared evidence statement rather than every sentence. New descriptions must be supported by existing records or an explicitly recorded source review.
 
@@ -23,6 +23,14 @@ Construction groups identify the output boundary: operator kernels, model progra
 Six `STARTER_CASE_IDS` are drawn from the canonical showcase, with the remaining selections shown under further reading. Changing a starter requires an existing showcase and case record; it is not a quality ranking. All project entries stay expanded and link upstream exactly once.
 
 首页按主要模型领域组织引擎，机制分类继续服务于深入分析；多领域信息保留为短标签与交叉索引。构建流程按实际产物分组。首页保留全量展开，精选入口只负责导读，不替代完整清单。
+
+## Hardware and model discovery
+
+[discovery.json](../catalog/discovery.json) defines curated hardware/model reading routes using existing project IDs and bilingual labels/notes. [scripts/discovery.py](../scripts/discovery.py) renders the compact homepage shortcuts and [scope guide](find-a-stack.md). The guide copies target scope, source visibility and review dates from the canonical CSV; it does not infer support from a general backend label. Both languages share the same routes.
+
+Routes overlap and do not change project counts or primary-domain placement. Keep the homepage to two compact shortcut rows; use More for additional hardware. Preserve the separate [mobile execution cross-index](device-execution-matrix.md). A new project need not appear in every curated route.
+
+硬件／模型入口是交叉导读，不是兼容性认证或排名。具体设备、检查点和配置仍以原始记录为准；只改展示时不刷新来源核查日期。
 
 ## Checks
 
