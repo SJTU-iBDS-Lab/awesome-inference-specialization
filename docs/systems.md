@@ -32,7 +32,7 @@ Integrated model runtimes and substantial specialized backends, including native
 
 集成模型运行时和实质专用后端，涵盖原生实现与有直接参照意义的既有执行栈。
 
-105 projects / 项目
+106 projects / 项目
 
 | Project and evidence | Why it belongs | Relevance / artifact |
 | --- | --- | --- |
@@ -64,6 +64,7 @@ Integrated model runtimes and substantial specialized backends, including native
 | [imp](catalog.md#imp) | Explicit single-architecture reconstruction plus a direct author disclosure of end-to-end coding-agent implementation. | core / runtime |
 | [Infernix](catalog.md#infernix) | Substantial descendant reconstructing heterogeneous execution for a model too large for GPU memory, with direct AI-development disclosure. | core / runtime |
 | [Iris](catalog.md#iris) | A native image-model runtime exposes which graph and execution responsibilities are taken out of a general framework. | core / runtime |
+| [JITEngine](catalog.md#jitengine) | Public model/Mac-specific execution packages connect disclosed whole-system AI synthesis to integrated Metal kernels, expert residency and decode scheduling. | core / runtime |
 | [Kipp](catalog.md#kipp) | Model-family reconstruction with explicit checkpoint rejection and native serving, beyond a teaching-only forward-pass example. | core / runtime |
 | [Kog Inference Engine (KIE)](catalog.md#kie) | An industrial model/runtime/hardware co-design case with an explicitly narrow low-latency operating point; distinguishes a purpose-built execution architecture from a generic serving configuration. | core / runtime |
 | [KTransformers / kt-kernel](catalog.md#ktransformers) | A substantial heterogeneous backend provides a core case for rebuilding execution while retaining shared serving infrastructure. | core / backend |
@@ -150,7 +151,7 @@ Agent harnesses, compiler workflows and model-specific optimization procedures. 
 
 Agent harness、编译流程与模型专用优化；区分内核、模型程序与服务执行栈的产出边界。
 
-14 projects / 项目
+15 projects / 项目
 
 | Project and evidence | Why it belongs | Relevance / artifact |
 | --- | --- | --- |
@@ -158,6 +159,7 @@ Agent harness、编译流程与模型专用优化；区分内核、模型程序�
 | [MetaInfer](catalog.md#metainfer) | Connects a disclosed construction workflow to the VibeQwen engine case; the toolbox and generated engine are different artifacts. | core / generator |
 | [Mirage Persistent Kernel](catalog.md#mirage) | A model-to-persistent-program construction path connects generated execution schedules to a concrete runtime artifact. | core / compiler |
 | [SEIS: Self-Evolving Inference Systems](catalog.md#seis) | Sustained agent-driven reconstruction of an existing inference engine connects inherited code and reports to kernel, runtime and decoding changes; the study also exposes gaps in its evolving validation gates. | core / generator |
+| [SkyDiscover / SkySynth](catalog.md#skydiscover) | SkySynth provides the disclosed construction workflow for JITEngine, with executable test admission and release gates; distinguish system synthesis from evolutionary program optimization. | core / generator |
 | [Sol-Engine](catalog.md#sol-engine) | Connects agent-guided optimization with inspectable model runtimes and their acceptance checks. | core / optimizer |
 | [VibeServe / VibeSys](catalog.md#vibesys) | Connects generation-time model/hardware/workload specialization to a concrete serving-system initiative; the broader generator and its scenario-specific outputs are distinct artifacts. | core / generator |
 | [AgentCompile](catalog.md#agentcompile) | Agent-guided fusion route: a narrower construction comparison with explicit verification and timing caveats. | adjacent / research-prototype |

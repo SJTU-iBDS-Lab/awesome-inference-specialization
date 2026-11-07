@@ -4,7 +4,7 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Systems & construction](systems.md) · [Comparison](comparison.md) · [Taxonomy](taxonomy.md) · [Evidence policy](evidence-policy.md)
 
-140 entries. Source review: 2026-11-05. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
+142 entries. Source review: 2026-11-07. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
 
 Use the family links below, or search this page for a model, device, mechanism or project. Source visibility is not a license or correctness certification. Semantic labels identify evaluation obligations, not proven equivalence.
 
@@ -1324,7 +1324,7 @@ Combines Ulysses and Ring sequence parallelism with CFG/data parallelism and Pip
 
 <a id="execution"></a>
 
-## Compiled & native execution / 编译与原生执行 (80)
+## Compiled & native execution / 编译与原生执行 (81)
 
 **How does a graph become an executable?** Fuse, lower, specialize and dispatch graphs or native kernels.
 
@@ -2311,6 +2311,35 @@ Implements selected FLUX and Z-Image pipelines in C with Metal or CPU kernels, m
 **Evidence:** [Source 1](https://github.com/antirez/iris.c/blob/main/README.md) · [Source 2](https://github.com/antirez/iris.c/blob/main/iris_safetensors.c) · [Source 3](https://github.com/antirez/iris.c/blob/main/iris_transformer_flux.c).
 
 **Reviewed:** 2026-10-12 · **AI involvement:** `not-established` · **Discovery:** `initial`.
+
+</details>
+
+<a id="jitengine"></a>
+
+### [JITEngine](https://github.com/skydiscover-ai/jitengine)
+
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** Public model/Mac-specific execution packages connect disclosed whole-system AI synthesis to integrated Metal kernels, expert residency and decode scheduling.
+
+Flash-Next M4 Pro dispatches grouped Metal expert kernels through a device slot map, repairs missing or moved expert contributions and rolls back lookahead state; pack16 losslessly recodes existing quantization metadata. Other packages include M2 decode turns and Flint M4 Pro persistent execution.
+
+**Scope:** Six MLX-based packages for Qwen3.6-35B-A3B, Qwen3.8-Flash-Next and Flint, tuned for 24 GB M2 or 48 GB M4 Pro Macs; model, weight format and memory contracts differ.
+
+**Boundary:** The installer selects released packages; it does not synthesize a new engine at startup. MLX and FreeToken-inspired offload are reused. Exactness is relative to specified quantized references; optional relaxed profiles change outputs. The author-reported 2.72x combines 32.9 tok/s with an older slotstream 0.2.11 measurement of 12.1 on M4 Pro at a 40 GB budget; no independent reproduction or qualification of all six packages here.
+
+**Semantic considerations:** layout / scheduling, reduced precision, target-verified proposals, configuration-dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `custom-metal-kernels`, `expert-cache-repair`, `cross-layer-lookahead`, `packed-quantization-metadata`, `persistent-decode`, `verified-drafting`.
+
+**Constraints:** `model`, `hardware`, `memory`, `precision`, `workload`.
+
+**Evidence:** [Source 1](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/README.md) · [Source 2](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/install.sh) · [Source 3](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/src/jitengine_qwen3_8_flash_next_m4pro/model/model.py) · [Source 4](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/src/jitengine_qwen3_8_flash_next_m4pro/model/moe/speculative.py) · [Source 5](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/src/jitengine_qwen3_8_flash_next_m4pro/kernels/grouped_expert_qmv.py) · [Source 6](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/src/jitengine_qwen3_8_flash_next_m4pro/kernels/pack16.py) · [Source 7](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/DETAILS.md) · [Source 8](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/tests/e2e/test_gate.py) · [Source 9](https://skydiscover-ai.github.io/blog-jitengine.html).
+
+**Reviewed:** 2026-11-07 · **AI involvement:** `disclosed` · **Discovery:** `keyword`.
 
 </details>
 
@@ -3650,7 +3679,7 @@ Rust runtimes own model loading, graph execution and state. Inspected paths impl
 
 <a id="construction"></a>
 
-## Construction & validation tools / 构建与验证工具 (16)
+## Construction & validation tools / 构建与验证工具 (17)
 
 **How are specialized programs built and checked?** Agents, kernel languages and evaluation infrastructure.
 
@@ -3999,6 +4028,35 @@ Keeps the coding agent fixed while successive sessions inherit and revise engine
 **Evidence:** [Source 1](https://arxiv.org/html/2610.04646v1) · [Source 2](https://github.com/smth-fun/self-evolving-inference-system/blob/bf2ddc5c5882a2573756b744c0e88c1b154739fa/README.md) · [Source 3](https://github.com/smth-fun/self-evolving-inference-system/blob/bf2ddc5c5882a2573756b744c0e88c1b154739fa/run_trial.sh) · [Source 4](https://github.com/smth-fun/mini-sglang/blob/2c1f6c307c96aa165873ad785cb0fa71fb71f9d3/python/minisgl/engine/engine.py).
 
 **Reviewed:** 2026-10-14 · **AI involvement:** `intrinsic` · **Discovery:** `keyword`.
+
+</details>
+
+<a id="skydiscover"></a>
+
+### [SkyDiscover / SkySynth](https://github.com/skydiscover-ai/skydiscover)
+
+[core](systems.md#core) · `construction` · `generator` · `text / general` · **public code**
+
+**Survey relevance:** SkySynth provides the disclosed construction workflow for JITEngine, with executable test admission and release gates; distinguish system synthesis from evolutionary program optimization.
+
+SkySynth coordinates specification, planning, implementation and evaluator/auditor feedback. Executable scripts run the selected candidate, distinguish failure from incomplete tests, admit new tests against references and mutants, and check audited artifact identity before export.
+
+**Scope:** Task-specified systems construction, linked here to JITEngine on Apple Silicon; the separate inference-engine example specifies Qwen3-4B/BF16 on one NVIDIA L4 with a branching workload.
+
+**Boundary:** Optimize and Synthesize are distinct modes. Plain-language task gates depend on the supplied reference/tests; seed tests bypass mutant checks. The L4 example contains a task and benchmark client, not a complete generated engine or ready-made correctness suite. The separate formal-proof mode does not certify JITEngine. Total construction and maintenance costs and independent reproduction are not established.
+
+**Semantic considerations:** generated-artifact dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `specification-driven-synthesis`, `agent-build-evaluate-loop`, `mutation-test-admission`, `candidate-audit`, `artifact-checkpointing`.
+
+**Constraints:** `specification`, `hardware`, `workload`, `evaluator`.
+
+**Evidence:** [Source 1](https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/README.md) · [Source 2](https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/README.md) · [Source 3](https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/workflow/scripts/run_tests.py) · [Source 4](https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/workflow/scripts/suite.py) · [Source 5](https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/workflow/scripts/validate_test.py) · [Source 6](https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/spec/run.py) · [Source 7](https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/examples/inference-engine/README.md) · [Source 8](https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/examples/inference-engine/task.md) · [Source 9](https://skydiscover-ai.github.io/blog-skysynth.html) · [Source 10](https://skydiscover-ai.github.io/blog-jitengine.html).
+
+**Reviewed:** 2026-11-07 · **AI involvement:** `intrinsic` · **Discovery:** `dependency`.
 
 </details>
 

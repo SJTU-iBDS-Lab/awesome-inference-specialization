@@ -51,7 +51,8 @@
         "swiftlet",
         "flash-moe",
         "anemll",
-        "ane-cpp"
+        "ane-cpp",
+        "jitengine"
       ],
       "note": "Metal-native execution, SSD expert streaming and ANE compilation are different paths. Chip generations, OS versions and model modifications matter.",
       "note_cn": "Metal 原生执行、SSD 专家流式加载与 ANE 编译是不同路线；须匹配芯片、系统版本与模型改动。",
@@ -118,7 +119,8 @@
         "spark-engine",
         "ignis",
         "basalt",
-        "n3komata"
+        "n3komata",
+        "jitengine"
       ],
       "note": "Selected Qwen3.8-Flash-Next paths across devices. Formats, reduced precision, cache modes and optional expert/routing changes prevent a speed-only comparison.",
       "note_cn": "跨设备的指定 Qwen3.8-Flash-Next 路径；权重格式、低精度、缓存模式和可选专家／路由改动需单独比较。",
@@ -136,7 +138,8 @@
         "ninfer-3090",
         "llamampere",
         "machx",
-        "ignis"
+        "ignis",
+        "jitengine"
       ],
       "note": "Selected dense and hybrid-MoE checkpoints; family names do not imply interchangeable architectures or unrestricted model loading. Some engines also appear under Flash-Next.",
       "note_cn": "指定稠密与混合 MoE 检查点；家族名称不意味着架构可互换或任意权重可加载，部分引擎也列入 Flash-Next。",

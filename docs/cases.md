@@ -14,7 +14,7 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 
 ### Construction workflows and generated execution / 构建流程与生成的执行程序
 
-[MetaInfer → VibeQwen](#vibeqwen) · [Sol-Engine](#sol-engine) · [Mirage MPK](#mirage) · [Lithos Metal](#lithos-metal) · [Magnitude](#magnitude) · [SEIS](#seis) · [VibeServe / VibeSys](#vibeserve) · [AutoMegaKernel](#automegakernel)
+[MetaInfer → VibeQwen](#vibeqwen) · [Sol-Engine](#sol-engine) · [Mirage MPK](#mirage) · [Lithos Metal](#lithos-metal) · [Magnitude](#magnitude) · [SEIS](#seis) · [VibeServe / VibeSys](#vibeserve) · [AutoMegaKernel](#automegakernel) · [JITEngine / SkySynth](#jitengine)
 
 ### Native runtimes for qualified models and devices / 围绕指定模型与设备重建原生运行时
 
@@ -199,6 +199,26 @@ The complete reading routes below expand the homepage selections. / 以下阅读
 **Sources:** [Source 1](https://arxiv.org/html/2606.09682v1) · [Source 2](https://github.com/RightNow-AI/AutoMegaKernel/blob/884534c4d2dbed4381576f81a79ae97feca53c34/HARNESS.md) · [Source 3](https://github.com/RightNow-AI/AutoMegaKernel/blob/884534c4d2dbed4381576f81a79ae97feca53c34/schedule/ir.py).
 
 **Reviewed:** 2026-10-14. See the linked project record for mechanism-specific caveats.
+
+<a id="jitengine"></a>
+
+## JITEngine / SkySynth: synthesized execution for a model and a Mac
+
+**Related project records:** [JITEngine](catalog.md#jitengine), [SkyDiscover / SkySynth](catalog.md#skydiscover).
+
+- **Why build it? / 为什么另建:** Specialize for fixed models, unified-memory budgets and SSD/GPU behavior on 24 GB M2 and 48 GB M4 Pro, including weights that exceed memory.
+- **Execution ownership / 重构边界:** JITEngine owns model execution, expert/state scheduling and serving inside six packages. SkySynth is the separate construction workflow; the reviewed installer only chooses and installs a released package.
+- **Retained components / 复用什么:** MLX/Metal, pretrained quantized checkpoints and model MTP heads are retained; Flash-Next credits FreeToken for the offload strategy. Later packages reuse earlier generated code. This is not a new model or a replacement for MLX.
+- **Scope given up / 取舍与兼容性:** Fixed model geometry and device/memory assumptions limit portability. Pack16 preserves existing quantization metadata, not original full-precision weights; optional relaxed or KV-quantized modes need separate quality contracts.
+- **Construction process / 怎样构建:** SkySynth specifies the task, plans, builds and evaluates implementations with critic/auditor feedback. Public scripts run candidate-specific tests, require reference-plus-mutant admission for non-seed tests and gate exported artifacts. JITEngine contains the resulting serving implementations and local checks.
+- **AI participation / AI 参与的直接证据:** Disclosed for JITEngine; intrinsic to SkySynth. The authors attribute the packages to agent synthesis. Available code and workflow do not independently prove that all code was autonomous or account for human steering.
+- **Disclosed effort / 构建投入:** No complete, comparable accounting of human effort, model calls, failed candidates, device time and maintenance was established. Reported decode performance is not a construction-cost measurement.
+- **Validation boundary / 验证覆盖:** Inspected Flash-Next kernel load checks, fallback/disable paths and a fixed greedy-output hash gate that also checks intended kernels engaged. Finite tests are configuration-specific; missing Metal/checkpoints can skip hardware tests. SkySynth test adequacy depends on the task. No upstream build, GPU run or synthesis run was performed.
+- **Evolution evidence / 适配与维护:** Separate package trees retain model/device contracts and shared-code provenance. New shapes, MLX versions, quantized packs and device co-residency need qualification; sustained maintenance cost is unknown.
+
+**Sources:** [Source 1](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/README.md) · [Source 2](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/install.sh) · [Source 3](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/src/jitengine_qwen3_8_flash_next_m4pro/model/model.py) · [Source 4](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/src/jitengine_qwen3_8_flash_next_m4pro/kernels/pack16.py) · [Source 5](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/src/jitengine_qwen3_8_flash_next_m4pro/kernels/selfcheck.py) · [Source 6](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/tests/e2e/test_gate.py) · [Source 7](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/DETAILS.md) · [Source 8](https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/README.md) · [Source 9](https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/workflow/scripts/run_tests.py) · [Source 10](https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/workflow/scripts/validate_test.py) · [Source 11](https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/spec/run.py) · [Source 12](https://skydiscover-ai.github.io/blog-jitengine.html).
+
+**Reviewed:** 2026-11-07. See the linked project record for mechanism-specific caveats.
 
 <a id="splash"></a>
 

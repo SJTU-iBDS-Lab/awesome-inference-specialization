@@ -92,6 +92,7 @@ Start with what is rebuilt and what effort is disclosed. Read each case for reta
 | [gr8](cases.md#gr8) | CUDA model/kernel execution, native S2 serving steps, custom RoCE collectives and optional KV block-store integration. The broader current model list is not certified by this GLM-focused inspection. | Author hardware/results are documented; total construction, compute and maintenance costs are not established. |
 | [Basalt](cases.md#basalt) | The inspected delta is the device-planned verify/expert program and integrated grouped prefill path, not the existence of CPU/GPU tiering, an API or a new model container alone. | Author hardware/results are documented; total construction, compute and maintenance costs are not established. |
 | [N3komata](cases.md#n3komata) | Pinned llama.cpp/GGML graph, expert-cache callbacks, upload APIs and Vulkan shader changes; the Python UI is not the admission basis. | Author hardware/results are documented; total construction, compute and maintenance costs are not established. |
+| [JITEngine / SkySynth](cases.md#jitengine) | JITEngine owns model execution, expert/state scheduling and serving inside six packages. SkySynth is the separate construction workflow; the reviewed installer only chooses and installs a released package. | No complete, comparable accounting of human effort, model calls, failed candidates, device time and maintenance was established. Reported decode performance is not a construction-cost measurement. |
 
 ## Library facets / 资料库的独立标签
 
@@ -212,6 +213,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [Ignis](catalog.md#ignis) · core | system / runtime / text | layout / scheduling, reduced precision, target-verified proposals, model / router training, configuration-dependent |
 | [imp](catalog.md#imp) · core | system / runtime / text, multimodal | configuration-dependent |
 | [Iris](catalog.md#iris) · core | system / runtime / image | layout / scheduling |
+| [JITEngine](catalog.md#jitengine) · core | system / runtime / text | layout / scheduling, reduced precision, target-verified proposals, configuration-dependent |
 | [Kipp](catalog.md#kipp) · core | system / runtime / text | configuration-dependent |
 | [Kog Inference Engine (KIE)](catalog.md#kie) · core · **documentation only** | system / runtime / text | layout / scheduling, model / router training |
 | [LightX2V](catalog.md#lightx2v) · core | system / runtime / image, video, audio | configuration-dependent |
@@ -275,6 +277,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 | [MetaInfer](catalog.md#metainfer) · core | construction / generator / text | generated-artifact dependent |
 | [ncu-report-skill](catalog.md#ncu-report-skill) · foundation | support / diagnostic / general | generated-artifact dependent |
 | [SEIS: Self-Evolving Inference Systems](catalog.md#seis) · core | construction / generator / text | generated-artifact dependent, reduced precision |
+| [SkyDiscover / SkySynth](catalog.md#skydiscover) · core | construction / generator / text, general | generated-artifact dependent |
 | [Sol-Engine](catalog.md#sol-engine) · core | construction / optimizer / image, video | generated-artifact dependent, configuration-dependent |
 | [TileLang](catalog.md#tilelang) · foundation | support / compiler / text, image, video, general | generated-artifact dependent |
 | [Triton](catalog.md#triton) · foundation | support / compiler / text, image, video, general | generated-artifact dependent |

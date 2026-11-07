@@ -2145,5 +2145,39 @@
       "https://github.com/nyacom/n3komata/blob/ee0fd1182f9b045922eeb52b22dc7ac51165587d/config/profiles/release.toml"
     ],
     "checked_on": "2026-11-05"
+  },
+  {
+    "id": "jitengine",
+    "title": "JITEngine / SkySynth: synthesized execution for a model and a Mac",
+    "project_ids": [
+      "jitengine",
+      "skydiscover"
+    ],
+    "summary": "Six public MLX-based engine packages expose model/device-specific kernels, residency and scheduling from a disclosed SkySynth construction workflow; installing a package is distinct from synthesizing one.",
+    "summary_cn": "SkySynth 构建流程关联六个公开的 MLX 专用引擎包，包含实际内核、驻留与调度改造；安装已生成版本不等于启动时现场合成。",
+    "motivation": "Specialize for fixed models, unified-memory budgets and SSD/GPU behavior on 24 GB M2 and 48 GB M4 Pro, including weights that exceed memory.",
+    "boundary": "JITEngine owns model execution, expert/state scheduling and serving inside six packages. SkySynth is the separate construction workflow; the reviewed installer only chooses and installs a released package.",
+    "reuse": "MLX/Metal, pretrained quantized checkpoints and model MTP heads are retained; Flash-Next credits FreeToken for the offload strategy. Later packages reuse earlier generated code. This is not a new model or a replacement for MLX.",
+    "tradeoff": "Fixed model geometry and device/memory assumptions limit portability. Pack16 preserves existing quantization metadata, not original full-precision weights; optional relaxed or KV-quantized modes need separate quality contracts.",
+    "construction": "SkySynth specifies the task, plans, builds and evaluates implementations with critic/auditor feedback. Public scripts run candidate-specific tests, require reference-plus-mutant admission for non-seed tests and gate exported artifacts. JITEngine contains the resulting serving implementations and local checks.",
+    "ai_role": "Disclosed for JITEngine; intrinsic to SkySynth. The authors attribute the packages to agent synthesis. Available code and workflow do not independently prove that all code was autonomous or account for human steering.",
+    "cost": "No complete, comparable accounting of human effort, model calls, failed candidates, device time and maintenance was established. Reported decode performance is not a construction-cost measurement.",
+    "validation": "Inspected Flash-Next kernel load checks, fallback/disable paths and a fixed greedy-output hash gate that also checks intended kernels engaged. Finite tests are configuration-specific; missing Metal/checkpoints can skip hardware tests. SkySynth test adequacy depends on the task. No upstream build, GPU run or synthesis run was performed.",
+    "maintenance": "Separate package trees retain model/device contracts and shared-code provenance. New shapes, MLX versions, quantized packs and device co-residency need qualification; sustained maintenance cost is unknown.",
+    "evidence_urls": [
+      "https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/README.md",
+      "https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/install.sh",
+      "https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/src/jitengine_qwen3_8_flash_next_m4pro/model/model.py",
+      "https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/src/jitengine_qwen3_8_flash_next_m4pro/kernels/pack16.py",
+      "https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/src/jitengine_qwen3_8_flash_next_m4pro/kernels/selfcheck.py",
+      "https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/tests/e2e/test_gate.py",
+      "https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/DETAILS.md",
+      "https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/README.md",
+      "https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/workflow/scripts/run_tests.py",
+      "https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/workflow/scripts/validate_test.py",
+      "https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/spec/run.py",
+      "https://skydiscover-ai.github.io/blog-jitengine.html"
+    ],
+    "checked_on": "2026-11-07"
   }
 ]

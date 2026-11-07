@@ -80,6 +80,7 @@ Metal 原生执行、SSD 专家流式加载与 ANE 编译是不同路线；须�
 | [Flash-MoE](catalog.md#flash-moe) | The implementation targets Qwen3.5-397B-A17B on Apple unified-memory hardware with SSD capacity far exceeding RAM and fixed model geometry. | `public-code` · 2026-10-12 · [Details / 详情](catalog.md#flash-moe) |
 | [ANEMLL](catalog.md#anemll) | Selected LLM architectures converted to CoreML for Apple Neural Engine, with size, shape, context and quantization restrictions. | `public-code` · 2026-10-12 · [Details / 详情](catalog.md#anemll) |
 | [ane.cpp](catalog.md#ane-cpp) | Dense Qwen3/Qwen3.5 text inference through private ANE APIs, with M3 Max-specific empirical constraints. | `public-code` · 2026-10-12 · [Details / 详情](catalog.md#ane-cpp) |
+| [JITEngine](catalog.md#jitengine) | Six MLX-based packages for Qwen3.6-35B-A3B, Qwen3.8-Flash-Next and Flint, tuned for 24 GB M2 or 48 GB M4 Pro Macs; model, weight format and memory contracts differ. | `public-code` · 2026-11-07 · [Details / 详情](catalog.md#jitengine) |
 
 [↑ By hardware / 按硬件](#hardware)
 
@@ -166,6 +167,7 @@ Selected Qwen3.8-Flash-Next paths across devices. Formats, reduced precision, ca
 | [Ignis](catalog.md#ignis) | Single SM120a Blackwell GPU (RTX 5090 / RTX PRO 6000), selected Qwen3.8-27B NVFP4 and Flash-Next MoE text paths; image/vision features are advertised but not audited here. | `public-code` · 2026-10-23 · [Details / 详情](catalog.md#ignis) |
 | [Basalt](catalog.md#basalt) | Qwen3.8-Flash-Next on Linux/Windows x64 with NVIDIA Blackwell sm_120 and CPU RAM; optional peer GPU tier. Text expert/verify and NVFP4 prefill paths inspected; vision not qualified here. | `public-code` · 2026-11-05 · [Details / 详情](catalog.md#basalt) |
 | [N3komata](catalog.md#n3komata) | AMD BC-250, 16 GiB unified memory, Linux/Mesa RADV Vulkan and SSD-backed Qwen3.8-Flash-Next IQ3_XXS GGUF shards. | `public-code` · 2026-11-05 · [Details / 详情](catalog.md#n3komata) |
+| [JITEngine](catalog.md#jitengine) | Six MLX-based packages for Qwen3.6-35B-A3B, Qwen3.8-Flash-Next and Flint, tuned for 24 GB M2 or 48 GB M4 Pro Macs; model, weight format and memory contracts differ. | `public-code` · 2026-11-07 · [Details / 详情](catalog.md#jitengine) |
 
 [↑ By model / 按模型](#models)
 
@@ -187,6 +189,7 @@ Selected dense and hybrid-MoE checkpoints; family names do not imply interchange
 | [llamAmpere](catalog.md#llamampere) | Qwen3.8-27B with an MTP head, primarily single-stream inference on Ampere RTX 3090/3090 Ti, where verification width and long-context state compete for compute and VRAM. | `public-code` · 2026-10-12 · [Details / 详情](catalog.md#llamampere) |
 | [Mach X](catalog.md#machx) | Intel Arc, built/tuned on Arc Pro B70; inspected Qwen 27B and 35B-A3B text decode paths. Other advertised architectures and video are outside this focused review. | `public-code` · 2026-10-23 · [Details / 详情](catalog.md#machx) |
 | [Ignis](catalog.md#ignis) | Single SM120a Blackwell GPU (RTX 5090 / RTX PRO 6000), selected Qwen3.8-27B NVFP4 and Flash-Next MoE text paths; image/vision features are advertised but not audited here. | `public-code` · 2026-10-23 · [Details / 详情](catalog.md#ignis) |
+| [JITEngine](catalog.md#jitengine) | Six MLX-based packages for Qwen3.6-35B-A3B, Qwen3.8-Flash-Next and Flint, tuned for 24 GB M2 or 48 GB M4 Pro Macs; model, weight format and memory contracts differ. | `public-code` · 2026-11-07 · [Details / 详情](catalog.md#jitengine) |
 
 [↑ By model / 按模型](#models)
 

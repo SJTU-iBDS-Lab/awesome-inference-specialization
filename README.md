@@ -20,7 +20,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 <!-- CATALOG-START -->
 
 <p align="center">
-<sub>140 projects · 105 engines · 14 build workflows · 3 benchmarks · 18 resources</sub>
+<sub>142 projects · 106 engines · 15 build workflows · 3 benchmarks · 18 resources</sub>
 </p>
 
 <div align="center">
@@ -42,7 +42,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 <sub>Scope follows the reviewed model, device and configuration; no compatibility certification or speed ranking.</sub>
 <!-- DISCOVERY-END -->
 
-<sub title="Catalog addition dates, not project release dates"><b>Recently added</b> · 2026-11-03–2026-11-05 · [gr8](#project-gr8) · [Basalt](#project-basalt) · [N3komata](#project-n3komata) · [Strixite](#project-strixite) · [Spark Engine](#project-spark-engine) · [Updates](docs/updates.md)</sub>
+<sub title="Catalog addition dates, not project release dates"><b>Recently added</b> · 2026-11-05–2026-11-07 · [JITEngine](#project-jitengine) · [SkyDiscover / SkySynth](#project-skydiscover) · [gr8](#project-gr8) · [Basalt](#project-basalt) · [N3komata](#project-n3komata) · [Updates](docs/updates.md)</sub>
 
 <a id="featured-reading"></a>
 <a id="start-here"></a>
@@ -107,13 +107,13 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 
 ## Inference engines
 
-<sub>All projects expanded; names link upstream. [Execution boundaries](docs/systems.md#system) · [Overlapping domains](docs/domains.md) · [★ Repository star snapshots · 2026-10-14–2026-11-05](docs/homepage-metadata.md)</sub>
+<sub>All projects expanded; names link upstream. [Execution boundaries](docs/systems.md#system) · [Overlapping domains](docs/domains.md) · [★ Repository star snapshots · 2026-10-14–2026-11-07](docs/homepage-metadata.md)</sub>
 
 > **Evidence:** Source-reviewed descriptions; performance has not been independently reproduced here. Model changes and material limits remain in each summary. [Reading the evidence](docs/evidence-policy.md).
 
 <a id="homepage-system-text"></a>
 
-### Language models <sub>· 63</sub>
+### Language models <sub>· 64</sub>
 
 - <a id="project-ane-lm"></a>**[ANE-LM](https://github.com/johnmai-dev/ANE-LM)** <sub title="johnmai-dev/ANE-LM: 144 repository stars; observed 2026-10-14">★&nbsp;144</sub> — A direct predecessor to ane.cpp, connecting Qwen ANE kernels and CPU operations through a compile cache; constrained by private interfaces and limited model coverage. <sub>[Details](docs/catalog.md#ane-lm)</sub>
 - <a id="project-ane-cpp"></a>**[ane.cpp](https://github.com/skyfallsin/ane.cpp)** <sub title="skyfallsin/ane.cpp: 6 repository stars; observed 2026-10-14">★&nbsp;6</sub> — Compiles Qwen convolution programs for ANE while the CPU handles normalization, attention and KV state, informed by hardware probes and kept/discarded experiments. <sub>[Details](docs/catalog.md#ane-cpp)</sub>
@@ -143,6 +143,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 - <a id="project-ik-llama"></a>**[ik_llama.cpp](https://github.com/ikawrakow/ik_llama.cpp)** <sub title="ikawrakow/ik_llama.cpp: 3,300 repository stars; observed 2026-10-14">★&nbsp;3.3k</sub> — A deep llama.cpp fork extending packed formats, CPU IQK kernels and CUDA dispatch while retaining general-engine compatibility. <sub>[Details](docs/catalog.md#ik-llama)</sub>
 - <a id="project-imp"></a>**[imp](https://github.com/kekzl/imp)** <sub title="kekzl/imp: 44 repository stars; observed 2026-10-14">★&nbsp;44</sub> — A C++/CUDA engine for RTX 5090-class devices, owning model execution, paged KV, graph scheduling and serving. The author explicitly discloses end-to-end coding-agent implementation. <sub>Multimodal · [Details](docs/catalog.md#imp)</sub>
 - <a id="project-infernix"></a>**[Infernix](https://github.com/wallawalla47/infernix)** <sub title="Wallawalla47/Infernix: 111 repository stars; observed 2026-10-14">★&nbsp;111</sub> — An explicitly AI-assisted NInfer fork combining GPU hot-expert caching, CPU miss computation, overlapped PCIe transfers and NVMe storage. <sub>Multimodal · [Details](docs/catalog.md#infernix)</sub>
+- <a id="project-jitengine"></a>**[JITEngine](https://github.com/skydiscover-ai/jitengine)** <sub title="skydiscover-ai/jitengine: 36 repository stars; observed 2026-11-07">★&nbsp;36 · [Blog](https://skydiscover-ai.github.io/blog-jitengine.html)</sub> — SkySynth-generated MLX engines for selected models and Macs, with custom Metal kernels, expert-cache repair and persistent decode. Installation selects released builds; exactness is relative to quantized references, with optional relaxed modes. <sub>[Details](docs/catalog.md#jitengine)</sub>
 - <a id="project-kipp"></a>**[Kipp](https://github.com/Polished-Snow/Kipp)** <sub title="Polished-Snow/Kipp: 1 repository stars; observed 2026-10-14">★&nbsp;1</sub> — A C11 stack owning strict checkpoint loading, tokenization, model execution, paged KV and batched serving through isolated Metal/CUDA backends. <sub>[Details](docs/catalog.md#kipp)</sub>
 - <a id="project-kie"></a>**[Kog Inference Engine (KIE)](https://blog.kog.ai/building-a-single-kernel-latency-optimized-llm-inference-engine-on-amd-mi300x-gpus/)** <sub title="Reviewed sources">[Blog](https://blog.kog.ai/real-time-llm-inference-on-standard-gpus-3-000-tokens-s-per-request/)</sub> — A vendor-described monokernel combining execution, weight streaming and multi-GPU communication. The eight-MI300X FP16 preview uses Laneformer/DTP model changes; public engine source is unestablished. <sub>[Details](docs/catalog.md#kie)</sub>
 - <a id="project-ktransformers"></a>**[KTransformers / kt-kernel](https://github.com/kvcache-ai/ktransformers)** <sub title="kvcache-ai/ktransformers: 19,604 repository stars; observed 2026-10-14">★&nbsp;19.6k</sub> — A heterogeneous MoE backend that uses ISA-specific CPU kernels and NUMA placement for memory-heavy experts while retaining shared GPU serving infrastructure. <sub>[Details](docs/catalog.md#ktransformers)</sub>
@@ -287,13 +288,14 @@ Emits composed forward programs, compiled model packages or executable graphs; h
 
 <a id="homepage-construction-stacks"></a>
 
-### Runtime construction and integrated optimization (5)
+### Runtime construction and integrated optimization (6)
 
 Builds a server or integrates changes into a model runtime. Kernel generation, configuration search and whole-engine construction are distinct scopes.
 
 - <a id="project-agentcompile"></a>**[AgentCompile](https://github.com/veneno1213822/AgentCompile)** <sub title="veneno1213822/AgentCompile: 7 repository stars; observed 2026-10-14">★&nbsp;7</sub> — Uses an LLM to select bounded CUDA templates and generate fused kernels for a runtime. Reviewed generic verification/timing paths contain skipped checks and placeholders. <sub>Language · Image · [Details](docs/catalog.md#agentcompile)</sub>
 - <a id="project-metainfer"></a>**[MetaInfer](https://github.com/MetaInfer/MetaInfer)** <sub title="HuangPuStar/MetaInfer: 113 repository stars; observed 2026-10-14">★&nbsp;113 · [Paper](https://arxiv.org/abs/2607.12875) · [Case report](https://www.baseten.co/blog/agentic-inference-optimization-faster-than-sota/)</sub> — Orchestrates coding agents to construct deployment-specific servers and checks fixed correctness/performance contracts, connecting to VibeQwen. Finite prompt checks do not establish numerical equivalence. <sub>Language · [Details](docs/catalog.md#metainfer)</sub>
 - <a id="project-seis"></a>**[SEIS: Self-Evolving Inference Systems](https://github.com/smth-fun/self-evolving-inference-system)** <sub title="smth-fun/self-evolving-inference-system: 0 repository stars; observed 2026-10-14">★&nbsp;0 · [Paper](https://arxiv.org/html/2610.04646v1) · [Blog](https://github.com/smth-fun/self-evolving-inference-system/blob/bf2ddc5c5882a2573756b744c0e88c1b154739fa/posts/post-2-evolve.md)</sub> — A fixed coding agent repeatedly refactors mini-sglang through inherited code and reports, coordinating kernels, runtime and decoding. Quantization changes numerics; the H100 paper results and the public ten-trial Blackwell example are distinct artifacts. <sub>Language · [Details](docs/catalog.md#seis)</sub>
+- <a id="project-skydiscover"></a>**[SkyDiscover / SkySynth](https://github.com/skydiscover-ai/skydiscover)** <sub title="skydiscover-ai/skydiscover: 752 repository stars; observed 2026-11-07">★&nbsp;752 · [Blog](https://skydiscover-ai.github.io/blog-skysynth.html)</sub> — SkySynth constructs specialized systems through specification, implementation and evaluator/auditor loops, linked here to JITEngine. Executable gates depend on task-defined tests; its separate proof mode does not certify these LLM engines. <sub>Language · General · [Details](docs/catalog.md#skydiscover)</sub>
 - <a id="project-sol-engine"></a>**[Sol-Engine](https://github.com/NVlabs/Sana/tree/sol-engine)** <sub title="NVlabs/Sana: 9,293 repository stars; observed 2026-10-14">★&nbsp;9.3k&nbsp;(parent repo)</sub> — An agent-guided video optimization workflow integrating model-specific fusion, state reuse, approximate caches and sparse attention with visual checks; each change needs separate validation and attribution. <sub>Image · Video · [Details](docs/catalog.md#sol-engine)</sub>
 - <a id="project-vibesys"></a>**[VibeServe / VibeSys](https://github.com/uw-syfi/vibesys)** <sub title="uw-syfi/vibesys: 114 repository stars; observed 2026-10-14">★&nbsp;114 · [Paper](https://arxiv.org/html/2605.06068v1) · [Blog](https://syfi.cs.washington.edu/blog/2026-05-12-introducing-vibeserve/)</sub> — An agent framework for model-, hardware- and workload-specific serving stacks, with design search, implementation and framework-owned evaluation. The VibeServe paper and current VibeSys code are different revisions; generated systems remain scenario- and contract-specific. <sub>Language · Audio · Multimodal · [Details](docs/catalog.md#vibesys)</sub>
 

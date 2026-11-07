@@ -177,7 +177,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Language models / 语言模型
 
-79 core/adjacent entries; 17 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+81 core/adjacent entries; 17 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
@@ -203,6 +203,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [Ignis](catalog.md#ignis) | core | Single SM120a Blackwell GPU (RTX 5090 / RTX PRO 6000), selected Qwen3.8-27B NVFP4 and Flash-Next MoE text paths; image/vision features are advertised but not audited here. |
 | [imp](catalog.md#imp) | core | A single RTX 5090-class sm_120a target and local agent workloads motivate native FP4 arithmetic, memory planning and low-overhead concurrent serving. |
 | [Infernix](catalog.md#infernix) | core | Qwen Flash-Next experts and n-gram embeddings exceed a single RTX 5090’s memory, while local agent sessions demand prefix reuse and bounded concurrency. |
+| [JITEngine](catalog.md#jitengine) | core | Six MLX-based packages for Qwen3.6-35B-A3B, Qwen3.8-Flash-Next and Flint, tuned for 24 GB M2 or 48 GB M4 Pro Macs; model, weight format and memory contracts differ. |
 | [Kipp](catalog.md#kipp) | core | A pinned Qwen3 checkpoint registry and small native runtime motivate explicit model contracts and hardware-checked CPU/Metal/CUDA paths. |
 | [Kog Inference Engine (KIE)](catalog.md#kie) | core | The reviewed low-latency preview uses an FP16 approximately 2B Laneformer model, batch one and eight AMD MI300X GPUs; the companion announcement also reports an eight-H200 configuration. |
 | [KTransformers / kt-kernel](catalog.md#ktransformers) | core | CPU AMX/AVX capabilities, NUMA topology, GPU memory and expert precision constrain the heterogeneous placement and execution backend. |
@@ -224,6 +225,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [Qwenox](catalog.md#qwenox) | core | Qwen3.8-Flash-Next on AMD Ryzen AI Max+ 395 / gfx1151 with 128 GB unified memory; Linux and Windows. Text execution reviewed; advertised vision paths not audited. |
 | [Saragossa](catalog.md#saragossa) | core | Single-user local latency on Apple Silicon for selected text and speech architectures with MLX affine integer weights. |
 | [SEIS: Self-Evolving Inference Systems](catalog.md#seis) | core | The paper centers on Qwen3-0.6B on one H100 with single-request greedy decoding, with supplementary Llama-3.2-1B experiments. The linked public ten-trial example uses RTX PRO 6000 Blackwell and is a separate configuration. |
+| [SkyDiscover / SkySynth](catalog.md#skydiscover) | core | Task-specified systems construction, linked here to JITEngine on Apple Silicon; the separate inference-engine example specifies Qwen3-4B/BF16 on one NVIDIA L4 with a branching workload. |
 | [Spark Engine](catalog.md#spark-engine) | core | NVIDIA DGX Spark / GB10 sm_121, Linux aarch64. Qwen3.8-Flash-Next text path on one node and N-way RDMA substrate inspected; GLM/DeepSeek multi-node and vision paths are advertised but not fully audited here. |
 | [Splash](catalog.md#splash) | core | Selected Qwen3.8-27B and Qwen3.6-35B-A3B checkpoints, plus compatible Ternary Bonsai 2, on Apple M3 or newer and macOS 26.4+; text and vision. |
 | [Strata](catalog.md#strata) | core | The Qwen3.8-Flash-Next model family, supported quantized layouts, consumer GPU VRAM and CPU memory/bandwidth define expert residency and transfer-versus-compute choices. |
@@ -272,10 +274,11 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Cross-domain infrastructure / 跨模态基础设施
 
-4 core/adjacent entries; 9 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+5 core/adjacent entries; 9 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
+| [SkyDiscover / SkySynth](catalog.md#skydiscover) | core | Task-specified systems construction, linked here to JITEngine on Apple Silicon; the separate inference-engine example specifies Qwen3-4B/BF16 on one NVIDIA L4 with a branching workload. |
 | [AKG Agents](catalog.md#akg-agents) | adjacent | Target backend/DSL, device architecture, reference framework, precision tolerance and concurrent-search budget constrain generated operators. |
 | [Atrex Kernel Agent (AKA)](catalog.md#atrex-kernel-agent) | adjacent | Evaluator-owned GPU operator tasks, target DSL/device and fixed optimization budgets constrain candidate search and acceptance. |
 | [KernelAgent](catalog.md#kernelagent) | adjacent | Traceable workload structure, target GPU, shape signatures, reference tensors and search/refinement budgets constrain synthesized code. |

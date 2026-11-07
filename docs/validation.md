@@ -78,6 +78,15 @@ These are methods inside existing engine records, not additional validation-tool
 
 以上测试均仅审阅源码、未在本次执行。相同量化舍入下的内核一致性、有限样本质量与缓存状态恢复是不同验收合同；不能合并成整栈无损或性能已验证结论。
 
+## Generated Mac engines and synthesis gates — 2026-11-07
+
+[JITEngine / SkySynth](cases.md#jitengine) adds two linked validation boundaries; the [pinned review](source-review-2026-11-07.md) traces their integration.
+
+- **Engine loading and output:** Flash-Next M4 Pro [kernel self-checks](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/src/jitengine_qwen3_8_flash_next_m4pro/kernels/selfcheck.py) use finite model-specific reference comparisons and control kernel fallback/disable paths. The [end-to-end gate](https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/tests/e2e/test_gate.py) combines a configurable fixed greedy text hash over three repeats with checks that intended paths engaged. Its speed floor is optional; missing Metal/checkpoints can skip hardware tests. Exactness concerns the stated quantized reference, not full-precision weights or every serving mode.
+- **Construction-loop integrity:** SkySynth's [test-admission script](https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/workflow/scripts/validate_test.py) requires ordinary new tests to pass a reference and catch a mutant; timeouts do not count as a catch and seed tests have an exception. [The runner](https://github.com/skydiscover-ai/skydiscover/blob/0d932b690670a7e544388ad362e9876c8bd256a0/skydiscover/synthesize/workflow/scripts/run_tests.py) distinguishes failure from unavailable/incomplete checks, with optional release gates. Task-defined tests remain the oracle; the separate formal-proof path does not certify JITEngine.
+
+本轮仅检查源码，未运行上述门禁。加载自检、有限输出回归、候选审计与形式化证明是不同证据；测试框架的存在不等于所有模型、设备和状态轨迹已经通过验证。
+
 ## Efficient validation: an open research question
 
 Automation alone does not establish efficiency. A useful report accounts for candidate compilation, reference runs, device time, judge calls, human review and failed attempts. It must also state what coverage was reduced to save that cost.

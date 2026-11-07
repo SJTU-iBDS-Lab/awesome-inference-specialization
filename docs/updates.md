@@ -2,6 +2,15 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Quick comparison](representative-comparison.md) · [Contributing](../CONTRIBUTING.md)
 
+## 2026-11-07 — Synthesized Mac engines and executable construction gates / 合成的 Mac 引擎与可执行构建门禁
+
+- Added [JITEngine](catalog.md#jitengine) and [SkyDiscover / SkySynth](catalog.md#skydiscover), with one [workflow/output case](cases.md#jitengine): **142 projects and 83 cases**. Six engine packages remain one repository record; SkySynth is part of SkyDiscover.
+- The [pinned source review](source-review-2026-11-07.md) traces Flash-Next Metal expert execution, cache correction, lookahead rollback and compact quantization metadata, with bounded scheduling/persistent-kernel checks in other packages. MLX, inherited offload strategy and quantized checkpoints are explicitly credited.
+- Clarified that the installer chooses released builds. The 2.72× claim uses author-reported 32.9 versus 12.1 tok/s on M4 Pro at a 40 GB budget, with the slotstream 0.2.11 baseline from an earlier session. Optional relaxed profiles and quantized-reference exactness are separated; no upstream build, GPU benchmark or synthesis run was performed.
+- Recorded SkySynth's task-dependent test admission, runner and artifact gates, distinguishing its separate evolutionary and formal-proof paths. Updated bilingual entries, construction grouping, Apple/Qwen discovery, validation evidence, recent additions and generated views. Prior records/cases/dates and homepage layout are preserved; only the two new star observations were added.
+
+新增条目依据实际执行和构建实现，不以速度宣传代替技术核查。保留模型／设备边界、上游复用与验证缺口；“已生成版本安装”“运行时内核编译”和“系统合成”分别表述。
+
 ## 2026-11-05 — Hardware/model discovery and concise homepages / 硬件模型入口与首页精简
 
 - Added a compact hardware/model finder near the top of both homepages and a [generated scope guide](find-a-stack.md) with 13 curated routes. Existing project IDs, canonical target scope, source visibility and review dates remain the authority; overlapping routes add no records or compatibility claims.

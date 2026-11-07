@@ -2,6 +2,8 @@
   "schema_version": 1,
   "parent_repository_ids": ["zero-inference", "akg-agents"],
   "links": {
+    "jitengine": [{"kind": "blog", "url": "https://skydiscover-ai.github.io/blog-jitengine.html", "provenance": "catalog"}],
+    "skydiscover": [{"kind": "blog", "url": "https://skydiscover-ai.github.io/blog-skysynth.html", "provenance": "catalog"}],
     "xdit": [{"kind": "paper", "url": "https://arxiv.org/abs/2411.01738", "provenance": "reading-list"}],
     "metainfer": [
       {"kind": "paper", "url": "https://arxiv.org/abs/2607.12875", "provenance": "reading-list"},
@@ -25,6 +27,8 @@
     "dinfer": [{"kind": "paper", "url": "https://arxiv.org/abs/2510.08666", "provenance": "catalog"}]
   },
   "recent": [
+    {"id": "jitengine", "added_on": "2026-11-07", "label": "JITEngine"},
+    {"id": "skydiscover", "added_on": "2026-11-07", "label": "SkyDiscover / SkySynth"},
     {"id": "gr8", "added_on": "2026-11-05", "label": "gr8"},
     {"id": "basalt", "added_on": "2026-11-05", "label": "Basalt"},
     {"id": "n3komata", "added_on": "2026-11-05", "label": "N3komata"},

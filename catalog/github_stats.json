@@ -1226,6 +1226,22 @@
       "fetched_on": "2026-11-05",
       "last_attempt_on": "2026-11-05",
       "status": "ok"
+    },
+    "skydiscover-ai/jitengine": {
+      "fetched_on": "2026-11-07",
+      "full_name": "skydiscover-ai/jitengine",
+      "last_attempt_on": "2026-11-07",
+      "repository_id": 1432541750,
+      "stars": 36,
+      "status": "ok"
+    },
+    "skydiscover-ai/skydiscover": {
+      "fetched_on": "2026-11-07",
+      "full_name": "skydiscover-ai/skydiscover",
+      "last_attempt_on": "2026-11-07",
+      "repository_id": 1160689201,
+      "stars": 752,
+      "status": "ok"
     }
   },
   "schema_version": 1

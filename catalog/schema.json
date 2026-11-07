@@ -322,7 +322,8 @@
         "magnitude",
         "seis",
         "vibeserve",
-        "automegakernel"
+        "automegakernel",
+        "jitengine"
       ]
     },
     {
@@ -481,6 +482,11 @@
       "id": "automegakernel",
       "output": "Checked model-forward program; not a complete serving engine",
       "output_cn": "带检查的模型前向程序；不是完整服务引擎"
+    },
+    {
+      "id": "skydiscover",
+      "output": "SkySynth system synthesis; public JITEngine packages are linked outputs",
+      "output_cn": "SkySynth 系统合成；关联公开 JITEngine 引擎包"
     }
   ],
   "benchmark_entries": [

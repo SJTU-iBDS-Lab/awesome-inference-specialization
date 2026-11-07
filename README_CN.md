@@ -20,7 +20,7 @@
 <!-- CATALOG-START -->
 
 <p align="center">
-<sub>140 个项目 · 105 个引擎 · 14 个构建流程 · 3 个基准 · 18 项资源</sub>
+<sub>142 个项目 · 106 个引擎 · 15 个构建流程 · 3 个基准 · 18 项资源</sub>
 </p>
 
 <div align="center">
@@ -42,7 +42,7 @@
 <sub>范围以已查模型、设备和配置为准；不代表兼容性认证或性能排名。</sub>
 <!-- DISCOVERY-END -->
 
-<sub title="目录收录日期，不是项目发布日期"><b>近期收录</b> · 2026-11-03–2026-11-05 · [gr8](#project-gr8) · [Basalt](#project-basalt) · [N3komata](#project-n3komata) · [Strixite](#project-strixite) · [Spark Engine](#project-spark-engine) · [更新记录](docs/updates.md)</sub>
+<sub title="目录收录日期，不是项目发布日期"><b>近期收录</b> · 2026-11-05–2026-11-07 · [JITEngine](#project-jitengine) · [SkyDiscover / SkySynth](#project-skydiscover) · [gr8](#project-gr8) · [Basalt](#project-basalt) · [N3komata](#project-n3komata) · [更新记录](docs/updates.md)</sub>
 
 <a id="featured-reading"></a>
 <a id="start-here"></a>
@@ -107,13 +107,13 @@
 
 ## 推理引擎
 
-<sub>全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md) · [★ 仓库 Star 快照 · 2026-10-14–2026-11-05](docs/homepage-metadata.md)</sub>
+<sub>全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md) · [★ 仓库 Star 快照 · 2026-10-14–2026-11-07](docs/homepage-metadata.md)</sub>
 
 > **证据说明：** 描述依据来源核查，性能未在本仓库独立复现。模型改动与重要限制仍随条目列出。[如何阅读证据](docs/evidence-policy.md)。
 
 <a id="homepage-system-text"></a>
 
-### 语言模型 <sub>· 63</sub>
+### 语言模型 <sub>· 64</sub>
 
 - <a id="project-ane-lm"></a>**[ANE-LM](https://github.com/johnmai-dev/ANE-LM)** <sub title="johnmai-dev/ANE-LM: 144 repository stars; observed 2026-10-14">★&nbsp;144</sub> — 作为 ane.cpp 的直接前身，以编译缓存连接 Qwen 的 ANE 内核与 CPU 运算，保留私有接口和有限模型范围的约束。 <sub>[详情](docs/catalog.md#ane-lm)</sub>
 - <a id="project-ane-cpp"></a>**[ane.cpp](https://github.com/skyfallsin/ane.cpp)** <sub title="skyfallsin/ane.cpp: 6 repository stars; observed 2026-10-14">★&nbsp;6</sub> — 通过硬件探针和保留／舍弃实验，将 Qwen 卷积编译到 ANE，并由 CPU 处理归一化、注意力与 KV 状态。 <sub>[详情](docs/catalog.md#ane-cpp)</sub>
@@ -143,6 +143,7 @@
 - <a id="project-ik-llama"></a>**[ik_llama.cpp](https://github.com/ikawrakow/ik_llama.cpp)** <sub title="ikawrakow/ik_llama.cpp: 3,300 repository stars; observed 2026-10-14">★&nbsp;3.3k</sub> — 在 llama.cpp 分支中扩展压缩量化格式、CPU IQK 内核和 CUDA 分派，展示保留通用引擎兼容性与专用执行的取舍。 <sub>[详情](docs/catalog.md#ik-llama)</sub>
 - <a id="project-imp"></a>**[imp](https://github.com/kekzl/imp)** <sub title="kekzl/imp: 44 repository stars; observed 2026-10-14">★&nbsp;44</sub> — 面向 RTX 5090 级设备重建 C++/CUDA 模型执行、分页 KV、图调度与服务，作者明确披露由编程代理端到端实现。 <sub>多模态 · [详情](docs/catalog.md#imp)</sub>
 - <a id="project-infernix"></a>**[Infernix](https://github.com/wallawalla47/infernix)** <sub title="Wallawalla47/Infernix: 111 repository stars; observed 2026-10-14">★&nbsp;111</sub> — 在 NInfer 分支中组合 GPU 热专家缓存、CPU 缺失专家计算、PCIe 重叠传输及 NVMe 存储，作者披露 AI 辅助开发。 <sub>多模态 · [详情](docs/catalog.md#infernix)</sub>
+- <a id="project-jitengine"></a>**[JITEngine](https://github.com/skydiscover-ai/jitengine)** <sub title="skydiscover-ai/jitengine: 36 repository stars; observed 2026-11-07">★&nbsp;36 · [博客](https://skydiscover-ai.github.io/blog-jitengine.html)</sub> — SkySynth 生成的指定模型／Mac 专用 MLX 引擎，含 Metal 内核、专家缓存修复与常驻解码。安装时选择已发布版本；精确性以量化参考为界，可选宽松模式会改输出。 <sub>[详情](docs/catalog.md#jitengine)</sub>
 - <a id="project-kipp"></a>**[Kipp](https://github.com/Polished-Snow/Kipp)** <sub title="Polished-Snow/Kipp: 1 repository stars; observed 2026-10-14">★&nbsp;1</sub> — 以 C11 重建严格检查点加载、分词、模型执行、分页 KV 与批处理服务，通过隔离的 Metal/CUDA 后端维持模型契约。 <sub>[详情](docs/catalog.md#kipp)</sub>
 - <a id="project-kie"></a>**[Kog Inference Engine (KIE)](https://blog.kog.ai/building-a-single-kernel-latency-optimized-llm-inference-engine-on-amd-mi300x-gpus/)** <sub title="已核实来源">[博客](https://blog.kog.ai/real-time-llm-inference-on-standard-gpus-3-000-tokens-s-per-request/)</sub> — 厂商披露的持久单内核，结合执行、权重流式读取与多卡通信。八张 MI300X 的 FP16 预览使用 Laneformer/DTP 模型改动，未确认引擎源码公开。 <sub>[详情](docs/catalog.md#kie)</sub>
 - <a id="project-ktransformers"></a>**[KTransformers / kt-kernel](https://github.com/kvcache-ai/ktransformers)** <sub title="kvcache-ai/ktransformers: 19,604 repository stars; observed 2026-10-14">★&nbsp;19.6k</sub> — 以 CPU 指令集专用内核和 NUMA 布局执行内存密集型 MoE 专家，并复用 GPU 服务设施，展示异构后端的重构边界。 <sub>[详情](docs/catalog.md#ktransformers)</sub>
@@ -287,13 +288,14 @@
 
 <a id="homepage-construction-stacks"></a>
 
-### 运行时构建与集成优化 (5)
+### 运行时构建与集成优化 (6)
 
 构建服务或将优化集成到模型运行时；需区分内核生成、配置搜索与完整引擎构建。
 
 - <a id="project-agentcompile"></a>**[AgentCompile](https://github.com/veneno1213822/AgentCompile)** <sub title="veneno1213822/AgentCompile: 7 repository stars; observed 2026-10-14">★&nbsp;7</sub> — 用 LLM 筛选有界 CUDA 模板候选并生成融合内核，连接到推理运行时；已审查通用验证与计时代码含跳过检查及占位项。 <sub>语言 · 图像 · [详情](docs/catalog.md#agentcompile)</sub>
 - <a id="project-metainfer"></a>**[MetaInfer](https://github.com/MetaInfer/MetaInfer)** <sub title="HuangPuStar/MetaInfer: 113 repository stars; observed 2026-10-14">★&nbsp;113 · [论文](https://arxiv.org/abs/2607.12875) · [案例报告](https://www.baseten.co/blog/agentic-inference-optimization-faster-than-sota/)</sub> — 编排编程智能体迭代构建部署专用推理服务，并以固定契约检查正确性和性能，连接 VibeQwen 案例；有限提示验证不等于数值等价。 <sub>语言 · [详情](docs/catalog.md#metainfer)</sub>
 - <a id="project-seis"></a>**[SEIS: Self-Evolving Inference Systems](https://github.com/smth-fun/self-evolving-inference-system)** <sub title="smth-fun/self-evolving-inference-system: 0 repository stars; observed 2026-10-14">★&nbsp;0 · [论文](https://arxiv.org/html/2610.04646v1) · [博客](https://github.com/smth-fun/self-evolving-inference-system/blob/bf2ddc5c5882a2573756b744c0e88c1b154739fa/posts/post-2-evolve.md)</sub> — 固定编程 Agent，通过继承代码与报告持续改造 mini-sglang，联动优化内核、运行时与解码。量化改变数值；H100 论文结果与公开十轮 Blackwell 示例是不同实验产物。 <sub>语言 · [详情](docs/catalog.md#seis)</sub>
+- <a id="project-skydiscover"></a>**[SkyDiscover / SkySynth](https://github.com/skydiscover-ai/skydiscover)** <sub title="skydiscover-ai/skydiscover: 752 repository stars; observed 2026-11-07">★&nbsp;752 · [博客](https://skydiscover-ai.github.io/blog-skysynth.html)</sub> — SkySynth 以规格、实现、评测／审计循环构建专用系统，关联 JITEngine 产物。可执行门禁依赖具体任务的测试；独立的形式化证明模式不代表这些 LLM 引擎已获证明。 <sub>语言 · 通用 · [详情](docs/catalog.md#skydiscover)</sub>
 - <a id="project-sol-engine"></a>**[Sol-Engine](https://github.com/NVlabs/Sana/tree/sol-engine)** <sub title="NVlabs/Sana: 9,293 repository stars; observed 2026-10-14">★&nbsp;9.3k（母仓库）</sub> — 以智能体引导配置与视觉检查整合模型专用视频执行补丁，包含融合、状态复用及近似缓存和稀疏注意力，各类改变需分别验证归因。 <sub>图像 · 视频 · [详情](docs/catalog.md#sol-engine)</sub>
 - <a id="project-vibesys"></a>**[VibeServe / VibeSys](https://github.com/uw-syfi/vibesys)** <sub title="uw-syfi/vibesys: 114 repository stars; observed 2026-10-14">★&nbsp;114 · [论文](https://arxiv.org/html/2605.06068v1) · [博客](https://syfi.cs.washington.edu/blog/2026-05-12-introducing-vibeserve/)</sub> — 通过设计搜索、实现与框架侧评测，按模型、硬件和负载构建专用服务栈。VibeServe 论文与现行 VibeSys 代码版本不同；产物的支持范围由具体场景和验收契约限定。 <sub>语言 · 音频 · 多模态 · [详情](docs/catalog.md#vibesys)</sub>
 

@@ -87,3 +87,7 @@ Reviewed revision: `83e73eb94051dc67431829d0f3d3eb67db0b8e9b`.
 ## Follow-up source inspection — 2026-11-05
 
 [Cluster, Blackwell and BC-250 review](source-review-2026-11-05.md) adds gr8, Basalt and N3komata after tracing kernel/runtime or patch integration. It records upstream reuse, quantitative test contracts, default approximation and unmeasured release combinations. No GPU/build reproduction was performed; historical findings and review dates are preserved.
+
+## Follow-up source inspection — 2026-11-07
+
+[JITEngine and SkyDiscover / SkySynth review](source-review-2026-11-07.md) links generated model/Mac-specific execution packages to their construction framework. It traces kernels, residency/state repair, task-dependent validation gates and the historical baseline behind the reported maximum speedup. No hardware or synthesis run was performed; older findings and review dates are unchanged.
