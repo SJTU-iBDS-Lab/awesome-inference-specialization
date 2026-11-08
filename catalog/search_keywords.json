@@ -1,0 +1,635 @@
+{
+  "schema_version": 1,
+  "updated_on": "2026-11-08",
+  "purpose": "Repeatable discovery of specialized inference systems and their construction/validation methods; search vocabulary is not admission evidence.",
+  "purpose_cn": "维护可复用的发现词表和查询模板；命中不等于收录，不更新既有项目核查日期。",
+  "keyword_groups": [
+    {
+      "id": "engine-identity",
+      "label": "Specialized engine identity",
+      "label_cn": "专用引擎定位",
+      "terms": [
+        "specialized inference",
+        "specialised inference",
+        "model-specific inference",
+        "hardware-specific inference",
+        "workload-specific inference",
+        "bespoke inference",
+        "custom inference engine",
+        "native inference engine",
+        "single-model runtime",
+        "fixed-shape execution"
+      ],
+      "catalog_examples": [
+        "jitengine",
+        "lily",
+        "machx"
+      ],
+      "note_cn": "定位词只用于召回；专用性需要执行路径支持。"
+    },
+    {
+      "id": "system-synthesis",
+      "label": "Whole-system construction",
+      "label_cn": "完整系统构建",
+      "terms": [
+        "inference engine synthesis",
+        "system synthesis",
+        "just-in-time systems",
+        "on-demand inference engine",
+        "generated inference engine",
+        "agent-built engine",
+        "coding agents",
+        "one model one machine",
+        "specialized-inference-engine",
+        "engine construction harness",
+        "SkySynth",
+        "EngineSmith"
+      ],
+      "catalog_examples": [
+        "skydiscover",
+        "vibesys",
+        "metainfer"
+      ],
+      "note_cn": "组合 engine/model 与 synthesis；单独 synthesis 容易召回语音合成。区分框架、生成产物与安装器。"
+    },
+    {
+      "id": "agent-optimization",
+      "label": "Agent optimization loops",
+      "label_cn": "智能体优化循环",
+      "terms": [
+        "self-evolving inference",
+        "self-improving inference",
+        "recursive self-improvement",
+        "profile-guided optimization",
+        "coding-agent harness",
+        "candidate acceptance",
+        "optimization workbench",
+        "evaluator-owned",
+        "held-out prompts",
+        "AB/BA",
+        "knowledge reuse",
+        "reward hacking"
+      ],
+      "catalog_examples": [
+        "seis",
+        "atrex-kernel-agent",
+        "skydiscover"
+      ],
+      "note_cn": "RSI 和 agent 的命中多数不是引擎；确认实际修改对象、评价流程和产物。"
+    },
+    {
+      "id": "execution-kernels",
+      "label": "Execution and kernel integration",
+      "label_cn": "执行与内核集成",
+      "terms": [
+        "megakernel",
+        "mega-kernel",
+        "persistent kernel",
+        "persistent decode",
+        "single-kernel inference",
+        "kernel fusion",
+        "launch overhead",
+        "host orchestration",
+        "device-side scheduling",
+        "graph replay",
+        "AOT kernel",
+        "kernel manifest",
+        "cross-layer fusion"
+      ],
+      "catalog_examples": [
+        "automegakernel",
+        "mirage",
+        "jitengine"
+      ],
+      "note_cn": "检查模型前向到内核的调用链；运行时 JIT 编译不自动等于系统合成。"
+    },
+    {
+      "id": "expert-residency",
+      "label": "Expert placement and movement",
+      "label_cn": "专家驻留与搬移",
+      "terms": [
+        "expert cache",
+        "global LRU",
+        "expert streaming",
+        "SSD offload",
+        "CPU-GPU co-execution",
+        "heterogeneous execution",
+        "bandwidth-adaptive",
+        "double-buffered prefill",
+        "expert prefetch",
+        "elastic VRAM",
+        "cache budget",
+        "pinned memory",
+        "weight window"
+      ],
+      "catalog_examples": [
+        "strata",
+        "ktransformers",
+        "flash-moe"
+      ],
+      "note_cn": "沿 cited/inspired-by/derived-from 反查；区分专家在 CPU 计算与权重搬到 GPU。"
+    },
+    {
+      "id": "state-and-context",
+      "label": "Hybrid state and context",
+      "label_cn": "混合状态与上下文",
+      "terms": [
+        "Gated DeltaNet",
+        "GDN state",
+        "recurrent state",
+        "KV cache",
+        "state rollback",
+        "semantic anchor",
+        "prefix cache",
+        "context editing",
+        "state checkpoint",
+        "slot map",
+        "state isolation",
+        "zero-copy execution"
+      ],
+      "catalog_examples": [
+        "qwenox",
+        "crucible",
+        "jitengine"
+      ],
+      "note_cn": "缓存命中或相同权重不能代替状态一致性检查；API 功能不能直接证明执行创新。"
+    },
+    {
+      "id": "speculation",
+      "label": "Proposal and verification execution",
+      "label_cn": "提案与验证执行",
+      "terms": [
+        "MTP",
+        "multi-token prediction",
+        "DFlash",
+        "DFlash2",
+        "DSpark",
+        "draft verification",
+        "speculative decoding",
+        "ngram speculation",
+        "tree verification",
+        "batched verification",
+        "accept commit rollback"
+      ],
+      "catalog_examples": [
+        "ignis",
+        "qwenox",
+        "jitengine"
+      ],
+      "note_cn": "区分推理实现、独立草稿模型、目标模型改动与采样分布；同名算法并非相同实现。"
+    },
+    {
+      "id": "precision-and-packing",
+      "label": "Representation and numerics",
+      "label_cn": "数值表示与打包",
+      "terms": [
+        "NVFP4",
+        "MXFP4",
+        "W4A8",
+        "W4A4",
+        "EXL3",
+        "FTW",
+        "GGUF",
+        "quantized GEMV",
+        "scale bias packing",
+        "mixed quantization",
+        "activation quantization",
+        "KV quantization"
+      ],
+      "catalog_examples": [
+        "exllamav3",
+        "basalt",
+        "n3komata"
+      ],
+      "note_cn": "打包元数据无损不代表量化无损；精度变化和引擎贡献分别记录。"
+    },
+    {
+      "id": "serving-workloads",
+      "label": "Workload and serving constraints",
+      "label_cn": "负载与服务约束",
+      "terms": [
+        "agentic serving",
+        "continuous batching",
+        "continuous speech batching",
+        "decode lanes",
+        "dual ubatch",
+        "single-stream decode",
+        "tensor parallel",
+        "context parallel",
+        "RDMA",
+        "long-context prefill",
+        "time to first token",
+        "time to first audio"
+      ],
+      "catalog_examples": [
+        "gr8",
+        "maya2-native",
+        "halogen-flash"
+      ],
+      "note_cn": "逐项区分单路与聚合、prefill 与 decode、冷启动与热缓存；协议兼容不单独构成收录理由。"
+    },
+    {
+      "id": "validation",
+      "label": "Validation and provenance",
+      "label_cn": "验证与来源",
+      "terms": [
+        "reference parity",
+        "teacher forcing",
+        "token mismatch rank",
+        "quality gate",
+        "mutation testing",
+        "source fingerprint",
+        "artifact digest",
+        "bit-exact",
+        "pixel-identical",
+        "paired evaluation",
+        "INCONCLUSIVE",
+        "differential testing"
+      ],
+      "catalog_examples": [
+        "kernelbench",
+        "atrex-bench",
+        "skydiscover"
+      ],
+      "note_cn": "验证词用于找到真实门禁和失败记录，不把关键词存在解释为验证通过。"
+    },
+    {
+      "id": "other-model-domains",
+      "label": "Diffusion, audio and action execution",
+      "label_cn": "扩散、音频与动作执行",
+      "terms": [
+        "diffusion inference engine",
+        "DiT compiler",
+        "denoising runtime",
+        "video inference",
+        "audio codec state",
+        "streaming TTS engine",
+        "ASR native runtime",
+        "VLA inference",
+        "speech kernel",
+        "joint audio video",
+        "block-sparse attention",
+        "distilled checkpoint"
+      ],
+      "catalog_examples": [
+        "lightx2v",
+        "minimax-h3-mlx",
+        "vla-simd",
+        "maya2-native"
+      ],
+      "note_cn": "语音合成是单独的有效检索方向；只在完整引擎构建查询中控制 synthesis 歧义。"
+    }
+  ],
+  "hardware_aliases": [
+    {
+      "id": "apple",
+      "label": "Apple Silicon",
+      "terms": [
+        "Apple Silicon",
+        "M2",
+        "M4 Pro",
+        "M5 Max",
+        "Metal",
+        "MLX",
+        "ANE"
+      ]
+    },
+    {
+      "id": "strix-halo",
+      "label": "Strix Halo / 395",
+      "terms": [
+        "Strix Halo",
+        "Ryzen AI Max+ 395",
+        "gfx1151",
+        "RDNA 3.5"
+      ]
+    },
+    {
+      "id": "rdna4",
+      "label": "R9700 / RDNA4",
+      "terms": [
+        "Radeon AI PRO R9700",
+        "R9700",
+        "gfx1201",
+        "RDNA4",
+        "HIP"
+      ]
+    },
+    {
+      "id": "arc",
+      "label": "Intel Arc",
+      "terms": [
+        "Intel Arc",
+        "Arc Pro B70",
+        "SYCL",
+        "XMX"
+      ]
+    },
+    {
+      "id": "blackwell",
+      "label": "Blackwell consumer and server",
+      "terms": [
+        "RTX 5090",
+        "RTX PRO 6000",
+        "sm_120",
+        "B200",
+        "B300"
+      ]
+    },
+    {
+      "id": "spark",
+      "label": "DGX Spark / GB10",
+      "terms": [
+        "DGX Spark",
+        "GB10",
+        "sm_121a"
+      ]
+    },
+    {
+      "id": "ampere",
+      "label": "RTX 3090 / Ampere",
+      "terms": [
+        "RTX 3090",
+        "Ampere",
+        "sm_86"
+      ]
+    },
+    {
+      "id": "mobile",
+      "label": "Mobile NPU",
+      "terms": [
+        "Hexagon",
+        "QNN",
+        "Adreno",
+        "Snapdragon",
+        "Core ML"
+      ]
+    },
+    {
+      "id": "rockchip",
+      "label": "Rockchip NPU",
+      "terms": [
+        "RK3588",
+        "RKNPU2",
+        "rknpu2_matmul_open",
+        "rknn-llm"
+      ]
+    },
+    {
+      "id": "ascend",
+      "label": "Ascend",
+      "terms": [
+        "Ascend 910B1",
+        "Ascend C",
+        "CANN",
+        "torch_npu"
+      ]
+    },
+    {
+      "id": "edge-cpu",
+      "label": "CPU / embedded",
+      "terms": [
+        "Jetson",
+        "Orin",
+        "Raspberry Pi",
+        "ARM NEON",
+        "AVX512"
+      ]
+    },
+    {
+      "id": "bc250",
+      "label": "BC-250",
+      "terms": [
+        "BC-250",
+        "Vulkan",
+        "RADV"
+      ]
+    }
+  ],
+  "model_terms": [
+    {
+      "id": "qwen35-36",
+      "terms": [
+        "Qwen3.5",
+        "Qwen3.6-35B-A3B"
+      ]
+    },
+    {
+      "id": "qwen38",
+      "terms": [
+        "Qwen3.8-27B",
+        "Qwen3.8-Flash-Next",
+        "Flash-Next"
+      ]
+    },
+    {
+      "id": "lfm",
+      "terms": [
+        "LFM2.5-24B-A2B",
+        "LFM2",
+        "short convolution"
+      ]
+    },
+    {
+      "id": "glm",
+      "terms": [
+        "GLM-5.3",
+        "GLM-5.3-Flash",
+        "GLM-5.2"
+      ]
+    },
+    {
+      "id": "deepseek",
+      "terms": [
+        "DeepSeek-V4-Flash",
+        "DeepSeek-V4.1",
+        "DSA",
+        "MLA"
+      ]
+    },
+    {
+      "id": "other-text",
+      "terms": [
+        "Flint",
+        "Gemma 4",
+        "MiniCPM-V",
+        "Clover"
+      ]
+    },
+    {
+      "id": "image-video",
+      "terms": [
+        "Qwen-Image-2.1-Turbo",
+        "MiniMax-H3",
+        "FastH3",
+        "FLUX",
+        "Wan"
+      ]
+    },
+    {
+      "id": "speech",
+      "terms": [
+        "Qwen3-TTS",
+        "Maya3",
+        "Drama 3",
+        "Whisper",
+        "Parakeet"
+      ]
+    }
+  ],
+  "alias_rule": "Terms are search variants and related targets, not assertions of identical architecture, model weights or hardware compatibility.",
+  "query_templates": [
+    {
+      "id": "recent-engines",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"engine\" created:>={since} archived:false",
+      "group_id": "engine-identity"
+    },
+    {
+      "id": "active-specialized",
+      "surface": "github-repositories",
+      "query": "\"specialized inference\" in:name,description,readme pushed:>={since} archived:false",
+      "group_id": "engine-identity"
+    },
+    {
+      "id": "agent-engines",
+      "surface": "github-repositories",
+      "query": "\"inference engine\" \"coding agents\" in:name,description,readme archived:false",
+      "group_id": "system-synthesis"
+    },
+    {
+      "id": "native-target",
+      "surface": "github-repositories",
+      "query": "\"{model}\" \"native\" in:name,description,readme archived:false",
+      "group_id": "engine-identity"
+    },
+    {
+      "id": "construct-target",
+      "surface": "github-repositories",
+      "query": "\"{model}\" \"harness\" in:name,description,readme archived:false",
+      "group_id": "system-synthesis"
+    },
+    {
+      "id": "mechanism-target",
+      "surface": "github-repositories",
+      "query": "\"{mechanism}\" \"{hardware}\" in:name,description,readme pushed:>={since} archived:false",
+      "group_id": "execution-kernels"
+    },
+    {
+      "id": "expert-cache",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"expert cache\" in:name,description,readme pushed:>={since} archived:false",
+      "group_id": "expert-residency"
+    },
+    {
+      "id": "persistent",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"persistent\" \"{hardware}\" in:name,description,readme archived:false",
+      "group_id": "execution-kernels"
+    },
+    {
+      "id": "megakernel",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"megakernel\" in:name,description,readme pushed:>={since} archived:false",
+      "group_id": "execution-kernels"
+    },
+    {
+      "id": "state-contract",
+      "surface": "github-repositories",
+      "query": "\"{model}\" \"state rollback\" in:name,description,readme archived:false",
+      "group_id": "state-and-context"
+    },
+    {
+      "id": "validation-loop",
+      "surface": "github-repositories",
+      "query": "\"{seed}\" \"quality gate\" in:name,description,readme archived:false",
+      "group_id": "validation"
+    },
+    {
+      "id": "fork-delta",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"{hardware}\" fork:only pushed:>={since}",
+      "group_id": "engine-identity"
+    },
+    {
+      "id": "npu",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"{hardware}\" in:name,description,readme created:>={since} archived:false",
+      "group_id": "serving-workloads"
+    },
+    {
+      "id": "diffusion",
+      "surface": "github-repositories",
+      "query": "\"diffusion\" \"inference\" created:>={since} archived:false",
+      "group_id": "other-model-domains"
+    },
+    {
+      "id": "speech",
+      "surface": "github-repositories",
+      "query": "\"speech\" \"inference\" \"kernel\" in:name,description,readme created:>={since} archived:false",
+      "group_id": "other-model-domains"
+    },
+    {
+      "id": "exact-seed",
+      "surface": "github-repositories",
+      "query": "\"{seed}\" in:name,description,readme",
+      "group_id": "engine-identity"
+    },
+    {
+      "id": "web-engine",
+      "surface": "web",
+      "query": "site:github.com \"{model}\" \"{hardware}\" \"inference\"",
+      "group_id": "engine-identity"
+    },
+    {
+      "id": "web-construction",
+      "surface": "web",
+      "query": "\"{seed}\" \"engine\" \"synthesis\"",
+      "group_id": "system-synthesis"
+    },
+    {
+      "id": "web-lineage",
+      "surface": "web",
+      "query": "\"{seed}\" \"inspired by\" inference",
+      "group_id": "expert-residency"
+    },
+    {
+      "id": "web-author",
+      "surface": "web",
+      "query": "\"{seed}\" inference architecture benchmark source code",
+      "group_id": "validation"
+    }
+  ],
+  "source_routes": [
+    {
+      "id": "github",
+      "url": "https://github.com/search?type=repositories",
+      "use_cn": "名称／描述发现，README 扩展，分开搜索创建日期和推送日期；另做 fork:only。"
+    },
+    {
+      "id": "first-party",
+      "url": "https://github.com/skydiscover-ai/jitengine",
+      "use_cn": "已收录仓库的致谢、NOTICE、VENDORED、对照基线和相关组织；回到被引用项目的官方仓库核查。"
+    },
+    {
+      "id": "author-reports",
+      "url": "https://skydiscover-ai.github.io/blog-jitengine.html",
+      "use_cn": "作者博客／论文用于发现术语、产物与依赖；性能仍按原始比较条件记录。"
+    },
+    {
+      "id": "topics",
+      "url": "https://github.com/topics/inference-engine",
+      "use_cn": "主题页仅作候选入口；星数、主题标签和搜索名次不是门槛。"
+    }
+  ],
+  "screening_rules": [
+    "Run a rolling pushed-date search and a separate created-date search; new to the catalog does not mean newly released.",
+    "Keep an undated dependency/author search so older upstream work is not missed.",
+    "Record exact query, surface, page and returned repository names; a capped sample is not exhaustive and unknown total counts stay unknown.",
+    "Run at least one fork-only pass. Compare substantial execution deltas with the named parent before admission.",
+    "Do not apply a stars threshold or globally exclude Python, MLX, wrappers, synthesis or speech. Inspect the delivered artifact.",
+    "Normalize repository identity using canonical API full_name and repository ID; model packages, renamed repositories and workflow aliases are not automatically new records.",
+    "Inspect implementation-to-kernel/state wiring and provenance; separate numerical/model changes from execution gains.",
+    "Keep candidates outside projects.csv until the existing contribution/evidence requirements are met; no performance reproduction is implied."
+  ]
+}

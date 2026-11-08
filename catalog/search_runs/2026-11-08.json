@@ -1,0 +1,909 @@
+{
+  "schema_version": 1,
+  "searched_on": "2026-11-08",
+  "timezone": "Asia/Shanghai",
+  "catalog_base_commit": "38bcdab22d17cfb9a2318f7d286ea4a464c1c26c",
+  "scope": "Bounded discovery and source spot-checks; no new catalog admissions or upstream execution.",
+  "github_runs": [
+    {
+      "id": "gh-01",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"engine\" created:>=2026-10-24 archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "musicurgy/delta-inference-engine",
+        "GGZ14/saber-engine",
+        "MayaResearch/maya2-native",
+        "ZhuLinsen/LiteMoE",
+        "pavelsimo/100-days-of-inference-engineering",
+        "EngineSmith/enginesmith",
+        "nsbradley88/talus-public",
+        "nixcat-dev/adamant",
+        "RunanywhereAI/trnrt",
+        "megasoft1978/strim-engine",
+        "33Lucas33/VLA-Inference-Engine",
+        "zhangshuibai/molten",
+        "nyacom/n3komata",
+        "PiMatyja/M1M2Max-inference-engine",
+        "anoane/anemone",
+        "benmaster82/Pithos",
+        "x0ne-labs/x0ne-Engine",
+        "BibeshT-TXST/InferenceEngineX",
+        "zuiho-kai/h3-metal",
+        "Incept5-AI/inferd"
+      ]
+    },
+    {
+      "id": "gh-02",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"synthesized\" in:name,description,readme archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "yl4579/StyleTTS2",
+        "ming024/FastSpeech2",
+        "microsoft/VibeVoice",
+        "luosiallen/latent-consistency-model",
+        "RVC-Boss/GPT-SoVITS",
+        "jaywalnut310/vits",
+        "babysor/MockingBird",
+        "KlingAIResearch/LivePortrait",
+        "SparkAudio/Spark-TTS",
+        "netease-youdao/EmotiVoice",
+        "cheaper-inference/OmniRoute",
+        "evalplus/evalplus",
+        "OpenTalker/video-retalking",
+        "argilla-io/distilabel",
+        "sebastianstarke/AI4Animation",
+        "coqui-ai/TTS",
+        "vibevoice-community/VibeVoice",
+        "k2-fsa/ZipVoice",
+        "Alibaba-NLP/DeepResearch",
+        "Francis-Rings/StableAvatar"
+      ]
+    },
+    {
+      "id": "gh-03",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"single kernel\" in:name,description,readme archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "NVIDIA-AI-IOT/Lidar_AI_Solution",
+        "osayamenja/FlashMoE",
+        "mirage-project/mirage",
+        "AMD-AGI/GEAK",
+        "Tencent/hpc-ops",
+        "NVlabs/tiny-cuda-nn",
+        "QwenLM/FlashQLA",
+        "DingXiaoH/DiverseBranchBlock",
+        "DingXiaoH/RepMLP",
+        "deepseek-ai/FlashMLA",
+        "sihyeong/Awesome-LLM-Inference-Engine",
+        "byungsoo-oh/ml-systems-papers",
+        "modular/skills",
+        "lumia431/photon_infer",
+        "DevTechJr/turboquant_cutile",
+        "ekzhang/jax-js",
+        "l0usie/Lidar_AI_Solution",
+        "leesou/PIM-DL-ASPLOS",
+        "Geekgineer/YOLOs-CPP-TensorRT",
+        "RightNow-AI/qwen3.5-triton"
+      ]
+    },
+    {
+      "id": "gh-04",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"expert cache\" in:name,description,readme pushed:>=2026-10-24 archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "FlashML-org/FreeToken",
+        "drumih/turbo-fieldfare",
+        "Edge0-AI/Edge0",
+        "thecodacus/llama.cpp",
+        "nntrainer/nntrainer",
+        "yanun0323/Whallm",
+        "carloslfu/slotstream",
+        "EfficientMoE/MoE-Infinity",
+        "spiritbuun/buun-llama-cpp",
+        "ikawrakow/ik_llama.cpp",
+        "JustVugg/colibri",
+        "Nehanth/pooled",
+        "stew675/llama-cpp-rdna-boosts",
+        "happyme531/open_rknpu2_lm_infer",
+        "BrightSec/shainet",
+        "guqiong96/Lsglang",
+        "FonaTech/Project_Chronos",
+        "byungsoo-oh/ml-systems-papers",
+        "musicurgy/delta-inference-engine",
+        "kryptic-sh/infr"
+      ]
+    },
+    {
+      "id": "gh-05",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"synthesis\" in:name,description,readme pushed:>=2026-10-01 archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "OpenBMB/VoxCPM",
+        "oumi-ai/oumi",
+        "hitsz-ids/synthetic-data-generator",
+        "RVC-Boss/GPT-SoVITS",
+        "microsoft/VibeVoice",
+        "modelscope/DiffSynth-Studio",
+        "espnet/espnet",
+        "fastmachinelearning/hls4ml",
+        "shivammehta25/Matcha-TTS",
+        "showlab/Awesome-Video-Diffusion",
+        "Project-MONAI/tutorials",
+        "arthurflor23/handwritten-text-recognition",
+        "jiep/offensive-ai-compilation",
+        "modelscope/modelscope",
+        "MiniMax-AI/MiniMax-Music3",
+        "Aratako/MioTTS-Inference",
+        "google-gemini/cookbook",
+        "google/skills",
+        "fishaudio/fish-speech",
+        "context-labs/HALO"
+      ]
+    },
+    {
+      "id": "gh-06",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"persistent\" \"Metal\" in:name,description,readme pushed:>=2026-10-24 archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "EricLBuehler/mistral.rs",
+        "jundot/omlx",
+        "orailnoor/cross-platform-llm-client",
+        "incoai/splash",
+        "0xShug0/audio.cpp",
+        "defilantech/LLMKube",
+        "beehive-lab/jitllm",
+        "guoqingbao/xinfer",
+        "alvinreal/awesome-opensource-ai",
+        "jjang-ai/vmlx",
+        "zhongkaifu/TensorSharp",
+        "DeusData/codebase-memory-mcp",
+        "Neywa-Labs/mlx-vlm",
+        "Avdpro/ai2apps",
+        "Neywa-Labs/nativ",
+        "ardanlabs/kronk",
+        "SharpAI/SwiftLM",
+        "orneryd/NornicDB",
+        "off-grid-ai/OGAM",
+        "ModelCloud/GPTQModel"
+      ]
+    },
+    {
+      "id": "gh-07",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"diffusion\" created:>=2026-10-01 archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "vladimirrott/mojo-dllm",
+        "amazon-science/ALoDLM",
+        "Introspective-Diffusion/DLMRT",
+        "liangkaihua123456/Latticor",
+        "kwanyun/edgar-code",
+        "MhDang/mosaic",
+        "Multimodal-Perception-Action/TRACE",
+        "EdwinjJ1/moss-image-mac",
+        "tusharsonthalia/diffusion-llm",
+        "gt-synergy-lab/Polestar",
+        "yingheng-wang/DDVI",
+        "Liquid4All/lfm-diffusion",
+        "ichDaheim/kikiri-german-inference",
+        "robotsbuildrobots/diffusion-gufo",
+        "fractalyze/optimizer",
+        "zzXavier/recurrent-diffusion-budget",
+        "leichang131-debug/Score-Based-Diffusion-Galactic-Confusion-Foreground-Marginalization-and-SGWB-Joint-Inference",
+        "IlluminatingFish/metacognitive-controller",
+        "ruchita-bodke13/Image-Generation-using-Stable-Diffusion",
+        "razoring/diffusion.gguf"
+      ]
+    },
+    {
+      "id": "gh-08",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"NPU\" in:name,description,readme created:>=2026-10-01 archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "deepseek-ai/DeepInfer",
+        "happyme531/open_rknpu2_lm_infer",
+        "InferMatrixLab/InferRSI",
+        "Tencent/WeVisOne-VL",
+        "mindie-agent/awesome-mindie-skills",
+        "mikealanni/gufo",
+        "zhzy0077/KataDroid",
+        "flitai-io/gpuworks",
+        "inclusionAI/TorchTurbo",
+        "koushik4475/edge-vision-accelerator",
+        "open-edge-platform/robotics-ai-suite",
+        "StayLameBro/backburner-llama.cpp",
+        "ER-brocode/edge-vision-accelerator",
+        "labscommunity/npu-render",
+        "achyudh/llama.cpp",
+        "shanselman/gputaskman",
+        "one2nc/awesome-inference-engineering",
+        "glincker/awesome-selfhosted-ai",
+        "22cms/sing-for-android",
+        "Quat3rnion/halogen-dashboard"
+      ]
+    },
+    {
+      "id": "gh-09",
+      "surface": "github-repositories",
+      "query": "\"inference engine\" \"agent\" in:name,description,readme created:>=2026-10-01 archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "recursive-oss/rec",
+        "musicurgy/delta-inference-engine",
+        "nace-ai/kapitsa",
+        "one2nc/awesome-inference-engineering",
+        "Wallawalla47/Infernix",
+        "glincker/awesome-selfhosted-ai",
+        "shawnshekari/strixite",
+        "MayaResearch/maya2-native",
+        "drawthingsai/local-code-community",
+        "crit-labs/crit",
+        "lxe/dsx",
+        "datamllab/HarborRL",
+        "Balanov/shim",
+        "RustingStudio/RustingStrata",
+        "fodelf/YoungAi",
+        "GGZ14/saber-engine",
+        "mach10x/strata",
+        "Generated-Computers/Locals",
+        "crit-labs/crit-hub",
+        "bpx03/QEngine"
+      ]
+    },
+    {
+      "id": "gh-10",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"self-improving\" in:name,description,readme archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "Human-Agent-Society/reef",
+        "PrimeIntellect-ai/prime-agent",
+        "Conway-Research/automaton",
+        "metauto-ai/GPTSwarm",
+        "MaximeRobeyns/self_improving_coding_agent",
+        "alchaincyf/hermes-agent-orange-book",
+        "MineDojo/NitroGen",
+        "greyhaven-ai/autocontext",
+        "lobehub/awesome-rsi",
+        "apple-aiml-research/ml-rsi-inference-bench",
+        "Embodied-Minds-Lab/BES",
+        "zzli2022/Awesome-System2-Reasoning-LLM",
+        "agulli/atlas-agents",
+        "XMUDeepLIT/Awesome-Self-Evolving-Agents",
+        "cfregly/ai-performance-engineering",
+        "walkinglabs/self-improving-agent-notebook",
+        "open-thought/system-2-research",
+        "PacktPublishing/30-Agents-Every-AI-Engineer-Must-Build",
+        "fainir/most-capable-agent-system-prompt",
+        "aliaihub/awesome-hermes-usecases"
+      ]
+    },
+    {
+      "id": "gh-11",
+      "surface": "github-repositories",
+      "query": "\"engine synthesis\" in:name,description,readme archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "bridge-mind/turbo-kart-rush",
+        "google/xls",
+        "m-toman/SALB",
+        "PanosK92/SpartanEngine",
+        "Garudex-Labs/secure-contract-machine",
+        "bloxfruitscripts1/debate-engine-synthesis",
+        "HayaiApp/HayaiTTS",
+        "ziv/godotiles",
+        "GenLang-V/GenDB-V",
+        "lovevin1314-tech/NexSandglass-Agent-DedicatedMemory",
+        "sxwdmjy/och-mrcp",
+        "karigardarsson/lunar-apparatus",
+        "WormJuiceDev/Cypher",
+        "ZXITRAX/Full-stark-free-Core-template",
+        "fakufaku/pyramic-demo",
+        "AjarnSpencer/AI-Voice-Studio",
+        "Quick-Eyed-Sky/tangerine",
+        "Bunchyearth23/bess",
+        "interestng/medkit",
+        "olympus-terminal/gpu-tts-toolkit"
+      ]
+    },
+    {
+      "id": "gh-12",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"megakernel\" in:name,description,readme pushed:>=2026-10-24 archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "mirage-project/mirage",
+        "Luce-Org/lucebox",
+        "cfregly/ai-performance-engineering",
+        "Bobliuuu/open-flapping-airplanes",
+        "PaddlePaddle/HALOps",
+        "SandAI-org/MagiCompiler",
+        "megabake/megabake",
+        "ROCm/fleet-chiplet-megakernel",
+        "jmschrei/cherimoya",
+        "gpujs/gpu.js",
+        "byungsoo-oh/ml-systems-papers",
+        "qhy991/Awesome-LLM-Kernel-Agent",
+        "RunanywhereAI/trnrt",
+        "zhixin612/awesome-papers-LMsys",
+        "KuangjuX/Papers-and-Learning-Notes",
+        "qhy991/Awesome-Kernel-Workflows",
+        "maci0/agave",
+        "Wataru-Nakata/owsm-trt",
+        "matthiasak/gibbs",
+        "MIT-RLX/rlx"
+      ]
+    },
+    {
+      "id": "gh-13",
+      "surface": "github-repositories",
+      "query": "\"specialized inference\" in:name,description,readme pushed:>=2026-10-24 archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "EngineSmith/enginesmith",
+        "irawanw/truss",
+        "SJTU-iBDS-Lab/awesome-inference-specialization",
+        "rohitg00/ai-engineering-from-scratch",
+        "NeelM0906/Mference",
+        "InferMatrixLab/awesome-model-hw-engines",
+        "meta-pytorch/dist_moe",
+        "dhaulagani/awesome-free-ai-apis",
+        "tom-material/truss",
+        "LittleLittleCloud/LLM-Bootstrap",
+        "yanchaomei/inference-forge",
+        "zhangshuibai/enginesmith-qwen35-08b-long-decode-m5max-round005",
+        "cilyde/BinaryDecisionModel",
+        "EndeavoringOrb/spec-eng-gemma-4-e2b",
+        "crit-labs/crit",
+        "ShreyashSrivastavaa/Shreyash-Portfolio",
+        "ChangyiYang/enginesmith",
+        "xuanfeiren/enginesmith",
+        "gowthamrameshkumar2925-lab/women-safety-blockchain",
+        "Soft-CPS-Research-Group/Algorithms"
+      ]
+    },
+    {
+      "id": "gh-14",
+      "surface": "github-repositories",
+      "query": "\"inference engine\" \"coding agents\" in:name,description,readme archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "antirez/ds4",
+        "sgl-project/sglang",
+        "alvinreal/awesome-opensource-ai",
+        "rafska/awesome-local-llm",
+        "incoai/splash",
+        "oculus-samples/Unity-PassthroughCameraApiSamples",
+        "paean-ai/deeptide",
+        "GradientHQ/parallax",
+        "tensorchord/Awesome-LLMOps",
+        "ai-dynamo/dynamo",
+        "AtomicBot-ai/Atomic-Chat",
+        "aymericdamien/TopDeepLearning",
+        "InftyAI/Awesome-LLMOps",
+        "rust-unofficial/awesome-rust",
+        "ashhart/TensorFold",
+        "0xSojalSec/LLMs-local",
+        "skydiscover-ai/skydiscover",
+        "yibie/awesome-jev",
+        "ikaijua/Awesome-AITools",
+        "vipshop/cache-dit"
+      ]
+    },
+    {
+      "id": "gh-15",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"recursive self-improvement\" in:name,description,readme archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "Gen-Verse/RSI-Anything",
+        "HITsz-TMG/KnowAct",
+        "FrontisAI/OpenRSI",
+        "TokenRhythm/NeoHorse",
+        "lobehub/awesome-rsi",
+        "rsi-gear/gear",
+        "evolvent-ai/RSIGym",
+        "theseus-labs-rsi/awesome-rsi",
+        "OpenRSI-Foundation/OpenRSI-Index",
+        "natnew/awesome-recursive-self-improvement",
+        "google-research/rrsi",
+        "lvy010/AI-wiki",
+        "raia-live/amfs",
+        "pageman/sutskever-30-implementations",
+        "leezythu/Awesome-Harness-Self-Improvement",
+        "SAIL-Research-Lab/Physical-RSI",
+        "hindupuravinash/nips2016",
+        "pinkbubblebubble/awesome-rsi",
+        "amitshekhariitbhu/ai-engineering-interview-questions",
+        "cocacola-lab/awesome-embodied-rsi"
+      ]
+    },
+    {
+      "id": "gh-16",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"R9700\" in:name,description,readme archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "Niko1221/Strata",
+        "Luce-Org/lucebox",
+        "warpfront/hipfire",
+        "zolotukhin/zinc",
+        "kyuz0/ai-toolbox-cockpit",
+        "Comfy-Org/ComfyUI",
+        "AMD-AGI/GEAK",
+        "ROCm/aiter",
+        "lemonade-sdk/llamacpp-rocm",
+        "lemonade-sdk/lemonade",
+        "ROCm/ATOM",
+        "Eliovp-BV/paiton-vllm-plugin",
+        "andysalerno/r9700-serving",
+        "kyuz0/pi-bench",
+        "ashhart/TensorFold",
+        "kyuz0/llama-toolboxes-cockpit",
+        "mattbucci/2x-R9700-RDNA4-GFX1201-sglang-inference",
+        "spiritbuun/buun-llama-cpp",
+        "Geramy/LSE",
+        "tsaipifong/whirl-llm"
+      ]
+    },
+    {
+      "id": "gh-17",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"Metal\" fork:only pushed:>=2026-10-24",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "ivanfioravanti/ds4-metal",
+        "kyuz0/ds4",
+        "IngeniousIdiocy/ds4",
+        "MaxFerAlten/ds4-studio",
+        "dongnh311/ds4-metal-qwen",
+        "TheRefreshCNFT/lithos-metal",
+        "jefby/TensorFold",
+        "GumbiiDigital/TensorFold",
+        "jishnuvenugopal/TensorFold",
+        "jgavinray/TensorFold",
+        "styles01/TensorFold",
+        "Boscoeuk/TensorFold",
+        "yguanrong/TensorFold",
+        "Sapphire-Rapids/TensorFold",
+        "krunkosaurus/TensorFold",
+        "jerryfane/TensorFold",
+        "Maxrio9/TensorFold",
+        "huijunwu/TensorFold",
+        "JonathanThompson/TensorFold",
+        "eXsoR65/TensorFold"
+      ]
+    },
+    {
+      "id": "gh-18",
+      "surface": "github-repositories",
+      "query": "\"inference\" \"gfx1151\" in:name,description,readme pushed:>=2026-10-24 archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "SWivid/F5-TTS",
+        "kyuz0/amd-strix-halo-toolboxes",
+        "lemonade-sdk/llamacpp-rocm",
+        "lemonade-sdk/lemonade",
+        "datawhalechina/torch-rechub",
+        "warpfront/hipfire",
+        "halo-box/strix-llama.cpp",
+        "gufo-org/gufo",
+        "Comfy-Org/ComfyUI",
+        "ROCm/aiter",
+        "Luce-Org/lucebox",
+        "Avarok-Cybersecurity/atlas",
+        "noamsto/nix-amd-ai",
+        "stew675/llama-cpp-rdna-boosts",
+        "shawnshekari/strixite",
+        "rulith-dev/rulith-inference",
+        "AMD-AGI/GEAK",
+        "0xShug0/audio.cpp",
+        "IIIIIllllIIIIIlllll/Qwenox",
+        "sypherin/strix-halo-setup"
+      ]
+    },
+    {
+      "id": "gh-19",
+      "surface": "github-repositories",
+      "query": "\"diffusion\" \"compiler\" in:name,description,readme pushed:>=2026-10-24 archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "pytorch/TensorRT",
+        "MochiDiffusion/MochiDiffusion",
+        "devitocodes/devito",
+        "techjarves/Portable-Local-Studio",
+        "FurkanGozukara/Stable-Diffusion",
+        "dusty-nv/jetson-containers",
+        "xdit-project/xDiT",
+        "Comfy-Org/ComfyUI",
+        "thu-ml/TurboDiffusion",
+        "xlite-dev/LeetCUDA",
+        "rohitg00/ai-engineering-from-scratch",
+        "huggingface/candle",
+        "PrunaAI/pruna",
+        "hpcaitech/ColossalAI",
+        "huggingface/optimum-habana",
+        "amitness/learning",
+        "Developer-Y/cs-video-courses",
+        "RosettaCommons/RFD4-Proteina",
+        "crynux-network/crynux-node",
+        "hao-ai-lab/FastVideo"
+      ]
+    },
+    {
+      "id": "gh-20",
+      "surface": "github-repositories",
+      "query": "\"speech\" \"inference\" \"kernel\" in:name,description,readme created:>=2026-10-01 archived:false",
+      "page": 1,
+      "per_page": 20,
+      "returned": [
+        "one2nc/awesome-inference-engineering",
+        "glincker/awesome-selfhosted-ai",
+        "amitshekhariitbhu/forward-deployed-engineer-roadmap",
+        "AbuZar-Ansarii/Jarvis",
+        "MayaResearch/maya2-native",
+        "zxcHolmes/minimax-h3-studio",
+        "SeraphimSerapis/awesome-local-ai",
+        "KittenML/kitten-tts-2-cpp",
+        "InferMatrixLab/vllm-omni-mlx",
+        "shanselman/gputaskman",
+        "raullenchai/esp32-thinks",
+        "lattifai/awesome-EmbeddingGemma",
+        "Michele-M-Media/HYPERHEN",
+        "third-intelligence/Haas-ASR",
+        "fodelf/YoungAi",
+        "open-edge-platform/robotics-ai-suite",
+        "erayyap/balbal",
+        "juanjo-barrientos/genaiguide",
+        "RACErace/breeze-tts-8g",
+        "kadirnar/drifting-tts"
+      ]
+    }
+  ],
+  "web_runs": [
+    {
+      "id": "web-01",
+      "surface": "web-system1",
+      "query": "\"inference engine\" \"synthesized\" \"SkySynth\"",
+      "recency_days": 30
+    },
+    {
+      "id": "web-02",
+      "surface": "web-system1",
+      "query": "\"LLM\" \"inference engine\" \"November\" \"2026\" github",
+      "recency_days": 14
+    },
+    {
+      "id": "web-03",
+      "surface": "web-system1",
+      "query": "\"FreeToken\" inference GitHub",
+      "recency_days": 30
+    }
+  ],
+  "sampling": {
+    "github_pages_per_query": 1,
+    "github_result_cap": 20,
+    "github_total_count": null,
+    "exhaustive": false,
+    "notes": "Returned names are discovery observations, including duplicates, unrelated hits and existing catalog members. No recall or precision percentage is inferred."
+  },
+  "candidates": [
+    {
+      "repository": "FlashML-org/FreeToken",
+      "repository_id": 1307001698,
+      "created_at": "2026-07-20T20:44:11Z",
+      "pushed_at": "2026-11-08T00:26:45Z",
+      "inspected_commit": "8215a94f92449c1aff07627d95ef73377363315d",
+      "status": "source-spot-check-pending",
+      "admitted": false,
+      "readme_url": "https://github.com/FlashML-org/FreeToken/blob/8215a94f92449c1aff07627d95ef73377363315d/README.md",
+      "discovered_via": [
+        "gh-04",
+        "web-03",
+        "jitengine-acknowledgement"
+      ],
+      "source_spot_checks": [
+        "https://github.com/FlashML-org/FreeToken/blob/8215a94f92449c1aff07627d95ef73377363315d/python/freetoken/moe/cpu_executor.py",
+        "https://github.com/FlashML-org/FreeToken/blob/8215a94f92449c1aff07627d95ef73377363315d/python/freetoken/moe/offload_cache.py"
+      ],
+      "next_checks": [
+        "Trace the bandwidth-adaptive policy through model dispatch, expert selection and cache-budget changes.",
+        "Check CPU/GPU synchronization tests and checkpoint/quantization effects against the stated baseline."
+      ]
+    },
+    {
+      "repository": "EngineSmith/enginesmith",
+      "repository_id": 1438225333,
+      "created_at": "2026-10-29T09:49:24Z",
+      "pushed_at": "2026-11-07T16:13:08Z",
+      "inspected_commit": "4ea26f3a93286a2aa41a06edf1f9170a54569cc5",
+      "status": "source-spot-check-pending",
+      "admitted": false,
+      "readme_url": "https://github.com/EngineSmith/enginesmith/blob/4ea26f3a93286a2aa41a06edf1f9170a54569cc5/README.md",
+      "discovered_via": [
+        "gh-01",
+        "gh-13"
+      ],
+      "source_spot_checks": [
+        "https://github.com/EngineSmith/enginesmith/blob/4ea26f3a93286a2aa41a06edf1f9170a54569cc5/src/enginesmith/acceptance.py",
+        "https://github.com/EngineSmith/enginesmith/blob/4ea26f3a93286a2aa41a06edf1f9170a54569cc5/src/enginesmith/evaluate.py"
+      ],
+      "next_checks": [
+        "Trace run/build/held-out evaluation and native-library enforcement.",
+        "Check Molten output lineage, actual acceptance tolerances and full development-cost accounting."
+      ]
+    },
+    {
+      "repository": "InferMatrixLab/InferRSI",
+      "repository_id": 1409534281,
+      "created_at": "2026-10-08T00:48:02Z",
+      "pushed_at": "2026-11-07T05:49:36Z",
+      "inspected_commit": "3a67f2456156f1071d4821e172a5bb55393f3f08",
+      "status": "source-spot-check-pending",
+      "admitted": false,
+      "readme_url": "https://github.com/InferMatrixLab/InferRSI/blob/3a67f2456156f1071d4821e172a5bb55393f3f08/README.md",
+      "discovered_via": [
+        "gh-08"
+      ],
+      "source_spot_checks": [
+        "https://github.com/InferMatrixLab/InferRSI/blob/3a67f2456156f1071d4821e172a5bb55393f3f08/src/inferrsi/harness/runner.py",
+        "https://github.com/InferMatrixLab/InferRSI/blob/3a67f2456156f1071d4821e172a5bb55393f3f08/src/inferrsi/harness/evaluation.py"
+      ],
+      "next_checks": [
+        "Inspect concrete campaign validators and source binding to the executed candidate.",
+        "Separate delivered optimization workbench from planned automatic search and externally reported engines."
+      ]
+    },
+    {
+      "repository": "GGZ14/saber-engine",
+      "repository_id": 1447320337,
+      "created_at": "2026-11-05T17:42:01Z",
+      "pushed_at": "2026-11-06T21:03:21Z",
+      "inspected_commit": "c8a1e84b39e73363495e549d480a6f6c3893800c",
+      "status": "source-spot-check-pending",
+      "admitted": false,
+      "readme_url": "https://github.com/GGZ14/saber-engine/blob/c8a1e84b39e73363495e549d480a6f6c3893800c/README.md",
+      "discovered_via": [
+        "gh-01",
+        "gh-09"
+      ],
+      "source_spot_checks": [
+        "https://github.com/GGZ14/saber-engine/blob/c8a1e84b39e73363495e549d480a6f6c3893800c/crates/saber-exec/src/forward.rs",
+        "https://github.com/GGZ14/saber-engine/blob/c8a1e84b39e73363495e549d480a6f6c3893800c/crates/saber-kernels/hip/mxfp4_gemm_decode.hip"
+      ],
+      "next_checks": [
+        "Trace serving dispatch to the selected HIP symbols and tensor-parallel synchronization.",
+        "Check generated/adapted kernel provenance, DFlash2 state commits and precision-sensitive quality gates."
+      ]
+    },
+    {
+      "repository": "happyme531/open_rknpu2_lm_infer",
+      "repository_id": 1419458453,
+      "created_at": "2026-10-14T16:51:19Z",
+      "pushed_at": "2026-11-05T09:14:18Z",
+      "inspected_commit": "e1331947c00d438470e48b585f7b34d0f783f40b",
+      "status": "source-spot-check-pending",
+      "admitted": false,
+      "readme_url": "https://github.com/happyme531/open_rknpu2_lm_infer/blob/e1331947c00d438470e48b585f7b34d0f783f40b/README.md",
+      "discovered_via": [
+        "gh-04",
+        "gh-08"
+      ],
+      "source_spot_checks": [
+        "https://github.com/happyme531/open_rknpu2_lm_infer/blob/e1331947c00d438470e48b585f7b34d0f783f40b/src/model/pipeline.rs",
+        "https://github.com/happyme531/open_rknpu2_lm_infer/blob/e1331947c00d438470e48b585f7b34d0f783f40b/src/model/qwen35/execution.rs"
+      ],
+      "next_checks": [
+        "Trace the NPU operator library and vendor-driver boundary, plus dual-ubatch tests.",
+        "Separate W4/W8 plus dynamic A8 quantization and optional expert skipping from scheduling improvements."
+      ]
+    },
+    {
+      "repository": "simplexai-labs/PolyStrata",
+      "repository_id": 1407921380,
+      "created_at": "2026-10-06T21:09:40Z",
+      "pushed_at": "2026-11-07T22:43:32Z",
+      "inspected_commit": "4de79331b49e553406860470fa3e96b5256e2e50",
+      "status": "source-spot-check-pending",
+      "admitted": false,
+      "readme_url": "https://github.com/simplexai-labs/PolyStrata/blob/4de79331b49e553406860470fa3e96b5256e2e50/README.md",
+      "discovered_via": [
+        "web-first-batch"
+      ],
+      "source_spot_checks": [
+        "https://github.com/simplexai-labs/PolyStrata/blob/4de79331b49e553406860470fa3e96b5256e2e50/src/poly/qwen35.cpp",
+        "https://github.com/simplexai-labs/PolyStrata/blob/4de79331b49e553406860470fa3e96b5256e2e50/src/poly/kernels.cu"
+      ],
+      "next_checks": [
+        "Compare the added poly engine with Strata and reused llama.cpp/GGML arithmetic.",
+        "Check model-specific launch paths, state/quality tests and numerical switches; do not duplicate unchanged Flash-Next execution."
+      ]
+    },
+    {
+      "repository": "zhangshuibai/molten",
+      "repository_id": 1433333755,
+      "created_at": "2026-10-25T15:19:18Z",
+      "pushed_at": "2026-10-29T13:00:40Z",
+      "inspected_commit": "f70658cc386964742ff3d567f02737e5db9f0ca7",
+      "status": "source-spot-check-pending",
+      "admitted": false,
+      "readme_url": "https://github.com/zhangshuibai/molten/blob/f70658cc386964742ff3d567f02737e5db9f0ca7/README.md",
+      "discovered_via": [
+        "gh-01",
+        "enginesmith-readme"
+      ],
+      "source_spot_checks": [
+        "https://github.com/zhangshuibai/molten/blob/f70658cc386964742ff3d567f02737e5db9f0ca7/VENDORED.md",
+        "https://github.com/zhangshuibai/molten/blob/f70658cc386964742ff3d567f02737e5db9f0ca7/src/lfm.rs"
+      ],
+      "next_checks": [
+        "Trace fused LFM Metal execution and state handling beyond Lily/MLX reuse.",
+        "Inspect exact evaluation gates and distinguish MLX-format weights from an MLX runtime dependency."
+      ]
+    }
+  ],
+  "lineage_observations": [
+    {
+      "from": "jitengine",
+      "to": "FlashML-org/FreeToken",
+      "relation": "acknowledged offload design",
+      "source_url": "https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/DETAILS.md"
+    },
+    {
+      "from": "EngineSmith/enginesmith",
+      "to": "zhangshuibai/molten",
+      "relation": "reported generated output",
+      "source_url": "https://github.com/EngineSmith/enginesmith/blob/4ea26f3a93286a2aa41a06edf1f9170a54569cc5/README.md"
+    },
+    {
+      "from": "zhangshuibai/molten",
+      "to": "lily",
+      "relation": "adapted runtime and kernel source",
+      "source_url": "https://github.com/zhangshuibai/molten/blob/f70658cc386964742ff3d567f02737e5db9f0ca7/VENDORED.md"
+    },
+    {
+      "from": "simplexai-labs/PolyStrata",
+      "to": "strata",
+      "relation": "unchanged Flash-Next engine plus separate poly-engine scope",
+      "source_url": "https://github.com/simplexai-labs/PolyStrata/blob/4de79331b49e553406860470fa3e96b5256e2e50/README.md"
+    }
+  ],
+  "summary": {
+    "github_queries": 20,
+    "web_queries": 3,
+    "github_returned_observations": 400,
+    "distinct_repository_names": 359,
+    "catalog_repository_url_matches": 23,
+    "source_spot_checked_candidates": 7,
+    "new_admissions": 0
+  },
+  "existing_catalog_matches": [
+    {
+      "repository": "antirez/ds4",
+      "project_id": "dwarfstar"
+    },
+    {
+      "repository": "ashhart/tensorfold",
+      "project_id": "tensorfold"
+    },
+    {
+      "repository": "drumih/turbo-fieldfare",
+      "project_id": "turbo-fieldfare"
+    },
+    {
+      "repository": "efficientmoe/moe-infinity",
+      "project_id": "moe-infinity"
+    },
+    {
+      "repository": "gufo-org/gufo",
+      "project_id": "gufo"
+    },
+    {
+      "repository": "halo-box/strix-llama.cpp",
+      "project_id": "strix-llama-cpp"
+    },
+    {
+      "repository": "hao-ai-lab/fastvideo",
+      "project_id": "fastvideo"
+    },
+    {
+      "repository": "iiiiilllliiiiilllll/qwenox",
+      "project_id": "qwenox"
+    },
+    {
+      "repository": "ikawrakow/ik_llama.cpp",
+      "project_id": "ik-llama"
+    },
+    {
+      "repository": "incoai/splash",
+      "project_id": "splash"
+    },
+    {
+      "repository": "justvugg/colibri",
+      "project_id": "colibri"
+    },
+    {
+      "repository": "mayaresearch/maya2-native",
+      "project_id": "maya2-native"
+    },
+    {
+      "repository": "mirage-project/mirage",
+      "project_id": "mirage"
+    },
+    {
+      "repository": "niko1221/strata",
+      "project_id": "strata"
+    },
+    {
+      "repository": "nyacom/n3komata",
+      "project_id": "n3komata"
+    },
+    {
+      "repository": "sgl-project/sglang",
+      "project_id": "sglang"
+    },
+    {
+      "repository": "sharpai/swiftlm",
+      "project_id": "swiftlm"
+    },
+    {
+      "repository": "shawnshekari/strixite",
+      "project_id": "strixite"
+    },
+    {
+      "repository": "skydiscover-ai/skydiscover",
+      "project_id": "skydiscover"
+    },
+    {
+      "repository": "thu-ml/turbodiffusion",
+      "project_id": "turbodiffusion"
+    },
+    {
+      "repository": "wallawalla47/infernix",
+      "project_id": "infernix"
+    },
+    {
+      "repository": "xdit-project/xdit",
+      "project_id": "xdit"
+    },
+    {
+      "repository": "zolotukhin/zinc",
+      "project_id": "zinc"
+    }
+  ],
+  "discovery_references": {
+    "web-first-batch": [
+      "web-01",
+      "web-02",
+      "web-03"
+    ],
+    "jitengine-acknowledgement": "https://github.com/skydiscover-ai/jitengine/blob/2c34508d617800ab7448a69e14a6dd551aec156e/engines/qwen3.8-flash-next-m4pro/DETAILS.md",
+    "enginesmith-readme": "https://github.com/EngineSmith/enginesmith/blob/4ea26f3a93286a2aa41a06edf1f9170a54569cc5/README.md"
+  }
+}

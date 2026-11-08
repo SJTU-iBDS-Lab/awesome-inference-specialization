@@ -4,6 +4,10 @@ Contribute evidence about **how specialized execution stacks are built, who can 
 
 The survey does not require a new project, AI involvement or an implementation from scratch. General engines, compilers, libraries and evaluators qualify only when a concrete reuse or comparison relationship to an included stack is documented. Teaching-oriented “nano” reproductions of standard engines are outside scope; small size alone does not exclude a substantive execution system. Adding entries or maximizing counts is not the objective.
 
+## Discover candidates
+
+Use the [search guide](docs/search-strategy.md) and [maintained keyword bank](catalog/search_keywords.json) for complementary construction, execution, hardware/model and dependency searches. Record exact queries, sampling limits and bounded source findings in [search runs](catalog/search_runs/); retrieval dates are separate from technical review dates. Search hits remain candidates until the admission checks below are complete. Hardware/model homepage routes in `catalog/discovery.json` contain admitted project IDs only.
+
 ## Add or correct a project
 
 1. Read the [scope](README.md#what-belongs-here), [taxonomy](docs/taxonomy.md), [selected cases](docs/cases.md) and [evidence policy](docs/evidence-policy.md).

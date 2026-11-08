@@ -91,3 +91,7 @@ Reviewed revision: `83e73eb94051dc67431829d0f3d3eb67db0b8e9b`.
 ## Follow-up source inspection — 2026-11-07
 
 [JITEngine and SkyDiscover / SkySynth review](source-review-2026-11-07.md) links generated model/Mac-specific execution packages to their construction framework. It traces kernels, residency/state repair, task-dependent validation gates and the historical baseline behind the reported maximum speedup. No hardware or synthesis run was performed; older findings and review dates are unchanged.
+
+## Follow-up discovery — 2026-11-08
+
+[Keyword expansion and source triage](discovery-2026-11-08.md) records a bounded search and seven source-spot-checked leads, with remaining admission work stated explicitly. The [keyword bank and workflow](search-strategy.md) retain hardware aliases, construction/execution terms, dependency routes and exact query observations. This pass admits no projects and changes no historical findings or technical review dates.

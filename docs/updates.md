@@ -2,6 +2,15 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Quick comparison](representative-comparison.md) · [Contributing](../CONTRIBUTING.md)
 
+## 2026-11-08 — Discovery vocabulary and source follow-up queue / 检索词库与源码补审线索
+
+- Established a [maintained keyword bank](../catalog/search_keywords.json): 11 groups with 131 terms, 12 hardware groups, 8 model-term groups and 20 query templates. The [search guide](search-strategy.md) separates retrieval, source triage and catalog admission.
+- Executed 20 GitHub repository queries and three web queries; preserved the exact queries and 400 returned observations (359 distinct repository names) in the [bounded run record](../catalog/search_runs/2026-11-08.json). Broad synthesis/RSI terms, capped result pages and ordinary forks exposed retrieval limits; no exhaustive-coverage claim is made.
+- The [discovery report](discovery-2026-11-08.md) records seven source-spot-checked leads: EngineSmith, Molten, FreeToken, InferRSI, Saber, open_rknpu2_lm_infer and PolyStrata. Framework/output and upstream-reuse relationships guide the remaining checks.
+- This pass changes discovery resources, not admission decisions: **142 projects and 83 cases** remain. Existing entries, review dates, star observations and homepage layout are unchanged. No upstream build, benchmark or agent run was performed.
+
+补充“构建框架 → 产物”“致谢 → 上游依赖”“硬件代号 → 执行路径”三类检索路线；候选与正式收录分开，搜索命中不作为性能或正确性结论。
+
 ## 2026-11-07 — Synthesized Mac engines and executable construction gates / 合成的 Mac 引擎与可执行构建门禁
 
 - Added [JITEngine](catalog.md#jitengine) and [SkyDiscover / SkySynth](catalog.md#skydiscover), with one [workflow/output case](cases.md#jitengine): **142 projects and 83 cases**. Six engine packages remain one repository record; SkySynth is part of SkyDiscover.
