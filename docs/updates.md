@@ -2,6 +2,15 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Quick comparison](representative-comparison.md) · [Contributing](../CONTRIBUTING.md)
 
+## 2026-11-09 — Query-aware AI-SQL execution / 查询驱动的 AI-SQL 推理
+
+- Added [Quail](catalog.md#quail) and its [query-planned execution case](cases.md#quail): **143 projects and 84 cases**. The [pinned source review](source-review-2026-11-09.md) traces join/anchor planning, operator scheduling, KV retention/rewind, shared-prefix attention and integrated Triton fusion.
+- Credited vLLM model/loading components, DeepGEMM and FlashAttention. Marked AI involvement from the authors' direct disclosure, without inferring autonomous synthesis or lower total development cost.
+- Distinguished requested input throughput (including KV reuse) from fresh computation and output generation. Historical author benchmarks, their scale factors and the AGENT-1 counterexample are separate from current prefix-sharing and generation capabilities. No upstream build, GPU test or benchmark was run.
+- Updated bilingual entries, case grouping, recent additions, embedded validation evidence and generated indexes. Extended the keyword bank with eight AI-SQL/accounting terms and two templates; the prior search run remains historical. Existing records, cases, review dates, star observations and homepage organization are preserved.
+
+Quail 具备真正的执行改造，予以收录；“10 亿 token/分钟”不能作为生成速度或新增计算量引用。原始发布文章日期为 9 月 24 日，当前源码已超出早期纯布尔负载范围。收录与源码核查均不代表独立性能复现。
+
 ## 2026-11-08 — Discovery vocabulary and source follow-up queue / 检索词库与源码补审线索
 
 - Established a [maintained keyword bank](../catalog/search_keywords.json): 11 groups with 131 terms, 12 hardware groups, 8 model-term groups and 20 query templates. The [search guide](search-strategy.md) separates retrieval, source triage and catalog admission.

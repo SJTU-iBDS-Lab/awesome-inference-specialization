@@ -140,5 +140,6 @@
   "basalt": "A Blackwell Flash-Next fork of Strata with reworked expert windows, persistent peer execution and Infernix-adapted NVFP4 prefill. Quantization, optional routing/draft approximations and default thinking controls affect output; quality checks are short-context.",
   "n3komata": "A BC-250 llama.cpp/Vulkan stack with SSD expert caching, batched uploads and router-mass selection. Defaults drop experts; cold misses await storage. Development benchmarks do not cover the complete release profile.",
   "jitengine": "SkySynth-generated MLX engines for selected models and Macs, with custom Metal kernels, expert-cache repair and persistent decode. Installation selects released builds; exactness is relative to quantized references, with optional relaxed modes.",
-  "skydiscover": "SkySynth constructs specialized systems through specification, implementation and evaluator/auditor loops, linked here to JITEngine. Executable gates depend on task-defined tests; its separate proof mode does not certify these LLM engines."
+  "skydiscover": "SkySynth constructs specialized systems through specification, implementation and evaluator/auditor loops, linked here to JITEngine. Executable gates depend on task-defined tests; its separate proof mode does not certify these LLM engines.",
+  "quail": "An AI-SQL engine coupling query planning, KV lifetime and shared-prefix attention, with fused Triton kernels and constrained Boolean readouts. Reuses vLLM model components; current generation operators have separate contracts."
 }

@@ -87,6 +87,16 @@ These are methods inside existing engine records, not additional validation-tool
 
 本轮仅检查源码，未运行上述门禁。加载自检、有限输出回归、候选审计与形式化证明是不同证据；测试框架的存在不等于所有模型、设备和状态轨迹已经通过验证。
 
+## Query-aware KV state and metric contracts — 2026-11-09
+
+[Quail](cases.md#quail) adds a state-machine oracle distinct from a model-quality benchmark; see the [pinned review](source-review-2026-11-09.md).
+
+- **KV history:** its [hash-model checker](https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/tests/helpers/kv_checker.py) tracks tokens, positions and attended history through physical pages. [Rewind](https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/tests/engine/test_stage_rewind.py) and [prefix-borrow](https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/tests/engine/test_stage_resident_prefix.py) tests check expected histories, work accounting and final ownership. A synthetic forward model can expose wrong state reads without certifying GPU numerics or task accuracy.
+- **Diagnostic versus gate:** the [hybrid join parity experiment](https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/experiments/cells/hybrid_join_parity.py) records logit-margin errors and Boolean agreement against vLLM. The stated numerical predictions are not enforced acceptance assertions in its reporting path.
+- **Measurement integrity:** [QUAIL-B's metric contract](https://github.com/fsdatalab/quail-bench/blob/2a883383c8062e0aa522b9e0cf4da8db64ffb16b/quail_b/reporting.py) distinguishes requested input lengths including KV hits, engine-reported fresh tokens and repeated work above an unlimited-KV minimum. Reference-answer agreement is conditional on evaluated rows/pairs, not proof of universal quality. Source inspection here does not constitute a separate benchmark admission.
+
+上述检查仅审阅源码，未运行；验证成本未量化。缓存状态正确、神经网络数值一致、任务标签一致与吞吐量计数是不同合同，不能互相替代。
+
 ## Efficient validation: an open research question
 
 Automation alone does not establish efficiency. A useful report accounts for candidate compilation, reference runs, device time, judge calls, human review and failed attempts. It must also state what coverage was reduced to save that cost.

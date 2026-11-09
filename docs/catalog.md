@@ -4,7 +4,7 @@
 
 [Home](../README.md) · [中文首页](../README_CN.md) · [Systems & construction](systems.md) · [Comparison](comparison.md) · [Taxonomy](taxonomy.md) · [Evidence policy](evidence-policy.md)
 
-142 entries. Source review: 2026-11-07. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
+143 entries. Source review: 2026-11-09. Descriptions report inspected mechanisms; no project benchmark was independently reproduced in this survey.
 
 Use the family links below, or search this page for a model, device, mechanism or project. Source visibility is not a license or correctness certification. Semantic labels identify evaluation obligations, not proven equivalence.
 
@@ -929,9 +929,38 @@ Integrates SageAttention and sparse-linear attention with timestep-distilled vid
 
 <a id="reuse"></a>
 
-## Computation reuse / 计算复用 (2)
+## Computation reuse / 计算复用 (3)
 
 **Which earlier results can be reused?** Reuse request prefixes, features or attention across steps.
+
+<a id="quail"></a>
+
+### [Quail](https://github.com/fsdatalab/quail)
+
+[core](systems.md#core) · `system` · `runtime` · `text` · **public code**
+
+**Survey relevance:** AI-SQL query structure drives its own physical execution, KV lifetime and shared-prefix forward path, with directly disclosed AI-assisted construction.
+
+Prices join order and anchor reuse, schedules physical operators around retained document KV, rewinds disposable suffix state, and combines grouped anchor reads with suffix attention and fused normalization/quantization. Boolean readouts score selected output-head rows.
+
+**Scope:** AI-SQL filters and joins over large text tables on CUDA GPUs; inspected Qwen3 FP8 forward path and H100 attention dispatch. Additional model/device/operator paths have separate contracts.
+
+**Boundary:** Reuses vLLM loading/model modules, DeepGEMM and FlashAttention; not an all-new model or kernel stack. Headline throughput counts requested input tokens including KV reuse, not generated or fresh tokens. Launch benchmarks are author-reported and version-specific; current code also includes prefix sharing and generation operators. No GPU reproduction or total construction-cost evidence.
+
+**Semantic considerations:** layout / scheduling, reduced precision, configuration-dependent.
+
+<details>
+<summary>Mechanism tags and source evidence / 机制标签与证据</summary>
+
+**Mechanisms:** `query-aware-planning`, `kv-rewind`, `shared-prefix-attention`, `fused-triton-kernels`, `restricted-output-head`, `operator-pipelining`.
+
+**Constraints:** `workload`, `model`, `hardware`, `memory`, `precision`.
+
+**Evidence:** [Source 1](https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/README.md) · [Source 2](https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/quail/planner/search/join_order.py) · [Source 3](https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/quail/backends/quail/executor/models/qwen3.py) · [Source 4](https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/quail/backends/quail/executor/attention.py) · [Source 5](https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/quail/backends/quail/executor/arena.py) · [Source 6](https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/quail/backends/quail/executor/readout.py) · [Source 7](https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/tests/helpers/kv_checker.py) · [Source 8](https://fsdatalab.github.io/blog/introducing-quail/) · [Source 9](https://modal.com/blog/quail-billion-tpm) · [Source 10](https://github.com/fsdatalab/quail-bench/blob/2a883383c8062e0aa522b9e0cf4da8db64ffb16b/quail_b/reporting.py).
+
+**Reviewed:** 2026-11-09 · **AI involvement:** `disclosed` · **Discovery:** `keyword`.
+
+</details>
 
 <a id="sglang"></a>
 

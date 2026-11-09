@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_on": "2026-11-08",
+  "updated_on": "2026-11-09",
   "purpose": "Repeatable discovery of specialized inference systems and their construction/validation methods; search vocabulary is not admission evidence.",
   "purpose_cn": "维护可复用的发现词表和查询模板；命中不等于收录，不更新既有项目核查日期。",
   "keyword_groups": [
@@ -219,14 +219,23 @@
         "RDMA",
         "long-context prefill",
         "time to first token",
-        "time to first audio"
+        "time to first audio",
+        "AI-SQL",
+        "query-aware inference",
+        "semantic join",
+        "semantic filter",
+        "LLM-powered dataflow",
+        "prefill-only inference",
+        "KV regret",
+        "requested input tokens"
       ],
       "catalog_examples": [
         "gr8",
         "maya2-native",
-        "halogen-flash"
+        "halogen-flash",
+        "quail"
       ],
-      "note_cn": "逐项区分单路与聚合、prefill 与 decode、冷启动与热缓存；协议兼容不单独构成收录理由。"
+      "note_cn": "逐项区分单路与聚合、prefill 与 decode、冷启动与热缓存；协议兼容不单独构成收录理由。 AI-SQL 区分 SQL 调用模型与 NL2SQL；吞吐量须分清完整请求输入（含 KV 复用）、fresh tokens 与生成输出。"
     },
     {
       "id": "validation",
@@ -598,6 +607,18 @@
       "surface": "web",
       "query": "\"{seed}\" inference architecture benchmark source code",
       "group_id": "validation"
+    },
+    {
+      "id": "ai-sql-execution",
+      "surface": "github-repositories",
+      "query": "\"AI-SQL\" \"inference\" in:name,description,readme archived:false",
+      "group_id": "serving-workloads"
+    },
+    {
+      "id": "web-query-aware",
+      "surface": "web",
+      "query": "\"query-aware inference\" KV attention engine",
+      "group_id": "serving-workloads"
     }
   ],
   "source_routes": [

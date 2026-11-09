@@ -32,7 +32,7 @@ Integrated model runtimes and substantial specialized backends, including native
 
 集成模型运行时和实质专用后端，涵盖原生实现与有直接参照意义的既有执行栈。
 
-106 projects / 项目
+107 projects / 项目
 
 | Project and evidence | Why it belongs | Relevance / artifact |
 | --- | --- | --- |
@@ -87,6 +87,7 @@ Integrated model runtimes and substantial specialized backends, including native
 | [parakeet.cpp (ggml)](catalog.md#parakeet-ggml) | Ports NeMo speech graphs and cache-aware transcription semantics into C++/ggml, exposing the conversion, streaming-state and parity work needed to build a portable native ASR stack. | core / runtime |
 | [peregrine](catalog.md#peregrine) | Rebuilds Colibri's disk-streamed MoE architecture around concurrent I/O, CPU and optional CUDA lanes, with a measured same-hardware comparison exposing when the rewrite does not help. | core / runtime |
 | [Qingming Qwen3-TTS](catalog.md#qingming-qwen3-tts) | Tests the narrowest device-specialization boundary: separate native synthesis paths for two fixed 24GB GPUs, including their memory capacities and generation/decoder concurrency contracts. | core / runtime |
+| [Quail](catalog.md#quail) | AI-SQL query structure drives its own physical execution, KV lifetime and shared-prefix forward path, with directly disclosed AI-assisted construction. | core / runtime |
 | [Quartz](catalog.md#saient-quartz) | Exposes native Rust image generation and an evolving native Wan path, while a separate C++ video companion provides a concrete case for auditing claimed versus actual execution boundaries. | core / runtime |
 | [Qwen-ASR (C)](catalog.md#qwen-asr-c) | Reconstructs Qwen3-ASR from waveform preprocessing through autoregressive transcription in C, making streaming context policy and CPU/GPU execution responsibilities directly inspectable. | core / runtime |
 | [Qwen3-TTS (C)](catalog.md#qwen3-tts-c) | Rebuilds the Qwen3-TTS talker, code predictor and waveform decoder as one native path; published engineering records connect implementation choices to reference checks and measurement corrections. | core / runtime |

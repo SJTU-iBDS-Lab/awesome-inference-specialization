@@ -1242,6 +1242,14 @@
       "repository_id": 1160689201,
       "stars": 752,
       "status": "ok"
+    },
+    "fsdatalab/quail": {
+      "repository_id": 1318923092,
+      "full_name": "fsdatalab/quail",
+      "stars": 181,
+      "fetched_on": "2026-11-09",
+      "last_attempt_on": "2026-11-09",
+      "status": "ok"
     }
   },
   "schema_version": 1

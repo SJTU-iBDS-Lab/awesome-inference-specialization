@@ -93,6 +93,7 @@ Start with what is rebuilt and what effort is disclosed. Read each case for reta
 | [Basalt](cases.md#basalt) | The inspected delta is the device-planned verify/expert program and integrated grouped prefill path, not the existence of CPU/GPU tiering, an API or a new model container alone. | Author hardware/results are documented; total construction, compute and maintenance costs are not established. |
 | [N3komata](cases.md#n3komata) | Pinned llama.cpp/GGML graph, expert-cache callbacks, upload APIs and Vulkan shader changes; the Python UI is not the admission basis. | Author hardware/results are documented; total construction, compute and maintenance costs are not established. |
 | [JITEngine / SkySynth](cases.md#jitengine) | JITEngine owns model execution, expert/state scheduling and serving inside six packages. SkySynth is the separate construction workflow; the reviewed installer only chooses and installs a released package. | No complete, comparable accounting of human effort, model calls, failed candidates, device time and maintenance was established. Reported decode performance is not a construction-cost measurement. |
+| [Quail](cases.md#quail) | Own query-to-physical-plan lowering, operator/stage scheduling, paged KV ownership and Qwen3 forward orchestration. Boolean filtering/joining is prefill-oriented; current AI.MAP and extraction paths have broader output contracts. | Historical GPU-throughput/cost reports use requested input lengths including KV hits and exclude costs outside their query timer. Human effort, failed attempts, validation compute and long-term maintenance costs are not quantified. |
 
 ## Library facets / 资料库的独立标签
 
@@ -151,6 +152,7 @@ The full mechanism-oriented index is retained below. Survey relevance and artifa
 
 | Project / survey relevance | Artifact role / modality | Semantic considerations |
 | --- | --- | --- |
+| [Quail](catalog.md#quail) · core | system / runtime / text | layout / scheduling, reduced precision, configuration-dependent |
 | [SGLang](catalog.md#sglang) · foundation | support / runtime / text | configuration-dependent |
 | [VideoSys](catalog.md#videosys) · adjacent | system / runtime / video | configuration-dependent, earlier-state reuse |
 

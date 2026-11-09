@@ -18,7 +18,7 @@ The maintained [keyword bank](../catalog/search_keywords.json) supplies search t
 | State / 状态 | GDN state, semantic anchor, state rollback | Are state ownership and repeated execution checked? |
 | Speculation / 投机 | DFlash2, MTP, tree verification | What target/reference and sampling contract are preserved? |
 | Representation / 数值表示 | FTW, NVFP4, W4A8, scale bias packing | Which changes affect precision or model behavior? |
-| Workloads / 服务负载 | dual ubatch, decode lanes, continuous speech batching | Which latency, throughput and concurrency conditions apply? |
+| Workloads / 服务负载 | dual ubatch, decode lanes, AI-SQL, query-aware inference | Which latency, throughput and concurrency conditions apply, and are reused input tokens counted? |
 | Validation / 验证 | teacher forcing, source fingerprint, mutation testing | What finite acceptance rule is actually enforced? |
 | Other domains / 其他模型领域 | DiT compiler, streaming TTS engine, VLA inference | Separate model/step changes from runtime improvements |
 
@@ -57,6 +57,10 @@ Run records use `searched_on` for retrieval, distinct from a project's technical
 The [November 8 record](../catalog/search_runs/2026-11-08.json) retains broad/noisy probes as observations. Its 20 GitHub queries each returned 20 names; only seven selected leads received bounded source inspection. Subsequent passes can record more pages or different ordering, but must label their coverage accurately.
 
 Maintain the vocabulary when a source introduces a useful synonym or a query repeatedly misses relevant work. Keep observed productive phrases, narrow ambiguous combinations, and retire stale template choices only with a reason. Do not turn the raw hit log into a second “awesome” list or automatically promote a candidate.
+
+## Query-aware follow-up — 2026-11-09
+
+The [Quail source review](source-review-2026-11-09.md) adds eight workload/accounting terms and two query templates: **139 terms in 11 groups and 22 templates**. These cover AI-SQL, semantic filters/joins, query-aware inference and KV regret. Distinguish SQL invoking a model from NL2SQL. This targeted source review does not replay or alter the November 8 search record; the new templates are vocabulary for subsequent searches, not claims of executed queries.
 
 ## 中文维护约定
 

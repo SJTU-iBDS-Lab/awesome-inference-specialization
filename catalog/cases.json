@@ -2179,5 +2179,41 @@
       "https://skydiscover-ai.github.io/blog-jitengine.html"
     ],
     "checked_on": "2026-11-07"
+  },
+  {
+    "id": "quail",
+    "title": "Quail: query plans control inference and KV lifetime",
+    "project_ids": [
+      "quail",
+      "vllm"
+    ],
+    "summary": "AI-SQL filters and joins expose future reuse to a dedicated executor, which schedules document KV, groups shared-prefix attention and restricts Boolean readouts while retaining established model and kernel components.",
+    "summary_cn": "AI-SQL 过滤与连接让专用执行器利用已知查询结构，安排文档 KV 生命周期、共享前缀注意力与布尔输出头，并复用成熟模型和内核组件。",
+    "motivation": "Large table queries create many related model evaluations. Quail uses query structure and estimated survivors to choose execution order, anchor reuse and work budgets.",
+    "boundary": "Own query-to-physical-plan lowering, operator/stage scheduling, paged KV ownership and Qwen3 forward orchestration. Boolean filtering/joining is prefill-oriented; current AI.MAP and extraction paths have broader output contracts.",
+    "reuse": "vLLM processed model modules/loading and kernel utilities, DeepGEMM, FlashAttention, Triton, Arrow and SQLGlot. Hydragen/SpecInfer are cited attention precedents, not evidence of an independently invented primitive.",
+    "tradeoff": "Targets planned table workloads and qualified model/device combinations. FP8 numerics, prompt layout and constrained TRUE/FALSE decisions require matching references; full-vocabulary generation is a different task. Finite HBM can invalidate the unlimited-reuse cost estimate.",
+    "construction": "Implements cost-guided join/anchor search, physical operator grouping and prefix retention/rewind, then integrates custom fusion and softmax-state merge kernels into a loaded Qwen3 model. Current source also borrows prefixes across document rows.",
+    "ai_role": "The CMU launch report directly discloses heavy coding-agent use and agent-assisted fused kernels. It does not establish autonomous synthesis, a named construction framework or reduced total effort.",
+    "cost": "Historical GPU-throughput/cost reports use requested input lengths including KV hits and exclude costs outside their query timer. Human effort, failed attempts, validation compute and long-term maintenance costs are not quantified.",
+    "validation": "Inspected hash-model KV history checks, rewind/borrow tests and QUAIL-B metric definitions. These separate state consistency from neural numerics and task accuracy. The hybrid join parity probe reports errors/agreement; its stated predictions are not enforced acceptance gates. Launch performance and the historical AGENT-1 counterexample were not rerun.",
+    "maintenance": "The reviewed backend pins vLLM 0.29.0, while the launch report used 0.26.0. Model layouts, output contracts, device attention selection and cache rules evolve; neither old speedups nor old missing-prefix limitations automatically describe the current revision.",
+    "evidence_urls": [
+      "https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/README.md",
+      "https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/quail/planner/search/join_order.py",
+      "https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/quail/backends/quail/executor/models/qwen3.py",
+      "https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/quail/backends/quail/executor/attention.py",
+      "https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/quail/backends/quail/executor/arena.py",
+      "https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/quail/backends/quail/executor/readout.py",
+      "https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/tests/helpers/kv_checker.py",
+      "https://fsdatalab.github.io/blog/introducing-quail/",
+      "https://modal.com/blog/quail-billion-tpm",
+      "https://github.com/fsdatalab/quail-bench/blob/2a883383c8062e0aa522b9e0cf4da8db64ffb16b/quail_b/reporting.py",
+      "https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/quail/backends/quail/backend.py",
+      "https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/quail/backends/quail/executor/model_loading.py",
+      "https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/tests/engine/test_stage_resident_prefix.py",
+      "https://github.com/fsdatalab/quail/blob/4072f9b61e3a2f435b0bb65fc8d91469b7d3a591/experiments/cells/hybrid_join_parity.py"
+    ],
+    "checked_on": "2026-11-09"
   }
 ]

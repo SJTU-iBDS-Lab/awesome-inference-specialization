@@ -177,7 +177,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 
 ## Language models / 语言模型
 
-81 core/adjacent entries; 17 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
+82 core/adjacent entries; 17 shared foundations. Counts reflect reviewed scope, not identical capability or maturity.
 
 | Project | Survey role | Inspected execution scope |
 | --- | --- | --- |
@@ -221,6 +221,7 @@ Use these facets to find relevant workloads, then inspect what the system actual
 | [NInfer](catalog.md#ninfer) | core | Selected Qwen Dense/MoE checkpoints on Linux and one RTX 5090 (sm_120a), with one resident model and one to eight startup-fixed execution lanes. |
 | [NInfer-3090](catalog.md#ninfer-3090) | core | Qwen dense/MoE serving on a 24 GB RTX 3090 requires SM86-compatible kernels and a smaller memory budget than upstream consumer Blackwell. |
 | [peregrine](catalog.md#peregrine) | core | GLM-5.2 744B-style int4 MoE streaming on Linux with NVMe, CPU and optional NVIDIA CUDA expert execution. |
+| [Quail](catalog.md#quail) | core | AI-SQL filters and joins over large text tables on CUDA GPUs; inspected Qwen3 FP8 forward path and H100 attention dispatch. Additional model/device/operator paths have separate contracts. |
 | [Quartz](catalog.md#saient-quartz) | core | Native Rust local inference with SD1.5/SDXL and an evolving Wan path on CPU/CUDA/Vulkan. |
 | [Qwenox](catalog.md#qwenox) | core | Qwen3.8-Flash-Next on AMD Ryzen AI Max+ 395 / gfx1151 with 128 GB unified memory; Linux and Windows. Text execution reviewed; advertised vision paths not audited. |
 | [Saragossa](catalog.md#saragossa) | core | Single-user local latency on Apple Silicon for selected text and speech architectures with MLX affine integer weights. |

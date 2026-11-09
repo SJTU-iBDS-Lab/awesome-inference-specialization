@@ -95,3 +95,7 @@ Reviewed revision: `83e73eb94051dc67431829d0f3d3eb67db0b8e9b`.
 ## Follow-up discovery — 2026-11-08
 
 [Keyword expansion and source triage](discovery-2026-11-08.md) records a bounded search and seven source-spot-checked leads, with remaining admission work stated explicitly. The [keyword bank and workflow](search-strategy.md) retain hardware aliases, construction/execution terms, dependency routes and exact query observations. This pass admits no projects and changes no historical findings or technical review dates.
+
+## Follow-up source inspection — 2026-11-09
+
+[Quail review](source-review-2026-11-09.md) adds one AI-SQL execution system after tracing query planning, KV lifetime and kernel integration. It credits reused model/kernel components, documents directly disclosed AI assistance, and separates logical input throughput from fresh model work and generation. Historical benchmarks and limitations are not assigned to the current revision. QUAIL-B supplies inspected metric evidence without a separate catalog admission; no hardware reproduction was performed.

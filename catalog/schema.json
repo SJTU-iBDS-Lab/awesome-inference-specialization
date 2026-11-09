@@ -396,7 +396,8 @@
         "gufo-rdma",
         "strix-llama-cpp",
         "dinfer",
-        "basalt"
+        "basalt",
+        "quail"
       ]
     },
     {

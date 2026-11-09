@@ -20,7 +20,7 @@
 <!-- CATALOG-START -->
 
 <p align="center">
-<sub>142 个项目 · 106 个引擎 · 15 个构建流程 · 3 个基准 · 18 项资源</sub>
+<sub>143 个项目 · 107 个引擎 · 15 个构建流程 · 3 个基准 · 18 项资源</sub>
 </p>
 
 <div align="center">
@@ -42,7 +42,7 @@
 <sub>范围以已查模型、设备和配置为准；不代表兼容性认证或性能排名。</sub>
 <!-- DISCOVERY-END -->
 
-<sub title="目录收录日期，不是项目发布日期"><b>近期收录</b> · 2026-11-05–2026-11-07 · [JITEngine](#project-jitengine) · [SkyDiscover / SkySynth](#project-skydiscover) · [gr8](#project-gr8) · [Basalt](#project-basalt) · [N3komata](#project-n3komata) · [更新记录](docs/updates.md)</sub>
+<sub title="目录收录日期，不是项目发布日期"><b>近期收录</b> · 2026-11-05–2026-11-09 · [Quail](#project-quail) · [JITEngine](#project-jitengine) · [SkyDiscover / SkySynth](#project-skydiscover) · [gr8](#project-gr8) · [Basalt](#project-basalt) · [更新记录](docs/updates.md)</sub>
 
 <a id="featured-reading"></a>
 <a id="start-here"></a>
@@ -107,13 +107,13 @@
 
 ## 推理引擎
 
-<sub>全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md) · [★ 仓库 Star 快照 · 2026-10-14–2026-11-07](docs/homepage-metadata.md)</sub>
+<sub>全部项目展开，名称直达上游。[执行边界](docs/systems.md#system) · [跨领域索引](docs/domains.md) · [★ 仓库 Star 快照 · 2026-10-14–2026-11-09](docs/homepage-metadata.md)</sub>
 
 > **证据说明：** 描述依据来源核查，性能未在本仓库独立复现。模型改动与重要限制仍随条目列出。[如何阅读证据](docs/evidence-policy.md)。
 
 <a id="homepage-system-text"></a>
 
-### 语言模型 <sub>· 64</sub>
+### 语言模型 <sub>· 65</sub>
 
 - <a id="project-ane-lm"></a>**[ANE-LM](https://github.com/johnmai-dev/ANE-LM)** <sub title="johnmai-dev/ANE-LM: 144 repository stars; observed 2026-10-14">★&nbsp;144</sub> — 作为 ane.cpp 的直接前身，以编译缓存连接 Qwen 的 ANE 内核与 CPU 运算，保留私有接口和有限模型范围的约束。 <sub>[详情](docs/catalog.md#ane-lm)</sub>
 - <a id="project-ane-cpp"></a>**[ane.cpp](https://github.com/skyfallsin/ane.cpp)** <sub title="skyfallsin/ane.cpp: 6 repository stars; observed 2026-10-14">★&nbsp;6</sub> — 通过硬件探针和保留／舍弃实验，将 Qwen 卷积编译到 ANE，并由 CPU 处理归一化、注意力与 KV 状态。 <sub>[详情](docs/catalog.md#ane-cpp)</sub>
@@ -162,6 +162,7 @@
 - <a id="project-ninfer-3090"></a>**[NInfer-3090](https://github.com/ashalliants/ninfer-3090)** <sub title="ashalliants/ninfer-3090: 49 repository stars; observed 2026-10-14">★&nbsp;49</sub> — 将 NInfer 分支适配至 24GB RTX 3090，重建 SM86 量化内核、内存规划和回放状态，超出单纯更改编译架构的范围。 <sub>多模态 · [详情](docs/catalog.md#ninfer-3090)</sub>
 - <a id="project-peregrine"></a>**[peregrine](https://github.com/s-b-repo/peregrine)** <sub title="s-b-repo/peregrine: 6 repository stars; observed 2026-10-16">★&nbsp;6</sub> — Colibri 衍生 Rust 引擎，以 io_uring、CPU／可选 CUDA 通道并发执行专家并固定顺序归约。作者报告的磁盘受限冷解码慢于 Colibri；GPU 路径仍需单独验证。 <sub>[详情](docs/catalog.md#peregrine)</sub>
 - <a id="project-powerinfer"></a>**[PowerInfer](https://github.com/Tiiny-AI/PowerInfer)** <sub title="Tiiny-AI/PowerInfer: 9,826 repository stars; observed 2026-10-14">★&nbsp;9.8k</sub> — 依据神经元激活频率将热点放在 GPU、冷激活交给 CPU，并用预测器驱动稀疏算子；依赖兼容稀疏模型，不能直接套用任意稠密权重。 <sub>[详情](docs/catalog.md#powerinfer)</sub>
+- <a id="project-quail"></a>**[Quail](https://github.com/fsdatalab/quail)** <sub title="fsdatalab/quail: 181 repository stars; observed 2026-11-09">★&nbsp;181 · [博客](https://fsdatalab.github.io/blog/introducing-quail/)</sub> — 面向 AI-SQL，将查询规划、KV 生命周期与共享前缀注意力联动，配合融合 Triton 内核和受限布尔输出头；复用 vLLM 模型组件，当前生成类算子采用不同执行合同。 <sub>[详情](docs/catalog.md#quail)</sub>
 - <a id="project-qwenox"></a>**[Qwenox](https://github.com/IIIIIllllIIIIIlllll/Qwenox)** <sub title="IIIIIllllIIIIIlllll/Qwenox: 126 repository stars; observed 2026-11-03">★&nbsp;126</sub> — 面向 gfx1151 的 Flash-Next HIP 运行时，具有低比特 MoE 内核、分页状态和跨槽投机验证。复用 Halogen 格式、Gufo 内核及 hipfire 思路；W4A4 与草稿宽度须单独检查质量。 <sub>[详情](docs/catalog.md#qwenox)</sub>
 - <a id="project-rocmfpx"></a>**[ROCmFPX](https://github.com/ROCmFPX/ROCmFPX)** <sub title="ROCmFPX/ROCmFPX: 48 repository stars; observed 2026-10-14">★&nbsp;48</sub> — 在 llama.cpp 下游定义 AMD 量化块、转换策略及匹配内核，展示格式与后端的协同构建，准确性依配方分别核验。 <sub>[详情](docs/catalog.md#rocmfpx)</sub>
 - <a id="project-saragossa"></a>**[Saragossa](https://github.com/azerozero/saragossa)** <sub title="azerozero/saragossa: 8 repository stars; observed 2026-10-14">★&nbsp;8</sub> — 以 Rust／Metal 为指定文本和语音模型自建执行、驻留解码状态、缓冲区及前缀快照，配有回归对照，聚焦 Apple 芯片单用户场景。 <sub>音频 · [详情](docs/catalog.md#saragossa)</sub>

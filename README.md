@@ -20,7 +20,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 <!-- CATALOG-START -->
 
 <p align="center">
-<sub>142 projects · 106 engines · 15 build workflows · 3 benchmarks · 18 resources</sub>
+<sub>143 projects · 107 engines · 15 build workflows · 3 benchmarks · 18 resources</sub>
 </p>
 
 <div align="center">
@@ -42,7 +42,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 <sub>Scope follows the reviewed model, device and configuration; no compatibility certification or speed ranking.</sub>
 <!-- DISCOVERY-END -->
 
-<sub title="Catalog addition dates, not project release dates"><b>Recently added</b> · 2026-11-05–2026-11-07 · [JITEngine](#project-jitengine) · [SkyDiscover / SkySynth](#project-skydiscover) · [gr8](#project-gr8) · [Basalt](#project-basalt) · [N3komata](#project-n3komata) · [Updates](docs/updates.md)</sub>
+<sub title="Catalog addition dates, not project release dates"><b>Recently added</b> · 2026-11-05–2026-11-09 · [Quail](#project-quail) · [JITEngine](#project-jitengine) · [SkyDiscover / SkySynth](#project-skydiscover) · [gr8](#project-gr8) · [Basalt](#project-basalt) · [Updates](docs/updates.md)</sub>
 
 <a id="featured-reading"></a>
 <a id="start-here"></a>
@@ -107,13 +107,13 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 
 ## Inference engines
 
-<sub>All projects expanded; names link upstream. [Execution boundaries](docs/systems.md#system) · [Overlapping domains](docs/domains.md) · [★ Repository star snapshots · 2026-10-14–2026-11-07](docs/homepage-metadata.md)</sub>
+<sub>All projects expanded; names link upstream. [Execution boundaries](docs/systems.md#system) · [Overlapping domains](docs/domains.md) · [★ Repository star snapshots · 2026-10-14–2026-11-09](docs/homepage-metadata.md)</sub>
 
 > **Evidence:** Source-reviewed descriptions; performance has not been independently reproduced here. Model changes and material limits remain in each summary. [Reading the evidence](docs/evidence-policy.md).
 
 <a id="homepage-system-text"></a>
 
-### Language models <sub>· 64</sub>
+### Language models <sub>· 65</sub>
 
 - <a id="project-ane-lm"></a>**[ANE-LM](https://github.com/johnmai-dev/ANE-LM)** <sub title="johnmai-dev/ANE-LM: 144 repository stars; observed 2026-10-14">★&nbsp;144</sub> — A direct predecessor to ane.cpp, connecting Qwen ANE kernels and CPU operations through a compile cache; constrained by private interfaces and limited model coverage. <sub>[Details](docs/catalog.md#ane-lm)</sub>
 - <a id="project-ane-cpp"></a>**[ane.cpp](https://github.com/skyfallsin/ane.cpp)** <sub title="skyfallsin/ane.cpp: 6 repository stars; observed 2026-10-14">★&nbsp;6</sub> — Compiles Qwen convolution programs for ANE while the CPU handles normalization, attention and KV state, informed by hardware probes and kept/discarded experiments. <sub>[Details](docs/catalog.md#ane-cpp)</sub>
@@ -162,6 +162,7 @@ Purpose-built runtimes, forks and backends for specific models, hardware and wor
 - <a id="project-ninfer-3090"></a>**[NInfer-3090](https://github.com/ashalliants/ninfer-3090)** <sub title="ashalliants/ninfer-3090: 49 repository stars; observed 2026-10-14">★&nbsp;49</sub> — An NInfer fork adapted to a 24 GB RTX 3090 through new SM86 quantized kernels, memory planning and replay state, beyond a compile-target change. <sub>Multimodal · [Details](docs/catalog.md#ninfer-3090)</sub>
 - <a id="project-peregrine"></a>**[peregrine](https://github.com/s-b-repo/peregrine)** <sub title="s-b-repo/peregrine: 6 repository stars; observed 2026-10-16">★&nbsp;6</sub> — A Colibri-derived Rust engine with concurrent io_uring, CPU/optional-CUDA expert lanes and deterministic reduction. Author-measured cold decode trails Colibri on the stated disk-bound machine; GPU execution needs separate qualification. <sub>[Details](docs/catalog.md#peregrine)</sub>
 - <a id="project-powerinfer"></a>**[PowerInfer](https://github.com/Tiiny-AI/PowerInfer)** <sub title="Tiiny-AI/PowerInfer: 9,826 repository stars; observed 2026-10-14">★&nbsp;9.8k</sub> — A CPU/GPU runtime placing frequently activated neurons on GPU and using predictors for sparse execution. Requires compatible sparse models, not arbitrary dense weights. <sub>[Details](docs/catalog.md#powerinfer)</sub>
+- <a id="project-quail"></a>**[Quail](https://github.com/fsdatalab/quail)** <sub title="fsdatalab/quail: 181 repository stars; observed 2026-11-09">★&nbsp;181 · [Blog](https://fsdatalab.github.io/blog/introducing-quail/)</sub> — An AI-SQL engine coupling query planning, KV lifetime and shared-prefix attention, with fused Triton kernels and constrained Boolean readouts. Reuses vLLM model components; current generation operators have separate contracts. <sub>[Details](docs/catalog.md#quail)</sub>
 - <a id="project-qwenox"></a>**[Qwenox](https://github.com/IIIIIllllIIIIIlllll/Qwenox)** <sub title="IIIIIllllIIIIIlllll/Qwenox: 126 repository stars; observed 2026-11-03">★&nbsp;126</sub> — A gfx1151 Flash-Next HIP runtime with low-bit MoE kernels, paged state and cross-slot speculative verification. Reuses Halogen formats, Gufo kernels and hipfire ideas; W4A4 and draft-width choices need separate quality checks. <sub>[Details](docs/catalog.md#qwenox)</sub>
 - <a id="project-rocmfpx"></a>**[ROCmFPX](https://github.com/ROCmFPX/ROCmFPX)** <sub title="ROCmFPX/ROCmFPX: 48 repository stars; observed 2026-10-14">★&nbsp;48</sub> — A llama.cpp downstream co-designing AMD quantization blocks, conversion policies and matching kernels; accuracy must be qualified per recipe. <sub>[Details](docs/catalog.md#rocmfpx)</sub>
 - <a id="project-saragossa"></a>**[Saragossa](https://github.com/azerozero/saragossa)** <sub title="azerozero/saragossa: 8 repository stars; observed 2026-10-14">★&nbsp;8</sub> — A single-user Apple Silicon runtime for selected text/speech models, with Rust/Metal execution, resident decode state, buffers and prefix snapshots backed by regression comparisons. <sub>Audio · [Details](docs/catalog.md#saragossa)</sub>
